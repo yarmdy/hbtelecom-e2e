@@ -1,0 +1,244 @@
+﻿@{
+    ViewBag.Title = "产品管理";
+    CTCCGoods.Controllers.cuser user = (CTCCGoods.Controllers.cuser)Session["loginuser"];
+}
+@section script{
+    <script>
+        var arrs = [
+            @foreach(var x in ViewBag.classbag)
+            {
+                <text>{ value:@x["cid"], text:"@x["cname"]"},</text>
+            }
+        ];
+        var parrs = [
+            @foreach(var x in ViewBag.changjia)
+            {
+                <text>{ value:@x["id"], text:"@x["name"]"},</text>
+            }
+        ];
+        var userType = @user.utype.Value;
+        $(function () {
+            var oTable = new TableInit();
+            oTable.Init();
+            var oButtonInit = new ButtonInit();
+            oButtonInit.Init();
+
+        });
+        var TableInit = function () {
+            var oTableInit = new Object();
+            oTableInit.Init = function () {
+                $('#tb_departments').bootstrapTable({
+                    url: '/goods/querygood',         //请求后台的URL（*）
+                    method: 'get',                      //请求方式（*）
+                    toolbar: '#toolbar',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: true,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 10,                       //每页的记录行数（*）
+                    pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                    search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    strictSearch: true,
+                    showColumns: true,                  //是否显示所有的列
+                    showRefresh: true,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: false,                //是否启用点击选中行
+                /*    height: 500,  */                      //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+                    showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    columns: [
+                        {
+                            field: 'id',
+                            title: 'id',
+                            visible: false,
+                        },
+                        {
+                            field: 'cid',
+                            title: '设备类型',
+                            editable: {
+                                type: 'select',
+                                title: '设备类型',
+                                source: arrs,
+                                validate: function (v) {
+                                    if (!v) return '设备类型不能为空';
+                                }
+                            },
+                            sortable:true
+                        },
+                        {
+                            field: 'pid',
+                            title: '厂家',
+                            editable: {
+                                type: 'select',
+                                title: '厂家',
+                                source: parrs,
+                                validate: function (v) {
+                                    if (!v) return '厂家不能为空';
+                                }
+                            },
+                            sortable:true
+                        },
+                        {
+                            field: 'name',
+                            title: '设备型号',
+                            editable: {
+                                type: 'text',
+                                title: '设备型号',
+                                validate: function (v) {
+                                    if (!v) return '设备型号不能为空';
+
+                                }
+                            },
+                            sortable:true
+                        },
+                        {
+                            field: 'class2',
+                            title: '设备分类',
+                            editable: {
+                                type: 'text',
+                                title: '设备分类',
+                                validate: function (v) {
+                                    if (!v) return '设备分类不能为空';
+
+                                }
+                            },
+                        },
+                        {
+                            field: 'code',
+                            title: '备注',
+                            editable: {
+                                type: 'text',
+                                title: '备注',
+                            }
+                        },
+                        {
+                            field: 'action',
+                            title: '操作',
+                            visible: true,
+                            width:70,
+                            formatter:function(){
+                                return "<button class=\"btndel btn btn-danger\" style=\"height:20px; font-size:12px; padding-top:0;padding-bottom:0;line-height:20px\" auth>删除</button>";
+                            },
+                            visible: userType != 0 ? false : true,
+                            events:{
+                                "click .btndel":function(a,b,c,d){
+                                    if(!c.id) {
+                                        $('#tb_departments').bootstrapTable("remove",{field:"id",values:[c.id]});
+                                        return;
+                                    }
+                                    var res=confirm("确定要删除设备类型吗？删除后不可恢复");
+                                    if(!res) return;
+                                    $.post("/goods/rg",{id:c.id},function(data){
+                                        if(data.ok){
+                                            $('#tb_departments').bootstrapTable("remove",{field:"id",values:[c.id]});
+                                        }else{
+                                            alert("删除失败："+data.msg);
+                                        }
+                                    });
+                                }
+                            }
+                        },
+                    ],
+                    onEditableSave: function (field, row, oldValue, $el) {
+                        var url;
+                        if (row.id) {
+                            url = "/goods/updategood";
+                        } else if (row.name && row.cid) {
+                            url = "/goods/insertgood";
+                        } else {
+                            return false;
+                        }
+                        $.ajax({
+                            type: "post",
+                            url: url,
+                            data: { "id": row.id, "name": row.name,"pid":row.pid, "code": row.code, "cid": row.cid, "class2":row.class2 },
+                            dataType: 'JSON',
+                            success: function (data) {
+                                if (data.status == "success") {
+                                    if (data.id) {
+                                        row.id = data.id;
+                                    }
+                                    if (data.cid) {
+                                        row.cid = data.cid;
+                                    }
+                                    console.log("操作成功");
+                                } else {
+                                    $el[0].innerHTML = oldValue;
+                                    alert(data.msg);
+                                }
+                            },
+                            error: function () {
+                                alert('编辑失败');
+                            },
+                            complete: function () {
+
+                            }
+
+                        });
+                    },
+
+                });
+            };
+
+            oTableInit.queryParams = function (params) {
+                var temp = {
+                    limit: params.limit,
+                    offset: params.offset,
+                    sort:params.sort,
+                    order:params.order
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+
+        function queryClassGood() {
+
+        }
+
+
+        var ButtonInit = function () {
+            var oInit = new Object();
+            var postdata = {};
+
+            oInit.Init = function () {
+
+            };
+
+            return oInit;
+        };
+
+        $("#btn_add").click(function () {
+            var data = $('#tb_departments').bootstrapTable('getData');
+            var index = data.length;
+            $('#tb_departments').bootstrapTable('insertRow', {
+                index: index,
+                row: {
+                    id: "",
+                    name: "",
+                    code: "",
+                    cid: "?",
+                    ccode: "",
+                    class2:"通用"
+                },
+            });
+        });
+    </script>
+}
+<div class="container">
+
+    <div id="toolbar" class="btn-group">
+        <button id="btn_add" type="button" class="btn btn-default" auth>
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+        </button>
+    </div>
+    <table id="tb_departments"></table>
+
+</div>

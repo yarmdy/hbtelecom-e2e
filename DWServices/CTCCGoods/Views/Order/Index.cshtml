@@ -1,0 +1,284 @@
+﻿@{
+    ViewBag.Title = "需求单";
+    Dictionary<string, object>[] cus = ViewBag.cus;
+    Dictionary<string, object>[] rus = ViewBag.rus;
+    Dictionary<int, string> oss = ViewBag.oss;
+    CTCCGoods.Controllers.cuser loginuser = ViewBag.loginuser;
+}
+@section style{
+<style>
+    .ordercode {
+        cursor:pointer
+    }
+    .delete {
+        font-size: 12px;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 12px;
+        margin: 0 auto;
+        display: block;
+        width: 60%;
+    }
+</style>    
+}
+
+@section script{
+    <script>
+        window.orderstatus = {
+        @foreach (CTCCGoods.Controllers.orderstatus e in Enum.GetValues(typeof(CTCCGoods.Controllers.orderstatus)))
+        {
+            @:"@((int)e)":"@(CTCCGoods.Controllers.O2.GED(e))",
+        }
+        };
+        function ordercode(value,row,index){
+            return "<a href=\"/order/byid/" + row.id + "\"  class=\"ordercode\" oidx=\"" + index + "\">" + value + "</a>";
+        }
+        function statusformat(value){
+            return orderstatus[value];
+        }
+        function statusformat2(value) {
+            if (value >= 8) return "-";
+            if (value <= -1) return "-";
+            return orderstatus[value+1];
+        }
+        function opera(value, row, index) {
+            if (row['status'] == -2) {
+                return "<a href='#' data="+row['id']+" class='btn btn-danger delete'>删除</a>";
+            }
+        }
+        
+        $(function () {
+
+            $('#table1').on('click', '.delete', function () {
+                var id = $(this).attr('data');
+                if (!confirm('确定删除吗？')) {
+                    return false;
+                }
+                $.post('/order/deleteorder', { 'orderId': id }, function (result) {
+                    if (result.ok) {
+                        $('#table1').bootstrapTable('removeAll').bootstrapTable('refresh');
+                    } else {
+                        alert(result.msg);
+                    }
+                })
+            });
+
+            //1.初始化Table
+            var oTable = new TableInit();
+            oTable.Init();
+
+            //2.初始化Button的点击事件
+            var oButtonInit = new ButtonInit();
+            oButtonInit.Init();
+
+            $("#tbaction").on("submit", function () {
+                $('#table1').bootstrapTable("removeAll").bootstrapTable("refresh");
+                return false;
+            });
+        });
+
+        var TableInit = function () {
+            var oTableInit = new Object();
+            //初始化Table
+            oTableInit.Init = function () {
+                $('#table1').bootstrapTable({
+                    url: '/order/fo',         //请求后台的URL（*）
+                    method: 'post',                      //请求方式（*）
+                    toolbar: '#tbaction',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: true,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 10,                       //每页的记录行数（*）
+                    pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                    search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    strictSearch: false,
+                    showColumns: true,                  //是否显示所有的列
+                    showRefresh: true,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: false,                //是否启用点击选中行
+                    //height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                    showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    columns: [{
+                        field: 'id',
+                        title: 'id',
+                        visible: false
+                    }, {
+                        field: 'code',
+                        title: '单号',
+                        //events: {
+                        //    "click .ordercode": openorder
+                        //},
+                        formatter: ordercode
+                    },
+                    {
+                        field: 'vid',
+                        title: '审批流id',
+                        visible: false
+                    },
+                    {
+                        field: 'createuid',
+                        title: '创建人id',
+                        visible: false
+                    },
+                    {
+                        field: 'createuname',
+                        title: '创建人',
+                    },
+                    {
+                        field: 'createtime',
+                        title: '创建时间',
+                    },
+                    {
+                        field: 'receiveuid',
+                        title: '厂家id',
+                        visible: false
+                    },
+                    {
+                        field: 'receiveuname',
+                        title: '厂家',
+                    },
+                    {
+                        field: 'status',
+                        title: '状态',
+                        formatter: statusformat
+                    },
+                    {
+                        field: 'statustime',
+                        title: '操作时间',
+                    },
+                    {
+                        field: 'verifyno',
+                        title: '待办流程号',
+                        visible: false
+                    },
+                    {
+                        field: 'verifyrole',
+                        title: '待办角色',
+                        visible: false,
+                    }, {
+                        field: 'status',
+                        title: '待办流程',
+                        formatter: statusformat2
+                    },
+                    {
+                        title: '操作',
+                        formatter: opera
+                    }
+                    ],
+                });
+            };
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    limit: params.limit,   //页面大小
+                    offset: params.offset,  //页码
+                    key: $("#orderkey").val(),
+                    cu: $("#ordercreateuser").val(),
+                    ru: $("#orderreceiveuser").val(),
+                    os: $("#orderstatus").val(),
+                    os2: $("#orderstatus2").val(),
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+
+        var ButtonInit = function () {
+            var oInit = new Object();
+            var postdata = {};
+
+            oInit.Init = function () {
+                //初始化页面上面的按钮事件
+            };
+
+            return oInit;
+        };
+
+        $('table').on('mouseenter', 'tbody tr', function (e) {
+            var orderid = $(this).attr('data-uniqueid')
+            $.post('/order/getinfobyid?orderid=' + orderid, function (result) {
+                if (result.ok) {
+                    var data = result.data;
+                    var $div = $('<div class="floatwindow"></div>');
+                    for (var i = 0; i < data.length;i++) {
+                        var $p = $('<p style="margin:0;padding:0;"><span style="color:#337ab7;">' + data[i].name + '</span>: ' + data[i].gnum + '</p>')
+                        $div.append($p);
+                    }
+                    var x = e.clientX;
+                    var y = e.clientY;
+                    $div.attr('style', 'box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3);display:none;border-radius: 10px;border:1px solid #ccc;position:absolute;background-color:#fff;padding: 10px;top:'+(y+5)+'px;left:'+(x+5)+'px;');
+                    $('body').append($div);
+                    $div.fadeIn(500);
+                }
+            })
+        })
+
+        $('table').on('mouseleave', 'tbody tr', function () {
+            $('.floatwindow').each(function (index, item) {
+                $(item).fadeOut(500).remove();
+            });
+        })
+    </script>
+}
+
+<div class="container">
+    <form class="form-inline"  id="tbaction">
+        <div class="btn-group" role="group" aria-label="...">
+          <a href="/order/byid"  class="btn btn-success" id="add" auth="1"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增</a>
+        </div>
+        <input class="form-control" type="text" id="orderkey" value="" placeholder="请输入单号. . ." autocomplete="off" />
+        <select class="form-control" id="ordercreateuser">
+            @if(loginuser.utype.Value!=(int)CTCCGoods.Controllers.crole.city){
+                <option value="-1">全部创建人</option>
+                foreach (var cu in cus)
+                {
+                    if (loginuser.utype.Value != (int)CTCCGoods.Controllers.crole.design || loginuser.wids.Contains(CTCCGoods.Controllers.O2.O2I(cu["wid"])))
+                    {
+                        <option value="@(cu["id"])">@(cu["name"])</option>
+                    }
+                }
+            }else{
+                <option value="@(loginuser.id)">@(loginuser.name)</option>
+            }
+        </select>
+        <select class="form-control" id="orderreceiveuser">
+            @if (loginuser.utype.Value != (int)CTCCGoods.Controllers.crole.manufactor){
+                <option value="-1">全部厂家</option>
+                foreach (var ru in rus)
+                { 
+                    <option value="@(ru["id"])">@(ru["name"])</option>
+                }
+            }else{
+                <option value="@(loginuser.id)">@(loginuser.name)</option>
+            }
+        </select>
+        <select class="form-control" id="orderstatus">
+            <option value="-10">全部状态</option>
+            @foreach (var s in oss) { 
+                <option value="@(s.Key)">@(s.Value)</option>
+            }
+        </select>
+        <select class="form-control" id="orderstatus2">
+            <option value="-10">全部待办</option>
+            @foreach (var s in oss) { 
+                <option value="@(s.Key)">@(s.Value)</option>
+            }
+        </select>
+        <button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
+    </form>
+
+    <table id="table1">
+            
+    </table>
+</div>
+

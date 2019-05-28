@@ -1,0 +1,266 @@
+﻿@{
+    ViewBag.Title = "后台任务";
+}
+@section style{
+<style>
+    .ordercode {
+        cursor:pointer
+    }
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            white-space:nowrap
+        }
+</style>    
+}
+@section script{
+    <script>
+        function errurlf(value, row, index) {
+            return value?"<a href=\"/taskerr/" + value + "\"  class=\"ordercode\" oidx=\"" + index + "\" target=\"_bland\">" + "查看" + "</a>":null;
+        }
+        function typeformat(value) {
+            var res = "";
+            switch (value) {
+                case 1:
+                    res = "发货表导入";
+                    break;
+                case 2:
+                    res = "网管详表导入";
+                    break;
+                case 3:
+                    res = "计算新增";
+                    break;
+                case 4:
+                    res = "lterru核对表导入";
+                    break;
+                case 5:
+                    res = "对比分析计算";
+                    break;
+                case 11:
+                    res = "原始数据导入";
+                    break;
+                default:
+                    res = "未知";
+                    break;
+            }
+
+            return res;
+        }
+        function statusformat(value) {
+            return value == 0 ? "等待" : value == 1 ? "运行" : value == 2?"停止":"未知";
+        }
+        function actionfmt(value,row,index) {
+            return "<button type=\"button\" rowid=\"" + row.id + "\" class=\"btn btn-danger btndel\" style=\"height:20px; font-size:12px; padding-top:0;padding-bottom:0;line-height:20px\">删除</button>";
+        }
+
+        
+
+        $(function () {
+
+            $("#btnrst").on("click", function () {
+                $.post("/task/rst", {}, function () {
+                    location = location;
+                });
+            });
+
+            $("#btntf").on("click", function () {
+                if (!confirm("是否清空失败任务？")) {
+                    return false;
+                }
+                $.post("/task/ttf", {}, function (data) {
+                    alert(data.msg);
+                    if (data.ok) {
+                        location = location;
+                    }
+                });
+            });
+
+            $("#truncrru").on("click", function () {
+                if ($("#pwd").hasClass("hidden")) {
+                    $("#pwd").removeClass("hidden");
+                } else {
+                    $("#pwd").addClass("hidden");
+                    var pwds = $("#pwd").val();
+                    $("#pwd").val("");
+                    if (!pwds) {
+                        return;
+                    }
+                    if (!confirm("此操作会清空RRU序列号管理所有数据，请谨慎操作")) {
+                        return;
+                    }
+                    if (!confirm("是否确认重置")) {
+                        return;
+                    }
+                    $.post("/rru/truncrru", { pwd: pwds }, function (data) {
+                        alert(data.msg);
+                        if (data.ok) {
+                            location = "/rru";
+                        }
+                    });
+                }
+            });
+            
+            //1.初始化Table
+            var oTable = new TableInit();
+            oTable.Init();
+
+            //2.初始化Button的点击事件
+            var oButtonInit = new ButtonInit();
+            oButtonInit.Init();
+
+            
+        });
+
+        var TableInit = function () {
+            var oTableInit = new Object();
+            //初始化Table
+            oTableInit.Init = function () {
+                $('#table1').bootstrapTable({
+                    url: '/task/ft',         //请求后台的URL（*）
+                    method: 'get',                      //请求方式（*）
+                    toolbar: '#tbaction',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: true,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 10,                       //每页的记录行数（*）
+                    pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                    search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    strictSearch: false,
+                    showColumns: true,                  //是否显示所有的列
+                    showRefresh: true,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: false,                //是否启用点击选中行
+                    //height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                    showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    columns: [{
+                        field: 'id',
+                        title: 'id',
+                        visible: false
+                    }, {
+                        field: 'ttype',
+                        title: '类型',
+                        //events: {
+                        //    "click .ordercode": openorder
+                        //},
+                        formatter: typeformat
+                    },
+                    {
+                        field: 'filename',
+                        title: '文件名',
+
+                        visible: false
+                    },
+                    {
+                        field: 'tfilename',
+                        title: '目标文件名',
+                    },
+                    {
+                        field: 'rul',
+                        title: '规则',
+                        visible: false
+                    },
+                    {
+                        field: 'tdesc',
+                        title: '备注',
+                    },
+                    {
+                        field: 'tstatus',
+                        title: '状态',
+                        formatter: statusformat
+                    },
+                    {
+                        field: 'createtime',
+                        title: '创建时间',
+                    },
+                    {
+                        field: 'starttime',
+                        title: '开始时间',
+                    },
+                    {
+                        field: 'endtime',
+                        title: '结束时间',
+                    }, {
+                        field: 'errurl',
+                        title: '错误信息',
+                        formatter: errurlf
+                    }, {
+                        field: 'action',
+                        title: '操作',
+                        formatter: actionfmt,
+                        events: {
+                            "click .btndel": function (e, u, r, i) {
+                                if (!confirm("是否删除任务？")) {
+                                    return false;
+                                }
+                                $.post("/task/dt/" + r.id, {}, function (data) {
+                                    alert(data.msg);
+                                    if (data.ok) {
+                                        $('#table1').bootstrapTable("removeByUniqueId",r.id);
+                                    }
+                                });
+                            }
+                        },
+                    }
+                    ],
+                });
+            };
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    limit: params.limit,   //页面大小
+                    offset: params.offset,  //页码
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+
+        var ButtonInit = function () {
+            var oInit = new Object();
+            var postdata = {};
+
+            oInit.Init = function () {
+                //初始化页面上面的按钮事件
+            };
+
+            return oInit;
+        };
+    </script>
+}
+
+<div class="container">
+    <form class="form-inline"  id="tbaction">
+        <div class="btn-group" role="group" aria-label="...">
+            @if (ViewBag.allstatus == 1)
+            {
+                <button class="btn btn-success disabled" type="button" id="btnrst"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> 正在运行</button>
+            }
+            else { 
+                <button class="btn btn-danger" type="button" id="btnrst"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span> 未运行，尝试运行</button>
+            }
+          
+        </div>
+        <button class="btn btn-danger" type="button" id="btntf"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 清空失败</button>
+        <div class="input-group">
+            <input type="password" id="pwd" placeholder="请输入管理员密码" class="form-control hidden" />
+            <div class="input-group-btn">
+                <button class="btn btn-danger" id="truncrru" type="button">重置RRU序列号管理</button>
+            </div>
+        </div>
+        
+        
+        <label>@ViewBag.allmsg</label>
+    </form>
+
+    <table id="table1">
+            
+    </table>
+</div>

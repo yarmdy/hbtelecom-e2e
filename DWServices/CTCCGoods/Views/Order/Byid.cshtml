@@ -1,0 +1,804 @@
+﻿@{
+    ViewBag.Title = "Byid";
+
+    CTCCGoods.Controllers.corder order = ViewBag.order;
+}
+
+@section style{
+    <style>
+        .box {
+            width: 80%;
+            margin: 0 auto;
+            min-width: 800px;
+        }
+
+        .form-group {
+            margin: 15px 25px 0 0;
+        }
+
+        .list_div {
+            width: 50%;
+            margin-top: 20px;
+            position: relative;
+        }
+        #list select.form-control {
+            width: calc(100% - 44px);
+            display: inline;
+        }
+
+        .add-btn-open {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: darkgreen;
+            color: #ffffff;
+            font-size: 20px;
+            line-height: 20px;
+            right: 0;
+            top: 5px;
+            text-align: center;
+        }
+
+            .add-btn-open:hover {
+                cursor: pointer;
+            }
+
+        .good_number {
+            width: 200px;
+        }
+
+        .verifyperson {
+            margin-right: 5%;
+            font-size: 20px;
+        }
+
+        #opinion {
+            margin-right: 10%;
+            width: 30%;
+        }
+
+        .agreebtn {
+            margin-right: 5%;
+        }
+
+        .cjbtndiv {
+            margin-bottom: 20px;
+        }
+
+        .cjcontent table {
+            width: 50%;
+        }
+
+        .cklist {
+            margin-left: -8%;
+            margin-right: 8%;
+        }
+
+        i {
+            font-style: normal;
+        }
+
+        .oldver b {
+            display: inline-block;
+            width: 1px;
+            height: 20px;
+            border-left: 2px solid #cccccc;
+            margin: 0 20px;
+            position: relative;
+            top: 5px;
+        }
+
+        .oldver span {
+            font-weight: 700;
+        }
+
+            .oldver span i {
+                font-weight: 400;
+            }
+
+        .oldlist {
+            width: 50%;
+            margin-top: 10px;
+        }
+
+        .add-btn-close:hover {
+            cursor: not-allowed;
+        }
+
+        .cjtb tr {
+            height: 40px;
+        }
+
+            .cjtb tr td:first-child {
+                width: 100px;
+            }
+
+            .cjtb tr td:last-child {
+                width: 600px;
+            }
+
+        .verify hr {
+            display: block;
+            border-top: 2px solid black;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        caption {
+            text-align: center;
+            color: #8a6d3b;
+        }
+
+            caption i {
+                font-weight: 700;
+            }
+    </style>
+}
+
+@section script {
+    <script src="/js/goodsrefer.js"></script>
+    <script>
+        function confirmOption() {
+            if (confirm('是否确定？')) {
+                return true;
+            }
+            return false;
+        }
+
+        function fjver(x) {
+            var $f = $(x).find("input[type=file]");
+            var len = $f[0].files.length;
+            var flag = true;
+            if (len == 0) {
+                flag = confirm("您尚未上传附件，确定继续此操作吗？");
+            }
+            if (!flag) {
+                return false;
+            }
+            return confirmOption();
+        }
+
+        $(function () {
+            //$.goodsrefer();
+            $("body").on("click", "#list a", function (e) {
+                //e.stopPropagation()
+                console.log($(this).parent().find('select'))
+                $(this).parent().find('select').goodsrefer();
+            });
+        var uarrs = [
+            @foreach (var x in ViewBag.userbag)
+            {
+                <text>{ id:@x["id"], name: "@x["name"]" },</text>
+            }
+        ];
+        var garrs = [
+            @foreach (var a in ViewBag.goodsbag)
+            {
+                <text>{ id: "@a["id"]", name: "@a["name"]", cid:"@a["cid"]", cname: "@a["cname"]", class2: "@a["class2"]", pid:"@a["pid"]", pname:"@a["pname"]" },</text>
+            }
+        ];
+        var chsum = {
+            @if (ViewBag.chsum != null)
+            {
+                foreach (var x in ViewBag.chsum)
+                {
+                    <text>@x.Value.gid:@x.Value.gnum,</text>
+                }
+            }
+        }
+
+        //订单id
+        var orderid = location.href.split("/")[location.href.split("/").length - 1];
+        orderid = isNaN(orderid) ? undefined : orderid;
+        if ($("#orderid")) {
+            $("#orderid").val(orderid);
+        }
+        if ($("#suborderid")) {
+            $("#suborderid").val(orderid);
+        }
+        if ($("#cjfhid")) {
+            $("#cjfhid").val(orderid);
+        }
+        if ($(".ddid")) {
+            $(".ddid").val(orderid);
+        }
+
+        var options = "";
+        var selected = $("#changjia").attr('reuid');
+        for (var i = 0; i < uarrs.length; i++) {
+            console.log(selected)
+            if (uarrs[i]["id"] == selected) {
+                options += "<option value='" + uarrs[i]["id"] + "' selected>" + uarrs[i]["name"] + "</option>";
+            } else {
+                options += "<option value='" + uarrs[i]["id"] + "'>" + uarrs[i]["name"] + "</option>";
+            }
+        }
+        $("#changjia").append(options);
+        var newgarrs2 = []
+        $.each(garrs, function () {
+            if (this.pid == $('#changjia').val()) {
+                newgarrs2.push(this)
+            }
+        })
+        $.goodsrefer(newgarrs2);
+
+        var goods = "";
+        for (var i = 0; i < garrs.length; i++) {
+            if (garrs[i].pid == $('#changjia').val()) {
+                goods += "<option value='" + garrs[i]["id"] + "'>" + garrs[i]["name"] + "</option>";
+            }
+        }
+        $(".goodslist").append(goods);
+        $(".goodslist").each(function () {
+            $(this).val($(this).attr("gid"));
+        });
+        //新增
+        $("#additem").click(function () {
+            var cid = $('#changjia').val();
+            $.post('/order/querychang', { 'id': cid }, function (result) {
+                if (result.ok) {
+                    var goods = "";
+                    for (var i = 0; i < result.cgoods.length; i++) {
+                        goods += "<option value='" + result.cgoods[i]["id"] + "'>" + result.cgoods[i]["name"] + "</option>";
+                    }
+                    var newitem = '<tr><td> <select class="goodslist form-control">' + goods + '</select><a class="btn btn-default"><span class="glyphicon glyphicon-search"></span></a></td><td><input type="number" class="good_number form-control"></td><td><button type="button" class="del btn btn-danger">删除</button></td></tr>';
+                    $("#list").append(newitem);
+                }
+            });
+        });
+        $('#changjia').change(function () {
+            $("#list").html('<tr><td>货物名称</td><td>数量</td><td></td></tr>');
+            var newgarrs = []
+            $.each(garrs, function () {
+                if (this.pid == $('#changjia').val()) {
+                    newgarrs.push(this)
+                }
+            })
+            $.goodsrefer(newgarrs);
+        });
+
+
+
+        if ($("#formstatus").val() != "新建" && $("#formstatus").val()) {
+            $("#additem").off();
+            $("#additem").addClass("add-btn-close");
+            $("#btng .dis").attr("disabled", "disabled");
+        }
+        //删除
+        $("#list").on("click", ".del", function () {
+            $(this).parent().parent().remove();
+        });
+
+        $("#save").click(function () {
+            var lid = -1;
+            var ls = location.href.split("/");
+            if (!isNaN(ls[ls.length-1])) {
+                lid = ls[ls.length - 1];
+            }
+            var changid = $("#changjia").val();
+            var $trs = $("#list").find("tr");
+            var s = "";
+            var gids = [];
+            for (var i = 1; i < $trs.length;i++) {
+                var gid = $($trs[i]).find("select").val();
+                var gnum = $($trs[i]).find("input").val();
+                if (isNaN(gnum) || !gid) {
+                    alert("填写数据有误！");
+                    return false;
+                }
+                var ogid = $($trs[i]).attr("ogid");
+                if (!ogid) {
+                    ogid = "";
+                }
+                if ($.inArray(gid,gids) != -1) {
+                    alert("不能存在两笔相同的货物！");
+                    return false;
+                }
+                gids.push(gid);
+                if (i == $trs.length - 1) {
+                    s += gid + "," + gnum + "," + ogid;
+                } else {
+                    s += gid + "," + gnum + "," + ogid + "|";
+                }
+            }
+
+            $.post("/order/save", { "changid": changid, "s":s, "lid":lid }, function (result) {
+                if (result.ok) {
+                    console.log(result.id);
+                    location.href = "/order/byid/" + result.id;
+                } else {
+                    alert(result.msg);
+                }
+            });
+        });
+
+        $("#close").click(function () {
+            var ls = location.href.split("/");
+            var id = ls[ls.length - 1];
+            var status = $('#formstatus').val();
+            if (status == '已作废') {
+                alert("此订单已作废，关闭无效");
+                return false;
+            }
+            if (isNaN(id)) {
+                alert("请先保存再关闭");
+                return false;
+            }
+            if (!confirm("关闭后无法恢复，确定关闭订单吗？")) {
+                return false;
+            }
+            $.post("/order/close", { "id": id, 'status': status }, function (result) {
+                if (result.ok) {
+                    alert(result.msg);
+                    location.reload();
+                } else {
+                    alert(result.msg);
+                }
+            });
+        });
+
+        $("#discarded").on("click", function () {
+            var status = $('#formstatus').val();
+            if (status == '已作废') {
+                alert('此订单已作废');
+                return false;
+            }
+            if (!confirm('此操作不可逆，作废后该订单不可恢复')) {
+                return false;
+            }
+            if (!confirm('此操作需要谨慎执行，您确定作废该订单吗？')) {
+                return false;
+            }
+            $.post("/order/discarded", { "id": orderid,"status":status }, function (result) {
+                if (result.ok) {
+                    location.reload();
+                } else {
+                    alert(result.msg);
+                }
+            });
+        });
+
+        //点击同意
+        $("#content").on("click", ".sgsagreebtn", function () {
+            if (!confirmOption()) return false; 
+            var status = $(this).text() == "同意";
+            var opinion = $("#opinion").val();
+            var id = location.href.split("/")[location.href.split("/").length - 1];
+            $.post("/order/verify", { "status": status, "opinion": opinion, "id": id }, function (result) {
+                if (result.ok) {
+                    location.reload();
+                } else {
+                    alert(result.msg);
+                }
+            });
+        });
+
+        $("#content").on("click", ".sjyagreebtn", function () {
+            if (!confirmOption()) return false;
+            var status = $(this).text() == "同意";
+            var opinion = $("#opinion").val();
+            var id = location.href.split("/")[location.href.split("/").length - 1];
+            $.post("/order/verifysjy", { "status": status, "opinion": opinion, "id": id }, function (result) {
+                if (result.ok) {
+                    location.reload();
+                } else {
+                    alert(result.msg);
+                }
+            });
+        });
+        $("#content").on("click", ".cjragreebtn", function () {
+            if (!confirmOption()) return false;
+            var opinion = $("#opinion").val();
+            var id = location.href.split("/")[location.href.split("/").length - 1];
+            $.post("/order/verifycjr", { "opinion": opinion, "id": id }, function (result) {
+                if (result.ok) {
+                    location.reload();
+                } else {
+                    alert(result.msg);
+                }
+            });
+        });
+        $("#content").on("click", ".dsagreebtn", function () {
+            if (!confirmOption()) return false;
+            var ck = $(".cklist").find(":selected").html()
+            if (!confirm("确认收货后产品将入["+ck+"]，确认收货吗？")) {
+                return false;
+            }
+            var dsoivd = $("#dsovid").val();
+            var opinion = $("#opinion").val();
+            var ck = $(".cklist").val();
+            var id = location.href.split("/")[location.href.split("/").length - 1];
+            $.post("/order/verifyds", { "opinion": opinion, "id": id, "ck": ck, "ovid": dsoivd }, function (result) {
+                if (result.ok) {
+                    location.reload();
+                } else {
+                    alert(result.msg);
+                }
+            });
+        });
+        if ($(".cjcontent")) {
+            var spans = $(".cjcontent").find("span");
+            var inhi = $(".cjcontent").find(".maxgnum");
+            var isz = 0;
+            for (var i = 0; i < spans.length; i++) {
+                var gid = $(spans[i]).parent().prev().find(".gidhidden").val();
+                var chnum = chsum[gid];
+                if (chnum == 0) isz++;
+                $(spans[i]).text(chnum);
+                $(inhi[i]).val(chnum);
+            }
+            if (isz == spans.length) {
+                $('#sendVerify').hide();
+            }
+        }
+
+        if (location.href.includes("msg")) {
+            var msg = location.href.split("?")[1];
+            alert(decodeURI(msg.split("=")[1]));
+            location.href = location.href.split("?")[0];
+        }
+        if ($("#formstatus").val() == "单据关闭") {
+            $("#formprocess").val("");
+        }
+        if ($("#formstatus").val().trim() == "新建") {
+            $("#beforeSubmit").show();
+        }
+
+        if ($('#arriveTime')) {
+            laydate.render({
+                elem: '#arriveTime'
+            });
+        }
+    });
+    </script>
+}
+<div class="container">
+    <div id="btng" auth="1">
+        <button id="save" type="button" class="btn btn-default dis">保存</button>
+        @*<button id="submit" type="button" class="btn btn-primary dis">提交</button>*@
+        <button id="close" type="button" class="btn btn-primary">关闭</button>
+        <button id="discarded" type="button" class="btn btn-danger">作废</button>
+    </div>
+    <div class="modal-body" id="content">
+        <form class="">
+            <div class="row">
+                <div class="form-group col-xs-3">
+                    <label for="formid">单号</label>
+                    <input type="text" class="form-control" id="formid" autocomplete="off"
+                           readonly value="@order.code">
+                </div>
+                <div class="col-xs-1"></div>
+                <div class="form-group col-xs-3">
+                    <label for="createperson">创建人</label>
+                    <input type="text" class="form-control" id="formcreateperson" autocomplete="off"
+                           value="@order.createuname" readonly>
+                </div>
+                <div class="col-xs-1"></div>
+                <div class="form-group col-xs-3">
+                    <label for="createtime">创建时间</label>
+                    <input type="text" class="form-control" id="formcreatetime" autocomplete="off"
+                           value="@order.createtime" readonly>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group  col-xs-3">
+                    <label for="status">状态</label>
+                    <input type="text" class="form-control" id="formstatus" autocomplete="off"
+                           value="@(CTCCGoods.Controllers.O2.GED(order.status))" readonly>
+                </div>
+                <div class="col-xs-1"></div>
+                <div class="form-group  col-xs-3">
+                    <label for="formoptime">操作时间</label>
+                    <input type="text" class="form-control" id="formoptime" autocomplete="off"
+                           value="@order.statustime" readonly>
+                </div>
+                <div class="col-xs-1"></div>
+                <div class="form-group  col-xs-3">
+                    <label for="formprocess">代办流程</label>
+                    <input type="text" class="form-control" id="formprocess" autocomplete="off"
+                           value="@(order.status.HasValue&&order.status.Value.GetHashCode()>=8 ||order.status.HasValue&&order.status.Value.GetHashCode()<0 ? "-":CTCCGoods.Controllers.O2.GED(order.status+1)) " readonly>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group  col-xs-3">
+                    @if (order.receiveuid.HasValue && order.status != CTCCGoods.Controllers.orderstatus.create)
+                    {
+                        <label for="formprocess">厂家</label>
+                        <select class="form-control" id="changjia" disabled>
+                            <option value="@order.receiveuid">@order.receiveuname</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <label for="formprocess">厂家</label>
+                        <select class="form-control" id="changjia" reuid="@(order.receiveuid.HasValue?order.receiveuid:-1)"></select>
+                    }
+                </div>
+            </div>
+        </form>
+        <div class="list_div">
+            <span title="添加" id="additem" class="add-btn-open">+</span>
+            <table id="list" class="table table-condensed">
+                <tr>
+                    <td>货物名称</td>
+                    <td>数量</td>
+                    <td></td>
+                </tr>
+                @if (order.status.HasValue && order.status != CTCCGoods.Controllers.orderstatus.create)
+                {
+                    foreach (var good in order.goods)
+                    {
+                        
+                        <tr ogid="@good.Value.id">
+                            <td>
+                                <select class="goodslist form-control" gid="@good.Value.gid" disabled></select>
+                                <a class="btn btn-default"><span class="glyphicon glyphicon-search"></span></a>
+                            </td>
+                            <td>
+                                <input type="number" autocomplete="off"
+                                       class="good_number form-control" value="@good.Value.gnum" disabled>
+                            </td>
+                            <td>
+                                <button type="button" class="del btn btn-danger" disabled>删除</button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    foreach (var good in order.goods)
+                    {
+                        <tr ogid="@good.Value.id">
+                            <td>
+                                <select class="goodslist form-control" gid="@good.Value.gid"></select>
+                                <a class="btn btn-default"><span class="glyphicon glyphicon-search"></span></a>
+                            </td>
+                            <td>
+                                <input type="number" autocomplete="off"
+                                       class="good_number form-control" value="@good.Value.gnum">
+                            </td>
+                            <td>
+                                <button type="button" class="del btn btn-danger">删除</button>
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </table>
+        </div>
+        <div id="beforeSubmit" class="alert alert-warning verify form-inline" onsubmit="return confirmOption();" style="display:none;" role="alert">
+            <form action="/order/submit" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="orderid" id="suborderid" value="" />
+                附件：<input type="file" style="display:inline-block;" name="file" value="" multiple />
+                <button type="submit" class="btn btn-primary">提交</button>
+            </form>
+        </div>
+        @foreach (var ver in order.verifies)
+        {
+            string style = "";
+            if (ver.Value.verifyno.Value == CTCCGoods.Controllers.orderstatus.cjsend || ver.Value.verifyno.Value == CTCCGoods.Controllers.orderstatus.cjreceive || ver.Value.verifyno.Value == CTCCGoods.Controllers.orderstatus.dsreceive)
+            {
+                style = "warning";
+            }
+            else
+            {
+                style = ver.Value.status == CTCCGoods.Controllers.verifystatus.agree ? "success" : "danger";
+            }
+            <div class="alert alert-@style verify oldver" role="alert">
+                <span>审批类型：<i>@(CTCCGoods.Controllers.O2.GED(ver.Value.verifyno))</i></span>
+                <b></b>
+                <span>审批人：<i>@ver.Value.uname</i></span>
+                <b></b>
+                <span>审批时间：<i>@ver.Value.createtime</i></span>
+                <b></b>
+                <span>审批状态: <i>@(CTCCGoods.Controllers.O2.GED(ver.Value.status))</i></span>
+                <b></b>
+                <span>审批意见：<i>@ver.Value.des</i></span>
+                @{
+                    var theUser = CTCCGoods.Controllers.DB.QueryAsDics("select * from cuser where id = " + ver.Value.uid);
+                }
+                <b></b>
+                <span>联系人：<i>@theUser[0]["contacts"]</i></span>
+                <b></b>
+                <span>联系方式：<i>@theUser[0]["tel"]</i></span>
+                @if (ver.Value.goods.Count != 0)
+                {
+                    <table class="table table-bordered oldlist">
+                        <caption>货期名称:<i>@ver.Value.sendname</i> | 计划到货时间:<i>@ver.Value.plantime.ToString().Split(' ')[0]</i> | 督导人:<i>@ver.Value.duname</i></caption>
+                        <tr>
+                            <td>货物名称</td>
+                            <td>数量</td>
+                        </tr>
+
+                        @foreach (var good in ver.Value.goods)
+                        {
+                            <tr>
+                                <td>@good.Value.gname</td>
+                                <td>@good.Value.gnum</td>
+                            </tr>
+                        }
+                    </table>
+                }
+                @if (ver.Value.attachments.Count != 0)
+                {
+                    <div>
+                        <strong>附件：</strong>
+                        @foreach (var x in ver.Value.attachments)
+                        {
+                            <a href="@x.Value.url" target="_blank">@x.Value.name</a>
+                        }
+                    </div>
+                }
+                @foreach (var x in ver.Value.verifies)
+                {
+                    <hr />
+                    <span>审批类型：<i>@(CTCCGoods.Controllers.O2.GED(x.Value.verifyno))</i></span>
+                    <b></b>
+                    <span>审批人：<i>@x.Value.uname</i></span>
+                    <b></b>
+                    <span>审批时间：<i>@x.Value.createtime</i></span>
+                    <b></b>
+                    <span>审批状态: <i>@(CTCCGoods.Controllers.O2.GED(x.Value.status))</i></span>
+                    <b></b>
+                    <span>审批意见：<i>@x.Value.des</i></span>
+                    var auser = CTCCGoods.Controllers.DB.QueryAsDics("select * from cuser where id = " + x.Value.uid);
+                    <b></b>
+                    <span>联系人：<i>@auser[0]["contacts"]</i></span>
+                    <b></b>
+                    <span>联系方式：<i>@auser[0]["tel"]</i></span>
+                    if (x.Value.attachments.Count != 0)
+                    {
+                        <div>
+                            <strong>附件：</strong>
+                            @foreach (var a in x.Value.attachments)
+                            {
+                                <a href="@a.Value.url" target="_blank">@a.Value.name</a>
+                            }
+                        </div>
+                    }
+                }
+                @if (ver.Value.localstatus == CTCCGoods.Controllers.orderstatus.cjsend)
+                {
+                    <hr />
+                    <form action="/order/verifycjr" method="post"  onsubmit="return confirmOption();" class="form-inline" enctype="multipart/form-data">
+                        <input type="hidden" name="id" class="ddid" value="" />
+                        <input type="hidden" name="ovid" value="@ver.Value.id" />
+                        <input type="hidden" name="duid" value="@ver.Value.duid" />
+                        <span class="verifyperson">厂家督导收货</span>
+                        备注：<input type="text" value="" class="form-control" name="opinion" autocomplete="off" />
+                        附件：<input type="file" style="display:inline" name="file" value="" multiple />
+                        <button type="submit" class="btn btn-info agreebtn">确认</button>
+                    </form>
+                }
+                else if (ver.Value.localstatus == CTCCGoods.Controllers.orderstatus.cjreceive)
+                {
+                    <hr />
+                    <div class="form-inline">
+                        <span class="verifyperson">地市确认收货</span>
+                        备注：
+                        <input type="text" value="" class="form-control" autocomplete="off"
+                               id="opinion" />
+                        <input type="hidden" id="dsovid" value="@ver.Value.id" />
+                        <select class="cklist form-control" style="display:none;">
+                            @foreach (var x in ViewBag.ckbag)
+                            {
+                                <option value="@x["id"]">@x["name"]</option>
+                            }
+                        </select>
+                        <button type="button" class="btn btn-info agreebtn dsagreebtn">确认收货</button>
+                    </div>
+                }
+            </div>
+
+
+        }
+        @if (order.status.HasValue && order.status.Value + 1 == CTCCGoods.Controllers.orderstatus.sgsverify)
+        {
+            <div class="alert alert-warning verify form-inline" role="alert">
+                <span class="verifyperson">省公司审核</span>
+                审批意见：
+                <input type="text" value="" class="form-control" autocomplete="off"
+                       id="opinion" />
+                <button type="button" class="btn btn-info agreebtn sgsagreebtn">同意</button>
+                <button type="button" class="btn btn-danger agreebtn sgsagreebtn">不同意</button>
+            </div>
+        }
+        else if (order.status.HasValue && order.status.Value + 1 == CTCCGoods.Controllers.orderstatus.cjconfirm)
+        {
+            <div class="alert alert-warning verify" role="alert">
+                <form class="form-inline" action="/order/verifycjc" method="post" onsubmit="return fjver(this)" enctype="multipart/form-data">
+                    <input type="hidden" name="orderid" id="orderid" value="" />
+                    <span class="verifyperson">厂家确认</span>
+                    备注：<input type="text" value="" class="form-control" autocomplete="off"
+                              id="opinion" name="opinion" />
+
+                    <input type="submit" class="btn btn-info agreebtn" name="submit" value="同意" />
+                    <input type="submit" class="btn btn-danger agreebtn" name="submit" value="不同意" /><br />
+                    附件：<input type="file" name="file" value="" multiple />
+                </form>
+            </div>
+        }
+        else if (order.status.HasValue && order.status.Value + 1 == CTCCGoods.Controllers.orderstatus.sjyverify)
+        {
+            <div class="alert alert-warning verify form-inline"  onsubmit="return confirmOption();" role="alert">
+                <span class="verifyperson">设计院审核</span>
+                审批意见：
+                <input type="text" value="" class="form-control" autocomplete="off" id="opinion" />
+                <button type="button" class="btn btn-info agreebtn sjyagreebtn">同意</button>
+                <button type="button" class="btn btn-danger agreebtn sjyagreebtn">不同意</button>
+            </div>
+        }
+        else if (order.status.HasValue && (order.status.Value + 1 == CTCCGoods.Controllers.orderstatus.cjsend || order.status.Value + 1 == CTCCGoods.Controllers.orderstatus.dsreceive || order.status.Value + 1 == CTCCGoods.Controllers.orderstatus.cjreceive))
+        {
+            <div class="alert alert-warning verify" id="sendVerify" role="alert">
+                <form action="/order/Verifycj" class="form-inline" method="post" onsubmit="return fjver(this)" enctype="multipart/form-data">
+                    <input type="hidden" name="orderid" id="cjfhid" value="" />
+                    <div class="cjbtndiv">
+                        <span class="verifyperson">厂家发货</span>
+                        <table class="cjtb">
+                            <tr>
+                                <td>备注</td>
+                                <td>
+                                    <input type="text" value="" autocomplete="off" class="form-control" name="opinion" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>货期名称</td>
+                                <td>
+                                    <input type="text" value="" autocomplete="off" class="form-control" name="name" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>计划到货时间</td>
+                                <td>
+                                    <input type="text" id="arriveTime" name="time" value="" autocomplete="off" class="form-control" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>督导人</td>
+                                <td>
+                                    <select class="form-control" name="dudao">
+                                        <option value=-1>---</option>
+                                        @foreach (var x in ViewBag.dudao)
+    {
+                                    <option value="@x["id"]">@x["name"]</option>
+}
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="cjcontent">
+                        <table class="table table-condensed">
+                            <tr>
+                                <td>货物名称</td>
+                                <td>数量</td>
+                            </tr>
+                            @{int i = 0; }
+                            @foreach (var good in order.goods)
+                            {
+
+                                <tr ogid="@good.Value.id">
+                                    <td>
+                                        <input type="text" value="@good.Value.gname" class="form-control" disabled />
+                                        <input type="hidden" class="gidhidden" name="gid[@i]" value="@good.Value.gid" />
+                                    </td>
+                                    <td>
+                                        <input style="display:inline;" type="number" name="gnum[@i]" class="good_number form-control" value="0" maxvalue="@good.Value.gnum">
+                                        <span style="margin-left:20px;"></span>
+                                        <input type="hidden" name="gmax[@i]" class="maxgnum" value="" />
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </table>
+
+                        附件：
+                        <input type="file" id="file" name="file" value="" multiple style="display:inline" />
+                        <button type="submit" class="btn btn-info agreebtn cjagreebtn">发货</button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>

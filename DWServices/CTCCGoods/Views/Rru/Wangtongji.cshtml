@@ -1,0 +1,388 @@
+﻿@{
+    ViewBag.Title = "网管详表统计";
+
+    string dbwang = ViewBag.dbwang + "";
+    dbwang = dbwang == "" ? "XX" : dbwang.Substring(0,dbwang.LastIndexOf("."));
+}
+
+@section style{
+    <style>
+        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            white-space:nowrap
+        }
+    </style>
+}
+@section script{
+    <script src="/js/rrucsvrefer.js"></script>
+    <script>
+        function numberred(v) {
+            var vv = parseInt(v);
+            if (vv < 0) {
+                return { css: {color:"red"}};
+            }
+            return {};
+        }
+        
+        $(function () {
+            $("#btn_export").on("click", function () {
+                var val = "@(ViewBag.file==null?"":((string)ViewBag.file).Replace("\\","\\\\"))";
+                if (val) {
+                    $("#btn_export").attr("href", "/rru/exporttongji?type=" + val + "&d=wangtongji&offset=0&limit=999&s=" + $("#txtdb").attr("ovalue") + "&g="+$("#selgroup").val());
+                }
+            });
+
+            $("#btnfull").on("click", function () {
+                var da = $("#divwai").hasClass("container-fluit");
+                if (da) {
+                    $("#divwai").removeClass("container-fluit").addClass("container");
+                    $("#btnfull").html("<span class=\"glyphicon glyphicon-fullscreen\" aria-hidden=\"true\"></span> 放大");
+                } else {
+                    $("#divwai").removeClass("container").addClass("container-fluit");
+                    $("#btnfull").html("<span class=\"glyphicon glyphicon-resize-small\" aria-hidden=\"true\"></span> 缩小");
+                }
+            });
+
+            $(".seldb>li>a").on("click", function (e) {
+                $("#txtdb").val($(this).html());
+                $("#txtdb").attr("ovalue", $(this).attr("ovalue"));
+
+                $("#txtdb").trigger("change");
+
+                if (e && e.preventDefault)
+                    e.preventDefault();
+                else
+                    window.event.returnValue = false;
+            });
+            var filesdata = [];
+            @if (ViewBag.wangs.Length > 0)
+            {
+                foreach (string item in ViewBag.wangs)
+                {
+                    @:filesdata.push({ id: "@(item)", name: "@(item)", year: "@(item.Substring(0, 4))", month: "@(item.Substring(4, 2))" });
+                }
+            }
+            $.rrucsvrefer(filesdata);
+
+            $("#btnjs").on("click", function () {
+                if ($("#txtjs").hasClass("hidden")) {
+                    $("#txtjs").removeClass("hidden");
+                    $("#txtjs").rrucsvrefer();
+                } else {
+                    $("#txtjs").addClass("hidden")
+                    var vv = $("#txtjs").val();
+                    $("#txtjs").val("");
+                    if (vv) {
+                        $.post("/rru/jstongji", { filename: vv }, function (data) {
+                            alert(data.msg);
+                        });
+                    }
+                }
+            });
+
+            $("#txtjs").on("click", function () {
+                $("#txtjs").rrucsvrefer();
+            });
+
+            $("#txtdb").on("change", function () {
+                basecolumns[0][5].title = "对比" + $("#txtdb").val() + "日RRU序列号新增数";
+                basecolumns[0][7].title = "对比" + $("#txtdb").val() + "日RRU序列号丢失数";
+                $('#table1').bootstrapTable("refreshOptions", { columns: basecolumns });
+            });
+
+            $("#selgroup").on("change", function () {
+                $("#txtdb").trigger("change");
+            });
+
+            //1.初始化Table
+            var oTable = new TableInit();
+            oTable.Init();
+
+            //2.初始化Button的点击事件
+            var oButtonInit = new ButtonInit();
+            oButtonInit.Init();
+
+            
+        });
+        var basecolumns=[
+                        [
+                            {
+                                title: "地市",
+                                rowspan: 2,
+                                field: 'city',
+                            },
+                            {
+                                title: "厂家",
+                                rowspan: 2,
+                                field: 'chang',
+                            }, {
+                                title: "历史到货数(含减免)",
+                                colspan: 3,
+                            },
+                            {
+                                title: "网管有序列号数(最新)",
+                                colspan:3,
+                            }, {
+                                title: "网管有序列号（最新）-历史到货数(含减免)",
+                                colspan: 3,
+                            },
+                            {
+                                title: "对比@(dbwang)日RRU序列号新增数",
+                                colspan: 3,
+                            },
+                            {
+                                title: "其中：序列号新增新发货来数",
+                                colspan: 3,
+                            }, {
+                                title: "对比@(dbwang)日RRU序列号丢失数",
+                                colspan: 3,
+                            },
+                            {
+                                title: "累计RRU序列号出现数",
+                                colspan: 3,
+                            },
+                            {
+                                title: "累计RRU序列号出现数-历史到货(含减免)",
+                                colspan: 3,
+                            },
+                            
+                        ],
+                        [
+                            {
+                                field: 'rrumd',
+                                title: 'RRU-800M',
+                            },
+                            {
+                                field: 'rrugd',
+                                title: 'RRU-1.8G&2.1G',
+                            },
+                            {
+                                field: 'prrud',
+                                title: 'PRRU',
+                            },
+                            {
+                                field: 'rrum',
+                                title: 'RRU-800M',
+                            },
+                            {
+                                field: 'rrug',
+                                title: 'RRU-1.8G&2.1G',
+                            },
+                            {
+                                field: 'prru',
+                                title: 'PRRU',
+                            },
+                            {
+                                field: 'rrum5',
+                                title: 'RRU-800M',
+                                cellStyle: numberred
+                            },
+                            {
+                                field: 'rrug5',
+                                title: 'RRU-1.8G&2.1G',
+                                cellStyle: numberred
+                            },
+                            {
+                                field: 'prru5',
+                                title: 'PRRU',
+                                cellStyle: numberred
+                            },
+                            {
+                                field: 'rrum2',
+                                title: 'RRU-800M',
+                            },
+                            {
+                                field: 'rrug2',
+                                title: 'RRU-1.8G&2.1G',
+                            },
+                            {
+                                field: 'prru2',
+                                title: 'PRRU',
+                            },
+                            {
+                                field: 'rrum3',
+                                title: 'RRU-800M',
+                            },
+                            {
+                                field: 'rrug3',
+                                title: 'RRU-1.8G&2.1G',
+                            },
+                            {
+                                field: 'prru3',
+                                title: 'PRRU',
+                            },
+                            {
+                                field: 'rrumu',
+                                title: 'RRU-800M',
+                            },
+                            {
+                                field: 'rrugu',
+                                title: 'RRU-1.8G&2.1G',
+                            },
+                            {
+                                field: 'prruu',
+                                title: 'PRRU',
+                            },
+                            {
+                                field: 'rrum4',
+                                title: 'RRU-800M',
+                            },
+                            {
+                                field: 'rrug4',
+                                title: 'RRU-1.8G&2.1G',
+                            },
+                            {
+                                field: 'prru4',
+                                title: 'PRRU',
+                            },
+                            {
+                                field: 'rrumj',
+                                title: 'RRU-800M',
+                                cellStyle: numberred
+                            },
+                            {
+                                field: 'rrugj',
+                                title: 'RRU-1.8G&2.1G',
+                                cellStyle: numberred
+                            },
+                            {
+                                field: 'prruj',
+                                title: 'PRRU',
+                                cellStyle: numberred
+                            },
+                        ]
+        ];
+        var TableInit = function () {
+            var oTableInit = new Object();
+            //初始化Table
+            oTableInit.Init = function () {
+                $('#table1').bootstrapTable({
+                    url: '/rru/filetongji',         //请求后台的URL（*）
+                    method: 'get',                      //请求方式（*）
+                    toolbar: '#tbaction',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: true,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 100,                       //每页的记录行数（*）
+                    pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                    search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    strictSearch: false,
+                    showColumns: true,                  //是否显示所有的列
+                    showRefresh: true,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: false,                //是否启用点击选中行
+                    //height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    uniqueId: "no",                     //每一行的唯一标识，一般为主键列
+                    showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    
+                    columns: basecolumns,
+                    onLoadSuccess: function (data) {
+                        var nr = { no: 999, city: "全部", chang: "全部", rrum: 0, rrug: 0, prru: 0, rrum2: 0, rrug2: 0, prru2: 0, rrum3: 0, rrug3: 0, prru3: 0, rrum4: 0, rrug4: 0, prru4: 0, rrum5: 0, rrug5: 0, prru5: 0, rrumd: 0, rrugd: 0, prrud: 0, rrumu: 0, rrugu: 0, prruu: 0, rrumj: 0, rrugj: 0, prruj: 0 };
+                        $.each(data.rows, function () {
+                            nr.rrum += parseInt(this.rrum);
+                            nr.rrum2 += parseInt(this.rrum2);
+                            nr.rrum3 += parseInt(this.rrum3);
+                            nr.rrum4 += parseInt(this.rrum4);
+                            nr.rrum5 += parseInt(this.rrum5);
+                            nr.rrumd += parseInt(this.rrumd);
+                            nr.rrumu += parseInt(this.rrumu);
+                            nr.rrumj += parseInt(this.rrumj);
+
+                            nr.rrug += parseInt(this.rrug);
+                            nr.rrug2 += parseInt(this.rrug2);
+                            nr.rrug3 += parseInt(this.rrug3);
+                            nr.rrug4 += parseInt(this.rrug4);
+                            nr.rrug5 += parseInt(this.rrug5);
+                            nr.rrugd += parseInt(this.rrugd);
+                            nr.rrugu += parseInt(this.rrugu);
+                            nr.rrugj += parseInt(this.rrugj);
+
+                            nr.prru += parseInt(this.prru);
+                            nr.prru2 += parseInt(this.prru2);
+                            nr.prru3 += parseInt(this.prru3);
+                            nr.prru4 += parseInt(this.prru4);
+                            nr.prru5 += parseInt(this.prru5);
+                            nr.prrud += parseInt(this.prrud);
+                            nr.prruu += parseInt(this.prruu);
+                            nr.prruj += parseInt(this.prruj);
+
+                            
+                        });
+                        $('#table1').bootstrapTable("insertRow", {index:999,row:nr});
+                    }
+                });
+            };
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    limit: params.limit,   //页面大小
+                    offset: params.offset,  //页码
+                    type: "@(ViewBag.file==null?"":((string)ViewBag.file).Replace("\\","\\\\"))",
+                    d: "wangtongji",
+                    s: $("#txtdb").attr("ovalue"),
+                    g:$("#selgroup").val()
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+
+        var ButtonInit = function () {
+            var oInit = new Object();
+            var postdata = {};
+
+            oInit.Init = function () {
+                //初始化页面上面的按钮事件
+            };
+
+            return oInit;
+        };
+    </script>
+}
+
+<div class="container" id="divwai">
+    <form class="form-inline"  id="tbaction">
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" id="btnfull"><span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> 放大</button>
+        </div>
+        <select id="selgroup" class="form-control">
+            <option value="0">地市+厂家</option>
+            <option value="1">地市</option>
+            <option value="2">厂家</option>
+        </select>
+        <a id="btn_export" class="btn btn-primary" href="###" target="_blank">
+            <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
+        </a>
+        
+        <div class="input-group">
+            <span class="input-group-addon">对比</span>
+            <input type="text" id="txtdb" class="form-control" readonly value="@(dbwang)" ovalue="" />
+            <div class="input-group-btn">
+                <button type="button" id="btnsel" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right seldb" aria-labelledby="btnsel">
+                    <li><a href="#" ovalue="">@(dbwang)</a></li>
+                    @foreach (string file in ViewBag.files) { 
+                        <li><a href="#" ovalue="@(file)">@(file.Substring(0,file.LastIndexOf(".")))</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        
+        <div class="input-group" auth>
+            <input type="text" id="txtjs" class="form-control hidden" readonly placeholder="请选择要计算的文件" />
+            <div class="input-group-btn">
+                <button type="button" id="btnjs" class="btn btn-success">计算对比</button>
+            </div>
+        </div>
+    </form>
+    <table id="table1">
+    </table>
+</div>

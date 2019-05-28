@@ -1,0 +1,420 @@
+﻿@{
+    ViewBag.Title = "入库明细";
+    Dictionary<string, object>[] whinfo = ViewBag.whinfo;
+    Dictionary<string, object>[] gdinfo = ViewBag.gdinfo;
+}
+@section style {
+<style>
+    .btngp {
+        display: inline-block;
+        width: 150px;
+        height: 35px;
+        margin-left: 30px;
+        vertical-align: baseline;
+    }
+
+    .btngp:hover {
+        background-color: #5cb85c;
+    }
+
+    .btngp span {
+        display: inline-block;
+        width: 61px;
+        height: 100%;
+    }
+
+    .btngp span:hover {
+        color: #ccc;
+    }
+
+    .btngp-file {
+        width: 75px;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+    }
+
+    .btngp-file:hover {
+        cursor:pointer;
+    }
+
+    .btngp-sub {
+        background-color: transparent;
+        border: none;
+    }
+    .time-box {
+        display: inline-block;
+        width: 450px;
+        height: 35px;
+        position: relative;
+        top: -2px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-left: 20px;
+        vertical-align: baseline;
+        background-color: #f0ad4e;
+    }
+    .time-box input,.time-box button {
+        border:0;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display:inline-block;
+    }
+    .time-box input:focus, .time-box button:focus {
+        outline: none;
+        outline-offset: 0;
+    }
+    .time-box input {
+        border-right: 1px solid #ccc;
+        width: 35%;
+        text-indent: 1em;
+        background-color:#fff;
+    }
+    .time-box .start-time {
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+    }
+    .time-box button {
+        width: calc(15% - 1px);
+    }
+    #timeSearch:hover, #timeExport:hover {
+        color:#ccc;
+    }
+    #timeSearch {
+        color: #fff;
+        background-color: #5cb85c;
+    }
+    #timeExport {
+        display: inline-block;
+        width: calc(15% - 1px);
+        text-align: center;
+        color: #fff;
+        background-color: #f0ad4e;
+    }
+</style>     
+}
+@section script{
+<script>
+    function stypefmt(value) {
+        var res = "";
+        if (value == 0) {
+            res = "需求单";
+        } else if (value == -1) {
+            res = "期初";
+        } else if (value == 2) {
+            res = "调货单";
+        } else {
+            res = "管理员调整";
+        }
+        return res;
+    }
+    function codefmt(value, row, index) {
+        if (!value) return "-";
+        if (row['stype'] == 0) {
+            return "<a href=\"/order/byid/" + row["oid"] + "\" >" + value + "</a>";
+        } else if (row['stype'] == 2) {
+            return "<a href=\"/trans/byid/" + row["oid"] + "\" >" + value + "</a>";
+        }
+        
+    }
+        $(function () {
+
+            laydate.render({
+                elem: '#startTime'
+            });
+            laydate.render({
+                elem: '#endTime'
+            });
+            //1.初始化Table
+            var oTable = new TableInit();
+            oTable.Init();
+
+            //2.初始化Button的点击事件
+            var oButtonInit = new ButtonInit();
+            oButtonInit.Init();
+
+            $("#add").on("click", function () {
+                $("#sel_wh").val("");
+                $("#sel_gd").val("");
+                $("#ip_io").val("0");
+                $("#ip_pur").val("0");
+                $("#addmodal").modal("show");
+            });
+            $("#btn_save").on("click", function () {
+                if (isNaN(parseInt($("#sel_wh").val())) || isNaN(parseInt($("#sel_gd").val())) || isNaN(parseInt($("#ip_io").val())) || isNaN(parseInt($("#ip_pur").val())) || isNaN(parseInt($("#sel_type").val()))) {
+                    $("#fmsg").html("请输入完整");
+                    return;
+                }
+                $("#fmsg").html("正在保存. . .");
+                $.post("/stock/asio", { siotype: parseInt($("#sel_type").val()), wid: parseInt($("#sel_wh").val()), gid: parseInt($("#sel_gd").val()), ionumber: parseInt($("#ip_io").val()), pur: parseInt($("#ip_pur").val()) }, function (data) {
+                    if (data.ok) {
+                        $("#fmsg").html("保存成功！");
+                        $("#sel_wh").val("");
+                        $("#sel_gd").val("");
+                        $("#ip_io").val("0");
+                        $("#ip_pur").val("0");
+                    } else {
+                        $("#fmsg").html("保存失败："+data.msg);
+                    }
+                });
+            });
+        });
+
+        var TableInit = function () {
+            var oTableInit = new Object();
+            //初始化Table
+            oTableInit.Init = function () {
+                $('#table1').bootstrapTable({
+                    url: '/stock/fsio',         //请求后台的URL（*）
+                    method: 'post',                      //请求方式（*）
+                    toolbar: '#tbaction',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: true,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 10,                       //每页的记录行数（*）
+                    pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                    search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    strictSearch: false,
+                    showColumns: true,                  //是否显示所有的列
+                    showRefresh: false,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: true,                //是否启用点击选中行
+                    //height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                    showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    columns: [{
+                        field: 'id',
+                        title: '出入库id',
+                        visible: false
+                    }, {
+                        field: 'wid',
+                        title: '仓库id',
+                        visible: false
+                    }, {
+                        field: 'wcode',
+                        title: '仓库编码',
+                        visible: false
+                    }, {
+                        field: 'wname',
+                        title: '地市',
+                    }, {
+                        field: 'gid',
+                        title: '产品id',
+                        visible: false
+                    }, {
+                        field: 'gcode',
+                        title: '产品编码',
+                        visible: false
+                    }, {
+                        field: 'gname',
+                        title: '型号',
+                    }, {
+                        field: 'require',
+                        title: '总需求数',
+                    }, {
+                        field: 'ionumber',
+                        title: '出入库数量',
+                    }, {
+                        field: 'purchased',
+                        title: '购买数量',
+                    }, {
+                        field: 'createtime',
+                        title: '出入库时间',
+                    }, {
+                        field: 'uid',
+                        title: '操作人id',
+                        visible: false
+                    }, {
+                        field: 'ucode',
+                        title: '操作人编码',
+                        visible: false
+                    }, {
+                        field: 'uname',
+                        title: '操作人',
+                    }, {
+                        field: 'stype',
+                        title: '类型',
+                        formatter:stypefmt
+                    }, {
+                        field: 'oid',
+                        title: '单据id',
+                        visible: false
+                    }, {
+                        field: 'ocode',
+                        title: '单号',
+                        formatter:codefmt
+                    }],
+                });
+            };
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    limit: params.limit,   //页面大小
+                    offset: params.offset
+                };
+                console.log(temp);
+                return temp;
+            };
+            return oTableInit;
+        };
+
+
+        var ButtonInit = function () {
+            var oInit = new Object();
+            var postdata = {};
+
+            oInit.Init = function () {
+                //初始化页面上面的按钮事件
+            };
+
+            return oInit;
+    };
+    if (location.href.includes("msg")) {
+        var msg = location.href.split("?")[1];
+        alert(decodeURI(msg.split("=")[1]));
+        location.href = location.href.split("?")[0];
+    }
+
+    $('.btngp-file').on('change', function () {
+        $(this).parent().find('i').text('已选择');
+    });
+    
+    //查询和导出
+    $('#timeSearch').on('click', function () {
+        var start = $('.start-time').val();
+        var end = $('.end-time').val();
+        var options = $('#table1').bootstrapTable('getOptions');
+        $('#table1').bootstrapTable('removeAll');
+        $('#table1').bootstrapTable('refresh', {
+            url: '/stock/search',
+            silent: true,
+            query: {
+                limit: options.pageSize,
+                offset: 0,
+                start: start,
+                end:end
+            }
+        });
+    });
+
+    $('table').on('mouseenter', 'tbody tr', function (e) {
+        var code = $(this).children().eq(8).find('a').eq(0).text();
+        var isOrder = $(this).text().includes('需求单')
+        var url = isOrder ? '/stock/getinfobyid?code=' + code + '&table=0' : '/stock/getinfobyid?code=' + code + '&table=1'
+        $.post(url, function (result) {
+            if (result.ok) {
+                var data = result.data;
+                var $div = $('<div class="floatwindow"></div>');
+                for (var i = 0; i < data.length; i++) {
+                    var $p = $('<p style="margin:0;padding:0;"><span style="color:#337ab7;">' + data[i].name + '</span>: ' + data[i].gnum + '</p>')
+                    $div.append($p);
+                }
+                var x = e.clientX;
+                var y = e.clientY;
+                $div.attr('style', 'box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3);display:none;border-radius: 10px;border:1px solid #ccc;position:absolute;background-color:#fff;padding: 10px;top:' + (y + 5) + 'px;left:' + (x + 5) + 'px;');
+                $('body').append($div);
+                $div.fadeIn(500);
+            }
+        })
+    })
+
+    $('table').on('mouseleave', 'tbody tr', function () {
+        $('.floatwindow').each(function (index, item) {
+            $(item).fadeOut(500).remove();
+        });
+    })
+
+    $('#timeExport').on('click', function () {
+        var start = $('.start-time').val();
+        var end = $('.end-time').val();
+        $(this).attr("href","/stock/export?start=" + start+"&end="+end);
+    });
+</script>
+}
+<div class="container">
+    <div class="btn-group" role="group" aria-label="..." id="tbaction">
+      <button type="button" class="btn btn-warning" id="add" auth><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 购买和调整</button>
+      <a href="/download/buytemplate" target="_blank" class="btn btn-success" auth><span class="glyphicon glyphicon-download" aria-hidden="true"></span> 下载购买模板</a>
+      <form action="/stock/upload" method="post" enctype="multipart/form-data" style="display:inline-block;">
+        <div class="btn btn-success btngp">
+          <span><input type="file" name="file" class="btngp-file" /><i>选择文件</i></span> |
+          <span><input type="submit" value="购买导入" class="btngp-sub" /></span>
+          </div>
+      </form>
+      <div class="time-box">
+          <input type="text" class="start-time" id="startTime" placeholder="起始时间"/><input class="end-time" id="endTime" type="text" placeholder="结束时间" /><button type="button" id="timeSearch">查询</button><a href="#" id="timeExport">导出</a>
+      </div>
+    </div>
+    <table id="table1">
+    </table>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="addmodal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">购买和调整<small style="color:red">*此操作为管理员调货使用，请谨慎操作</small></h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="sel_type" class="col-sm-2 control-label">调整类型</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="sel_type">
+                        <option value="1">管理员调整</option>
+                        <option value="-1">期初录入</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sel_wh" class="col-sm-2 control-label">仓库</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="sel_wh">
+                        @foreach (var dic in whinfo) { 
+                            <option value="@dic["id"]">@dic["name"]</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sel_gd" class="col-sm-2 control-label">产品</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="sel_gd">
+                        @foreach (var dic in gdinfo) { 
+                            <option value="@dic["id"]">@dic["name"]</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ip_io" class="col-sm-2 control-label">入库数量</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="number" id="ip_io" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ip_pur" class="col-sm-2 control-label">购买数量</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="number" id="ip_pur" />
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <label id="fmsg" style="color:red"></label>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="btn_save" auth>保存</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

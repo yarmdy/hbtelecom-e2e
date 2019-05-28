@@ -1,0 +1,246 @@
+﻿@{
+    ViewBag.Title = "网管详表最新统计";
+}
+@section style {
+<style>
+    
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            white-space:nowrap
+        }
+    </style>    
+}
+@section script {
+    <script src="/js/rrucsvrefer.js"></script>
+    <script>
+        $("#btn_export").on("click", function () {
+            var val = $("#history").find("option:selected").attr("url");
+            if (val) {
+                $("#btn_export").attr("href", "/rru/export?index=0&file=" + val);
+            }
+        })
+        $(function () {
+            $("#btnsearch").on("click", function () {
+                $("#table1").bootstrapTable("selectPage", 1);
+            });
+        });
+        var baseCols=[{
+            field: 'no',
+            title: '序号',
+        },
+                    {
+                        field: '地市',
+                        title: '地市',
+                    },
+                    {
+                        field: '厂家',
+                        title: '厂家'
+                    },
+                    {
+                        field: 'BBU名称',
+                        title: 'BBU名称'
+                    },
+                    {
+                        field: '机框号',
+                        title: '机框号',
+                    },
+                    {
+                        field: 'eNodeB ID',
+                        title: 'eNodeB ID',
+                    }, {
+                        field: '频段',
+                        title: '频段',
+                    }, {
+                        field: 'RRU型号',
+                        title: 'RRU型号',
+                    }, {
+                        field: 'RRU类型',
+                        title: 'RRU类型',
+                    }, {
+                        field: 'RRU名称',
+                        title: 'RRU名称',
+                    }, {
+                        field: 'RRU序列号',
+                        title: 'RRU序列号',
+                    }, {
+                        field: '备注',
+                        title: '备注'
+                    }, {
+                        field: '相对上一次是否新增',
+                        title: '相对上一次是否新增',
+                    }, {
+                        field: '生产日期',
+                        title: '生产日期',
+                    }, {
+                        field: '新增是否从新发货来',
+                        title: '新增是否从新发货来',
+                    }, {
+                        field: '现网是否存在',
+                        title: '现网是否存在',
+                    }, {
+                        field: '最近出现日期',
+                        title: '最近出现日期',
+                    }];
+        var TableInit = function () {
+            var oTableInit = new Object();
+            //初始化Table
+            oTableInit.Init = function () {
+                $('#table1').bootstrapTable({
+                    url: "/rru/file",
+                    method: "GET",
+                    toolbar: '#toolbar',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: true,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 10,                       //每页的记录行数（*）
+                    pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                    search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    strictSearch: false,
+                    showColumns: true,                  //是否显示所有的列
+                    showRefresh: true,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: true,                //是否启用点击选中行
+                    uniqueId: "no",                     //每一行的唯一标识，一般为主键列
+                    showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    columns: baseCols,
+                    onLoadSuccess: function (data) {
+                        if (data.rows && data.rows.length > 0) {
+                            var same = true;
+                            if (same) {
+                                var ccount = 0;
+                                for (var col in data.rows[0]) {
+                                    ccount++;
+                                    if (!same) continue;
+                                    var has = false;
+                                    for (var col2 in this.columns[0]) {
+                                        if (col == this.columns[0][col2].field) {
+                                            has = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!has) {
+                                        same = false;
+                                    }
+                                }
+                            }
+                            same = same && (ccount == this.columns[0].length);
+                            if (!same) {
+                                var newcols = [];
+                                for (var col in data.rows[0]) {
+                                    newcols.push({
+                                        field: col,
+                                        title: col,
+                                    });
+                                }
+                                $('#table1').bootstrapTable("refreshOptions", {
+                                    columns:newcols
+                                });
+                            }
+                            
+                        }
+                    }
+                })
+            };
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    limit: params.limit,   //页面大小
+                    offset: params.offset,  //页码
+                    type: $("#history").find("option:selected").attr("url"),
+                    d: "wangtj",
+                    b: $("#txtbname").val(),
+                    r: $("#txtrname").val(),
+                    n: $("#txtrno").val(),
+                    city: $("#selcity").val(),
+                    chang: $("#selchang").val(),
+                    pinduan: $("#selpinduan").val(),
+                    leixing: $("#selrrutype").val(),
+                    xz: $("#selxz").val(),
+                    fh: $("#selfh").val(),
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+        var oTable = new TableInit();
+        oTable.Init();
+
+    </script>
+
+}
+<div class="container">
+    
+        <div id="toolbar" class="form-inline" >
+            <a id="btn_export" class="btn btn-primary" href="###">
+                <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
+            </a>
+            @if (ViewBag.history.Count > 0)
+            {
+                <select class="form-control hidden" id="history">
+                    @foreach (var item in ViewBag.history)
+                    {
+                        if (item["text"].Contains("[hidden]"))
+                        {
+                            item["text"] = item["text"].Replace("[hidden]", "");
+
+                        }
+                        <option url="@(item["code"])" value="@(item["text"])">@(item["text"])</option>
+                    }
+                </select>
+            }
+            
+        </div>
+    <div class="form-inline" id="toolbar3">
+        <label>条件：</label>
+        <select class="form-control" id="selcity">
+            <option value="">全部地市</option>
+            @foreach (var i in CTCCGoods.Controllers.ctasksHandle.constcitys) { 
+                <option value="@(i)">@(i)</option>
+            }
+        </select>
+        <select class="form-control" id="selchang">
+            <option value="">全部厂家</option>
+            @foreach (var i in CTCCGoods.Controllers.ctasksHandle.constchangs) { 
+                <option value="@(i)">@(i)</option>
+            }
+        </select>
+        <select class="form-control" id="selpinduan">
+            <option value="">全部频段</option>
+            @foreach (var i in CTCCGoods.Controllers.ctasksHandle.constpinduan) { 
+                <option value="@(i)">@(i)</option>
+            }
+        </select>
+        <select class="form-control" id="selrrutype">
+            <option value="">全部rru类型</option>
+            @foreach (var i in CTCCGoods.Controllers.ctasksHandle.constleixing) { 
+                <option value="@(i)">@(i)</option>
+            }
+        </select>
+        <select class="form-control" id="selxz">
+            <option value="">是否新增</option>
+            <option value="是">是</option>
+            <option value="否">否</option>
+        </select>
+        <select class="form-control" id="selfh">
+            <option value="">新增是否从发货来</option>
+            <option value="是">是</option>
+            <option value="否">否</option>
+        </select>
+    </div>
+    <div class="form-inline" id="toolbar2" style="margin-top:10px">
+        <label style="color:white">条件：</label>
+        <input class="form-control" type="text" placeholder="输入BBU名称" id="txtbname"  />
+        <input class="form-control" type="text" placeholder="输入RRU名称" id="txtrname" />
+        <input class="form-control" type="text" placeholder="输入RRU序列号" id="txtrno" />
+        <button class="btn btn-default" type="button" id="btnsearch">查询</button>
+    </div>
+    <table id="table1"></table>
+</div>

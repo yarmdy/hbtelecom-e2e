@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Select";
+    var sda = ViewBag.sda;
+    var sjy = ViewBag.sjy;
+    var ds = ViewBag.ds;
+}
+@section style {
+<style>
+    .green {
+        color: green;
+    }
+    .touch:hover {
+        cursor: pointer;
+    }
+</style>   
+}
+@section script{
+    <script>
+    $(function () {
+        var sdas = [
+            @foreach (var x in ViewBag.sda)
+            {
+                <text>{ uid:@x["uid"], uname: "@x["uname"]",wid:@x["wid"], wname: "@x["wname"]" },</text>
+            }
+        ];
+        var sjys = [
+            @foreach (var x in ViewBag.sjy)
+            {
+                <text>{ id:@x["id"], name: "@x["name"]" },</text>
+            }
+        ];
+        var dss = [
+            @foreach (var x in ViewBag.ds)
+            {
+                <text>{ id:@x["id"], name: "@x["name"]" },</text>
+            }
+        ];
+
+        var $tr = $("<tr><th>设计院</th></tr>");
+        for (var i = 0; i < dss.length; i++) {
+            var $th = $("<th>" + dss[i]['name'] + "</th>");
+            $th.data('id', dss[i]['id']);
+            $tr.append($th);
+        }
+        $('#table').append($tr);
+        var data = {};
+        for (var i = 0; i < sdas.length; i++) {
+            var key = sdas[i]['uname'];
+            if (data[key] != undefined) {
+                data[key].push({ 'wid': sdas[i]['wid'], 'wname': sdas[i]['wname'] });
+            } else {
+                data[key] = [{ 'wid': sdas[i]['wid'], 'wname': sdas[i]['wname']}];
+            }
+        }
+        console.log(data);
+        for (var i = 0; i < sjys.length; i++) {
+            var $str = $("<tr></tr>");
+            var $std = $("<td>" + sjys[i]['name'] + "</td>");
+            $std.data('id', sjys[i]['id']);
+            $str.append($std);
+            for (var j = 0; j < dss.length; j++) {
+                var $dtd = $("<td class='touch'></td>");
+                $dtd.data('id', dss[j]['id']);
+                $str.append($dtd);
+            }
+            var sdata = data[sjys[i]['name']] === undefined ? [] : data[sjys[i]['name']];
+            console.log(sdata);
+            for (var k = 0; k < sdata.length; k++) {
+                $str.children().each(function () {
+                    if ($(this).data('id') === sdata[k]['wid']) {
+                        $(this).html("<span class='glyphicon glyphicon-ok green touch'></span>");
+                    }
+                });
+            }
+            $('#table').append($str);
+        }
+
+        $('#table').on('click', '.touch', function () {
+            var type = 0;
+            var sid = $(this).parent().children('td:first').data('id');
+            var did = $(this).data('id');
+            if ($(this).find('span').hasClass('green')) {
+                type = 1;
+            }
+            var $that = $(this);
+            $.ajax({
+                url: '/user/changesjy',
+                data: { 'type': type, 'sid': sid, 'did': did },
+                dataType: 'json',
+                success: function (result) {
+                    if (result.ok) {
+                        if (type === 0) {
+                            $that.html("<span class='glyphicon glyphicon-ok green touch'></span>");
+                        } else {
+                            $that.find('span').remove();
+                        }
+                    } else {
+                        alert(result.msg);
+                    }
+                },
+                error: function () {
+                    console.log('change error');
+                }
+            });
+        });
+    });
+    </script>
+}
+<div class="container">
+    <table id="table" class="table table-bordered">
+        @*<tr>
+                <th>设计院</th>
+                <th>石家庄</th>
+                <th>承德</th>
+                <th>秦皇岛</th>
+                <th>唐山</th>
+                <th>廊坊</th>
+                <th>沧州</th>
+                <th>衡水</th>
+                <th>邢台</th>
+                <th>保定</th>
+                <th>邯郸</th>
+                <th>张家口</th>
+            </tr>*@
+    </table>
+</div>

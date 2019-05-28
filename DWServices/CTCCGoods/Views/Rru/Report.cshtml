@@ -1,0 +1,380 @@
+﻿@{
+    ViewBag.Title = "新发货表";
+}
+
+@section style {
+<style>
+    #record:hover {
+        cursor: pointer;
+        color: deepskyblue;
+    }
+    #recordInfo {
+        display:none;
+    }
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            white-space:nowrap
+        }
+    </style>    
+}
+
+@section script {
+    <script src="/js/rrucsvrefer.js"></script>
+    <script>
+        var filesdata = [];
+        @if (ViewBag.history.Count > 0)
+        {
+            foreach (Dictionary<string, string> item in ViewBag.history)
+            {
+                if (item["text"].Contains("[hidden]"))
+                {
+                    item["text"] = item["text"].Replace("[hidden]", "");
+
+                }
+                @:filesdata.push({id:"@(item["text"])",name:"@(item["text"])",year:"@(item["text"].Substring(0, 4))",month:"@(item["text"].Substring(4, 2))"});
+            }
+        }
+        $.rrucsvrefer(filesdata);
+        $(function () {
+            $("#btn_search").on("click", function () {
+                $("#history").rrucsvrefer();
+            });
+
+
+            $("#line").val("张家口,中兴,\"R8862A S2100(2110_50,6G,AC,60W)|R8862A S2100射频单元(2110_50,6G,AC,60W)\",RRU,zx219189267625,2019/3/1,张家口冬奥会19年室分二期,,是,0,,是");
+            $("#jsuan").on("click", function () {
+                $.post("/rru/jsuan", { val: $("#line").val(), rg: $("#rg").val() }, function (res) {
+                    $("#res").html(res.msg);
+                });
+            });
+
+            $("#history").on("change", function () {
+                var val = $("#history").find("option:selected").attr("url");
+                $('#table1').bootstrapTable('refresh', { url: '/rru/file', type: val, d: "report", limit: 10, offset: 0 })
+            })
+
+            $("#btn_export").on("click", function () {
+                var val = $("#history").find("option:selected").attr("url");
+                if (val) {
+                    $("#btn_export").attr("href", "/rru/export?index=0&file=" + val);
+                }
+            })
+
+
+            $('#record').on("click", function () {
+                if ($("#recordInfo").attr("data-show") == "hidden") {
+                    $('#record').find("span").removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-down");
+                    $("#recordInfo").show();
+                    $("#recordInfo").attr("data-show", "show");
+                } else {
+                    $('#record').find("span").removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-right");
+                    $("#recordInfo").hide();
+                    $("#recordInfo").attr("data-show", "hidden");
+                }
+            });
+
+            $("#showFile").on("click", function () {
+                var files = [];
+                $("input[name='record']:checked").each(function (i) {
+                    files.push($(this).val());
+                })
+                if (files.length) {
+                    files = files.join(',');
+                    setTimeout(function () {
+                        $.ajax({
+                            url: "/rru/hiddenoropenfile",
+                            type: "post",
+                            data: { files: files, type: "open" },
+                            dataType: "json",
+                            success: function (res) {
+                                if (res.result) {
+                                    $("input[name='record']:checked").each(function (i) {
+                                        $(this).parent().css("color", "black")
+                                        $("input[name='record']:checked").each(function (i) {
+                                            if ($(this).val().indexOf("[hidden]") != -1) {
+                                                $(this).val().replace("[hidden]", "");
+                                            }
+                                            $(this).removeAttr("checked");
+                                        })
+                                    })
+                                }
+                            }
+                        })
+                    }, 500)
+                }
+            })
+
+            $("#hideFile").on("click", function () {
+                var files = [];
+                $("input[name='record']:checked").each(function (i) {
+                    files.push($(this).val());
+                })
+                if (files.length) {
+                    files = files.join(',');
+                    setTimeout(function () {
+                        $.ajax({
+                            url: "/rru/hiddenoropenfile",
+                            type: "post",
+                            data: { files: files, type: "close" },
+                            dataType: "json",
+                            success: function (res) {
+                                if (res.result) {
+                                    $("input[name='record']:checked").each(function (i) {
+                                        $(this).parent().css("color", "#ccc");
+                                        $("input[name='record']:checked").each(function (i) {
+                                            if ($(this).val().indexOf("[hidden]") == -1) {
+                                                var s = $(this).val().split(".");
+                                                s[s.length - 2] = s[s.length - 2] + "[hidden]";
+                                                $(this).val(s.join("."));
+                                            }
+                                            $(this).removeAttr("checked");
+                                        })
+                                    })
+                                }
+                            }
+                        })
+                    }, 500)
+                }
+            });
+
+            $("#flimport").val("");
+
+            $("#btnimport").on("click", function () {
+                if ($("#txttime").hasClass("hidden")) {
+                    $("#txttime").removeClass("hidden")
+                    $("#btnopen").removeClass("hidden")
+                } else {
+                    if ($("#flimport").val()) {
+                        $("#toolbar").submit();
+                    } else {
+                        $("#txttime").addClass("hidden")
+                        $("#btnopen").addClass("hidden")
+                    }
+                }
+                
+            });
+            $("#btnopen").on("click", function () {
+                $("#flimport").trigger("click");
+            });
+            $("#flimport").on("change", function () {
+                //$("#toolbar").submit();
+                //$("#txttime").removeClass("hidden")
+                $("#btnopen").removeClass("btn-warning").addClass("btn-success");
+            });
+            laydate.render({
+                elem: '#txttime'
+            });
+
+            $("#btn_del").on("click", function () {
+                if (!confirm("是否删除(" + $("#history").val() + ")，删除后无法恢复！")) {
+                    return;
+                }
+                $.post("/rru/dreport", { name: $("#history").val() }, function (data) {
+                    alert(data.msg);
+                    if (data.ok) {
+                        location = location;
+                    }
+                });
+            });
+        });
+        
+
+        var TableInit = function () {
+            var oTableInit = new Object();
+            //初始化Table
+            oTableInit.Init = function () {
+                $('#table1').bootstrapTable({
+                    url: "/rru/file",
+                    method: "GET",
+                    toolbar: '#toolbar',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: true,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 10,                       //每页的记录行数（*）
+                    pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                    search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    strictSearch: false,
+                    showColumns: true,                  //是否显示所有的列
+                    showRefresh: true,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: true,                //是否启用点击选中行
+                    uniqueId: "no",                     //每一行的唯一标识，一般为主键列
+                    showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    columns: [{
+                        field: 'no',
+                        title: '行号',
+                    },
+                    {
+                        field: '地市',
+                        title: '地市',
+                    },
+                    {
+                        field: '厂家',
+                        title: '厂家'
+                    },
+                    {
+                        field: 'RRU型号',
+                        title: 'RRU型号'
+                    },
+                    {
+                        field: 'RRU类型',
+                        title: 'RRU类型',
+                    },
+                    {
+                        field: 'RRU序列号',
+                        title: 'RRU序列号',
+                    }, {
+                        field: '发货时间',
+                        title: '发货时间',
+                    }, {
+                        field: '借货期次',
+                        title: '借货期次',
+                    }, {
+                        field: '备注',
+                        title: '备注',
+                    }, {
+                        field: '是否八期',
+                        title: '是否八期',
+                    }, {
+                        field: '是否在网管',
+                        title: '是否在网管',
+                    }, {
+                        field: '是否存在过网管',
+                        title: '是否存在过网管'
+                    }, {
+                        field: '是否新发货',
+                        title: '是否新发货',
+                    }],
+                    onLoadSuccess: function (data) {
+                        if (data.rows && data.rows.length > 0) {
+                            var same = true;
+                            if (same) {
+                                var ccount = 0;
+                                for (var col in data.rows[0]) {
+                                    ccount++;
+                                    if (!same) continue;
+                                    var has = false;
+                                    for (var col2 in this.columns[0]) {
+                                        if (col == this.columns[0][col2].field) {
+                                            has = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!has) {
+                                        same = false;
+                                    }
+                                }
+                            }
+                            same = same && (ccount == this.columns[0].length);
+                            if (!same) {
+                                var newcols = [];
+                                for (var col in data.rows[0]) {
+                                    newcols.push({
+                                        field: col,
+                                        title: col,
+                                    });
+                                }
+                                $('#table1').bootstrapTable("refreshOptions", {
+                                    columns: newcols
+                                });
+                            }
+
+                        }
+                    }
+                })
+            };
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    limit: params.limit,   //页面大小
+                    offset: params.offset,  //页码
+                    type: $("#history").find("option:selected").attr("url"),
+                    d: "report",
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+        var oTable = new TableInit();
+        oTable.Init();
+
+    </script>
+
+}
+
+    <div class="container">
+        @if ( false&&ViewBag.user.utype == 0 && ViewBag.history.Count > 0)
+        {
+            <div>
+                <span id="record">所有记录<span class="glyphicon glyphicon-chevron-right"></span></span>
+                <div id="recordInfo" data-show="hidden" style="overflow: hidden;border: 1px solid #ccc;padding: 15px;border-radius: 10px;">
+                    <div id="recordList">
+                        @foreach (var item in ViewBag.history)
+                        {
+                            var f = false;
+                            if (item["text"].Contains("[hidden]"))
+                            {
+                                item["text"] = item["text"].Replace("[hidden]", "");
+                                f = true;
+                            }
+                        <label class="checkbox-inline"  @if (f)
+                                                        { @("style=color:#ccc;")}>
+                            <input type="checkbox" name="record" value="@(item["code"])"> @(item["text"])
+                        </label>
+                        }
+                    </div>
+                    <div>
+                        <button style="float: right;margin-left: 15px;" class="btn btn-sm btn-default" id="hideFile">隐藏</button>
+                        <button style="float: right;"class="btn btn-sm btn-primary" id="showFile">显示</button>
+                    </div>
+                </div>
+            </div>
+        }
+            <form id="toolbar" class="form-inline" action="/rru/nsendimport" method="post" enctype="multipart/form-data">
+                <input type="file" id="flimport" class="hidden" name="flimport" />
+                <a class="btn btn-info" href="/template/newsend_template.xlsx" auth><span class="glyphicon glyphicon-book" aria-hidden="true"></span> 模板下载</a>
+                <div class="input-group" auth>
+                    <input type="text" readonly placeholder="导入时间，不填为当前时间" class="form-control hidden" name="txttime" id="txttime" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-warning hidden" type="button" id="btnopen"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> 浏览</button>
+                        <button class="btn btn-success" type="button" id="btnimport"><span class="glyphicon glyphicon-import" aria-hidden="true"></span> 导入</button>
+                    </div>
+                </div>
+                
+                
+                <a id="btn_export" class="btn btn-primary" href="###">
+                    <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
+                </a>
+                @if (ViewBag.history.Count > 0)
+                {
+                    <select class="form-control" id="history">
+                        @foreach (var item in ViewBag.history)
+                        {
+                            if (item["text"].Contains("[hidden]"))
+                            {
+                                item["text"] = item["text"].Replace("[hidden]", "");
+
+                            }
+                            <option url="@(item["code"])" value="@(item["text"])">@(item["text"])</option>
+                        }
+                    </select>
+                }
+                <button class="btn btn-default" type="button" id="btn_search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <button class="btn btn-danger" type="button" id="btn_del" auth><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删除</button>
+            </form>
+        <table id="table1"></table>
+        <input class="form-control hidden" type="text" value="" id="line" />
+        <input class="form-control hidden" type="text" id="rg" />
+        
+        <input class="btn btn-default hidden" type="button" value="计算" id="jsuan" />
+        <br />
+        <label id="res"></label>
+    </div>

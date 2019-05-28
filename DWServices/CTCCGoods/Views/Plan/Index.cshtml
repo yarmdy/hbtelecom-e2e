@@ -1,0 +1,434 @@
+﻿@{
+    ViewBag.Title = "地市上传任务";
+    CTCCGoods.Controllers.cuser user = (CTCCGoods.Controllers.cuser)Session["loginuser"];
+}
+
+@section script{
+    <script>
+        var sortVal = localStorage.getItem('sort');
+        if (!sortVal || sortVal == 1) {
+            $(':radio').eq(0).attr('checked', 'checked');
+        } else if (sortVal == 2) {
+            $(':radio').eq(1).attr('checked', 'checked');
+        }
+        
+
+
+        let innerData = null;
+        var parrs = {
+                @foreach(var x in ViewBag.et)
+                {
+                    <text>@x["id"]:"@x["name"]",</text>
+                }
+            };
+        window.usertype = @user.utype;
+        function getDate(cb) {
+            $.get('/plan/getdate', function (result) { if (result.ok) { cb && cb(result.data) } })
+        }
+
+        function convertStatus(value, row, index) {
+            return value === 0 ? "开启" : "关闭";
+        }
+
+        function createlink(value, row, index) {
+            //if (row.etid == -1) {
+            //    return '<a href="/plan/option#' + row.id + '-n">' + value + '</a>';
+            //} else {
+                return '<a href="/plan/option#' + row.id + '">' + value + '</a>';
+            //}
+        }
+
+        $(function () {
+
+            window.user = {
+                "id":@user.id,
+                "name": "@user.name"
+            };
+
+
+
+            //1.初始化Table
+            var oTable = new TableInit();
+            oTable.Init();
+
+            //2.初始化Button的点击事件
+            var oButtonInit = new ButtonInit();
+            oButtonInit.Init();
+        });
+
+
+        var originData = null;
+        function format(data) {
+            if (!data) {
+                return null
+            }
+            var result = []
+            var old = []
+            var planclasses = []
+            for (var i = 0; i < data.length; i++) {
+                if (old.indexOf(data[i].planclass) != -1) {
+                    continue
+                }
+                old.push(data[i].planclass)
+                planclasses.push(data[i].planclass)
+            }
+            for (var i = 0; i < planclasses.length;i++) {
+                var p = planclasses[i];
+                var donenum = 0;
+                var doingnum = 0;
+                for (var j = 0; j < data.length; j++) {
+                    if (data[j].planclass != p) {
+                        continue
+                    }
+                    if (data[j].status == 0) {
+                        doingnum++
+                    } else {
+                        donenum++
+                    }
+                }
+                result.push({ planclass: p, plansnum: (donenum+doingnum), plandone:donenum, plandoing: doingnum })
+            }
+            return result
+        }
+
+        function getDataByPlanClass(planclass, data) {
+            var newData = []
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].planclass == planclass) {
+                    newData.push(data[i])
+                }
+            }
+            if (!sortVal || sortVal == 1) {
+                newData.sort(function (a, b) {
+                    return a.name.localeCompare(b.name, 'zh-CN');
+                })
+            } else {
+                newData.sort(function (a, b) {
+                    return new Date(a.createtime).getTime() > new Date(b.createtime).getTime() ? 1 : -1;
+                })
+            }
+            innerData = newData;
+            return newData
+        }
+
+        // 排序
+        $('input[type=radio][name=sort]').on('change', function () {
+            var val = $(this).val();
+            console.log(val)
+            if (val == 1) {
+                innerData.sort(function (a, b) {
+                    return a.name.localeCompare(b.name, 'zh-CN');
+                })
+            } else {
+                innerData.sort(function (a, b) {
+                    return new Date(a.createtime).getTime() > new Date(b.createtime).getTime() ? -1 : 1;
+                })
+            }
+            $('#table1').bootstrapTable('load', innerData);
+            // 本地保存
+            localStorage.setItem('sort', val);
+        })
+
+
+        var TableInit = function () {
+            var oTableInit = new Object();
+            //初始化Table
+            oTableInit.Init = function () {
+                $.get('/plan/fp', function (data) {
+                    originData = data.data;
+                    $('#table1').bootstrapTable({
+                        //url: '/plan/fp',         //请求后台的URL（*）
+                        //method: 'post',                      //请求方式（*）
+                        toolbar: '#tbaction',                //工具按钮用哪个容器
+                        striped: true,                      //是否显示行间隔色
+                        cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                        pagination: true,                   //是否显示分页（*）
+                        sortable: true,                     //是否启用排序
+                        sortOrder: "asc",                   //排序方式
+                        queryParams: oTableInit.queryParams,//传递参数（*）
+                        sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                        pageNumber: 1,                       //初始化加载第一页，默认第一页
+                        pageSize: 10,                       //每页的记录行数（*）
+                        pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                        search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                        strictSearch: false,
+                        showColumns: true,                  //是否显示所有的列
+                        showRefresh: true,                  //是否显示刷新按钮
+                        minimumCountColumns: 2,             //最少允许的列数
+                        clickToSelect: true,                //是否启用点击选中行
+                        //height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                        uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                        showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+                        cardView: false,                    //是否显示详细视图
+                        detailView: false,                   //是否显示父子表
+                        sortName: 'planclass',
+                        columns: [{
+                            field: 'id',
+                            title: '任务id',
+                            visible: false
+                        },
+                            {
+                                field: 'planclass',
+                                title: '任务分类',
+                                formatter: function (val) {
+                                    return '<a href="javascript:;" class="planclass">'+val+'</a>'
+                                },
+                                events: {
+                                    'click .planclass': function (e, value, row, index) {
+                                        var newData = getDataByPlanClass(value, data.data)
+                                        $('#table1').bootstrapTable('load', newData)
+                                        $('#table1').bootstrapTable('showColumn', 'name')
+                                        $('#table1').bootstrapTable('showColumn', 'etname')
+                                        $('#table1').bootstrapTable('showColumn', 'uploadnum')
+                                        $('#table1').bootstrapTable('showColumn', 'plannum')
+                                        $('#table1').bootstrapTable('showColumn', 'status')
+                                        $('#table1').bootstrapTable('showColumn', 'createtime')
+                                        $('#table1').bootstrapTable('showColumn', 'plantime')
+                                        $('#table1').bootstrapTable('showColumn', 'completetime')
+                                        $('#table1').bootstrapTable('showColumn', 'createuname')
+                                        $('#table1').bootstrapTable('showColumn', 'filename')
+                                        $('#table1').bootstrapTable('hideColumn', 'planclass')
+                                        $('#table1').bootstrapTable('hideColumn', 'plansnum')
+                                        $('#table1').bootstrapTable('hideColumn', 'plandone')
+                                        $('#table1').bootstrapTable('hideColumn', 'plandoing')
+                                        $('#backclass').show()
+                                        $('#sort').show()
+                                    }
+                                },
+
+                            },
+                            {
+                                field: 'plansnum',
+                                title: '任务数量'
+                            },
+                            {
+                                field: 'plandone',
+                                title: '已关闭'
+                            },
+                            {
+                                field: 'plandoing',
+                                title: '进行中'
+                            },
+                            {
+                            field: 'name',
+                            title: '任务名称',
+                                formatter: createlink,
+                                visible: false
+                            //editable: {
+                            //    type: 'text',
+                            //    title: '任务名称',
+                            //    validate: function (v) {
+                            //        if (!v) return '任务名称不能为空';
+                            //    }
+                            //},
+                        }, {
+                            field: 'des',
+                            title: '备注',
+                            visible: false
+                        }, {
+                            field: 'etname',
+                                title: '模板',
+                                visible: false
+                        }, {
+                            field: 'etid',
+                            title: '模板id',
+                            visible: false
+                            //editable: {
+                            //    type: 'select',
+                            //    title: '模板',
+                            //    source: parrs,
+                            //    validate: function (v) {
+                            //        if (!v) return '模板不能为空';
+                            //    }
+                            //},
+                        }, {
+                            field: 'uploadnum',
+                                title: '上传数量',
+                                visible: false
+                            //editable: {
+                            //    type: 'number',
+                            //    title: '上传数量',
+                            //    validate: function (v) {
+                            //        if (!v) return '上传数量不能为空';
+                            //    }
+                            //},
+                        }, {
+                            field: 'plannum',
+                                title: '计划数量',
+                                visible: false
+                            //editable: {
+                            //    type: 'number',
+                            //    title: '计划数量',
+                            //    validate: function (v) {
+                            //        if (!v) return '计划数量不能为空';
+                            //    }
+                            //},
+                        }, {
+                            field: 'status',
+                            title: '状态',
+                                formatter: convertStatus,
+                                visible: false
+
+                        }, {
+                            field: 'createtime',
+                                title: '发布时间',
+                                visible: false
+                        }, {
+                            field: 'plantime',
+                                title: '计划完成时间',
+                                visible: false
+                            //editable: {
+                            //    type: 'date',
+                            //    clear: false,
+                            //    placement: 'left',
+                            //    title: '请选择日期:',
+                            //    validate: function (v) {
+                            //        if (!v) return '计划完成时间不能为空';
+                            //    }
+                            //},
+                        }, {
+                            field: 'completetime',
+                                title: '实际完成时间',
+                                visible: false
+                        }, {
+                            field: 'createuid',
+                            title: '发布人id',
+                            visible: false
+                        }, {
+                            field: 'createuname',
+                                title: '发布人',
+                                visible: false
+                        },
+                        {
+                            field: 'filename',
+                            title: '操作',
+                            width: usertype != 0 ? '10%' : '15%',
+                            formatter: function (value, row, index) {
+                                //var text = "<a href=" + value + " style='margin-right:20px;height:20px;line-height:20px;font-size: 14px;padding-top: 0;padding-bottom:0;' class='btn btn-primary download'>下载</a><a class='btn btn-danger delete' style='height:20px;line-height:20px;font-size: 14px;padding-top: 0;padding-bottom:0;'>删除</a>";
+                                var text = '-';
+                                //if (row.etid == -1) {
+                                //    text = "<a class='btn btn-danger delete' style='height:20px;line-height:20px;font-size: 14px;padding-top: 0;padding-bottom:0;'>删除</a>";
+                                //}
+                                //if (usertype != 0) {
+                                //    text = "<a href=" + value + " style='height:20px;line-height:20px;font-size: 14px;padding-top: 0;padding-bottom:0;' class='btn btn-primary download'>下载</a>";
+                                //    if (row.etid == -1) {
+                                //        text = "-";
+                                //    }
+                                //}
+                                if (usertype == 0) {
+                                    text = "<a class='btn btn-danger delete' style='height:20px;line-height:20px;font-size: 14px;padding-top: 0;padding-bottom:0;'>删除</a>";
+                                }
+                                return text;
+                            },
+                            visible: false,
+                            events: {
+                                'click .delete': function (e, value, row, index) {
+                                    var id = row['id'];
+                                    if (!id) return false;
+                                    if (!confirm('您确认删除吗？')) return false;
+                                    $.post('/plan/deletetask', { 'id': id }, function (result) {
+                                        if (result.ok) {
+                                            alert(result.msg);
+                                            location.reload();
+                                        } else {
+                                            var msg = result.msg + "\n\n";
+                                            if (result.data) {
+                                                for (var i = 0; i < result.data.length; i++) {
+                                                    msg += result.data[i]['name'] + "\n";
+                                                }
+                                            }
+                                            alert(msg);
+                                        }
+                                    });
+                                }
+                            },
+                            },],
+                        data: format(data.data)
+                    })
+                })
+            };
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    limit: params.limit,   //页面大小
+                    offset: params.offset,  //页码
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+        $('#backclass').on('click', function () {
+            $('#table1').bootstrapTable('load', format(originData))
+            $('#table1').bootstrapTable('hideColumn', 'name')
+            $('#table1').bootstrapTable('hideColumn', 'etname')
+            $('#table1').bootstrapTable('hideColumn', 'uploadnum')
+            $('#table1').bootstrapTable('hideColumn', 'plannum')
+            $('#table1').bootstrapTable('hideColumn', 'status')
+            $('#table1').bootstrapTable('hideColumn', 'createtime')
+            $('#table1').bootstrapTable('hideColumn', 'plantime')
+            $('#table1').bootstrapTable('hideColumn', 'completetime')
+            $('#table1').bootstrapTable('hideColumn', 'createuname')
+            $('#table1').bootstrapTable('hideColumn', 'filename')
+            $('#table1').bootstrapTable('showColumn', 'planclass')
+            $('#table1').bootstrapTable('showColumn', 'plansnum')
+            $('#table1').bootstrapTable('showColumn', 'plandone')
+            $('#table1').bootstrapTable('showColumn', 'plandoing')
+            $('#backclass').hide()
+            $('#sort').hide()
+        })
+
+        var ButtonInit = function () {
+            var oInit = new Object();
+            var postdata = {};
+
+            oInit.Init = function () {
+                //初始化页面上面的按钮事件
+            };
+
+            return oInit;
+        };
+
+        //$("#add").click(function () {
+        //    var data = $('#table1').bootstrapTable('getData');
+        //    var index = data.length;
+        //    getDate(function (date) {
+        //        $('#table1').bootstrapTable('insertRow', {
+        //            index: index,
+        //            row: {
+        //                id: "",
+        //                name: "",
+        //                des: "",
+        //                uploadnum: 0,
+        //                plannum: "",
+        //                status: 0,
+        //                createtime: date,
+        //                plantime: "",
+        //                completetime: "",
+        //                createuname: user.name,
+        //                etid: "",
+        //                createuid: user.id
+        //            },
+        //        });
+        //    });
+        //});
+        $('#add').on('click', function () {
+            location.href = '/plan/option#new'
+        })
+    </script>
+}
+
+    <div class="container">
+        <a href="javascript:;" id="backclass" style="display:none;" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>任务列表</a>
+        <span id="sort" style="display:none;">排序：<input type="radio" name="sort" value="1" checked/>名称 <input type="radio" name="sort" value="2" />时间</span>
+        <div class="btn-group" role="group" aria-label="..." id="tbaction" auth>
+
+            <button type="button" class="btn btn-success" id="add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发布任务</button>
+            <a href="/plan/templet" class="btn btn-success">模板管理</a>
+            <a href="/plan/enums" class="btn btn-success">枚举管理</a>
+            @*<a href="/plan/files" class="btn btn-success">上传文件</a>*@
+
+        </div>
+        <table id="table1"></table>
+    </div>

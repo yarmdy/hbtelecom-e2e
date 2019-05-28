@@ -1,0 +1,282 @@
+﻿@{
+    ViewBag.Title = "仓库存量";
+    Dictionary<string, object>[] vwarehouse = ViewBag.vwarehouse;
+    Dictionary<string, object>[] vclass = ViewBag.vclass;
+    Dictionary<string, object>[] vgoods = ViewBag.vgoods;
+    Dictionary<string, object>[] changjia = ViewBag.changjia;
+    Dictionary<string, object>[] class2s = ViewBag.class2s;
+    CTCCGoods.Controllers.cuser user = (CTCCGoods.Controllers.cuser)Session["loginuser"];
+}
+@section script{
+    <script>
+        $(function () {
+
+            laydate.render({
+                elem: '#csdate'
+            });
+
+            $.get("/stock/getdate", function (result) {
+                if (result.ok) {
+                    $('#csdate').val(result.date);
+                }
+            });
+
+            //1.初始化Table
+            var oTable = new TableInit();
+            oTable.Init();
+
+            //2.初始化Button的点击事件
+            var oButtonInit = new ButtonInit();
+            oButtonInit.Init();
+            $("#searchg").on("change", function () {
+                if ($(this).val() != -1) {
+                    $("#searchc").val($(this).find("option:selected").attr("cid"));
+                }
+            });
+            $("#searchc").on("change", function () {
+                var $this = $(this);
+                $("#searchg").val("-1");
+                $("#searchg option").each(function () {
+                    if ($this.val() == -1) {
+                        $(this).show();
+                    } else {
+                        if (!$(this).attr("cid") || $this.val() == $(this).attr("cid")) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    }
+                });
+            });
+            $("#btnsearch").on("click", function () {
+                $('#table1').bootstrapTable("hideAllColumns");
+                if ($("#searchtype").val() == "1" || $("#searchtype").val() == "2") {
+                    $('#table1').bootstrapTable("showColumn", "cname");
+                    $('#table1').bootstrapTable("showColumn", "require");
+                    $('#table1').bootstrapTable("showColumn", "stock");
+                    $('#table1').bootstrapTable("showColumn", "purchased");
+                    $('#table1').bootstrapTable("showColumn", "nopurchased");
+                    if ($("#searchtype").val() == "2") {
+                        $('#table1').bootstrapTable("showColumn", "gname");
+                        $('#table1').bootstrapTable("showColumn", "pname");
+                        $('#table1').bootstrapTable("showColumn", "class2");
+                    }
+                } else {
+                    $('#table1').bootstrapTable("showColumn", "wname");
+                    $('#table1').bootstrapTable("showColumn", "cname");
+                    $('#table1').bootstrapTable("showColumn", "require");
+                    $('#table1').bootstrapTable("showColumn", "stock");
+                    $('#table1').bootstrapTable("showColumn", "purchased");
+                    $('#table1').bootstrapTable("showColumn", "gname");
+                    $('#table1').bootstrapTable("showColumn", "pname");
+                    $('#table1').bootstrapTable("showColumn", "nopurchased");
+                    $('#table1').bootstrapTable("showColumn", "class2");
+                }
+
+                $('#table1').bootstrapTable("removeAll").bootstrapTable("refresh");
+            });
+        });
+
+        var TableInit = function () {
+            var oTableInit = new Object();
+            //初始化Table
+            oTableInit.Init = function () {
+                $('#table1').bootstrapTable({
+                    url: '/stock/fs',         //请求后台的URL（*）
+                    method: 'post',                      //请求方式（*）
+                    toolbar: '#tbaction',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: true,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 10,                       //每页的记录行数（*）
+                    pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                    search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    strictSearch: false,
+                    showColumns: false,                  //是否显示所有的列
+                    showRefresh: false,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: true,                //是否启用点击选中行
+                    //height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                    showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    showExport: true,
+                    exportDataType: 'all',
+                    exportTypes: ['csv'],
+                    exportOptions: {
+                        //ignoreColumn: [0,0],            //忽略某一列的索引
+                        fileName: '存量清单',              //文件名称设置
+                        worksheetName: 'Sheet1',          //表格工作区名称
+                        //excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],
+                        //onMsoNumberFormat: DoOnMsoNumberFormat
+                    },
+                    columns: [{
+                        field: 'id',
+                        title: '存量id',
+                        visible: false
+                    }, {
+                        field: 'wid',
+                        title: '地市id',
+                        visible: false
+                    }, {
+                        field: 'wcode',
+                        title: '地市代码',
+                        visible: false
+                    }, {
+                        field: 'wname',
+                        title: '地市名称',
+                    }, {
+                        field: 'cid',
+                        title: '类型id',
+                        visible: false
+                    }, {
+                        field: 'ccode',
+                        title: '类型代码',
+                        visible: false
+                    }, {
+                        field: 'cname',
+                        title: '类型名称',
+                    }, {
+                        field: 'gid',
+                        title: '型号id',
+                        visible: false
+                    }, {
+                        field: 'class2',
+                        title: '分类名称',
+                    }, {
+                        field: 'gcode',
+                        title: '型号代码',
+                        visible: false
+                    }, {
+                        field: 'gname',
+                        title: '型号名称',
+                    }, {
+                        field: 'pname',
+                        title: '厂家',
+                    },
+                    {
+                        field: 'require',
+                        title: '总需求数',
+                    },
+                    {
+                        field: 'stock',
+                        title: '总到货数',
+                    }, {
+                        field: 'purchased',
+                        title: '已购买',
+                    }, {
+                        field: 'nopurchased',
+                        title: '未购买',
+                        formatter: function (value, row, index) {
+                            value = row['stock'] - row['purchased'];
+                            return value;
+                        }
+                    },
+
+                    ],
+
+                });
+            };
+
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    limit: params.limit,   //页面大小
+                    offset: params.offset,
+                    searchtype: $("#searchtype").val(),
+                    searchwh: $("#searchwh").val(),
+                    searchc: $("#searchc").val(),
+                    searchc2: $("#searchc2").val(),
+                    searchg: $("#searchg").val(),
+                    changjia: $("#changjia").val(),
+                    date: $("#csdate").val()
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+
+        var ButtonInit = function () {
+            var oInit = new Object();
+            var postdata = {};
+
+            oInit.Init = function () {
+                //初始化页面上面的按钮事件
+            };
+
+            return oInit;
+        };
+
+
+    </script>
+}
+<div class="container">
+    <div class="form-inline" id="tbaction">
+        <select class="form-control" id="searchtype">
+            <option value="3">明细</option>
+            <option value="2">统计（按设备型号）</option>
+            <option value="1">统计（按设备类型）</option>
+        </select>
+        <select class="form-control" id="searchwh">
+            @if (user.utype == 1)
+            {
+                var house = CTCCGoods.Controllers.DB.QueryAsDics("select * from cwarehouse where id = " + user.wid);
+                <option value="@house[0]["id"]">@house[0]["name"]</option>
+            }
+            else
+            {
+                <option value="-1">所有地市</option>
+                foreach (var wh in vwarehouse)
+                {
+                    <option value="@wh["id"]">@wh["name"]</option>
+                }
+            }
+        </select>
+        <select class="form-control" id="searchc">
+            <option value="-1">所有类型</option>
+            @foreach (var c in vclass)
+            {
+                <option value="@c["id"]">@c["name"]</option>
+            }
+        </select>
+        <select class="form-control" id="searchc2">
+            <option value="-1">所有分类</option>
+            @foreach (var c in class2s)
+            {
+                <option value="@c["class2"]">@c["class2"]</option>
+            }
+        </select>
+        <select class="form-control" id="changjia">
+            @if (user.utype == 3)
+            {
+                <option value="@user.id">@user.name</option>
+            }
+            else
+            {
+                <option value="-1">所有厂家</option>
+                foreach (var j in changjia)
+                {
+                    <option value="@j["id"]">@j["name"]</option>
+                }
+            }
+        </select>
+        <select class="form-control" id="searchg">
+            <option value="-1">所有型号</option>
+            @foreach (var g in vgoods)
+            {
+                <option value="@g["id"]" cid="@g["cid"]">@g["name"]</option>
+            }
+        </select>
+        <input class="form-control" type="text" id="csdate" value="" />
+        <button type="button" class="btn btn-info" id="btnsearch"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
+    </div>
+    <table id="table1"></table>
+</div>

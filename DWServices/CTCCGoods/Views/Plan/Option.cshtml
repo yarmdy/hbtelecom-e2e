@@ -1,0 +1,719 @@
+﻿@{
+    ViewBag.Title = "Option";
+    CTCCGoods.Controllers.cuser user = (CTCCGoods.Controllers.cuser)Session["loginuser"];
+    Dictionary<string, object>[] pc = ViewBag.pc;
+}
+@section style {
+<style>
+    #new-form,
+    #update-form {
+        margin-top: 40px;
+    }
+    #new,
+    #update,
+    #detail,
+    #upload {
+        display: none;
+    }
+    #uploadstatus,
+    #nowstatus {
+        margin: 20px 0;
+        font-size: 16px;
+    }
+    #uploadsub {
+        margin: 20px 0;
+    }
+    .city-box {
+        margin: 20px 0;
+    }
+    #fileBtn {
+        margin-bottom: 20px;
+    }
+    .city-box > div {
+        margin: 0;
+        padding: 0;
+    }
+    #fileBox {
+        display: none;
+    }
+    .red {
+        color: red;
+    }
+    .green {
+        color: green;
+    }
+    #detailTable {
+        text-align:center;
+    }
+    #detailTable td {
+        width: 20%;
+    }
+    .planclass-box {
+        position:relative;
+    }
+    #planclass {
+        padding-right: 20px;
+    }
+    .planclass-box span {
+        position:absolute;
+        width: 20px;
+        line-height: 100%;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .planclass-box span:hover {
+        cursor: pointer;
+        color: #269abc;
+    }
+    .planclass-box .content {
+        position: absolute;
+        display: none;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        width: 100%;
+        padding: 10px;
+    }
+    .planclass-box .content p {
+        border-bottom: 1px solid #ccc;
+        padding: 10px;
+        margin: 0;
+        font-weight: bold;
+    }
+    .planclass-box .content p:hover {
+        cursor: pointer;
+        color: #fff;
+        background-color: #269abc;
+    }
+    .no-template {
+        font-size: 12px;
+        margin-left: 10px;
+    }
+</style>
+}
+@section script{
+<script>
+    if (location.href.includes("msg")) {
+        var msg = location.href.split("?")[1];
+        alert(decodeURI(msg.split("=")[1]));
+        location.href = location.href.split("?")[0];
+    }
+    function formCheck() {
+        if ($('#city').val() == 999) {
+            if ($('#spliteName').val().trim() == '') {
+                alert('请输入分割列名称')
+                return false;
+            }
+        }
+        return true;
+    }
+
+    var hash = location.hash.substr(1)
+    if (hash.indexOf('?message') != -1) {
+        var message = hash.split('?')[1].split('=')[1]
+        alert(decodeURIComponent(message))
+        location.href = location.href.split('?')[0]
+    }
+    var normal = false
+    if (hash.indexOf('-n') != -1) {
+        hash = hash.split('-')[0]
+        normal = true
+    }
+
+    $(function () {
+
+        $('input').attr('autocomplete', 'off')
+
+        function getCityInfo(callback) {
+            $.get('/plan/getcityinfo', function(result) {
+                if(result.ok) {
+                    callback && callback(result.data)
+                }
+            })
+        }
+
+        function getUploadInfo(epid, whid, callback) {
+            $.get('/plan/getuploadinfo?whid='+whid+'&epid='+epid, function(result) {
+                if(result.ok) {
+                    callback && callback(result.data)
+                }
+            })
+        }
+
+        function getPlanInfoById(callback) {
+            var id = hash
+            $.get('/plan/getplaninfobyid?id='+id, function(result) {
+                if(result.ok) {
+                    callback && callback(result.data)
+                }
+            })
+        }
+
+        function getDetail(callback) {
+            var id = hash
+            $.get('/plan/getdetail?id='+id, function(result) {
+                if (result.ok) {
+                    console.log(result.data)
+                    callback && callback(result.data)
+                }
+            })
+        }
+
+        function changeStatusInfo (data) {
+            try{
+                if(data.isUp) {
+                    var statusText = "";
+                    switch (data.data[0].status) {
+                        case 0:
+                            statusText = '等待上传文件';
+                            break;
+                        case 1:
+                            statusText = "分析完成，等待合并";
+                            break;
+                        case -1:
+                            statusText = "文件出现错误";
+                            break;
+                        case -2:
+                            statusText = "文件无法计算";
+                            break;
+                        case -4:
+                            statusText = "管理员回传";
+                            break;
+                        case 2:
+                        case 3:
+                            statusText = "文件计算完成";
+                            break;
+                        case 4:
+                            statusText = "管理员回传";
+                            break;
+                        case 9:
+                            statusText = "上传成功";
+                            break;
+                    }
+                    $('#nowstatus').html('当前状态：<span>'+statusText+'</span>')
+                }else {
+                    $('#nowstatus').html('当前状态：<span>未检测到文件</span>')
+                }
+            }catch(e) {
+
+            }
+        }
+
+        if (hash === 'new') {
+            $('#new').show();
+            $('#update').hide();
+            $('#detail').hide();
+            $('#upload').hide();
+            laydate.render({
+                elem: '#plantime'
+            });
+        } else {
+
+            $('#new').hide();
+            $('#update').show();
+            $('#detail').show();
+            $('#upload').show();
+            getPlanInfoById(function(data) {
+                $('#uid').val(data['info'].id);
+                $('#upid').val(data['info'].id);
+                $('#uname').val(data['info'].name);
+                $('#uetid').html("<option value='-1'>未选择</option>");
+                var flag = false;
+                begin:
+                for (var i = 0; i < data['allet'].length; i++) {
+                    if (!flag) {
+                        for (var j = 0; j < data['allet'].length; j++) {
+                            if (data['allet'][j].id == data['info'].etid) {
+                                $('#uetid').append('<option selected value=' + data['allet'][j].id + '>' + data['allet'][j].name + '</option>');
+                                flag = true;
+                                continue begin;
+                            }
+                        }
+                    }
+                    $('#uetid').append('<option value=' + data['allet'][i].id + '>' + data['allet'][i].name + '</option>');
+                }
+                $('#uuploadnum').val(data['info'].uploadnum);
+                $('#uplannum').val(data['info'].plannum);
+                data['info'].status == 0 ? $('#release').attr('selected', 'selected') : $('#hasdone').attr('selected', 'selected');
+                $('#createtime').val(data['info'].createtime);
+                $('#donetime').val(data['info'].completetime);
+                $('#uplantime').val(data['info'].plantime);
+                $('#createuser').val(data['info'].createuname);
+                $('#uplanclass').val(data['info'].planclass);
+                laydate.render({
+                    elem: '#uplantime'
+                });
+                laydate.render({
+                    elem: '#donetime'
+                });
+            })
+            getDetail(function(data) {
+                if (data.isAdmin) {
+                    if (data.etid == -1) {
+                        $('#downloadt').attr('style', 'display: none')
+                        $('#uploadfrom').attr('action', '/plan/uploadfiles')
+                    }
+                    for(var i=0;i<data.detail.length;i++) {
+                        var $tr = $('#detailTable').find('tr:contains("'+data.detail[i].name+'")')
+                        var statusText = "";
+                        switch (data.detail[i].status) {
+                            case 0:
+                                statusText = '等待上传文件';
+                                break;
+                            case 1:
+                                statusText = "分析完成，等待合并";
+                                break;
+                            case -1:
+                                statusText = "文件出现错误";
+                                break;
+                            case -2:
+                                statusText = "文件无法计算";
+                                break;
+                            case -3:
+                                statusText = "文件合并失败";
+                                break;
+                            case -4:
+                                statusText = "管理员回传";
+                                $tr.children().eq(1).find('span').removeClass('glyphicon-remove').addClass('red').removeClass('green').addClass('glyphicon-repeat')
+                                break;
+                            case 2:
+                            case 3:
+                                $tr.children().eq(1).find('span').removeClass('glyphicon-remove').removeClass('red').addClass('green').addClass('glyphicon-ok')
+                                statusText = "文件计算完成";
+                                break;
+                            case 4:
+                                $tr.children().eq(1).find('span').removeClass('glyphicon-remove').removeClass('red').addClass('green').addClass('glyphicon-repeat')
+                                statusText = "管理员回传";
+                                break;
+                            case 9:
+                                $tr.children().eq(1).find('span').removeClass('glyphicon-remove').removeClass('red').addClass('green').addClass('glyphicon-ok')
+                                statusText = "已上传";
+                                break;
+                        }
+                        $tr.children().eq(3).text(statusText)
+                        if (data.detail[i].status == 2 || data.detail[i].status == 3 || data.detail[i].status == 4 || data.detail[i].status == 9) {
+                            $tr.children().eq(4).html('<a href="downplan?epid=' + data.detail[i].epid + '&whid=' + data.detail[i].whid + '">下载</a>')
+                        } else if (data.detail[i].status == -1 || data.detail[i].status == -2 || data.detail[i].status == -4) {
+                             var name = '/planup/error/' + hash + '/' + data.detail[i].whid + '/error.txt'
+                            $tr.children().eq(4).html('<a href="'+name+'">错误信息</a>')
+                        }
+                        $tr.children().eq(2).text(data.detail[i].uptime);
+                    }
+                    if(data.combined) {
+                        $('#allFiles').css('display', 'inline-block');
+                        $('#allFiles').attr('href', '/planup/combine/'+ hash +'/'+data['etname'].name+'.xlsx');
+                    }
+                    if (data.etid != -1) {
+                        $('#downloadt').attr('href', '/plantemp/' + data.etid.etid + '/' + data.etname.name + '.xlsx').show();
+                    }
+                } else {
+                    if (data.etid == -1) {
+                        $('#downloadt').attr('style', 'display: none')
+                        $('#uploadfrom').attr('action', '/plan/uploadfiles')
+                    }
+                    if(data.detail.length>0) {
+                        var $tr = $('#detailTable').find('tr').eq(1)
+                        $tr.children().eq(0).html(data.detail[0].name)
+                        var statusText = "";
+                        switch (data.detail[0].status) {
+                            case 0:
+                                statusText = '等待上传文件';
+                                break;
+                            case 1:
+                                statusText = "分析完成，等待合并";
+                                break;
+                            case -1:
+                                statusText = "文件出现错误";
+                                break;
+                            case -2:
+                                statusText = "文件无法计算";
+                                break;
+                            case -4:
+                                statusText = "管理员回传";
+                                $tr.children().eq(1).find('span').removeClass('glyphicon-remove').addClass('red').removeClass('green').addClass('glyphicon-repeat')
+                                break;
+                            case -3:
+                            case 2:
+                            case 3:
+                                statusText = "文件计算完成";
+                                $tr.children().eq(1).find('span').removeClass('glyphicon-remove').removeClass('red').addClass('green').addClass('glyphicon-ok')
+                                break;
+                            case 4:
+                                $tr.children().eq(1).find('span').removeClass('glyphicon-remove').removeClass('red').addClass('green').addClass('glyphicon-repeat')
+                                statusText = "管理员回传";
+                                break;
+                            case 9:
+                                $tr.children().eq(1).find('span').removeClass('glyphicon-remove').removeClass('red').addClass('green').addClass('glyphicon-ok')
+                                statusText = "已上传";
+                                break;
+                        }
+                        $tr.children().eq(3).text(statusText)
+                        if (data.detail[0].status == 2 || data.detail[0].status == 3 || data.detail[0].status == 4 || data.detail[0].status == 9) {
+                            $tr.children().eq(4).html('<a href="downplan?epid=' + data.detail[0].epid + '&whid=' + data.detail[0].whid + '">下载</a>')
+                        } else if (data.detail[0].status == -1 || data.detail[0].status == -2 || data.detail[0].status == -4) {
+                             var name = '/planup/error/' + hash + '/' + data.detail[0].whid + '/error.txt'
+                            $tr.children().eq(4).html('<a href="'+name+'">错误信息</a>')
+                        }
+                        $tr.children().eq(2).text(data.detail[0].uptime);
+                        
+                    }
+                    if (data.etid != -1) {
+                        $('#downloadt').attr('href', '/plantemp/' + data.etid.etid + '/' + data.etname.name + '.xlsx').show();
+                    }
+                }
+            })
+            getCityInfo(function(data) {
+                var city = data.city;
+                var user = data.user;
+                var node = "";
+                if (user.utype == 0) {
+                    node += "<option value='-1'>请选择</option>";
+                    for (var i = 0; i < city.length; i++) {
+                        node += "<option value=" + city[i].id + ">" + city[i].name + "</option>";
+                    }
+                } else {
+                    for (var i = 0; i < city.length; i++) {
+                        if (city[i].name == user.name) {
+                            node = "<option value=" + city[i].id + " selected>" + city[i].name + "</option>";
+                            $('#city').parent().append('<input type="hidden" value="'+city[i].id+'" name="whid" />')
+                            $('#city').attr('name', '').attr('disabled', 'disabled')
+                            break;
+                        }
+                    }
+                }
+                $('#city').append(node);
+                getUploadInfo(hash, $('#city').val(), function(data) {
+                    changeStatusInfo(data)
+                })
+            })
+        }
+        
+        $('#city').on('change', function () {
+            if ($('#city').val() == 999) {
+                $('.splitename').css('display', 'block')
+            }
+            getUploadInfo(hash, $('#city').val(), function(data) {
+                changeStatusInfo(data)
+            })
+        })
+
+        $('#fileBtn').on('click', function () {
+            $('#fileBox').trigger('click');
+        });
+        $('#fileBox').on('change', function () {
+            var filename = $('#fileBox').val().split('\\')[$('#fileBox').val().split('\\').length-1];
+            $('#fileBtn').html('<span class="glyphicon glyphicon-file"></span>已选择 [' + filename + ']');
+        });
+        
+        $('#uploadsub').on('click', function () {
+            if ($('#city').val() == -1) {
+                alert('请选择地市！');
+                return false;
+            }
+            return true;
+        });
+
+        // task class
+        $('.planclass-box span').on('click', function (e) {
+            e.stopPropagation()
+            if ($(this).hasClass('glyphicon-chevron-down')) {
+                $(this).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
+                $('.planclass-box .content').css('display', 'block')
+            } else {
+                $(this).removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
+                $('.planclass-box .content').css('display', 'none')
+            }
+        })
+        $('body').on('click', function () {
+            if ($('.planclass-box span').hasClass('glyphicon-chevron-up')) {
+                $('.planclass-box span').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
+                $('.planclass-box .content').css('display', 'none')
+            }
+        })
+
+        $('.planclass-box .content').on('click', 'p', function () {
+            $('#planclass').val($(this).html())
+            $('.planclass-box span').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
+            $('.planclass-box .content').css('display', 'none')
+        })
+
+        $('#pcs').on('click', 'a', function () {
+            $('#uplanclass').val($(this).html())
+        })
+
+        if (hash == 'new') {
+            $.post('/plan/getplanclass', function (result) {
+                if (result.ok) {
+                    if (result.data == null) {
+                        return
+                    }
+                    for (var i = 0; i < result.data.length;i++) {
+                        var p = $('<p>' + result.data[i].planclass + '</p>')
+                        $('.planclass-box .content').append(p)
+                    }
+                }
+            })
+        }
+
+        $('#noTemp').on('click', function (e) {
+            e.preventDefault()
+            $('#etid').attr('disabled', 'disabled');
+        })
+
+
+    })
+</script>
+}
+<div id="container" class="container">
+    @if (user.utype == 0)
+    {
+        <div id="new">
+            <h3>任务发布</h3>
+            <form id="new-form" action="/plan/inserttask" method="post">
+                <div class="form-group">
+                    <label for="name">任务名称</label>
+                    <input type="text" class="form-control" id="name" name="name" value="" />
+                </div>
+                <div class="form-group">
+                    <label for="etid">模板@*<a href="#" class="no-template" id="noTemp">不选择模板</a>*@</label>
+                    <select id="etid" name="etid" class="form-control">
+                        <option value="-1">请选择</option>
+                        @foreach (var et in ViewBag.et)
+                        {
+                            <option value="@et["id"]">@et["name"]</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="plannum">计划数量</label>
+                    <input type="text" class="form-control" id="plannum" name="plannum" value="" />
+                </div>
+                <div class="form-group">
+                    <label for="plantime">计划完成时间</label>
+                    <input type="text" class="form-control" id="plantime" name="plantime" value="" />
+                </div>
+                <div class="form-group">
+                    <label for="planclass">任务分组</label>
+                    <div class="planclass-box">
+                        <input type="text" name="planclass" id="planclass" value="" class="form-control" />
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                        <div class="content">
+                            
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-info" value="发布" />
+            </form>
+        </div>
+        <div id="update">
+            <h3>修改</h3>
+            <form method="post" action="/plan/updatetask" id="update-form">
+                <div class="row">
+                    <div class="form-group col-xs-2" style="display:none;">
+                        <label for="uid">任务ID</label>
+                        <input type="text" class="form-control" id="uid" name="id" value="" readonly />
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label for="uname">任务名称</label>
+                        <input type="text" class="form-control" id="uname" name="name" value="" />
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label for="uplanclass">任务分类</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="planclass" id="uplanclass" aria-label="..." value="" />
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                <ul class="dropdown-menu" id="pcs">
+                                    @foreach (var item in pc) {
+                                        <li><a href="javascript:;">@item["planclass"]</a></li>
+                                    }
+                                </ul>
+                            </div><!-- /btn-group -->
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="form-group col-xs-3">
+                        <label for="uetid">模板</label>
+                        <select id="uetid" name="etid" class="form-control"></select>
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label for="uuploadnum">上传数量</label>
+                        <input type="text" class="form-control" name="uploadnum" id="uuploadnum" value="" readonly />
+                    </div>
+                    <div class="form-group col-xs-3">
+                        <label for="uplannum">计划数量</label>
+                        <input type="text" class="form-control" name="plannum" id="uplannum" value="" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-2">
+                        <label for="ustatus">状态</label>
+                        <select class="form-control" id="ustatus" name="status">
+                            <option value="0" id="release">开启</option>
+                            <option value="1" id="hasdone">关闭</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label for="createtime">发布时间</label>
+                        <input type="text" class="form-control" name="createtime" id="createtime" value="" readonly />
+                    </div>
+                    <div class="form-group col-xs-3">
+                        <label for="uplantime">计划完成时间</label>
+                        <input type="text" class="form-control" name="plantime" id="uplantime" value="" />
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label for="donetime">实际完成时间</label>
+                        <input type="text" class="form-control" name="donetime" id="donetime" value="" />
+                    </div>
+                    <div class="form-group col-xs-3">
+                        <label for="createuser">发布人</label>
+                        <input type="text" class="form-control" name="createuser" id="createuser" value="" readonly />
+                    </div>
+                </div>
+                <div class="row">
+                    <input type="submit" value="确认修改" class="btn btn-warning col-xs-1 col-xs-push-5" />
+                </div>
+            </form>
+        </div>
+        <div id="detail">
+            <h3 style="display: inline-block;">详情</h3>&nbsp;&nbsp;<a id="downloadt" href="" style="display:none;">下载模板</a>&nbsp;&nbsp;<a id="allFiles" href="" style="display:none;">下载合并文件</a>
+            <table id="detailTable" class="table table-condensed table-striped table-hover">
+                <tr>
+                    <td>地市</td>
+                    <td>上传</td>
+                    <td>上传时间</td>
+                    <td>状态</td>
+                    <td>下载</td>
+                </tr>
+                <tr>
+                    <td>石家庄</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>邯郸</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>保定</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>沧州</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>承德</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>廊坊</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>衡水</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>秦皇岛</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>张家口</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>邢台</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>唐山</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+                <tr>
+                    <td>雄安</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+            </table>
+        </div>
+    }
+    else 
+    {
+        <div id="detail">
+            <h3 style="display: inline-block;">详情</h3>&nbsp;&nbsp;<a id="downloadt" href="" style="display:none;">下载模板</a>
+            <table id="detailTable" class="table table-condensed table-striped table-hover">
+                <tr>
+                    <td>地市</td>
+                    <td>上传</td>
+                    <td>上传时间</td>
+                    <td>状态</td>
+                    <td>下载</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td><span class="glyphicon glyphicon-remove red"></span></td>
+                    <td></td>
+                    <td>-</td>
+                    <td><a href=""></a></td>
+                </tr>
+            </table>
+        </div>
+    }
+    <div id="upload">
+        <h3>上传</h3>
+        <div id="nowstatus">
+            当前状态：<span>未检测到文件</span>
+        </div>
+        <div>
+            <form id="uploadfrom" action="/plan/uploadfile" method="post" enctype="multipart/form-data" onsubmit="return formCheck()">
+                <input type="hidden" name="id" id="upid" value="" />
+                <div class="row city-box">
+                    <div class="col-xs-3">
+                        <select class="form-control" id="city" name="whid"></select>
+                    </div>
+                    <div class="col-xs-3 splitename" style="margin-left: 10px;display:none;">
+                        <input type="text" class="form-control" name="spliteName" id="spliteName" placeholder="分割列名称">
+                    </div>
+                </div>
+                <input type="file" id="fileBox" name="file" />
+                <button type="button" class="btn btn-primary" id="fileBtn"><span class="glyphicon glyphicon-file"></span>选择文件</button>
+                <br />
+                <input type="submit" id="uploadsub" class="btn btn-info" value="上传" />
+            </form>
+        </div>
+    </div>
+</div>

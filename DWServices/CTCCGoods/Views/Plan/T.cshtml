@@ -1,0 +1,469 @@
+﻿@{
+    ViewBag.Title = "模板";
+    CTCCGoods.Controllers.e_templet templet = ViewBag.templet;
+    Dictionary<string, object>[] enums = ViewBag.enums;
+}
+@section style{
+    <style>
+        .act {
+            font-size: 12px;
+            height: 20px;
+            line-height: 20px;
+            padding: 0 1px;
+            margin: 0 1px;
+            width: 35px;
+        }
+        #loading {
+            display:none;
+        }
+        #loading div:first-child {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color:rgba(0,0,0,.3);
+            z-index: 9999;
+        }
+        #loading div:last-child {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            color: #fff;
+            font-size: 30px;
+            -webkit-transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
+            z-index: 99999;
+        }
+        ::selection {
+            background: transparent;
+        }
+    </style>
+}
+@section script{
+    <script>
+        function HEC(html)
+        {
+            var temp = document.createElement ("div");
+            (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
+            var output = temp.innerHTML;
+            temp = null;
+            return output;
+        }
+        function HDC(text)
+        {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        var etctypes = [
+            @foreach (CTCCGoods.Controllers.e_etctype e in Enum.GetValues(typeof(CTCCGoods.Controllers.e_etctype)))
+            {
+            @:{value:"@((int)e)",text:"@(CTCCGoods.Controllers.O2.GED(e))"},
+            }
+        ];
+        var enums=[
+            {value:-1,text:"-",fenlei:"全部"},
+            @foreach (var e in enums)
+            {
+            @:{value:"@(e["id"])",text:"@(e["name"])",fenlei:"@(e["eclass"])"},
+            }
+        ];
+        function notnullf(v){
+            return "<input type=\"checkbox\" class=\"ck\" "+(v?"checked":"")+" />";
+        }
+        function actionbtn(v){
+            return "<button class=\"btn btn-info act up\"><span class=\"glyphicon glyphicon-arrow-up\" aria-hidden=\"true\"></span> 上</button><button class=\"btn btn-info act down\"><span class=\"glyphicon glyphicon-arrow-down\" aria-hidden=\"true\"></span> 下</button><button class=\"btn btn-danger act del\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> 删</button>";
+        }
+        function onrowsave(field, row, oldValue, $el) {
+            $('#table1').bootstrapTable("updateRow",{index:row.ordernum-1,row:row});
+        }
+        $(function () {
+            //1.初始化Table
+            var oTable = new TableInit();
+            oTable.Init();
+
+            //2.初始化Button的点击事件
+            var oButtonInit = new ButtonInit();
+            oButtonInit.Init();
+            @{
+                int i = 0;
+            }
+            @foreach (var col in templet.cols)
+            {
+
+            <text>
+                $('#table1').bootstrapTable('insertRow', { index: @(i), row: { etid:@(col.Value.etid),ordernum:@(col.Value.ordernum),name:"@(Html.Raw(col.Value.name.Replace("\n","\\n").Replace("\"","\\\"")))",
+                    classname:"@(Html.Raw(col.Value.classname.Replace("\n","\\n").Replace("\"","\\\"")))",comments:"@(Html.Raw(col.Value.comments.Replace("\n","\\n").Replace("\"","\\\"")))", etctype:@((int)col.Value.etctype.Value),eeid:@(col.Value.eeid),notnull:@(col.Value.notnull.HasValue&&col.Value.notnull.Value?"true":"false"),expr:"@(Html.Raw(col.Value.expr))",ecc:"@(Html.Raw(col.Value.ecc))",} });
+            </text>
+                i++;
+            }
+            $("#add").on("click",function(){
+                var count=$('#table1').bootstrapTable('getData').length;
+                $('#table1').bootstrapTable('insertRow', { index: count, row: { ordernum:count+1,name:"",
+                    classname:"",comments:"", etctype:0,eeid:-1,notnull:false,expr:"",ecc:"",} });
+            });
+            $("#save").on("click",function(){
+                var pagecolsdata = $('#table1').bootstrapTable('getData');
+                    //return false
+                var pagedata={name:$("#txtName").val(),des:$("#txtDes").val(),cols2:JSON.stringify(pagecolsdata)};
+                @if(templet.id.HasValue && templet.id.Value>0){
+                    @:pagedata.id=@(templet.id.Value);
+                }
+                $.post("/plan/ut",pagedata,function(data){
+                    if(data.ok){
+                        window.location.href="/plan/t/"+data.etid;
+                    }else{
+                        alert(data.msg);
+                    }
+                });
+            })
+
+            $('#table1').on('mousedown', 'tbody tr', function (e) {
+                e.stopPropagation()
+                if (e.target === $(this).children('td')[0] && e.button === 0) {
+                    var currentIndex = $(this).attr('data-index')
+                    var originLen = $('#table1 tbody').children('tr').length
+                    var cloneTr = $(this).clone()
+                    $(this).css({ position: 'absolute', overflow: 'hidden' })
+                    $(this).velocity({
+                        width: '15px',
+                        height: '15px',
+                        borderRadius: '15px',
+                        backgroundColor: '#1f6fb5'
+                    })
+                    var x = parseInt($(this).css('left'))
+                    var y = parseInt($(this).css('top'))
+                    var sx = e.pageX
+                    var sy = e.pageY
+                    var tr = this
+                    var targetTr = null
+                    $(document).on('mousemove', function (e) {
+                        e.stopPropagation()
+                        var sx2 = e.pageX - sx
+                        var sy2 = e.pageY - sy
+                        $(tr).css({ left: x + sx2, top: y + sy2 })
+                    })
+                    $('#table1').on('mouseenter', 'tbody tr', function () {
+                        e.stopPropagation()
+                        var compIndex = $(this).attr('data-index')
+                        if (currentIndex < compIndex) {
+                            $(this).css('border-bottom', '2px solid #ff534d')
+                        } else {
+                            $(this).css('border-top', '2px solid #ff534d')
+                        }
+                        targetTr = this
+                    })
+                    $('#table1').on('mouseleave', 'tbody tr', function () {
+                        e.stopPropagation()
+                        $(this).css('border-top', '0px')
+                        $(this).css('border-bottom', '0px')
+                        targetTr = null
+                    })
+                    $(document).on('mouseup', function (e) {
+                        e.stopPropagation()
+                        $(document).unbind('mousemove')
+                        $('#table1').unbind('mouseenter')
+                        if (targetTr && targetTr !== tr) {
+                            $(tr).remove()
+                            var index = parseInt($(targetTr).attr('data-index'))
+                            var data = $('#table1').bootstrapTable('getRowByUniqueId', parseInt($(tr).attr('data-uniqueid')))
+                            $('#table1').bootstrapTable('removeByUniqueId', parseInt($(tr).attr('data-uniqueid')))
+                            $('#table1').bootstrapTable('insertRow', {
+                                index: index, row: {
+                                    ordernum: -1, name: data.name,
+                                    classname: data.classname, comments: data.comments, etctype: data.etctype, eeid: data.eeid, notnull: data.notnull, expr: data.expr, ecc: data.ecc,
+                                }
+                            });
+                            var trs = $('#table1 tbody').children('tr')
+                            for (var i = 0; i < trs.length; i++) {
+                                var uid = parseInt($(trs[i]).attr('data-uniqueid'))
+                                if (uid === -1) {
+                                    continue
+                                }
+                                var d = $('#table1').bootstrapTable('getRowByUniqueId', uid)
+                                d.ordernum = i + 1
+                                $('#table1').bootstrapTable('updateRow', {
+                                    index: i,
+                                    row: d
+                                })
+                            }
+                            var r = $('#table1').bootstrapTable('getRowByUniqueId', -1)
+                            r.ordernum = index + 1
+                            $('#table1').bootstrapTable('updateRow', {
+                                index: index,
+                                row: r
+                            })
+                            $(document).unbind('mouseup')
+                        } else {
+                            var next = parseInt($(tr).attr('data-index')) + 1
+                            $(tr).remove()
+                            if (next > $('#table1 tbody').children().length) {
+                                $('#table1').find('tbody').append(cloneTr)
+                            } else {
+                                $('#table1').find('tbody').find('tr[data-index=' + next + ']').before(cloneTr)
+                            }
+                            $(document).unbind('mouseup')
+                        }
+                        var trs = $('#table1 tbody').children('tr')
+                        var keys = {}
+                        var vals = {}
+                        var repeatId, repeatVal
+                        if (trs.length > originLen) {
+                            for (var i = 0; i < trs.length; i++) {
+                                var thisIndex = $(trs[i]).attr('data-uniqueid')
+                                var thisVal = $(trs[i]).children('td').eq(1).text()
+                                if (keys[thisIndex]) {
+                                    repeatId = thisIndex
+                                } else {
+                                    keys[thisIndex] = true
+                                }
+                                if (vals[thisVal]) {
+                                    repeatVal = thisVal
+                                } else {
+                                    vals[thisVal] = thisVal
+                                }
+                            }
+                        }
+                        if (repeatId && repeatVal) {
+                            var repeatItems = $('#table1 tbody').children('[data-uniqueid='+repeatId+']')
+                            for (var j = 0; j < repeatItems.length; j++) {
+                                console.log(repeatItems.eq(j).children().eq(1).text())
+                                if (repeatItems.eq(j).children().eq(1).text() == repeatVal) {
+                                    repeatItems.eq(j).remove()
+                                }
+                            }
+                        }
+                    })
+                }
+            })
+        });
+        
+        var TableInit = function () {
+            var oTableInit = new Object();
+            //初始化Table
+            oTableInit.Init = function () {
+                $('#table1').bootstrapTable({
+                    //url: '/plan/ftc',         //请求后台的URL（*）
+                    method: 'post',                      //请求方式（*）
+                    toolbar: '#tbaction',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: true,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 65534,                       //每页的记录行数（*）
+                    pageList: [65534],        //可供选择的每页的行数（*）
+                    search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    strictSearch: false,
+                    showColumns: false,                  //是否显示所有的列
+                    showRefresh: false,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: true,                //是否启用点击选中行
+                    //height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    uniqueId: "ordernum",                     //每一行的唯一标识，一般为主键列
+                    showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    columns: [{
+                        field: 'etid',
+                        title: '模板id',
+                        visible: false,
+                    }, {
+                        field: 'ordernum',
+                        title: '序号',
+                    }, {
+                        field: 'name',
+                        title: '列名',
+                        editable: {
+                            validate: function (value) { //字段验证
+                                if (!$.trim(value)) {
+                                    return '不能为空';
+                                }
+                            },
+                        }
+                    }, {
+                        field: 'classname',
+                        title: '分类名称',
+                        editable: true
+                    },
+                    {
+                        field: 'comments',
+                        title: '注释',
+                        editable: true
+                    },{
+                        field: 'etctype',
+                        title: '数据类型',
+                        editable: {
+                            type: "select",
+                            //pk:2,
+                            source: etctypes
+                        }
+                    },  {
+                        field: 'eeid',
+                        title: '枚举',
+                        editable: {
+                            type: "selectx",
+                            //pk:2,
+                            source: enums
+                        }
+                    }, {
+                        field: 'notnull',
+                        title: '必填',
+                        formatter:notnullf,
+                        events:{
+                            "click .ck":function(a,b,c,d){
+                                c.notnull=!b;
+                            }
+                        }
+                    }, {
+                        field: 'expr',
+                        title: '公式',
+                        editable: {
+
+                        }
+                    }, {
+                        field: 'ecc',
+                        title: '校验',
+                        editable: {
+
+                        }
+                    },{
+                        field: 'ordernum2',
+                        title: '操作',
+                        formatter:actionbtn,
+                        events:{
+                            "click .up":function(a,b,c,d){
+                                if(d<=0) return;
+                                var data=$('#table1').bootstrapTable('getData');
+                                var up=JSON.parse(JSON.stringify(data[d-1]));
+                                up.ordernum=d+1;
+                                var down=JSON.parse(JSON.stringify(c));
+                                down.ordernum=d;
+                                $('#table1').bootstrapTable("updateRow",{index:d-1,row:down});
+                                $('#table1').bootstrapTable("updateRow",{index:d,row:up});
+                            }
+                            ,
+                            "click .down":function(a,b,c,d){
+                                var count=$('#table1').bootstrapTable('getData').length;
+                                if(d>=count-1) return;
+                                var data=$('#table1').bootstrapTable('getData');
+                                var up=JSON.parse(JSON.stringify(c));
+                                up.ordernum=d+2;
+                                var down=JSON.parse(JSON.stringify(data[d+1]));
+                                down.ordernum=d+1;
+                                $('#table1').bootstrapTable("updateRow",{index:d+1,row:up});
+                                $('#table1').bootstrapTable("updateRow",{index:d,row:down});
+                            },
+                            "click .del":function(a,b,c,d){
+                                $('#table1').bootstrapTable("remove",{field:"ordernum",values:[c.ordernum]});
+                                var count=$('#table1').bootstrapTable('getData').length;
+                                for(var ii=d;ii<count;ii++){
+                                    $('#table1').bootstrapTable("updateRow",{index:ii,row:{ordernum:ii+1}});
+                                }
+
+                            },
+                        }
+                    }, ],
+                    onEditableSave: onrowsave,
+                });
+            };
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    limit: params.limit,   //页面大小
+                    offset: params.offset,  //页码
+                    @(templet.id.HasValue ? "etid:" + templet.id + "," : "")
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+
+        var ButtonInit = function () {
+            var oInit = new Object();
+            var postdata = {};
+
+            oInit.Init = function () {
+                //初始化页面上面的按钮事件
+            };
+
+            return oInit;
+        };
+
+        $('#import').on('click', function () {
+            var id = location.href.substr(location.href.lastIndexOf('/') + 1)
+            $('#pageid').val(id);
+            $('#tfile').trigger('click')
+        })
+
+        $('#tfile').on('change', function () {
+            //$('#subbtn').trigger('click');
+            var id = location.href.substr(location.href.lastIndexOf('/') + 1)
+            var fd = new FormData();
+            fd.append("upfile", $("#tfile").get(0).files[0]);
+            $.ajax({
+                url: "/plan/importtemp",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: fd,
+                dataType: 'json',
+                beforeSend: function () {
+                    $('#loading').show();
+                },
+                success: function (result) {
+                    if (result.ok) {
+                        var data = result.data;
+                        $('#table1').bootstrapTable('removeAll'); 
+                        for (var i = 0; i < data.length;i++) {
+                            var count = $('#table1').bootstrapTable('getData').length;
+                            $('#table1').bootstrapTable('insertRow', {
+                                index: count, row: {
+                                    ordernum: count + 1, name: data[i].data,
+                                    classname: data[i].class, comments: data[i].comments, etctype: 0, eeid: -1, notnull: false, expr: "", ecc: "",
+                                }
+                            });
+                        }
+                        $('#loading').hide();
+                    } else {
+                        alert(result.msg);
+                    }
+                }
+            })
+        });
+
+    </script>
+}
+<div class="container">
+    <div class="form-inline" id="tbaction">
+        <button type="button" class="btn btn-info" id="add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加列</button>
+        <button type="button" class="btn btn-primary" id="import"><span class="glyphicon glyphicon-flash" aria-hidden="true"></span> 导入列</button>
+        <div class="input-group">
+            <span class="input-group-addon">模板名</span>
+            <input type="text" placeholder="模板名" class="form-control" value="@templet.name" id="txtName" />
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">备注</span>
+            <input type="text" placeholder="备注" class="form-control" value="@templet.des" id="txtDes" />
+        </div>
+
+    </div>
+    <form style="display:none;">
+        <input type="text" id="pageid" name="id" />
+        <input type="file" id="tfile" name="file" value="" />
+    </form>
+    <div id="loading">
+        <div></div>
+        <div id="msging">正在解析...</div>
+    </div>
+    <table id="table1"></table>
+    <button type="button" class="btn btn-success" id="save" style="margin-top:10px"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存并生成模板</button>
+</div>

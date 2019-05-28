@@ -1,0 +1,251 @@
+﻿@{
+    ViewBag.Title = "超忙门限定义";
+}
+@section style{
+    <style>
+        .fixk {
+            width:300px;
+            height:50px;
+            background-color:white;
+            border:1px solid #ccc;
+            padding:8px;
+            position:absolute;
+            left:0;
+            top:0;
+            box-shadow:0 0 5px 0 rgba(0,0,0,.5);
+            z-index:999;
+        }
+    </style>
+}
+@section script{
+    <script>
+        function bfz(v) {
+            if (v) {
+                return "≥"+v+"%"+"&nbsp;<a class=\"fix\" href=\"#\">修改</a>";
+            } else {
+                return null;
+            }
+        }
+        function gsf(v, d, i, f) {
+            if (v) {
+                if (d.id < 5) {
+                    return "≥" + v + "&nbsp;<a class=\"fix\" href=\"#\">修改</a>";
+                } else {
+                    return "<" + v + "&nbsp;<a class=\"fix\" href=\"#\">修改</a>";
+                }
+            } else {
+                return null;
+            }
+        }
+        function fix(e,v,d,i,f) {
+            $("#fixv").val(v).attr("krmid", d.id).attr("field", f).attr("rowi",i);
+        }
+        $(function () {
+
+            //1.初始化Table
+            var oTable = new TableInit();
+            oTable.Init();
+
+            //2.初始化Button的点击事件
+            var oButtonInit = new ButtonInit();
+            oButtonInit.Init();
+
+            $("body").on("click", ".fix", function (e) {
+                $(".fixk").css({ left: $(this).offset().left, top: $(this).offset().top + 18 }).removeClass("hidden");;
+                if (e && e.preventDefault)
+                    e.preventDefault();
+                else
+                    window.event.returnValue = false;
+            });
+            $(document).on("click", function (e) {
+                var target = $(e.target);
+                if ($(".fixk").is(target) || $(".fixk").has(target).length > 0 || target.hasClass("fix")) return;
+                $(".fixk").addClass("hidden");
+            });
+            $("#fixb").on("click", function () {
+                var $this = $("#fixv");
+                $.post("/netcap/ukrm", { id: $this.attr("krmid"), field: $this.attr("field"), v: $this.val() }, function (data) {
+                    if (data.ok) {
+                        $('#table1').bootstrapTable("updateCellById", { id: $this.attr("krmid"), field: $this.attr("field"), value: $this.val() });
+                        $(".fixk").addClass("hidden");
+                    } else {
+                        alert(data.msg);
+                    }
+                })
+            })
+        });
+
+        var TableInit = function () {
+            var oTableInit = new Object();
+            //初始化Table
+            oTableInit.Init = function () {
+                $('#table1').bootstrapTable({
+                    url: '/netcap/fkrm',         //请求后台的URL（*）
+                    method: 'post',                      //请求方式（*）
+                    toolbar: '#tbaction',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: true,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 10,                       //每页的记录行数（*）
+                    pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                    search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    strictSearch: false,
+                    showColumns: true,                  //是否显示所有的列
+                    showRefresh: true,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: true,                //是否启用点击选中行
+                    //height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                    showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    columns: [[
+                    {
+                        title: '频段',
+                        field: 'pinduan',
+                    },
+                    {
+                        title: '门限',
+                        field: 'menxian',
+                    },
+                    {
+                        field: 'id',
+                        title: 'id',
+                        visible: false
+                    },
+                    {
+                        field: 'prbup',
+                        title: 'PRB上行利用率（%）',
+                    }
+                    ,
+                    {
+                        field: 'prbdown',
+                        title: 'PRB下行利用率（%）',
+                        formatter: bfz,
+                        events: {
+                            "click .fix": function (e, v, d, i) {
+                                fix(e, v, d, i, "prbdown");
+                            }
+                        }
+                    }
+                    ,
+                    {
+                        field: 'rrc',
+                        title: 'RRC连接用户数（个）',
+                        formatter: gsf,
+                        events: {
+                            "click .fix": function (e, v, d, i) {
+                                fix(e, v, d, i, "rrc");
+                            }
+                        }
+                    }
+                    ,
+                    {
+                        field: 'flowup',
+                        title: '小区流量（GB)-上行',
+                    }
+                    ,
+                    {
+                        field: 'flowdown',
+                        title: '小区流量（GB)-下行',
+                        formatter: gsf,
+                        events: {
+                            "click .fix": function (e, v, d, i) {
+                                fix(e, v, d, i, "flowdown");
+                            }
+                        }
+                    }
+                    ,
+                    {
+                        field: 'ucount',
+                        title: '计费用户数',
+                        formatter: gsf,
+                        events: {
+                            "click .fix": function (e, v, d, i) {
+                                fix(e, v, d, i, "ucount");
+                            }
+                        }
+                    }],
+                    //[
+                    //    {
+                    //        rowspan:2,
+                    //        title: '800M（5M带宽）',
+                    //    },
+                    //    {
+                    //        title: '门限一（大流量）',
+                    //    }
+                    //], [
+                    //    {
+                    //        title: '门限二（多用户）',
+                    //    }
+                    //],
+                    //[
+                    //    {
+                    //        rowspan: 2,
+                    //        title: '1.8G/2.1G（20M带宽）',
+                    //    },
+                    //    {
+                    //        title: '门限一（大流量）',
+                    //    }
+                    //], [
+                    //    {
+                    //        title: '门限二（多用户）',
+                    //    }
+                    //],
+                    //[
+                    //    {
+                            
+                    //        title: '低流量',
+                    //    },
+                    //    {
+                    //        title: '门限',
+                    //    }
+                    //]
+                    ],
+                    onLoadSuccess: function (data) {
+                        $('#table1').bootstrapTable('mergeCells', { index: 0, field: 'pinduan', rowspan: 2 });
+                        $('#table1').bootstrapTable('mergeCells', { index: 2, field: 'pinduan', rowspan: 2 });
+                    }
+                });
+            };
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    limit: params.limit,   //页面大小
+                    offset: params.offset,  //页码
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+
+        var ButtonInit = function () {
+            var oInit = new Object();
+            var postdata = {};
+
+            oInit.Init = function () {
+                //初始化页面上面的按钮事件
+            };
+
+            return oInit;
+        };
+    </script>
+}
+
+<div class="container">
+    
+    <table id="table1">
+            
+    </table>
+</div>
+<div class="fixk form-inline hidden">
+    <input value="" id="fixv" class="form-control" />
+    <button type="button" class="btn btn-info" id="fixb">修改</button>
+</div>

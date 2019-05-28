@@ -1,0 +1,319 @@
+﻿@{
+    CTCCGoods.Controllers.cuser loginuser = ViewBag.loginuser;
+    bool forcepwd = bool.Parse(System.Configuration.ConfigurationManager.AppSettings["forcepwd"]);
+
+    var updatepwd = false;
+    if (forcepwd){
+        //var r = new System.Text.RegularExpressions.Regex(@".*(!=.{10,})(!=.*\d)(!=.*[a-z])(!=.*[A-Z])(!=.*[!@#$%^&*?\(\)]).*");
+        var r = new System.Text.RegularExpressions.Regex("^.*(?=.{10,})(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).*$");
+        updatepwd=!r.IsMatch(loginuser.pwd);
+    }
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>无线网支撑管理系统-@ViewBag.Title</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/js/bootstarp_table/bootstrap-table.css" rel="stylesheet" />
+    <link href="/js/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="/js/html5shiv.min.js"></script>
+      <script src="/js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .modifypwd {
+            width:100%;
+        }
+        .modifypwd tr {
+            margin-bottom: 40px;
+        }
+        .modifypwd td:first-child {
+            text-align: center;
+        }
+        #mymodal i {
+            color: #808080;
+            font-size: 12px;
+            font-style: normal;
+        }
+        #msg {
+            color: red;
+        }
+        .badge-red {
+            background-color:red;
+        }
+        .navbar-nav > li > a {
+            font-size: 16px;
+            padding-top: 25px;
+            padding-bottom: 25px
+        }
+        .navbar-brand {
+            padding: 25px 25px;
+            font-size: 22px;
+        }
+        .dropdown-menu>.tt a {
+            font-size:14px;
+            font-weight:bold;
+            color:black
+        }
+        .dropdown-menu>.tt a:hover {
+            color:black
+        }
+        .dropdown-menu>.tt a:visited {
+            color:black
+        }
+    </style>
+    @RenderSection("style", required: false)
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">无线网支撑管理系统</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav nav-tabs">
+                    <li @(ViewBag.ctl == null ? " class=active" : "")><a href="/">首页 <span class="badge badge-red">@(ViewBag.tasknum != null && ViewBag.tasknum > 0 ? ViewBag.tasknum + "" : "")</span><span class="sr-only">(current)</span></a></li>
+                    
+                    <li @(ViewBag.ctl == "需求单"||ViewBag.ctl == "调货单" ? " class=active dropdown" : " class=dropdown") class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">单据 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/order">需求单</a></li>
+                            <li auth="123"><a href="/trans">调货单</a></li>
+                        </ul>
+                    </li>
+                    <li @(ViewBag.ctl == "类型管理" ? " class=active dropdown" : " class=dropdown") auth="1234">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">类型管理 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/goods/cclass">设备类型</a></li>
+                            <li><a href="/goods">设备型号</a></li>
+                            @*<li role="separator" class="divider"></li>*@
+                        </ul>
+                    </li>
+                    <li @(ViewBag.ctl == "仓储" ? " class=active dropdown" : " class=dropdown") class="dropdown" auth="13">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">仓储 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/stock/cwarehouse" auth>地市管理</a></li>
+                            <li><a href="/stock">仓库存量</a></li>
+                            <li><a href="/stock/cstockio" auth>入库明细(购买)</a></li>
+                        </ul>
+                    </li>
+                    <li @(ViewBag.ctl == "用户管理" ? " class=active" : "") auth><a href="/user">用户管理</a></li>
+                    <li @(ViewBag.ctl == "地市上传任务" ? " class=active" : "") auth="1"><a href="/plan">地市上传任务</a></li>
+
+                    <li @(ViewBag.ctl == "RRU序列号管理"||ViewBag.ctl == "后台任务管理"||ViewBag.ctl=="网络容量评估" ? " class=active dropdown" : " class=dropdown") class="dropdown" auth="1">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">报表管理 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="disabled tt" auth="1"><a href="#">RRU序列号管理 </a></li>
+                            <li><a href="/rru" auth="1">新发货表</a></li>
+                            <li><a href="/rru/wang" auth="1">网管详表(最新)</a></li>
+                            <li><a href="/rru/wangtj" auth="1">网管详表(累计)</a></li>
+                            <li><a href="/rru/lterru" auth="1">历史到货表</a></li>
+                            <li><a href="/rru/wangtongji" auth="1">对比分析</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="disabled tt" auth="1"><a href="#">网络容量评估 </a></li>
+                            <li><a href="/netcap/table1" auth="1">原始数据 </a></li>
+                            <li><a href="#" auth="1">超忙计算 </a></li>
+                            <li><a href="#" auth="1">超忙原始清单 </a></li>
+                            <li><a href="#" auth="1">超忙对应扩容清单 </a></li>
+                            <li><a href="#" auth="1">数据完整率 </a></li>
+                            <li><a href="/netcap/krmen" auth="1">超忙门限 </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/task" auth>后台任务</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@(Session["loginuser"] == null ? "我的" : ((CTCCGoods.Controllers.cuser)Session["loginuser"]).name) <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="modifypwd" data-toggle="modal" data-target="#myModal">修改密码</a></li>
+                            <li><a href="/login/logout" id="logout">退出登录</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <ol class="breadcrumb">
+            @if (ViewBag.ctl != null)
+            {
+                <li><a href="/">首页</a></li>
+                if (ViewBag.act != null)
+                {
+                    <li><a href="/@(ViewContext.RouteData.Values["controller"])">@ViewBag.ctl</a></li>
+                    <li>@ViewBag.act</li>
+                }
+                else
+                {
+                    <li>@ViewBag.ctl</li>
+                }
+            }
+            else
+            {
+                <li>首页</li>
+            }
+        </ol>
+    </div>
+    <div id="mymodal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">@(updatepwd?"您的密码不符合新规范，请及时":"")修改密码</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="originalpwd" class="col-sm-2 control-label">原密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="originalpwd">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newpwd" class="col-sm-2 control-label">新密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="newpwd">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmpwd" class="col-sm-2 control-label">确认密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="confirmpwd">
+                            </div>
+                        </div>
+                        <i>[必须大于等于10位，必须包含大小写字母、数字、特殊字符四种组合]</i>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <span id="msg"></span>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="confirmmodify">修改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    @RenderBody()
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstarp_table/bootstrap-table.js"></script>
+    <script src="/js/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <script src="/js/bootstarp_table/bootstrap-table-zh-CN.js"></script>
+    <script src="/js/bootstrap3-editable/js/bootstrap-table-editable.js"></script>
+    <script src="/js/bootstrap-table-export.js"></script>
+    <script src="/js/tableExport.min.js"></script>
+    <script src="/js/xlsx.core.min.js"></script>
+    <script src="/js/FileSaver.min.js"></script>
+    <script src="/js/laydate/laydate.js"></script>
+    <script src="~/js/velocity.min.js"></script>
+    <script>
+        $("#modifypwd").click(function () {
+            $("#originalpwd").val("");
+            $("#newpwd").val("");
+            $("#confirmpwd").val("");
+            $("#mymodal").modal();
+            return false;
+        });
+        $("#confirmmodify").click(function () {
+            var opwd = $("#originalpwd").val().trim();
+            var npwd = $("#newpwd").val().trim();
+            var cpwd = $("#confirmpwd").val().trim();
+            if (!(opwd && npwd && cpwd)) {
+                $("#msg").text("字段不能为空");
+                setTimeout(function () {
+                    $("#msg").text("");
+                }, 5000);
+                return false;
+            }
+            //var reg = /^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_]+$)(?![a-z0-9]+$)(?![a-z\W_]+$)(?![0-9\W_]+$)[a-zA-Z0-9\W_]{6,}$/;
+            var reg = /^.*(?=.{10,})(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).*$/;
+            if (!reg.test(npwd)) {
+                $("#msg").text("密码不符合规范");
+                setTimeout(function () {
+                    $("#msg").text("");
+                }, 5000);
+                return false;
+            }
+            if (npwd.length < 10) {
+                $("#msg").text("密码长度应大于等于10位");
+                setTimeout(function () {
+                    $("#msg").text("");
+                }, 5000);
+                return false;
+            }
+            if (npwd !== cpwd) {
+                $("#msg").text("两次密码输入不一致");
+                setTimeout(function () {
+                    $("#msg").text("");
+                }, 5000);
+                return false;
+            }
+            $.ajax({
+                url: "/login/modifypwd",
+                data: { "opwd": opwd, "npwd": npwd },
+                type: "post",
+                dataType: "json",
+                success: function (result) {
+                    if (!result.status) {
+                        $("#msg").text(result.msg);
+                        setTimeout(function () {
+                            $("#msg").text("");
+                        }, 5000);
+                    } else {
+                        $("#mymodal").modal("hide");
+                        alert("修改成功");
+                    }
+                },
+                error: function () {
+                    console.log("修改密码异常");
+                }
+            });
+        });
+    </script>
+    @RenderSection("script", required: false)
+    <script>
+        $(function () {
+            @if(ViewBag.loginuser.utype!=0){
+            <text>
+            $("[auth]").each(function () {
+                if ($(this).attr("auth").indexOf("@(ViewBag.loginuser.utype)") < 0) {
+                    $(this).hide();
+                }
+            });
+            setTimeout(function () {
+                $(".editable").off("click");
+            }, 100);
+            </text>
+            }
+
+            @if(updatepwd){
+            <text>
+            $("#modifypwd").trigger("click");
+            </text>
+            }
+
+            $(".dropdown-menu>.tt a").on("click", function () {
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>
