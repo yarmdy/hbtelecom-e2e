@@ -1,0 +1,13 @@
+$(function(){
+	selectLocation();
+	selectMonth();
+	loadMonth();
+	loadChinaMap();
+	chinaIncreChart();
+	personFigure();
+	personIcre();
+	keyArea();
+	requestKeyArea();
+	requestChinaMap();
+	requestPersonData();
+});
