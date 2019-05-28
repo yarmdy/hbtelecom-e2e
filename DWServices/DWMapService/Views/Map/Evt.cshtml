@@ -1,0 +1,363 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>河北电信多频网络性能分析</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/dijit/themes/claro/claro.css" />
+    <link rel="stylesheet" href="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/esri/css/main.css" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="/js/html5shiv.min.js"></script>
+      <script src="/js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        /*.panel {
+            box-shadow:2px 2px 16px #888888;
+        }*/
+        .content {
+            /*height:700px*/
+        }
+
+        .left {
+            padding-right: 2px;
+        }
+
+        .right {
+            padding-left: 2px;
+        }
+
+        html, body, .main {
+            height: 100%;
+        }
+
+        .head {
+            height: 5%;
+            margin: 0;
+            padding: 0;
+            border: 0
+        }
+        .body {
+            margin-top:1%;
+            height: 92%
+        }
+
+        .b100 {
+            height: 100%;
+            padding-bottom: 0;
+            margin-bottom: 0
+        }
+        .headpanel {
+            height: 55px
+        }
+
+        .bodypanel {
+            height: calc(100% - 55px);
+        }
+
+        .maptop {
+            height: calc(100% - 32px);
+        }
+
+        .mapbottom {
+            height: 64px
+        }
+        .mapcity {
+            width: 100%;
+            height:32px
+        }
+        .map {
+            width: 100%;
+            height: calc(100% - 32px);
+            height: 100%;
+        }
+        .zcharts {
+            height: 200px;
+            border-bottom: 1px solid #ccc;
+            margin-bottom:15px
+        }
+        /***********************************************/
+        .station p {
+            margin:0 0;
+        }
+        .type p {
+            margin: 0 0;
+        }
+        .station {
+            text-align: center;
+        }
+        .station img {
+            margin-bottom:50%;
+        }
+        .type {
+            text-align: center;
+        }
+        .panel-my {
+            /*border-color: #00b4fb;*/
+        }
+            .panel-my > .panel-heading {
+                background-color: #fff;
+            }
+        .borderb {
+            margin-bottom: 10px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #CCC
+        }
+        .fazhi {
+            position:absolute;top:3px;right:00px;width:350px;height:70px;display:none;background-color:#efe
+        }
+            .fazhi b, .fazhi span {
+                height:20px;display:block; float:left
+            }
+            .fazhi b {
+                width:20px;
+            }
+            .fazhi span {
+                width:65px;
+            }
+                .fazhi span.l {
+                    text-align:right;
+                }
+    </style>
+</head>
+<body>
+    <div class="container-fluid main">
+        <div class="head" style="background:#00b4fb">
+            <img class="media-object" width="130" height="39" style="display:inline" src="/image/logo.png" />
+            <span style="font-size:16px;color:#FFF">河北电信多频网络性能分析</span>
+        </div>
+        <div class="row body">
+            <div class="col-md-4 b100 left" style="display:none">
+                <div class="panel panel-my b100">
+                    <div class="panel-heading headpanel" style="text-align:center;font-size:24px" id="time">2017年11月27日 星期一</div>
+                    <div class="panel-body bodypanel" style="overflow-y:scroll">
+                        <div class="row">
+                            <div class="col-md-6">全省2G话务量： <b id="stghwl"></b> </div>
+                            <div class="col-md-6">2G资源利用率： <b id="sfgll"></b></div>
+                            <div class="col-md-6 borderb">全省4G超忙小区： <b id="sprbll"></b></div>
+                            <div class="col-md-6 borderb">4G网络告警： <b id="sfgmrfg"></b></div>
+
+                            <div class="col-md-12">
+                                <div id="alarm" class="zcharts"></div>
+                                <div id="cmtime" class="zcharts"></div>
+                                <div id="qfgll" class="zcharts" style="display:none"></div>
+                                <div id="qprbll" class="zcharts" style="display:none"></div>
+                                <div id="qmrfg" class="zcharts" style="display:none"></div>
+                                <div id="qtghwl" class="zcharts"></div>
+                                <div id="qzyll" class="zcharts"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12  b100 right">
+                <div class="panel panel-my  b100">
+                    <div class="panel-heading headpanel" style="display:none">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-11">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="ENBIDl">ENBID</span>
+                                            <input type="text" id="enbid" class="form-control" placeholder="ENBID" aria-describedby="ENBIDl">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="CELLIDl">CELLID</span>
+                                            <input type="text" id="cellid" class="form-control" placeholder="CELLID" aria-describedby="CELLIDl">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="button" value="查询" class="btn btn-default" id="query" />
+                                    </div>
+                                    <div class="col-md-3" id="query_msg" style="line-height:100%;height:100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height:20px">
+                        <div class="eventtl" style="display:none" >
+                        <b style="color:#f00;margin:0 30px">弱覆盖事件</b>
+                        <b style="color:#f80;margin:0 30px">无覆盖事件</b>
+                        <b style="color:#fF0;background-color:#000;margin:0 30px">数据掉线事件</b>
+                        <b style="color:#0F0;background-color:#000;margin:0 30px">数据连接建立失败事件</b>
+                        <b style="color:#0FF;background-color:#000;margin:0 30px">4G回落3G事件</b>
+                        <b style="color:#00F;margin:0 30px">4G回落2G事件</b>
+                        <b style="color:#f0F;margin:0 30px">网络频繁切换事件</b>
+                    </div>
+                    </div>
+                    
+                    <div class="panel-body bodypanel">
+                        <div class="row b100 right">
+                            <div class="col-md-1 station maptop"  style="display:none">
+                                <div style="width:100%;height:16.666%">
+                                    <p>CDMA</p>
+                                    <img src="/image/station_close.png" width="60%" height="40%" />
+                                </div>
+                                <div style="width:100%;height:16.666%">
+                                    <p>L800M</p>
+                                    <img src="/image/station_open.png" width="60%" height="40%" class="selected" />
+                                    </div>
+                                <div style="width:100%;height:16.666%">
+                                    <p>L1.8G</p>
+                                    <img src="/image/station_close.png" width="60%" height="40%" />
+                                    </div>
+                                <div style="width:100%;height:16.666%">
+                                    <p>L2.1G</p>
+                                    <img src="/image/station_close.png" width="60%" height="40%" />
+                                    </div>
+                                <div style="width:100%;height:16.666%">
+                                    <p>L2.6G</p>
+                                    <img src="/image/station_close.png" width="60%" height="40%" />
+                                    </div>
+                                <div style="width:100%;height:16.666%">
+                                    <p>NB-IoT</p>
+                                    <img src="/image/station_close.png" width="60%" height="40%" />
+                                    </div>
+                                </div>
+                            <div class="col-md-12 maptop">
+                                @*<div class="mapcity"><b>覆盖—</b><span id="cityfg"></span></div>*@
+                                <div class="map" id="viewDiv"></div>
+                            </div>
+                            <div class="col-md-1 mapbottom" ></div>
+                            <div class="col-md-11 type mapbottom" style="display:none">
+                                <div class="col-md-3"><p>流量</p><img src="/image/flow_open.png" width="20%" height="95%" class="selected" /></div>
+                                <div class="col-md-3"><p>PRB利用率</p><img src="/image/prb_close.png" width="20%" height="95%" /></div>
+                                <div class="col-md-3"><p>RRC连接数</p><img src="/image/rrc_close.png" width="20%" height="95%" /></div>
+                                <div class="col-md-3"><p>覆盖</p><img src="/image/cover_close.png" width="20%" height="95%" /></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div><a href="/map/downevt">下载事件统计数据</a></div>
+                    <div class="fazhi" id="nball">
+                        <b></b><span class="l">-87≤</span><b style="background-color:#0f0;">&nbsp;</b><span></span>
+                        <b></b><span class="l">-120≤</span><b style="background-color:#f90;">&nbsp;</b><span>＜-110</span>
+                        <br />
+                        <b></b><span class="l">-97≤</span><b style="background-color:#00f;">&nbsp;</b><span>＜-87</span>
+                        <b></b><span></span><b style="background-color:#f00;">&nbsp;</b><span>＜-120</span>
+                        <br />
+                        <b></b><span class="l">-110≤</span><b style="background-color:#ff0;">&nbsp;</b><span>＜-97</span>
+                    </div>
+                    <div class="fazhi" id="prball">
+                        <b></b><span></span><b style="background-color:#0f0;">&nbsp;</b><span>＜12.5%</span>
+                        <b></b><span class="l">37.5%≤</span><b style="background-color:#f90;">&nbsp;</b><span>＜50%</span>
+                        <br />
+                        <b></b><span class="l">12.5%≤</span><b style="background-color:#00f;">&nbsp;</b><span>＜25%</span>
+                        <b></b><span class="l">50%≤</span><b style="background-color:#f00;">&nbsp;</b><span></span>
+                        <br />
+                        <b></b><span class="l">25%≤</span><b style="background-color:#ff0;">&nbsp;</b><span>＜37.5%</span>
+                    </div>
+                    <div class="fazhi" id="rrcall">
+                        <b></b><span></span><b style="background-color:#0f0;">&nbsp;</b><span>＜50</span>
+                        <b></b><span class="l">150≤</span><b style="background-color:#f90;">&nbsp;</b><span>＜200</span>
+                        <br />
+                        <b></b><span class="l">50≤</span><b style="background-color:#00f;">&nbsp;</b><span>＜100</span>
+                        <b></b><span class="l">200≤</span><b style="background-color:#f00;">&nbsp;</b><span></span>
+                        <br />
+                        <b></b><span class="l">100≤</span><b style="background-color:#ff0;">&nbsp;</b><span>＜150</span>
+                    </div>
+                    <div class="fazhi" id="fgnonb">
+                        <b></b><span class="l">90%≤</span><b style="background-color:#0f0;">&nbsp;</b><span></span>
+                        <b></b><span class="l">45%≤</span><b style="background-color:#f90;">&nbsp;</b><span>＜60%</span>
+                        <br />
+                        <b></b><span class="l">75%≤</span><b style="background-color:#00f;">&nbsp;</b><span>＜90%</span>
+                        <b></b><span></span><b style="background-color:#f00;">&nbsp;</b><span>＜45%</span>
+                        <br />
+                        <b></b><span class="l">60%≤</span><b style="background-color:#ff0;">&nbsp;</b><span>＜75%</span>
+                    </div>
+                    <div class="fazhi" id="ll800" style="display:none">
+                        <b></b><span></span><b style="background-color:#0f0;">&nbsp;</b><span>＜0.3GB</span>
+                        <b></b><span class="l">0.9GB≤</span><b style="background-color:#f90;">&nbsp;</b><span>＜1.2GB</span>
+                        <br />
+                        <b></b><span class="l">0.3GB≤</span><b style="background-color:#00f;">&nbsp;</b><span>＜0.6GB</span>
+                        <b></b><span class="l">1.2GB≤</span><b style="background-color:#f00;">&nbsp;</b><span></span>
+                        <br />
+                        <b></b><span class="l">0.6GB≤</span><b style="background-color:#ff0;">&nbsp;</b><span>＜0.9GB</span>
+                    </div>
+                    <div class="fazhi" id="ll1800">
+                        <b></b><span></span><b style="background-color:#0f0;">&nbsp;</b><span>＜1.5GB</span>
+                        <b></b><span class="l">4.5GB≤</span><b style="background-color:#f90;">&nbsp;</b><span>＜6GB</span>
+                        <br />
+                        <b></b><span class="l">1.5GB≤</span><b style="background-color:#00f;">&nbsp;</b><span>＜3GB</span>
+                        <b></b><span class="l">6GB≤</span><b style="background-color:#f00;">&nbsp;</b><span></span>
+                        <br />
+                        <b></b><span class="l">3GB≤</span><b style="background-color:#ff0;">&nbsp;</b><span>＜4.5GB</span>
+                    </div>
+                    <div class="fazhi" id="ll2100">
+                        <b></b><span></span><b style="background-color:#0f0;">&nbsp;</b><span>＜2GB</span>
+                        <b></b><span class="l">6GB≤</span><b style="background-color:#f90;">&nbsp;</b><span>＜8GB</span>
+                        <br />
+                        <b></b><span class="l">2GB≤</span><b style="background-color:#00f;">&nbsp;</b><span>＜4GB</span>
+                        <b></b><span class="l">8GB≤</span><b style="background-color:#f00;">&nbsp;</b><span></span>
+                        <br />
+                        <b></b><span class="l">4GB≤</span><b style="background-color:#ff0;">&nbsp;</b><span>＜6GB</span>
+                    </div>
+                    <div class="fazhi" id="ll2600">
+                        <b></b><span></span><b style="background-color:#0f0;">&nbsp;</b><span>＜2GB</span>
+                        <b></b><span class="l">6GB≤</span><b style="background-color:#f90;">&nbsp;</b><span>＜8GB</span>
+                        <br />
+                        <b></b><span class="l">2GB≤</span><b style="background-color:#00f;">&nbsp;</b><span>＜4GB</span>
+                        <b></b><span class="l">8GB≤</span><b style="background-color:#f00;">&nbsp;</b><span></span>
+                        <br />
+                        <b></b><span class="l">4GB≤</span><b style="background-color:#ff0;">&nbsp;</b><span>＜6GB</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        模态框（Modal）标题
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <table border="1" class="table" id="tableid">
+                        <tr><td>row 1, cell 1</td><td>row 1, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                    </table>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/echarts.min.js"></script>
+    <script src="/gjs/token"></script>
+    @*<script>
+        $("#cityfg").html(fgstr);
+    </script>*@
+    @*<script type="text/javascript" src="/js/main.js"></script>*@
+    <script src="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/dojo/dojo.js"></script>
+    <script src="/js/right2.js"></script>
+    <script>
+
+    </script>
+</body>
+</html>

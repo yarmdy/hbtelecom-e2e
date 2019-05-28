@@ -1,0 +1,125 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <script src="/gjs/token"></script>
+    <script src="/js/echarts.min.js"></script>
+    <link rel="stylesheet" href="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/dijit/themes/claro/claro.css" />
+    <link rel="stylesheet" href="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/esri/css/main.css" />
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script src="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/dojo/dojo.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script src="/js/right.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="/js/html5shiv.min.js"></script>
+      <script src="/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="head" style="font-size:48px;text-align:center;color:dodgerblue">
+        河北电信移动网络性能监控
+    </div>
+    <!--*************主体区**************-->
+    <div class="body">
+        <!--********图表区*********-->
+        <div class="main left">
+            <div style="height:20%;width:95%;">
+                <div style="text-align:center;background-color:black;width:95%;height:30%;">
+                    <label id="time" style="color:white;font-size:30px;"></label>
+                </div>
+                <div style="margin-top:2%;width:95%;">
+                    <label style="padding-left:2%">全省2G话务量：</label>
+                    <label id="stghwl"></label>
+                    <label  style="padding-left:19%">全省4G流量：</label>
+                    <label id="sfgll"></label>
+                </div>
+                <div style="margin-top:2%;width:95%;">
+                    <label style="padding-left:2%">全省4G超忙小区：</label>
+                    <label id="sprbll"></label>
+                    <label style="padding-left:16.5%">4G网络告警：</label>
+                    <label id="sfgmrfg"></label>
+                </div>
+            </div>
+            <div style="height:75%;width:95%;overflow-y:auto;">
+                <div id="alarm" style="width:95%;height:30%;border: 1px solid #8E8E8E;"></div>
+                <div id="cmtime" style="width:95%;height:30%;border: 1px solid #8E8E8E;"></div>
+                <div id="qfgll" style="width:95%;height:30%;border: 1px solid #8E8E8E;"></div>
+                <div id="qprbll" style="width:95%;height:30%;border: 1px solid #8E8E8E;"></div>
+                <div id="qmrfg" style="width:95%;height:30%;border: 1px solid #8E8E8E;"></div>
+                <div id="qtghwl" style="width:95%;height:30%;border: 1px solid #8E8E8E;"></div>
+                <div id="qzyll" style="width:95%;height:30%;border: 1px solid #8E8E8E;"></div>
+            </div>
+        </div>
+        <!--********地图区*********-->
+        <div class="main right">
+            <div class="leftmenu">
+                <p>CDMA</p>
+                <img src="/image/station_close.png" width="80%" height="80%"/>
+                <p>L800M</p>
+                <img src="/image/station_open.png" width="80%" height="80%" class="selected"/>
+                <p>L1.8G</p>
+                <img src="/image/station_close.png" width="80%" height="80%" />
+                <p>L2.1G</p>
+                <img src="/image/station_close.png" width="80%" height="80%" />
+                <p>L2.6G</p>
+                <img src="/image/station_close.png" width="80%" height="80%" />
+                <p>NB-IoT</p>
+                <img src="/image/station_close.png" width="80%" height="80%" />
+            </div>
+            <div class="mdiv">
+                <div class="query">
+                    ENBID: <input type="text" id="enbid" />
+                    CELLID: <input type="text" id="cellid" />
+                    <input type="button" value="查询" id="query" />
+                    <span id="query_msg"></span>
+                </div>
+                <div class="map" id="viewDiv"></div>
+            </div>
+            <div class="buttomenu">
+                <ul>
+                    <li><p>流量</p><img src="/image/flow_open.png" width="40%" height="95%" class="selected"/></li>
+                    <li><p>PRB利用率</p><img src="/image/prb_close.png" width="40%" height="95%"/></li>
+                    <li><p>RRC连接数</p><img src="/image/rrc_close.png" width="30%" height="95%"/></li>
+                    <li><p>覆盖</p><img src="/image/cover_close.png" width="40%" height="95%"/></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        模态框（Modal）标题
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <table border="1" class="table" id="tableid">
+                        <tr><td>row 1, cell 1</td><td>row 1, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                        <tr><td>row 2, cell 1</td><td>row 2, cell 2</td></tr>
+                    </table>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</body>
+</html>

@@ -1,0 +1,330 @@
+[11:58:22] application start
+[11:58:23] getdata
+[12:03:38] application start
+[12:03:41] getdata
+[12:04:25] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get1(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 774
+[12:04:26] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:04:26] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:04:27] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:04:27] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:04:29] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get1(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 774
+[12:04:29] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:16:04] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get1(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 774
+[12:16:04] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:16:05] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:18] application start
+[12:21:18] getdata
+[12:21:21] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:21] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:22] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:24] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get1(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 774
+[12:21:24] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:24] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:26] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:26] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:28] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:28] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:30] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:30] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:31] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get1(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 774
+[12:21:31] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:31] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:32] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:32] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:33] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:33] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:33] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get1(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 774
+[12:21:34] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:34] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:36] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:36] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:38] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:39] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:40] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:40] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:42] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:42] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:44] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:44] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:46] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:46] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:54] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:54] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:55] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get1(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 774
+[12:21:55] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:21:55] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:21:59] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:00] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:02] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:02] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get1(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 774
+[12:22:02] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:04] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:05] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:07] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:07] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:12] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get1(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 774
+[12:22:12] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:12] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:13] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:13] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:15] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get1(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 774
+[12:22:15] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:15] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:17] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:17] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:19] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:19] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:24] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:24] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:25] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get1(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 774
+[12:22:25] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:25] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:27] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:27] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:29] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:29] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828
+[12:22:31] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get2(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 801
+[12:22:31] 由于目标计算机积极拒绝，无法连接。 192.168.0.3:3390:   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+              在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 103
+              在 DWMapService.Controllers.ThreeMapController.Get3(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\ThreeMapController.cs:行号 828

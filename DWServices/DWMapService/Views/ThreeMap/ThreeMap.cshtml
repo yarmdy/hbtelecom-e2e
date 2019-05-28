@@ -1,0 +1,116 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>三网覆盖对比</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/dijit/themes/claro/claro.css" />
+    <link rel="stylesheet" href="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/esri/css/main.css" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="/js/html5shiv.min.js"></script>
+      <script src="/js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .main {
+            height: 100%;
+        }
+        .maparea {
+            width: 100%;
+            height: calc(100% - 100px);
+        }
+        .map {
+            display:inline-block;
+            height: 100%;
+            width: 30%;
+            margin:0 1%;
+        }
+        .map p {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            font-weight: bold;
+            text-align:center;
+        }
+        .map .mapblock {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #ccc;
+        }
+        .legend {
+            display: flex;
+            height: 40px;
+            line-height: 40px;
+            justify-content:center;
+        }
+        .legend .legend-box {
+            display:inline-block;
+            height: 40px;
+            line-height: 40px;
+            margin:0 20px;
+        }
+        .legend .legend-box .block {
+            display:inline-block;
+            height: 20px;
+            width: 20px;
+            vertical-align:middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid main">
+        <div class="head" style="background:#00b4fb">
+            <img class="media-object" width="130" height="39" style="display:inline" src="/image/logo.png" />
+            <span style="font-size:16px;color:#FFF">三网覆盖对比</span>
+        </div>
+        <div class="legend">
+            <select id="selJD"><option value="1">一季度</option><option value="2">二季度</option><option value="3" selected>三季度</option></select>
+            <span class="legend-box">-87&nbsp;≤&nbsp;<span class="block" style="background-color:#00FF04;"></span></span>|
+            <span class="legend-box">-97&nbsp;≤&nbsp;<span class="block" style="background-color:#0200FA;"></span>&nbsp;&lt;&nbsp;&nbsp;-87</span>|
+            <span class="legend-box">-110&nbsp;≤&nbsp;<span class="block" style="background-color:#FEFB00;"></span>&nbsp;&lt;&nbsp;-97</span>|
+            <span class="legend-box">-120&nbsp;≤&nbsp;<span class="block" style="background-color:#FF9500;"></span>&nbsp;&lt;&nbsp;-110</span>|
+            <span class="legend-box"><span class="block" style="background-color:#FB0300;"></span>&nbsp;&lt;&nbsp;-120</span>
+        </div>
+        <div class="maparea">
+            <div class="map">
+                <p>电信</p>
+                <div class="mapblock" id="viewDiv"></div>
+            </div>
+            <div class="map">
+                <p>移动</p>
+                <div class="mapblock" id="viewDiv1"></div>
+            </div>
+            <div class="map">
+                <p>联通</p>
+                <div class="mapblock" id="viewDiv2"></div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/echarts.min.js"></script>
+    <script src="/gjs/token"></script>
+    @*<script type="text/javascript" src="/js/main.js"></script>*@
+    <script src="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/dojo/dojo.js"></script>
+    <script src="/js/right3.js"></script>
+</body>
+</html>

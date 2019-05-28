@@ -1,0 +1,88 @@
+[11:35:10] application start
+[11:35:22] application start
+[11:35:25] getdata
+[11:38:30] application start
+[11:38:31] getdata
+[11:48:41] application start
+[11:48:41] getdata
+[12:07:52] application start
+[12:07:52] getdata
+[12:08:03] application start
+[12:08:03] getdata
+[12:18:12] application start
+[12:18:12] getdata
+[12:18:25] application start
+[12:18:25] getdata
+[12:18:28] 未将对象引用设置到对象的实例。:   在 DWMapService.Controllers.MapController.Get(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\MapController.cs:行号 323
+[12:18:58] application start
+[12:18:58] getdata
+[12:18:58] 未将对象引用设置到对象的实例。:   在 DWMapService.Controllers.MapController.Get(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\MapController.cs:行号 323
+[12:19:00] 未将对象引用设置到对象的实例。:   在 DWMapService.Controllers.MapController.Get(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\MapController.cs:行号 323
+[12:20:14] application start
+[12:20:14] getdata
+[12:20:16] 未将对象引用设置到对象的实例。:   在 DWMapService.Controllers.MapController.Get(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\MapController.cs:行号 323
+[12:39:36] application start
+[12:39:45] getdata
+[12:53:59] application start
+[12:53:59] getdata
+[12:54:07] 未将对象引用设置到对象的实例。:   在 DWMapService.Controllers.MapController.Evtget(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\MapController.cs:行号 804
+[12:54:34] 未将对象引用设置到对象的实例。:   在 DWMapService.Controllers.MapController.Evtget(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\MapController.cs:行号 804
+[12:55:02] application start
+[12:55:02] getdata
+[12:55:36] 列“flow”不属于表 Table。:   在 System.Data.DataRow.GetDataColumn(String columnName)
+              在 System.Data.DataRow.get_Item(String columnName)
+              在 DWMapService.Controllers.MapController.Evtget(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\MapController.cs:行号 840
+[12:55:46] 列“flow”不属于表 Table。:   在 System.Data.DataRow.GetDataColumn(String columnName)
+              在 System.Data.DataRow.get_Item(String columnName)
+              在 DWMapService.Controllers.MapController.Evtget(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\MapController.cs:行号 840
+[12:56:40] 列“flow”不属于表 Table。:   在 System.Data.DataRow.GetDataColumn(String columnName)
+              在 System.Data.DataRow.get_Item(String columnName)
+              在 DWMapService.Controllers.MapController.Evtget(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\MapController.cs:行号 840
+[13:00:49] application start
+[13:00:49] getdata
+[13:00:53] 未将对象引用设置到对象的实例。:   在 DWMapService.Controllers.MapController.Evtget(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\MapController.cs:行号 804
+[13:01:46] application start
+[13:01:47] getdata
+[13:03:31] application start
+[13:03:31] getdata
+[13:03:53] application start
+[13:03:53] getdata
+[13:05:57] application start
+[13:05:58] getdata
+[13:07:28] application start
+[13:07:29] getdata
+[13:07:34] 未将对象引用设置到对象的实例。:   在 DWMapService.Controllers.MapController.Evtget(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\MapController.cs:行号 804
+[13:14:11] application start
+[13:14:11] getdata
+[13:16:42] application start
+[13:16:43] getdata
+[13:20:33] application start
+[13:20:34] getdata
+[13:21:34] application start
+[13:21:34] getdata
+[13:22:20] application start
+[13:22:21] getdata
+[13:25:02] application start
+[13:25:02] getdata
+[13:26:24] application start
+[13:26:24] getdata
+[13:28:14] application start
+[13:28:14] getdata
+[13:30:35] application start
+[13:30:36] getdata
+[13:44:59] application start
+[13:45:00] getdata
+[13:46:24] application start
+[13:46:24] getdata
+[15:10:22] application start
+[15:10:23] getdata
+[15:12:47] application start
+[15:12:47] getdata
+[15:15:11] application start
+[15:15:12] getdata
+[15:15:45] application start
+[15:15:46] getdata
+[15:25:17] application start
+[15:25:17] getdata
+[15:26:03] application start
+[15:26:03] getdata

@@ -1,0 +1,164 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>小区信息呈现</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/dijit/themes/claro/claro.css" />
+    <link rel="stylesheet" href="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/esri/css/main.css" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="/js/html5shiv.min.js"></script>
+      <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+        .main {
+            height: 100%;
+        }
+        .body {
+            margin-top: 20px;
+            height: calc(100% - 59px);
+        }
+        .query {
+            float: right;
+            width: 60%;
+        }
+        #download {
+            float:left;
+            width: 40%;
+            display:flex;
+            justify-content:center;
+        }
+        #download .form-control {
+            display: inline-block;
+            width: 20%;
+            min-width: 100px;
+        }
+        #download #downloadBtn {
+            margin-left: 40px;
+        }
+        .body > .content {
+            margin-top: 20px;
+            height: calc(100% - 95px);
+        }
+        .body > .content > .download {
+            float: left;
+            width: 100px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .body > .content > .mapbox {
+            float: left;
+            width: 100%;
+            height: 100%;
+        }
+            .body > .content > .mapbox > .map {
+                width: 100%;
+                height: 100%;
+            }
+    </style>
+
+</head>
+<body>
+    <div class="container-fluid main">
+        <div class="head" style="background:#00b4fb">
+            <img class="media-object" width="130" height="39" style="display:inline" src="/image/logo.png" />
+            <span style="font-size:16px;color:#FFF">小区信息呈现</span>
+        </div>
+        <div class="body">
+            <div class="query">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="ENBIDl">ENBID</span>
+                            <input type="text" id="enbid" class="form-control" placeholder="ENBID" aria-describedby="ENBIDl">
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="CELLIDl">CELLID</span>
+                            <input type="text" id="cellid" class="form-control" placeholder="CELLID" aria-describedby="CELLIDl">
+                        </div>
+                    </div>
+                    <div class="col-xs-1">
+                        <input type="button" value="查询" class="btn btn-default" id="query" />
+                    </div>
+                    <div class="col-xs-3" id="query_msg" style="line-height:100%;height:100%;"></div>
+                </div>
+            </div>
+            <div id="download">
+                    <select id="downloadNum" class="form-control">
+                        <option value="12">全省</option>
+                        <option value="0">石家庄</option>
+                        <option value="1">廊坊</option>
+                        <option value="2">保定</option>
+                        <option value="3">邯郸</option>
+                        <option value="4">沧州</option>
+                        <option value="5">衡水</option>
+                        <option value="6">邢台</option>
+                        <option value="7">唐山</option>
+                        <option value="8">秦皇岛</option>
+                        <option value="9">张家口</option>
+                        <option value="10">承德</option>
+                        <option value="11">雄安</option>
+                    </select>
+                    <button class="btn btn-primary" id="downloadBtn">下载</button>
+                    <a style="display:none;"><span id="readdownload">download</span></a>
+            </div>
+            <div class="clearfix"></div>
+            <div class="content">
+                @*<div class="col-xs-1 download">
+                    <a href="/alarm/getcitydata?no=0" class="btn btn-info">石家庄</a>
+                    <a href="/alarm/getcitydata?no=1" class="btn btn-info">廊坊</a>
+                    <a href="/alarm/getcitydata?no=2" class="btn btn-info">保定</a>
+                    <a href="/alarm/getcitydata?no=3" class="btn btn-info">邯郸</a>
+                    <a href="/alarm/getcitydata?no=4" class="btn btn-info">沧州</a>
+                    <a href="/alarm/getcitydata?no=5" class="btn btn-info">衡水</a>
+                    <a href="/alarm/getcitydata?no=6" class="btn btn-info">邢台</a>
+                    <a href="/alarm/getcitydata?no=7" class="btn btn-info">唐山</a>
+                    <a href="/alarm/getcitydata?no=8" class="btn btn-info">秦皇岛</a>
+                    <a href="/alarm/getcitydata?no=9" class="btn btn-info">张家口</a>
+                    <a href="/alarm/getcitydata?no=10" class="btn btn-info">承德</a>
+                    <a href="/alarm/getcitydata?no=11" class="btn btn-info">雄安</a>
+                </div>*@
+                <div class="col-xs-12 mapbox">
+                    <div class="map" id="viewDiv"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/echarts.min.js"></script>
+    <script src="/gjs/token"></script>
+    @*<script>
+            $("#cityfg").html(fgstr);
+        </script>*@
+    @*<script type="text/javascript" src="/js/main.js"></script>*@
+    <script src="@(System.Configuration.ConfigurationManager.AppSettings["zjjurl"])/dojo/dojo.js"></script>
+    <script src="/js/alarm.js"></script>
+    <script>
+
+    </script>
+</body>
+</html>

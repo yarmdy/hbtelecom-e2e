@@ -1,0 +1,32 @@
+[17:34:26] application start
+[17:34:27] getdata
+[20:13:18] application start
+[20:13:22] getdata
+[20:13:32] 值不能为 null。
+           参数名: ipString:   在 System.Net.IPAddress.InternalParse(String ipString, Boolean tryParse)
+              在 System.Net.IPAddress.Parse(String ipString)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 77
+              在 DWMapService.Controllers.AlarmController.Get(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 38
+[20:13:39] 值不能为 null。
+           参数名: ipString:   在 System.Net.IPAddress.InternalParse(String ipString, Boolean tryParse)
+              在 System.Net.IPAddress.Parse(String ipString)
+              在 DWMapService.Controllers.GetData.get(Int32 act, Int32 width, Int32 height, Double bboxx, Double bboxy, Double bboxx2, Double bboxy2, Int32 crs) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 77
+              在 DWMapService.Controllers.AlarmController.Get(String REQUEST, Nullable`1 WIDTH, Nullable`1 HEIGHT, String BBOX, String FORMAT, String STYLES, Nullable`1 TRANSPARENT, String CRS, String LAYERS) 位置 c:\Users\Arthas\project\CTCC\hbtelecom-e2e\DWServices\DWMapService\Controllers\AlarmController.cs:行号 38
+[20:14:32] application start
+[20:14:32] getdata
+[20:27:10] application start
+[20:27:11] getdata
+[20:27:54] application start
+[20:27:55] getdata
+[20:28:45] application start
+[20:28:45] getdata
+[21:17:19] application start
+[21:17:19] getdata
+[21:18:51] application start
+[21:18:52] getdata
+[21:21:15] application start
+[21:21:16] getdata
+[21:24:46] application start
+[21:24:46] getdata
+[21:29:29] application start
+[21:29:30] getdata
