@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{16DFDBC9-6310-4F82-BC81-10F9AC60BCA3}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DWWinService</RootNamespace>
+    <AssemblyName>DWWinService</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=2.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet, Version=2013.4.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\Renci.SshNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="bll\AlarmAnalyzer.cs" />
+    <Compile Include="bll\AllKQIDataAnalyzer.cs" />
+    <Compile Include="bll\Analyzer.cs" />
+    <Compile Include="bll\BusyTimeAnalyzer.cs" />
+    <Compile Include="bll\CoreAnalyzer.cs" />
+    <Compile Include="bll\EventAnalyzer.cs" />
+    <Compile Include="bll\FlowAnalyzer.cs" />
+    <Compile Include="bll\IpAnalyzer.cs" />
+    <Compile Include="bll\KPIAnalyzer.cs" />
+    <Compile Include="bll\Kqi85Analyzer.cs" />
+    <Compile Include="bll\KQIGoodAnalyzer.cs" />
+    <Compile Include="bll\MRAnalyzer.cs" />
+    <Compile Include="bll\NBAnalyzer.cs" />
+    <Compile Include="bll\PerformanceAnalyzer.cs" />
+    <Compile Include="bll\PlayAnalyzer.cs" />
+    <Compile Include="bll\SignalAnalyzer.cs" />
+    <Compile Include="bll\TerminalAnalyzer.cs" />
+    <Compile Include="bll\VideoAnalyzer.cs" />
+    <Compile Include="bll\WebAnalyzer.cs" />
+    <Compile Include="bll\WifiAnalyzer.cs" />
+    <Compile Include="config\AnalyzerCfg.cs" />
+    <Compile Include="interfaces\IAnalyzer.cs" />
+    <Compile Include="interfaces\IDownloader.cs" />
+    <Compile Include="libs\AnalyzerStatusServer.cs" />
+    <Compile Include="libs\DB.cs" />
+    <Compile Include="libs\Downloader.cs" />
+    <Compile Include="libs\FtpDownloader.cs" />
+    <Compile Include="libs\LocalDownloader.cs" />
+    <Compile Include="libs\LOG.cs" />
+    <Compile Include="libs\SftpDownloader.cs" />
+    <Compile Include="libs\WebData.cs" />
+    <Compile Include="libs\Worker.cs" />
+    <Compile Include="libs\ZIP.cs" />
+    <Compile Include="Runner.cs" />
+    <Compile Include="Service1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Service1.Designer.cs">
+      <DependentUpon>Service1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\SysConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="dll\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="dll\Oracle.DataAccess.dll" />
+    <Content Include="dll\Renci.SshNet.dll" />
+    <Content Include="WinRAR.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

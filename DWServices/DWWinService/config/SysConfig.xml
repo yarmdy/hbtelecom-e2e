@@ -1,0 +1,1155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<NewDataSet>
+  <server><![CDATA[Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=127.0.0.1)(PORT=1521)))(CONNECT_DATA=(SERVER=orcl)(SERVICE_NAME=orcl)));User Id=mis;Password=mis;]]></server>
+  <Analyzers ver="0">
+    <!--<analyzer>
+      <name>Web</name>
+      <dec>WEB业务质差服务器报表</dec>
+      <class_name>DWWinService.WebAnalyzer</class_name>
+      <quarter>true</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>01:10</daytime>
+      <dbtables>
+        <table_min>WEB_MIN</table_min>
+        <table_day>WEB_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port>25</port>
+            <uid>test</uid>
+            <pwd>123456</pwd>
+            <path><![CDATA[H:\JCFTP\web\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\web\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\web\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <APP_NAME csvcol="APP" />
+        <SERVER_NAME csvcol="HOST" />
+        <IP_ADDRESS csvcol="SERVER IP" />
+        <WEB_RATE csvcol="FST SCREEN BAD TIME" />
+        <WEB_COUNT csvcol="PAGE OPEN REQUEST TIME" />
+        <PAGE_RATE csvcol="PAGE OPEN BAD TIME" />
+        <SCREEN_RATE csvcol="FST SCREEN REQUEST TIME" />
+        <CREATETIME csvcol="START TIME" />
+      </mapping>
+    </analyzer>
+    
+    <analyzer>
+      <name>Video</name>
+      <dec>视频业务质差服务器报表</dec>
+      <class_name>DWWinService.VideoAnalyzer</class_name>
+      <quarter>true</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>01:10</daytime>
+      <dbtables>
+        <table_min>VIDEO_MIN</table_min>
+        <table_day>VIDEO_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port>25</port>
+            <uid>test</uid>
+            <pwd>123456</pwd>
+            <path><![CDATA[H:\JCFTP\video\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\video\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\video\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <START_TIME csvcol="START TIME" />
+        <APPLICATION csvcol="APP" />
+        <SERER_IP csvcol="SERVER IP" />
+        <STREAM_REQUEST csvcol="STREAM REQUEST TIME" />
+        <STREAM_DL_GOOD_TIMES csvcol="STREAM DL BAD TIME" />
+        <STREAM_HALT_GOOD_TIMES csvcol="STREAM HALT BAD TIME" />
+      </mapping>
+    </analyzer>
+    
+    <analyzer>
+      <name>Signal</name>
+      <dec>及时通信业务质差服务器报表</dec>
+      <class_name>DWWinService.SignalAnalyzer</class_name>
+      <quarter>true</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>01:10</daytime>
+      <dbtables>
+        <table_min>SIGNAL_MIN</table_min>
+        <table_day>SIGNAL_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port>25</port>
+            <uid>test</uid>
+            <pwd>123456</pwd>
+            <path><![CDATA[H:\JCFTP\im\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\im\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\im\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+       <mapping>
+        <APP_NAME csvcol="APP" />
+        <SERVER_NAME csvcol="HOST" />
+        <IP_ADDRESS csvcol="SERER IP" />
+        <SIGNAL_COUNT csvcol="IM SENT REQUEST TIME" />
+        <SIGNAL_FLOW csvcol="IM SENT FAIL TIME" />
+        <CREATETIME csvcol="START TIME" />
+      </mapping>
+    </analyzer>
+    
+    <analyzer>
+      <name>Play</name>
+      <dec>在线游戏业务质差服务器报表</dec>
+      <class_name>DWWinService.PlayAnalyzer</class_name>
+      <quarter>true</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>01:10</daytime>
+      <dbtables>
+        <table_min>PLAY_MIN</table_min>
+        <table_day>PLAY_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port>25</port>
+            <uid>test</uid>
+            <pwd>123456</pwd>
+            <path><![CDATA[H:\JCFTP\game\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\game\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\game\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <APP_NAME csvcol="APP" />
+        <SERVER_NAME csvcol="HOST" />
+        <IP_ADDRESS csvcol="SERVER IP" />
+        <PLAY_RATE csvcol="GAME BAD TIME" />
+        <PLAY_COUNT csvcol="GAME REQUEST TIME" />
+        <CREATETIME csvcol="START TIME" />
+      </mapping>
+    </analyzer>
+    
+    <analyzer>
+      <name>Core</name>
+      <dec>核心网</dec>
+      <class_name>DWWinService.CoreAnalyzer</class_name>
+      <quarter>true</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>01:10</daytime>
+      <dbtables>
+        <table_min>CORE_MIN</table_min>
+        <table_day>CORE_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port>25</port>
+            <uid>test</uid>
+            <pwd>123456</pwd>
+            <path><![CDATA[H:\JCFTP\core\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\core\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\core\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <START_TIME csvcol="START TIME" />
+        <MME_ID csvcol="MME ID" />
+        <ATTACH_REQUEST csvcol="ATTACH REQUEST" />
+        <ATTACH_SUC csvcol="ATTACH SUC" />
+        <SERVICE_REQUEST csvcol="SERVICE REQUEST" />
+        <SERVICE_SUC csvcol="SERVICE SUC" />
+        <TAU_REQUEST csvcol="TAU REQUEST" />
+        <TAU_SUC csvcol="TAU SUC" />
+      </mapping>
+    </analyzer>
+   
+    <analyzer>
+      <name>Wifi</name>
+      <dec>无线</dec>
+      <class_name>DWWinService.WifiAnalyzer</class_name>
+      <quarter>true</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>02:20</daytime>
+      <dbtables>
+        <table_min>KQI_MIN</table_min>
+        <table_day>KQI_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[H:\JCFTP\kqi\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kqi\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kqi\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <START_TIME csvcol="START TIME" />
+        <CITY csvcol="CITY" />
+        <RAT csvcol="RAT" />
+        <ECGI csvcol="ECGI" />
+        <FDG_NUM csvcol="FST SCREEN BAD TIMES" />
+        <FD_SUM csvcol="FST SCREEN TIMES" />
+        <GAME_NUM csvcol="GAME DELAY BAD TIMES" />
+        <GAME_SUM csvcol="GAME REQUEST TIMES" />
+        <NEWS_SUM csvcol="IM SENT REQUEST TIMES" />
+        <NEWS_NUM csvcol="IM SENT FAIL TIMES" />
+        <PAGE_NUM csvcol="PAGE OPEN BAD TIMES" />
+        <PAGE_SUM csvcol="PAGE OPEN TIMES" />
+        <VIDEO_GNUM csvcol="STREAM RATE BAD TIMES" />
+        <VIDEO_BNUM csvcol="STREAM STALL BAD TIMES" />
+        <VIDEO_SNUM csvcol="STREAM REQUEST TIMES" />
+        <BFLOW csvcol="DL THROUGHPUT(Bytes)" />
+        <TFLOW csvcol="UL THROUGHPUT(Bytes)" />
+      </mapping>
+    <custom>
+        <createpath><![CDATA[F:\WDSystemData\FTPDATA\hbapsdata\seqbadcell\]]></createpath>
+      </custom>
+    </analyzer>
+
+    <analyzer>
+      <name>WifiGood</name>
+      <dec>无线优良率统计</dec>
+      <class_name>DWWinService.KQIGoodAnalyzer</class_name>
+      <quarter>true</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>02:20</daytime>
+      <dbtables>
+        <table_min>KQI_MIN</table_min>
+        <table_day>KQI_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[H:\JCFTP\kqi\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\good\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\good\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <START_TIME csvcol="START TIME" />
+        <CITY csvcol="CITY" />
+        <RAT csvcol="RAT" />
+        <ECGI csvcol="ECGI" />
+        <FDG_NUM csvcol="FST SCREEN BAD TIMES" />
+        <FD_SUM csvcol="FST SCREEN TIMES" />
+        <GAME_NUM csvcol="GAME DELAY BAD TIMES" />
+        <GAME_SUM csvcol="GAME REQUEST TIMES" />
+        <NEWS_SUM csvcol="IM SENT REQUEST TIMES" />
+        <NEWS_NUM csvcol="IM SENT FAIL TIMES" />
+        <PAGE_NUM csvcol="PAGE OPEN BAD TIMES" />
+        <PAGE_SUM csvcol="PAGE OPEN TIMES" />
+        <VIDEO_GNUM csvcol="STREAM RATE BAD TIMES" />
+        <VIDEO_BNUM csvcol="STREAM STALL BAD TIMES" />
+        <VIDEO_SNUM csvcol="STREAM REQUEST TIMES" />
+        <BFLOW csvcol="DL THROUGHPUT(Bytes)" />
+        <TFLOW csvcol="UL THROUGHPUT(Bytes)" />
+      </mapping>
+      <custom>
+        <createpath><![CDATA[H:\KQIGOOD\KQIGOOD]]></createpath>
+      </custom>
+    </analyzer>
+
+    <analyzer>
+      <name>KQI85</name>
+      <dec>无线85</dec>
+      <class_name>DWWinService.Kqi85Analyzer</class_name>
+      <quarter>false</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>03:00</daytime>
+      <dbtables>
+        <table_min></table_min>
+        <table_day>KQI85_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[H:\JCFTP\kqi\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kqi85\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kqi85\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <START_TIME csvcol="START TIME" />
+        <CITY csvcol="CITY" />
+        <RAT csvcol="RAT" />
+        <ECGI csvcol="ECGI" />
+        <FDG_NUM csvcol="FST SCREEN BAD TIMES" />
+        <FD_SUM csvcol="FST SCREEN TIMES" />
+        <GAME_NUM csvcol="GAME DELAY BAD TIMES" />
+        <GAME_SUM csvcol="GAME REQUEST TIMES" />
+        <NEWS_SUM csvcol="IM SENT REQUEST TIMES" />
+        <NEWS_NUM csvcol="IM SENT FAIL TIMES" />
+        <PAGE_NUM csvcol="PAGE OPEN BAD TIMES" />
+        <PAGE_SUM csvcol="PAGE OPEN TIMES" />
+        <VIDEO_GNUM csvcol="STREAM RATE BAD TIMES" />
+        <VIDEO_BNUM csvcol="STREAM STALL BAD TIMES" />
+        <VIDEO_SNUM csvcol="STREAM REQUEST TIMES" />
+        <BFLOW csvcol="DL THROUGHPUT(Bytes)" />
+        <TFLOW csvcol="UL THROUGHPUT(Bytes)" />
+      </mapping>
+      
+    </analyzer>
+
+    <analyzer>
+      <name>Flow</name>
+      <dec>流量</dec>
+      <class_name>DWWinService.FlowAnalyzer</class_name>
+      <quarter>true</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>02:20</daytime>
+      <dbtables>
+        <table_min>FLOW_MIN</table_min>
+        <table_day></table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[H:\JCFTP\kqi\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\flow\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\flow\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <START_TIME csvcol="START TIME" />
+        <BFLOW csvcol="DL THROUGHPUT(Bytes)" />
+        <TFLOW csvcol="UL THROUGHPUT(Bytes)" />
+      </mapping>
+    </analyzer>
+    
+    
+    <analyzer>
+      <name>Terminal</name>
+      <dec>终端</dec>
+      <class_name>DWWinService.TerminalAnalyzer</class_name>
+      <quarter>false</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>01:10</daytime>
+      <dbtables>
+        <table_day>TERMINAL_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port>25</port>
+            <uid>test</uid>
+            <pwd>123456</pwd>
+            <path><![CDATA[H:\JCFTP\terminal\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\terminal\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\terminal\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <START_TIME csvcol="STARTTIME" />
+        <BRAND csvcol="BRAND" />
+        <MODEL csvcol="MODEL" />
+        <FST_SCREEN_GOOD_TIMES csvcol="FST SCREEN BAD TIME" />
+        <FST_SCREEN_TIMES csvcol="FST SCREEN REQUEST TIME" />
+        <GAME_DELAY_GOOD_TIMES csvcol="GAME BAD TIME" />
+        <GAME_REQUEST_TIMES csvcol="GAME REQUEST TIME" />
+        <IM_SENT_REQUEST_TIMES csvcol="IM REQUEST TIME" />
+        <IM_SENT_SUC_TIMES csvcol="IM FAIL TIME" />
+        <PAGE_OPEN_GOOD_TIMES csvcol="PAGE OPEN BAD TIME" />
+        <PAGE_OPEN_TIMES csvcol="PAGE OPEN REQUEST TIME" />
+        <STREAM_RATE_GOOD_TIMES csvcol="STREAM DL BAD TIME" />
+        <STREAM_STALL_GOOD_TIMES csvcol="STREAM HALT BAD TIME" />
+        <STREAM_REQUEST_TIMES csvcol="STREAM REQUEST TIME" />
+      </mapping>
+    </analyzer>
+
+    
+    <analyzer>
+      <name>MR</name>
+      <dec>MR</dec>
+      <class_name>DWWinService.MRAnalyzer</class_name>
+      <quarter>false</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>08:00</daytime>
+      <dbtables>
+        <table_min>DATA_MR</table_min>
+        <table_day>DATA_MR</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>ftp</stype>
+            <ip>136.155.160.247</ip>
+            <port>21</port>
+            <uid>mdt</uid>
+            <pwd>Nokia123</pwd>
+            <path><![CDATA[/]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\mr\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\mr\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <SC_ENBID csvcol="SC_ENBID" />
+        <SC_LCRID csvcol="SC_LCRID" />
+        <ECI csvcol="SC_ECI" />
+        <SDATE csvcol="SDATE" />
+        <CITY csvcol="CITY" />
+        <VENDORID csvcol="VENDORID" />
+        <CELLID csvcol="CELLID" />
+        <LTESCEARFCN csvcol="LTESCEARFCN" />
+        <CMCC_OVERSHOOT_ADJ_COUNT csvcol="OVERSHOOT_ADJ_COUNT" />
+        <CMCC_OVERLAP_RATE csvcol="PEROVERLAP" />
+        <CMCC_OVERLAP_COUNT csvcol="OVERLAP_SUB_CNT" />
+        <LTESCRSRP csvcol="AVGRSRP" />
+        <LTESCRSRP_MIN csvcol="LTESCRSRP_MIN" />
+        <LTESCRSRP_MAX csvcol="LTESCRSRP_MAX" />
+        <TOTAL_OBJ_COUNT csvcol="OVERLAP_TOT_CNT" />
+        <MRO_COUNT_MOD3 csvcol="MRO_COUNT_MOD3" />
+        <MRO_COUNT_SUM csvcol="MRO_COUNT_SUM" />
+        <MRO_RATE_MOD3 csvcol="MRO_RATE_MOD3" />
+        <RSRP_COUNT_TOTAL csvcol="RSRP_COUNT_TOTAL" />
+        <RSRP_COUNT_LOW csvcol="SUBSAMPLERSRP_110" />
+        <RSRP_LOW_RATE csvcol="PERRSRP_110" />
+        <TADV_COUNT_SUM csvcol="TADV_COUNT_SUM" />
+        <TADV_DIST_AVG csvcol="TADV_DIST_AVG" />
+      </mapping>
+    </analyzer>
+    <analyzer>
+      <name>IPRAN</name>
+      <dec>IPRAN</dec>
+      <class_name>DWWinService.IpAnalyzer</class_name>
+      <quarter>false</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>06:00</daytime>
+      <dbtables>
+        <table_day>IPRAN_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port>25</port>
+            <uid>test</uid>
+            <pwd>123456</pwd>
+            <path><![CDATA[H:\JCFTP\ran\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\ran\tar\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\ran\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <CITY csvcol="CITY"/>
+        <IP csvcol="IP"/>
+        <KIND csvcol="KIND"/>
+      </mapping>
+    </analyzer>
+
+    <analyzer>
+      <name>ALARM_MIN</name>
+      <dec>ALARM</dec>
+      <class_name>DWWinService.AlarmAnalyzer</class_name>
+      <quarter>true</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>15:50</daytime>
+      <dbtables>
+        <table_min>ALARM_MIN</table_min>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>ftp</stype>
+            <ip>136.158.217.59</ip>
+            <port>21</port>
+            <uid>alarmdl</uid>
+            <pwd>Nokia123alarm</pwd>
+            <path><![CDATA[/]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\alarm\tmp]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\alarm\tar]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <CITY csvcol="CITY"/>
+        <BELONG_AREA csvcol="BELONG_AREA"/>
+        <CELL_NAME csvcol="CELL_NAME"/>
+        <ECI csvcol="ECI"/>
+        <WIFI_TYPE csvcol="WIFI_TYPE"/>
+        <WIFI_NAME csvcol="WIFI_NAME"/>
+      </mapping>
+    </analyzer>
+
+    <analyzer>
+      <name>BUSYTIME_MIN</name>
+      <dec>BUSYTIME</dec>
+      <class_name>DWWinService.BusyTimeAnalyzer</class_name>
+      <quarter>true</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>15:50</daytime>
+      <dbtables>
+        <table_min>BUSYTIME_MIN</table_min>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[H:\JCFTP\kqi\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kqi\btm\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kqi\btr\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <START_TIME csvcol="START TIME" />
+        <CITY csvcol="CITY" />
+        <RAT csvcol="RAT" />
+        <ECGI csvcol="ECGI" />
+        <FDG_NUM csvcol="FST SCREEN BAD TIMES" />
+        <FD_SUM csvcol="FST SCREEN TIMES" />
+        <GAME_NUM csvcol="GAME DELAY BAD TIMES" />
+        <GAME_SUM csvcol="GAME REQUEST TIMES" />
+        <NEWS_SUM csvcol="IM SENT REQUEST TIMES" />
+        <NEWS_NUM csvcol="IM SENT FAIL TIMES" />
+        <PAGE_NUM csvcol="PAGE OPEN BAD TIMES" />
+        <PAGE_SUM csvcol="PAGE OPEN TIMES" />
+        <VIDEO_GNUM csvcol="STREAM RATE BAD TIMES" />
+        <VIDEO_BNUM csvcol="STREAM STALL BAD TIMES" />
+        <VIDEO_SNUM csvcol="STREAM REQUEST TIMES" />
+        <BFLOW csvcol="DL THROUGHPUT(Bytes)" />
+        <TFLOW csvcol="UL THROUGHPUT(Bytes)" />
+      </mapping>
+      <custom>
+        <createpath><![CDATA[F:\WDSystemData\FTPDATA\hbapsdata\seqbadcell\]]></createpath>
+      </custom>
+    </analyzer>
+
+    <analyzer>
+      <name>ALLKPIINFO</name>
+      <dec>无线优良率和其他数据统计</dec>
+      <class_name>DWWinService.AllKQIDataAnalyzer</class_name>
+      <quarter>false</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>11:40</daytime>
+      <dbtables>
+        <table_min>KQIGOOD_DAY</table_min>
+        <table_day>KQIGOOD_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[H:\JCFTP\kqi\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\allkqiinfo\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\allkqiinfo\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+        <CREATETIME csvcol="START TIME" />
+        <CITY csvcol="CITY" />
+        <RAT csvcol="RAT" />
+        <ECI csvcol="ECGI" />
+        <FDG_NUM csvcol="FST SCREEN BAD TIMES" />
+        <FD_SUM csvcol="FST SCREEN TIMES" />
+        <GAME_NUM csvcol="GAME DELAY BAD TIMES" />
+        <GAME_SUM csvcol="GAME REQUEST TIMES" />
+        <NEWS_SUM csvcol="IM SENT REQUEST TIMES" />
+        <NEWS_NUM csvcol="IM SENT FAIL TIMES" />
+        <PAGE_NUM csvcol="PAGE OPEN BAD TIMES" />
+        <PAGE_SUM csvcol="PAGE OPEN TIMES" />
+        <VIDEO_GNUM csvcol="STREAM RATE BAD TIMES" />
+        <VIDEO_BNUM csvcol="STREAM STALL BAD TIMES" />
+        <VIDEO_SNUM csvcol="STREAM REQUEST TIMES" />
+        <BFLOW csvcol="DL THROUGHPUT(Bytes)" />
+        <TFLOW csvcol="UL THROUGHPUT(Bytes)" />
+      </mapping>
+      <custom>
+        <createpath><![CDATA[H:\ALLKQIINFO\]]></createpath>
+      </custom>
+    </analyzer>
+
+    <analyzer>
+      <name>Performance</name>
+      <dec>性能数据</dec>
+      <class_name>DWWinService.PerformanceAnalyzer</class_name>
+      <quarter>false</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>08:05</daytime>
+      <dbtables>
+        <table_min></table_min>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\per\org\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\per\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\per\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+
+      </mapping>
+      <custom>
+        <webtar><![CDATA[http://m.weibo.cn|http://xw.qq.com|http://m.jd.com|http://m.360.com|http://3g.163.com/touch|http://189.cn|http://sina.cn|http://m.sohu.com|http://m.taobao.com|http://www.apple.com/cn|http://i.ifeng.com]]></webtar>
+        <videotar><![CDATA[http://m.tv.sohu.com|http://www.youku.com|http://m.v.qq.com|http://m.iqiyi.com|http://m.tv189.com|http://www.le.com]]></videotar>
+        <imtar><![CDATA[微信|QQ|易信]]></imtar>
+        <gametar><![CDATA[王者荣耀|阴阳师|爱游戏]]></gametar>
+        <nettype><![CDATA[1X|EVDO|WLAN]]></nettype>
+        <webopen><![CDATA[>1500|>1800]]></webopen>
+        <firstdelay><![CDATA[>5000]]></firstdelay>
+        <videodown><![CDATA[<1500|<1000]]></videodown>
+        <videorate><![CDATA[>0.5]]></videorate>
+        <gamedelay><![CDATA[>300]]></gamedelay>
+
+        <webcount>9</webcount>
+        <videocount>4</videocount>
+        <imcount>4</imcount>
+        <gamecount>4</gamecount>
+        <downloadurl>http://132.33.18.55:9703/07E99589C36C3836/</downloadurl>
+        <exportpath><![CDATA[E:\WebSite\DWebsite\perdata\]]></exportpath>
+      </custom>
+    </analyzer>
+
+    <analyzer>
+      <name>NB</name>
+      <dec>NB</dec>
+      <class_name>DWWinService.NBAnalyzer</class_name>
+      <quarter>false</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>08:10</daytime>
+      <dbtables>
+        <table_min>NB_DAY</table_min>
+        <table_day>NB_DAY</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>136.155.160.247</ip>
+            <port>21</port>
+            <uid>mdt</uid>
+            <pwd>Nokia123</pwd>
+            <path><![CDATA[H:\nb\huawei\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\nb\tmp\hw\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\nb\tar\hw\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>136.155.160.247</ip>
+            <port>21</port>
+            <uid>mdt</uid>
+            <pwd>Nokia123</pwd>
+            <path><![CDATA[H:\nb\nokia\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\nb\tmp\nk\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\nb\tar\nk\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>136.155.160.247</ip>
+            <port>21</port>
+            <uid>mdt</uid>
+            <pwd>Nokia123</pwd>
+            <path><![CDATA[H:\nb\zte\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\nb\tmp\zx\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\nb\tar\zx\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+
+      </mapping>
+      <custom>
+        <zjpath><![CDATA[c:\ftp\]]></zjpath>
+      </custom>
+    </analyzer>
+    <analyzer>
+      <name>KPI</name>
+      <dec>KPI</dec>
+      <class_name>DWWinService.KPIAnalyzer</class_name>
+      <quarter>true</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>08:10</daytime>
+      <dbtables>
+        <table_min>1</table_min>
+        <table_day>1</table_day>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>136.155.160.247</ip>
+            <port>21</port>
+            <uid>mdt</uid>
+            <pwd>Nokia123</pwd>
+            <path><![CDATA[H:\nb\huawei\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kpi\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kpi\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>136.155.160.247</ip>
+            <port>21</port>
+            <uid>mdt</uid>
+            <pwd>Nokia123</pwd>
+            <path><![CDATA[H:\nb\nokia\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kpi\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kpi\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>136.155.160.247</ip>
+            <port>21</port>
+            <uid>mdt</uid>
+            <pwd>Nokia123</pwd>
+            <path><![CDATA[H:\nb\zte\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kpi\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[I:\data\kpi\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+
+      </mapping>
+      <custom>
+        <zjpath><![CDATA[H:\kpi\]]></zjpath>
+      </custom>
+    </analyzer>-->
+    <analyzer>
+      <name>Event</name>
+      <dec>事件</dec>
+      <class_name>DWWinService.EventAnalyzer</class_name>
+      <quarter>false</quarter>
+      <offsettime>60000</offsettime>
+      <daytime>15:39</daytime>
+      <dbtables>
+        <table_min></table_min>
+      </dbtables>
+      <csvs>
+        <csv>
+          <fileserver>
+            <stype>local</stype>
+            <ip>192.168.1.103</ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[C:\evt\org\]]></path>
+          </fileserver>
+          <filetmp>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[C:\evt\tmp\]]></path>
+          </filetmp>
+          <filetarget>
+            <stype>local</stype>
+            <ip></ip>
+            <port></port>
+            <uid></uid>
+            <pwd></pwd>
+            <path><![CDATA[C:\evt\tar\]]></path>
+          </filetarget>
+          <regular></regular>
+        </csv>
+      </csvs>
+      <mapping>
+
+      </mapping>
+      <custom>
+        <downloadurl>http://192.168.1.114/yuanshi/</downloadurl>
+      </custom>
+    </analyzer>
+  </Analyzers>
+</NewDataSet>
