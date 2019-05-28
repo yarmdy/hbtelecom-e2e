@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background-color: #eeeeee;
+        }
+
+        .bar {
+            width: 1000px;
+            height: 400px;
+        }
+
+        .q1 {
+            padding: 20px 0 20px 0;
+            height: 50px;
+            margin-left: 50px;
+        }
+
+        .date {
+            width: 150px;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid #999999;
+            outline: none;
+            text-indent: 1em;
+        }
+
+            .date:focus {
+                box-shadow: 0 0 1px 0 #0094ff inset;
+            }
+
+        .search {
+            width: 60px;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid #999999;
+            outline: none;
+            background-color: #ffffff;
+            cursor: pointer;
+        }
+
+            .search:hover {
+                box-shadow: 0 0 1px 0 #0094ff inset;
+            }
+
+            .search:active {
+                background-color: #eeeeee;
+            }
+
+        .wrap {
+            border-bottom: 1px solid #ffffff;
+            box-shadow: 0 2px 2px 0 #ffffff;
+        }
+
+        .c1 {
+            width: 1200px;
+            margin: 0 auto;
+        }
+        .head {
+            text-align:center;
+            height: 80px;
+            font-size: 35px;
+            line-height: 80px;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="head">地市指标监控</div>
+    <div class="wrap">
+        <div class="c1">
+            <div class="q1">
+                日期：<input type="text" class="date" id="date" /> 时间：
+                   <select id="time" class="date">
+                       <option value="00:00">00:00</option>
+                       <option value="01:00">01:00</option>
+                       <option value="02:00">02:00</option>
+                       <option value="03:00">03:00</option>
+                       <option value="04:00">04:00</option>
+                       <option value="05:00">05:00</option>
+                       <option value="06:00">06:00</option>
+                       <option value="07:00">07:00</option>
+                       <option value="08:00">08:00</option>
+                       <option value="09:00">09:00</option>
+                       <option value="10:00">10:00</option>
+                       <option value="11:00">11:00</option>
+                       <option value="12:00">12:00</option>
+                       <option value="13:00">13:00</option>
+                       <option value="14:00">14:00</option>
+                       <option value="15:00">15:00</option>
+                       <option value="16:00">16:00</option>
+                       <option value="17:00">17:00</option>
+                       <option value="18:00">18:00</option>
+                       <option value="19:00">19:00</option>
+                       <option value="20:00">20:00</option>
+                       <option value="21:00">21:00</option>
+                       <option value="22:00">22:00</option>
+                       <option value="23:00">23:00</option>
+                   </select> 
+                <input class="search" type="button" value="查询" id="search" />
+            </div>
+            <div class="bar" id="e1"></div>
+            <div class="bar" id="e2"></div>
+        </div>
+    </div>
+    <div>
+        <div class="c1">
+            <div class="q1">
+                日期：<input type="text" class="date" id="date2" />--<input class="date" type="text" id="date3" /> <input class="search" type="button" value="查询" id="search2" />
+            </div>
+            <div class="bar" id="e3"></div>
+            <div class="bar" id="e4"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="/page/js/loginyz.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script type="text/javascript" src="js/citygoodrate.js"></script>
+    <script type="text/javascript">
+        laydate.render({
+            elem: '#date',
+        });
+        laydate.render({
+            elem: '#date2',
+        });
+        laydate.render({
+            elem: '#date3',
+        });
+        init();
+        init_data();
+        clickSearch1();
+        clickSearch2();
+        e1LegendSwitch();
+        e1CitySwitch();
+        e3LegendSwitch();
+        e3CitySwitch();
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" standalone="yes"?>
+<!--<DbConnectionList>
+  <Connection>
+    <Name>ghgis</Name>
+    <Timeout>100000</Timeout>
+    <DbType>Oracle</DbType>
+    <Datasource>192.168.1.114</Datasource>
+    <Database>orcl</Database>
+    <Port>1521</Port>
+    <Username>mis</Username>
+    <Password>mis</Password>
+  </Connection>
+</DbConnectionList>-->
+
+<DbConnectionList>
+  <Connection>
+    <Name>ghgis</Name>
+    <Timeout>100000</Timeout>
+    <DbType>Oracle</DbType>
+    <Datasource>localhost</Datasource>
+    <Database>orcl</Database>
+    <Port>1521</Port>
+    <Username>C##WITHF</Username>
+    <Password>guo199394</Password>
+  </Connection>
+</DbConnectionList>

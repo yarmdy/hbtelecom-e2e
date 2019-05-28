@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background-color: #eeeeee;
+        }
+
+        .bar {
+            width: 1000px;
+            height: 400px;
+            margin: auto;
+        }
+
+
+        .date {
+            width: 150px;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid #999999;
+            outline: none;
+            text-indent: 1em;
+        }
+
+            .date:focus {
+                box-shadow: 0 0 1px 0 #0094ff inset;
+            }
+
+        .search {
+            width: 60px;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid #999999;
+            outline: none;
+            background-color: #ffffff;
+            cursor: pointer;
+        }
+
+            .search:hover {
+                box-shadow: 0 0 1px 0 #0094ff inset;
+            }
+
+            .search:active {
+                background-color: #eeeeee;
+            }
+
+        .c1 {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .q1 {
+            padding: 20px 0 20px 0;
+            height: 50px;
+            margin-left: 50px;
+        }
+
+        .head {
+            text-align: center;
+            height: 80px;
+            font-size: 35px;
+            line-height: 80px;
+            background-color: #ffffff;
+        }
+        .c1 div.group {
+            margin: 30px 0; 
+            /*border: 1px solid skyblue;*/
+        }
+        .title {
+            font-size: 25px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="head">三网数据对比</div>
+    <div>
+        <div class="c1">
+            <div class="q1">
+                日期：<input type="text" class="date" id="date1" />--<input class="date" type="text" id="date2" /> <input class="search" type="button" value="查询" id="search" />
+                <a href="###" class="search" id="exportcity" >导出城市</a><a href="###" class="search" id="exportcontent" >导出内容</a>
+            </div>
+            <div class="group">
+                <div class="title">城市数据对比</div>
+                <div class="bar" id="e1"></div>
+                <div class="bar" id="e2"></div>
+                <div class="bar" id="e3"></div>
+                <div class="bar" id="e4"></div>
+                <div class="bar" id="e5"></div>
+                <div class="bar" id="e6"></div>
+                <div class="bar" id="e7"></div>
+            </div>
+            <div class="group">
+                <div class="title">应用数据对比</div>
+                <div class="bar" id="e8"></div>
+                <div class="bar" id="e9"></div>
+                <div class="bar" id="e10"></div>
+                <div class="bar" id="e11"></div>
+                <div class="bar" id="e12"></div>
+                <div class="bar" id="e13"></div>
+                <div class="bar" id="e14"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="/page/js/loginyz.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script type="text/javascript" src="js/threenet.js"></script>
+    <script type="text/javascript">
+        laydate.render({
+            elem: '#date1',
+        });
+        laydate.render({
+            elem: '#date2',
+        });
+        $("#exportcity").on("click", function () {
+            var date1 = $("#date1").val();
+            var date2 = $("#date2").val();
+            $("#exportcity").attr("href", "/services/threenet.ashx?type=exportcity&date1="+date1+"&date2="+date2)
+        });
+        $("#exportcontent").on("click", function () {
+            var date1 = $("#date1").val();
+            var date2 = $("#date2").val();
+            $("#exportcontent").attr("href", "/services/threenet.ashx?type=exportcontent&date1=" + date1 + "&date2=" + date2)
+        });
+        initChart();
+        getServerDateTime();
+        initData();
+        search();
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+﻿#exportbut {
+    display: none;
+}
+.header {
+    height: 150px;
+    box-shadow: 0 0 2px 2px rgba(0,0,0,.2);
+}
+.header div {
+    text-align:center;
+    height: 75px;
+    line-height: 75px;
+}
+.header .title {
+    font-size: 20px;
+    font-weight: bold;
+}
+.header .data {
+    font-size: 20px;
+    margin-right: 20px;
+    color: #FE4C40;
+}
+.block {
+    margin-top: 30px;
+    box-shadow: 0 4px 2px 0 rgba(0,0,0,.2);
+}
+.block-title {
+    font-size: 20px;
+    font-weight:bold;
+    color: #333;
+    text-align:center;
+    margin: 20px 0 40px;
+}
+.chart {
+    margin: 0 auto;
+    height: 400px;
+}
+#wifiTableTitle, #coreTableTitle {
+    font-size: 20px;
+    text-align:center;
+    font-weight:bold;
+}

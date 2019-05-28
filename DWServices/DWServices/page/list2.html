@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Examples &middot; Bootstrap Table</title>
+    <meta name="author" content="zhixin">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="frame/libs/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-table.css"> 
+    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="/page/js/loginyz.js"></script>
+    <script src="frame/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script> 
+    <script src="js/bootstrap-table.js"></script> 
+</head>
+<body> 
+                    <script>
+                        $(function() {
+                           
+							
+							$('#show2').bootstrapTable({
+								url: 'data2.json',
+								striped:true, 
+								 showExport: true,  //是否显示导出按钮  
+								   buttonsAlign:"buttom",  //按钮位置  
+								   exportTypes:['excel'],  //导出文件类型  
+								   Icons:'glyphicon-export',  
+									pageList: [22, 25, 50, 100],
+									 pagination:"true",
+									 pageSize: 20,
+								columns: [{
+									field: 'id',
+									title: 'Item ID'
+								}, {
+									field: 'name',
+									title: 'Item Name'
+								}, {
+									field: 'price',
+									title: 'Item Price'
+								}, ],
+								onClickRow:function(row, $element){
+										console.log($element)
+										$(".danger").removeClass("danger");
+										$element.addClass("danger");
+										window.location.href='main.html'
+									}
+								}); 
+                        });
+                    </script>
+                
+                    <table  id="show2" >
+                         
+                    </table>
+    
+ 
+
+
+
+</body>
+</html>

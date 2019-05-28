@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html style="overflow: hidden;">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>定位平台</title> 
+<link rel="stylesheet" href="page/css/styles.css" type="text/css" />   
+<script type="text/javascript" src="page/js/jquery-1.12.4.js"></script>   
+<link rel="stylesheet" href="page/frame/libs/bootstrap-3.3.7/css/bootstrap.min.css"> 
+<script src="page/frame/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>  
+<link rel="stylesheet" href="page/themes/default/style.css">
+<link rel="stylesheet" type="text/css" href="page/login/style.css" />
+	<!-- JavaScript代码-->
+	<script src="page/login/jquery.js" type="text/javascript"></script>
+	<script src="page/login/jquery.fullscreenr.js" type="text/javascript"></script>
+<style type="text/css">
+.panel-heading {background:#00b4fb;}
+.input-group-lg>.form-control, .input-group-lg>.input-group-addon, .input-group-lg>.input-group-btn>.btn {height:40px;}
+.form-control {border:1px solid #8a9ba8;border-radius:3px;}
+.input-group .form-control:first-child {border-radius:3px;}
+</style>
+<script type="text/javascript">  
+		<!--
+	  
+        // 您必须指定你的背景图片的大小
+			var FullscreenrOptions = {  width: 1920, height: 1080, bgID: '#bgimg' };
+			// 此处将会激活全屏背景
+			jQuery.fn.fullscreenr(FullscreenrOptions);
+		//-->
+	</script>
+<script type="text/javascript">
+	$(function() {
+		var username = $('#username').val();
+		var password = $('#password').val();
+
+		if (username != '' && password != '') {
+			//
+		}
+
+		showErrorMsg();
+	});
+
+	function showErrorMsg() {
+		var account = '${username}';
+		var msg = '${shiroLoginFailure}';
+		if (msg == 'org.apache.shiro.authc.UnknownAccountException') {
+			msg = account + "账户不存在！";
+		} else if (msg == 'org.apache.shiro.authc.IncorrectCredentialsException') {
+			msg = "账户和密码不匹配！";
+		} else if (msg == 'org.apache.shiro.authc.AuthenticationException') {
+			msg = "账户和密码不匹配！";
+		} else {
+			//
+		}
+		$('#errorMsg').html(msg);
+	}
+ 
+		
+	    function testlogin() {
+	        if ($("#usercode").val() == "") {
+	            alert("请填写用户名!")
+	            return;
+	        }
+	        if ($("#password").val() == "") {
+	            alert("请填写密码!");
+	            return;
+	        }
+	        $("#loadimage").show();
+	        var options = {
+	            url: '/login.ashx',
+	            type: 'post',
+	            dataType: 'text',
+	            data: $("#loginform").serialize(),
+	            success: function (data) { 
+	                console.log("data:", data)
+	                data = eval("(" + data + ")");
+	                if (data.result == "error") {
+	                    alert("用户或者密码错误请重新输入！！")
+	                } else {
+	                    window.location.href = "/page/index.aspx";
+	                }
+	                $("#loadimage").hide();
+	            }
+	        };
+	        $.ajax(options);
+	    }
+	
+</script>
+</head>
+<body>
+    <div class="box">
+	<img id="bgimg" src="page/login/1442990676133.jpg" />
+    </div>
+	<div class="container" style="background:page/image/b.jpg">
+		<div class="row">
+			<div class="col-md-12 csg-col">
+			<div style="width:260px;height:109px;margin:auto;margin-top: 120px;background:url(page/login/logo.png) no-repeat center;background-size:250px 109px;"></div>
+				<div class="panel panel-primary center-block"
+					style="width: 340px; margin-top:30px;border-radius:5px;overflow:hidden;-webkit-box-shadow: 0px 3px 6px 3px rgba(0,0,0,0.04);box-shadow: 0px 3px 6px 3px rgba(0,0,0,0.04);border:0px; ">
+                    
+					<div class="panel-body" style="">
+						<h3 style="font-size:20px;padding:5px 5px;color:#424f59;margin-top:30px;text-align:center;">登录</h3>
+						<form    id="loginform">
+							<div class="form-group" style="padding: 5px 30px 0px 30px;">
+								<div class="input-group input-group-lg" style="width:100%;border-radius:5px;">
+									<input type="text" style="font-size:14px;"
+										id="usercode" name="usercode" class="form-control"
+										placeholder="用户账号" value=''>
+								</div>
+							</div>
+							<div class="form-group" style="padding: 5px 30px 0px 30px;">
+								<div class="input-group input-group-lg" style="width:100%;border-radius:5px;">
+									<input
+										type="password" id="password" name="password" style="font-size:14px;"
+										placeholder="用户密码" class="form-control" value=''>
+								</div>
+							</div>
+							<div class="form-group" style="padding: 5px 30px 5px 30px;">
+								<div class="col-sm-12" style="padding:0px;">
+									<div class="checkbox pull-left" style="font-size:12px;">
+										 
+									</div>
+									<input type="button" value="登录"
+										class="btn btn-primary pull-right" style="width:100%;background:#00b4fb;border:0px;height:40px;" onclick="testlogin()"/>
+                                    <image id="loadimage" src="/page/images/load.gif"   style="display:none"></image>
+								</div>
+							</div> 
+						</form>
+
+					</div>
+					<div class="panel-footer" style="border-top:0px;height:40px;line-height:40px;">  
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+select {
+  -webkit-appearance:menulist-button;
+   padding: 0px 0px 0px 0px; 
+   height: auto;
+}
+
+.custom-filter select {
+  -webkit-appearance:menulist-button;
+   padding: 0px 0px 0px 0px; 
+	height: 30px;
+	min-width: 80px;
+}

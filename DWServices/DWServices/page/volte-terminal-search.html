@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="frame/libs/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-table.css">
+    <link href="css/bootstrap-editable.css" rel="stylesheet" />
+    <link href="css/volte-terminal-search.css" rel="stylesheet" />
+</head>
+<body>
+    <h3>VoLTE感知单用户查询</h3>
+    <div class="container databox">
+        <form id="tbaction" class="form-inline">
+            开始时间：<input class="form-control" autocomplete="off" type="text" id="starttime">
+            结束时间：<input class="form-control" autocomplete="off" type="text" id="endtime">
+            品牌：
+            <select class="form-control" id="brand">
+                <option value="-1" selected>请选择</option>
+            </select>
+            型号：
+            <select class="form-control" disabled id="model">
+                <option value="-1" selected>请选择</option>
+            </select>
+            <input type="button" id="search" value="查询" class="btn btn-primary">
+            <button class="btn btn-success" id="export">导出</button>
+        </form>
+        <div>
+            <table id="table"></table>
+        </div>
+
+    </div>
+    <div id="chart" style="width: 80%;height: 600px;margin: 30px auto;"></div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/laydate/laydate.js"></script>
+    <script src="frame/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/bootstrap-table.js"></script>
+    <script src="js/bootstrap-editable.js"></script>
+    <!--<script src="js/bootstrap-table-zh-CN.js"></script>-->
+    <script src="js/bootstrap-table-export.js"></script>
+    <script src="js/tableExport.js"></script>
+    <script type="text/javascript" src="js/terminal-search.js"></script>
+</body>
+</html>

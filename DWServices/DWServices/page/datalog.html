@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html style="overflow: hidden;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>定位平台</title>
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="/page/js/loginyz.js"></script>
+    <script src="frame/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="frame/libs/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-table.css">
+    <link rel="stylesheet" href="css/bootstrap-editable.css">
+    <link rel="stylesheet" href="css/jquery.mloading.css">
+    <link rel="stylesheet" href="themes/default/style.css">
+    <script type="text/javascript" src="js/jquery.date_input.pack.js"></script>
+    <script src="js/bootstrap-table.js"></script>
+    <script type="text/javascript" src="js/bootstrap-table-export.js"></script>
+    <script type="text/javascript" src="js/bootstrap-editable.js"></script>
+    <script src="js/tableExport.js"></script> 
+     <script src="js/datauntil.js"></script> 
+    <script type="text/javascript" src="js/showlist.js"></script>
+    <script type="text/javascript" src="js/jquery.mloading.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <link href="css/datePicker.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body style="overflow: auto;overflow-x:hidden">
+    <style>
+        .danger {
+            background: yellow;
+        }
+        .text {width:100px;height:16px;line-height:16px;border:0px solid #f00;overflow:hidden;}
+        .text:hover {width:100px;height:200px;transition-delay:0.5s;}
+    </style>
+    <script type="text/javascript">
+        var selectparam = {
+            "THEQUOTA": ""
+        };
+        var rowOne = {};
+        function GetDateStr(AddDayCount) {
+            var dd = new Date();
+            dd.setDate(dd.getDate() + AddDayCount);//获取AddDayCount天后的日期
+            var y = dd.getFullYear();
+            var m = dd.getMonth() + 1;//获取当前月份的日期
+            var d = dd.getDate();
+            return new Date(y + "-" + m + "-" + d);
+        }
+        function initdate() {
+            $.extend(DateInput.DEFAULT_OPTS, {
+                month_names: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                short_month_names: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+                short_day_names: ["日","一", "二", "三", "四", "五", "六"],
+                dateToString: function (date) {
+                    var month = (date.getMonth() + 1).toString();
+                    var dom = date.getDate().toString();
+                    if (month.length == 1) month = "0" + month;
+                    if (dom.length == 1) dom = "0" + dom;
+                    return date.getFullYear() + "-" + month + "-" + dom;
+                }
+
+            });
+            $("#datePicker").val(selectparam.datePicker); 
+            $('#datePicker').date_input();
+        }
+
+        var selectparam = {
+            "eNBID": "",
+            "cellId": "",
+            "eci": "",
+            "datePicker": (GetDateStr(-1)).Format("yyyy-MM-dd"),
+            "key": "",
+            "scale": "d"
+        };
+        $(function () {  
+                $("#selectF").click(function () {                     
+                    $("body").mLoading("show"); //开启      
+                    selectparam.datePicker = $("#datePicker").val();
+                    $('#show2').bootstrapTable('refresh');
+                });
+                initdate();
+        })
+        var curRow = {};
+        var columns = [
+              {
+                  field: "CITY",
+                  title: "地市"
+              },
+            {
+                field: "xqpjrsrp",
+                title: "小区平均RSRP"
+            },
+                {
+                    field: "rfgbl",
+                    title: "弱覆盖"
+                },
+                {
+                    field: "pjjl",
+                    title: "平均TA距离"
+                },
+                {
+                    field: "cdfgk",
+                    title: "重叠覆盖"
+                },
+                {
+                    field: "gfglqgs",
+                    title: "过覆盖"
+                },
+                {
+                    field: "modgrcd",
+                    title: "下行模三干扰"
+                },
+                {
+                    field: "sxprbpjlyl18",
+                    title: "上行PRB平均利用率"
+                },
+                {
+                    field: "xxprbpjlyl18",
+                    title: "下行PRB平均利用率"
+                },
+                {
+                    field: "pjrrcljyhs18",
+                    title: "RRC连接用户数"
+                },
+                {
+                    field: "pdcpxx18",
+                    title: "下行流量"
+                },
+                {
+                    field: "pdcpsx18",
+                    title: "上行流量"
+                },
+                {
+                    field: "pjjhyhs18",
+                    title: "4.19 平均激活用户数"
+                },
+                {
+                    field: "rrcljcgl",
+                    title: "RRC连接建立成功率(%)"
+                },
+                {
+                    field: "rrcsbcs",
+                    title: "RRC建立失败次数"
+                },
+                {
+                    field: "xhysl",
+                    title: "寻呼拥塞率"
+                },
+                {
+                    field: "xhyscs",
+                    title: "寻呼拥塞次数"
+                },
+                {
+                    field: "rrcljcjbl",
+                    title: "RRC连接重建比例"
+                },
+                {
+                    field: "rrcljcjcgcs",
+                    title: "RRC连接重建成功次数"
+                },
+                {
+                    field: "uesxwdxl",
+                    title: "UE上下文掉线率"
+                },
+                {
+                    field: "uesxycsfcs",
+                    title: "UE上下文异常释放次数"
+                },
+                {
+                    field: "erabdxl",
+                    title: "E-RAB掉线率"
+                },
+                {
+                    field: "erabdxcs",
+                    title: "E-RAB掉线次数"
+                },
+                {
+                    field: "rrccjbl",
+                    title: "RRC重建比例"
+                },
+                {
+                    field: "rrccjqqcs",
+                    title: "RRC重建请求次数"
+                },
+                {
+                    field: "xtnqhcgl",
+                    title: "系统内切换成功率"
+                },
+                {
+                    field: "xtnqsbcs",
+                    title: "系统内切换失败次数"
+                },
+                {
+                    field: "cdsbl",
+                    title: "4G重定向到3G的比例（%）"
+                },
+                {
+                    field: "ltecdxcs",
+                    title: "LTE重定向到3G的次数"
+                },
+                {
+                    field: "cqibl",
+                    title: "CQI≥7的比例"
+                },
+                {
+                    field: "xxprbslzb",
+                    title: "11.1 下行PRB双流占比"
+                },
+                {
+                    field: "yhtysxpjsl",
+                    title: "8.13 用户体验上行平均速率"
+                },
+                {
+                    field: "yhtyxxpjsl",
+                    title: "8.14 用户体验下行平均速率"
+                },
+                {
+                    field: "xqtfsc",
+                    title: "小区退服时长"
+                },
+                {
+                    field: "xqzdl",
+                    title: "小区中断率"
+                },
+                {
+                    field: "xqkyl",
+                    title: "小区可用率"
+                },
+                {
+                    field: "grzspjz",
+                    title: "干扰噪声的平均值"
+                }
+        ]
+        function showtable() {
+            $('#show2').bootstrapTable({
+                url: '../services/Datalog.ashx',
+                striped: true,
+                pagination: false,
+                showExport: true,  //是否显示导出按钮  
+                buttonsAlign: "right",  //按钮位置  
+                exportTypes: ['excel'],  //导出文件类型  
+                Icons: 'glyphicon-export',
+                exportDataType: 'all',
+                "processing": true,
+                search: false,
+                silent: false,
+                paging: true,
+                sortName: "id",    //排序相关  
+                sortOrder: "desc",
+                sortStable: true,
+                queryParams: selectparam,
+                export: 'glyphicon-export icon-share',
+                sortName: ['id'],
+                columns: columns, 
+                onLoadSuccess: function () {
+                    $("body").mLoading("hide");
+                }
+            });
+        }
+        window.onload = function () {
+            showtable()
+        }
+    </script>
+    <div style="width: 100%; overflow-y:auto" id="sshow">
+        <div style="width: 88%; margin-left: auto; margin-right: auto; margin-top: 21px">
+
+            <div class="custom-filter" style="height: 110px; padding-top: 0px;"> 
+                <h3 id="pagination-table" style="margin: 0px; font-size: 18px; height: 50px; line-height: 50px; text-indent: 14px; border-bottom: 1px solid #eee;">入库完整性校验	</h3> 
+                <ul class="list-inline" style="margin-top: 10px;"> 
+                     
+                    <li class="filter-bar-lab">日期:</li>
+                    <li>
+                        <input type="text" id="datePicker" class="input date_picker "  placeholder="点击选择日期" />
+                    </li>  
+                    <button type="button"   id="selectF" class="btn btn-primary btn-search" >  查询</button> 
+                </ul>
+            </div> 
+                <div class="row">
+                    <div class="bs-example col-md-12 csg-co " style="height: 598px;">
+                        <table id="show2" data-height="580" data-pagination="true" striped="true"></table>
+                    </div>  
+                </div>
+            </div> 
+    </div> 
+     
+</body>
+</html>

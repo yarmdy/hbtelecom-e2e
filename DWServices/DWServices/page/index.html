@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html style="overflow: hidden;">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>定位平台</title> 
+<link rel="stylesheet" href="css/styles.css" type="text/css" />   
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>   
+    <script type="text/javascript" src="/page/js/loginyz.js"></script>
+<link rel="stylesheet" href="frame/libs/bootstrap-3.3.7/css/bootstrap.min.css"> 
+<script src="frame/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>  
+<link rel="stylesheet" href="themes/default/style.css">
+
+  <script>
+      function hidebar() {
+          $('#sys-navbar').addClass('navbar-hide');
+          //显示下拉按钮
+          $('#btn-navbar-col').removeClass('hide');
+          $('#btn-navbar-col').show();
+          $('#btn-navbar-col').click(function () {
+              $('#btn-navbar-col').hide();
+              $('#sys-navbar').removeClass('navbar-hide');
+          });
+      }
+
+  </script>
+</head> 
+ <body  style="overflow: hidden;">
+       
+     <button id="btn-navbar-col" type="button"
+		class="btn btn-link btn-navbar-col hide">
+		<span class="glyphicon glyphicon-chevron-down"></span>导航栏</a>
+	</button> 
+	<nav id="sys-navbar" class="navbar navbar-default" role="navigation">
+		<div class="navbar-header">
+			<a class="navbar-brand logo" href="#" target="_blank"></a>
+		</div>
+		<div>
+			<ul id="mainnavbar" class="nav navbar-nav"> 
+				<li id="appjc"><a href="list.html"
+					target="mainframe">定位</a></li>
+                 <li id="Li2"><a href="casedata.html"
+					target="mainframe">质差案例</a></li>
+                <li id="appfx"><a href="quota.html"
+					target="mainframe">参数设定</a></li>
+                <li id="Li1"><a href="datalog.html"
+					target="mainframe">入库完整性</a></li>
+                <li id="Li3"><a href="decision.html"
+					target="mainframe">指挥决策</a></li>
+			</ul>
+		</div>
+		<div>
+			<ul class="nav navbar-nav navbar-right" style="padding-right: 30px;">
+			  	<li><a >欢迎:管理员</a></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown"> <span class="glyphicon glyphicon-list"></span>
+				</a>
+					<ul class="dropdown-menu">
+
+						<!-- 
+						    <li><a href="<%=path%>/bep/console" target="mainframe"><span
+								    class="glyphicon glyphicon-book"></span> BEP Console</a></li>
+						    <li><a href="<%=path%>/demos/demo1.jsp" target="mainframe"><span
+								    class="glyphicon glyphicon-book"></span> Demo</a></li>
+                         -->
+
+						<li><a href="<%=path%>/bep/console" target="mainframe"><span
+								class="glyphicon glyphicon-user"></span>个人中心</a></li>
+						<li class="divider"></li>
+						<li><a href="../login.html"><span
+								class="glyphicon glyphicon-log-out"></span>退出</a></li>
+
+					</ul></li>
+				<li><a href="javascript:hidebar()"> <span
+						class="glyphicon glyphicon-chevron-up"></span></a></li>
+			</ul>
+		</div>
+	</nav>
+	<iframe id="mainframe" name="mainframe" src="list.html"
+		scrolling="yes" frameborder="0" style="width: 100%; height: 95%;"></iframe>
+
+</body>
+</body>
+</html>

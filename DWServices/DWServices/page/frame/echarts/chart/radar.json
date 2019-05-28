@@ -1,0 +1,123 @@
+{
+    "title": {
+        "text": "质差原因定位概览"
+    },
+    "backgroundColor": "rgba(255,255,255,0)",
+    "toolbox": {
+        "show": true,
+        "feature": {
+            "restore": {
+                "show": true
+            },
+            "saveAsImage": {
+                "show": true
+            }
+        }
+    },
+    "tooltip": {},
+    "radar": {
+	   "name": {
+            "textStyle": {
+                "color": "black"
+            }
+        },
+        "indicator": [ 
+            {
+                "name": "弱覆盖",
+                "max": 100,
+                "min": -10
+            },
+            {
+                "name": "重叠覆盖",
+                "max": 100,
+                "min": -10
+            },
+            {
+                "name": "过覆盖",
+                "max": 100,
+                "min": -10
+            }, 
+            {
+                "name": "上行PRB平均利用率",
+                "max": 100,
+                "min": -10
+            },
+            {
+                "name": "下行PRB平均利用率",
+                "max": 100,
+                "min": -10
+            },
+            {
+                "name": "RRC连接用户数",
+                "max": 100,
+                "min": -10
+            },
+            {
+                "name": "下行流量",
+                "max": 100,
+                "min": -10
+            },
+            {
+                "name": "上行流量",
+                "max": 100,
+                "min": -10
+            }, 
+			{
+                "name": "下行模三干扰",
+                "max": 100,
+                "min": -10
+            },{
+                "name": "上行干扰",
+                "max": 100,
+                "min": -10
+            },
+            {
+                "name": "本基站故障",
+                "max": 100,
+                "min": -10
+            },
+            {
+                "name": "相邻基站故障",
+                "max": 100,
+                "min": -10
+            }
+        ]
+    },
+    "series": [
+        {
+            "name": "pingfen",
+            "type": "radar",
+			 "label": {
+                "normal": {
+                    "show": true ,
+                    "textStyle":{
+                        "color":"rgba(0, 0, 0, 0.5)"
+                    }
+                        
+                }
+            },
+            "data": [
+                {
+                    "value": [
+                        50,
+                        10,
+                        10,
+                        20,
+                        30,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "name": "指标评分"
+                }
+            ],
+            "areaStyle": {
+				"show":false
+			}
+        }
+    ]
+}

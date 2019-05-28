@@ -1,0 +1,308 @@
+﻿<!DOCTYPE html>
+<html style="overflow: hidden;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>定位平台</title>
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="/page/js/loginyz.js"></script>
+    <script src="frame/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="frame/libs/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-table.css">
+    <link rel="stylesheet" href="css/jquery.mloading.css">
+    <link rel="stylesheet" href="themes/default/style.css">
+    <script type="text/javascript" src="js/jquery.date_input.pack.js"></script>
+    <script src="js/bootstrap-table.js"></script>
+    <script type="text/javascript" src="js/bootstrap-table-export.js"></script>
+    <script src="js/tableExport.js"></script>
+    <script src="js/datauntil.js"></script>
+    <script type="text/javascript" src="js/showlist.js"></script>
+    <script type="text/javascript" src="js/jquery.mloading.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-table-filter-control.js"></script>
+</head>
+<body style="overflow: auto;overflow-x:hidden">
+    <style>
+        .danger {
+            background: yellow;
+        }
+
+        .text {
+            width: 100px;
+            height: 16px;
+            line-height: 16px;
+            border: 0px solid #f00;
+            overflow: hidden;
+        }
+
+            .text:hover {
+                width: 100px;
+                height: 200px;
+                transition-delay: 0.5s;
+            }
+    </style>
+    <script type="text/javascript">
+        var selectparam = {
+            "THEQUOTA": ""
+        };
+        var rowOne = {};
+        function GetDateStr(AddDayCount) {
+            var dd = new Date();
+            dd.setDate(dd.getDate() + AddDayCount);//获取AddDayCount天后的日期
+            var y = dd.getFullYear();
+            var m = dd.getMonth() + 1;//获取当前月份的日期
+            var d = dd.getDate();
+            return new Date(y + "-" + m + "-" + d);
+        }
+        function initdate() {
+            $.extend(DateInput.DEFAULT_OPTS, {
+                month_names: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                short_month_names: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+                short_day_names: ["一", "二", "三", "四", "五", "六", "日"],
+                dateToString: function (date) {
+                    var month = (date.getMonth() + 1).toString();
+                    var dom = date.getDate().toString();
+                    if (month.length == 1) month = "0" + month;
+                    if (dom.length == 1) dom = "0" + dom;
+                    return date.getFullYear() + "-" + month + "-" + dom;
+                }
+
+            });
+            $("#datePicker").val(selectparam.datePicker);
+            $('#datePicker').date_input();
+        }
+
+        var selectparam = {
+            filename: "",
+            keyname: ""
+        };
+        $(function () {
+            $("#selectF").click(function () {
+                $("body").mLoading("show"); //开启    
+                selectparam.filename = $("#filename").val();
+                selectparam.keyname = $("#keyname").val();
+                selectparam.datePicker = $("#datePicker").val();
+
+                $('#show2').bootstrapTable('refresh');
+            });
+            initdate();
+        })
+        var curRow = {};
+        var columns = [
+               {
+                   field: "KEYS_NAME",
+                   title: "检索关键字"
+               },
+            {
+                field: "FILE_NAME",
+                title: "案例名称"
+            },
+             {
+                 field: "DOWN_COUNT",
+                 title: "用户点击数"
+             }
+             ,
+             {
+                 field: "___dd",
+                 title: "下载",
+                 formatter: function (value, row, index) {
+                     return "<a href='#' name=\"MAXVALUE\" data-type=\"text\" data-pk=\"" + row.FILE_PATH + "\" onclick=\"DownLoadFile(\'" + row.ID + "\')\" data-title=\"下载\">下载</a>";
+                 }
+             }
+             ,
+             {
+                 field: "___ddd",
+                 title: "删除",
+                 formatter: function (value, row, index) {
+                     return "<a href='#' name=\"MAXVALUE\" data-type=\"text\" data-pk=\"" + row.FILE_PATH + "\" onclick=\"deletefile(\'" + row.ID + "\')\" data-title=\"删除\">删除</a>";
+                 }
+             }
+
+        ]
+        function showtable() {
+            $('#show2').bootstrapTable({
+                url: '../services/CaseUpFile.ashx',
+                striped: true,
+                pagination: true,
+                showExport: false,  //是否显示导出按钮  
+                buttonsAlign: "right",  //按钮位置  
+                exportTypes: ['excel'],  //导出文件类型  
+                Icons: 'glyphicon-export',
+                exportDataType: 'all',
+                "processing": true,
+                search: false,
+                silent: false,
+                paging: true,
+                sortName: "id",    //排序相关  
+                sortOrder: "desc",
+                sortStable: true,
+                queryParams: selectparam,
+                export: 'glyphicon-export icon-share',
+                sortName: ['id'],
+                columns: columns,
+                onLoadSuccess: function () {
+                    $("body").mLoading("hide");
+                }
+            });
+        }
+        window.onload = function () {
+            showtable()
+        }
+        function casedivclick() {
+            if ($("#casediv").is(":hidden")) {
+                $("#casediv").show();
+            } else {
+                $("#casediv").hide();
+            }
+        }
+
+        function uploadFile() {
+            var formData = new FormData();
+            var checkboxval = "";
+            var checkname = "";
+            $.each($('input:checkbox:checked'), function (i, item) {
+                if (i > 0) {
+                    checkboxval += ",";
+                    checkname += ",";
+                }
+                checkboxval += $(this).val().trim();
+                checkname += $(this).parent().text().trim();
+            });
+            formData.append('file', $('#file')[0].files[0]);
+            formData.append('checkeboxvalue', checkboxval);
+            formData.append('checkeboxname', checkname);
+            formData.append('optaior', "save");
+            $.ajax({
+                url: '../services/CaseUpFile.ashx',
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false
+            }).done(function (res) { 
+                $(":checkbox").removeAttr("checked")
+                if (eval("(" + res + ")").result == "True") {
+                        alert("导入成功!!!")
+                }
+                var file = $("#file")
+                file.after(file.clone().val(""));
+                file.remove();
+                $("#selectF").click();
+            }).fail(function (res) { });
+
+        }
+        function DownLoadFile(id) {
+            window.location.href = '../services/CaseUpfile.ashx?optaior=download&id=' + id + '&r=' + Math.random();
+        }
+        function deletefile(id) {
+            $.ajax({
+                url: '../services/CaseUpFile.ashx?optaior=deletefile&id=' + id + '&r=' + Math.random(),
+                type: 'POST',
+                cache: false, 
+                processData: false,
+                contentType: false
+            }).done(function (res) {
+                console.log(res);
+                $("#selectF").click();
+            }).fail(function (res) { });
+        } 
+    </script>
+    <div style="width: 100%; overflow-y: auto" id="sshow">
+        <div style="width: 88%; margin-left: auto; margin-right: auto; margin-top: 21px">
+
+            <div class="custom-filter" style="padding-top: 0px; background-color: white" />
+
+            <h3 id="pagination-table" onclick="casedivclick()" style="margin: 0px; font-size: 18px; height: 50px; line-height: 50px; text-indent: 14px; border-bottom: 1px solid #eee;cursor:pointer">质差案例	</h3>
+
+            <div id="casediv" style="border-width: 1px; border-radius: 4px 4px 0 0; display: none">
+                <div style="padding: 10px">
+                    <label class="labelanli">设备告警</label>
+                    <label class="checkbox-inline" style="padding-left: 30px">
+                        <input type="checkbox" id="inlineCheckbox1" value="bjzgj">
+                        本基站告警
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="xljzgz">
+                        相邻基站故障
+                    </label>
+                </div>
+                <div style="padding: 10px">
+                    <label class="labelanli">干扰</label>
+                    <label class="checkbox-inline" style="padding-left: 30px">
+                        <input type="checkbox" id="Checkbox1" value="sxgr">
+                        下行模三干扰
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="Checkbox2" value="modgrcd">
+                        上行干扰
+                    </label>
+                </div>
+                <div style="padding: 10px">
+                    <label class="labelanli">容量</label>
+                    <label class="checkbox-inline" style="padding-left: 30px">
+                        <input type="checkbox" id="Checkbox3" value="sxprbpjlyl18">
+                        上行PRB平均利用率
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="Checkbox7" value="xxprbpjlyl18">
+                        下行PRB平均利用率
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="Checkbox8" value="pjrrcljyhs18">
+                        RRC连接用户数
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="Checkbox9" value="pdcpxx18">
+                        下行流量
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="Checkbox10" value="pdcpsx18">
+                        上行流量
+                    </label>
+                </div>
+                <div style="padding: 10px">
+                    <label class="labelanli">覆盖</label>
+                    <label class="checkbox-inline" style="padding-left: 30px">
+                        <input type="checkbox" id="Checkbox4" value="rfgbl">
+                        弱覆盖
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="Checkbox5" value="cdfgk">
+                        重叠覆盖
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="Checkbox6" value="gfglqgs">
+                        过覆盖
+                    </label>
+                </div>
+                <ul class="list-inline" style="margin-top: 10px; margin-bottom: 10px;">
+                    <li>
+                        <input type="file" class="input" id="file" style="width: 500px" />
+                    </li>
+                    <li>
+                        <button type="button" id="Button1" onclick="uploadFile()" class="btn btn-primary btn-search">导入</button>
+                    </li>
+                </ul>
+            </div>
+            <ul class="list-inline" style="margin-top: 10px; margin-bottom: 10px;">
+                <li class="filter-bar-lab">标题:</li>
+                <li>
+                    <input type="text" style="width: 300px" class="input" id="filename" placeholder="请输入案例名称" /></li> 
+                    <li class="filter-bar-lab">关键词:</li>
+                <li>
+                    <input type="text" style="width: 300px" class="input" id="keyname" placeholder="请输入案例关键词" /></li>
+                <li>
+                    <button type="button" id="selectF" class="btn btn-primary btn-search">查询</button>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="bs-example col-md-12 csg-co " style="height: 598px;">
+                <table id="show2" data-height="580" data-pagination="true" striped="true"></table>
+            </div>
+        </div>
+    </div>
+     <form id="formExport" method="post" style="display: none;" enctype="" action=""></form>
+</body>
+</html>

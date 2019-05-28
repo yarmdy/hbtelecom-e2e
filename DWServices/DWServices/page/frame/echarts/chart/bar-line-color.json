@@ -1,0 +1,163 @@
+{
+    "tooltip": {
+        "trigger": "axis",
+        "textStyle": {
+            "fontWeight": "normal"
+        } 
+    },
+    "grid": {
+        "left": 40
+    },
+    "legend": {
+        "data": [
+            "正常",
+            "需关注",
+            "率"
+        ], 
+		"bottom": 10, 
+		"show":true
+    },
+    "xAxis": [
+        {
+            "type": "category",
+            "data": [
+                "2010年",
+                "2011年",
+                "2012年",
+                "2013年",
+                "2014年",
+                "2015年",
+                "2016年"
+            ],
+            "axisTick": {
+                "inside": false,
+                "interval": 0
+            },
+            "axisLine": {
+                "lineStyle": {
+                    "color": "#545454"
+                }
+            },
+            "splitLine": {
+                "show": true
+            },
+            "axisLabel": {
+                "interval": 0,
+                "textStyle": {
+                    "fontWeight": "normal",
+                    "fontSize": 12
+                }
+            }
+        }
+    ],
+    "toolbox": {
+        "feature": {
+            "saveAsImage": {}
+        }
+    },
+    "yAxis": [
+        {
+            "type": "value",
+            "name": "次数",
+            "nameTextStyle": {
+                "fontWeight": "normal"
+            },
+            "nameGap": 15,
+            "splitLine": {
+                "show": false
+            },
+            "splitArea": {
+                "show": false
+            },
+            "axisLine": {
+                "lineStyle": {
+                    "color": "#545454"
+                }
+            },
+            "axisLabel": {
+                "interval": 0,
+                "textStyle": {
+                    "fontWeight": "normal",
+                    "fontSize": 12
+                }
+            }
+        },
+        {
+            "type": "value",
+            "name": "率(%)",
+            "min": 0,
+             
+            "axisLabel": {
+                "formatter": "{value}"
+            }
+        }
+    ],
+    "series": [
+        {
+            "name": "正常",
+            "type": "bar",
+            "barGap": "0",
+            "stack": "总量",
+            "barMaxWidth": 30,
+            "itemStyle": {
+                "normal": {
+                    "barBorderRadius": [
+                        5
+                    ],
+                    "color": "rgba(70,164,219,0.7)"
+                }
+            },
+            "data": [
+                "1",
+                "4",
+                "-",
+                "5",
+                "-",
+                "-",
+                "-",
+                "-",
+                "-",
+                "-",
+                "-",
+                "-"
+            ]
+        },
+        {
+            "name": "需关注",
+            "type": "bar",
+            "barGap": "0",
+            "stack": "总量",
+            "itemStyle": {
+                "normal": {
+                    "barBorderRadius": [
+                        5
+                    ],
+                    "color": "rgba(249,180,57,0.7)"
+                }
+            },
+            "data": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ]
+        },
+        {
+            "name": "率",
+            "type": "line",
+            "yAxisIndex": 1,
+            "data": [
+                "1",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1" 
+            ]
+        }
+    ]
+}

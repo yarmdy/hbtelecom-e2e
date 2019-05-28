@@ -1,0 +1,17 @@
+﻿#exportbut {
+    display: none;
+}
+h3 {
+    height: 100px;
+    text-align: center;
+    color: #333;
+    line-height: 100px;
+    box-shadow: 0 0 2px 2px rgba(0,0,0,.2);
+    margin: 0;
+}
+.databox {
+    margin-top: 30px;
+}
+#realexport {
+    visibility: hidden;
+}

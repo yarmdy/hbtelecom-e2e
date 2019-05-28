@@ -1,0 +1,166 @@
+/**关于树型结构的样式
+**/
+.csg-table-tree>tbody>tr>td, .csg-table-tree>tbody>tr>th, .csg-table-tree>tfoot>tr>td, .csg-table-tree>tfoot>tr>th, .csg-table-tree>thead>tr>td, .csg-table-tree>thead>tr>th{
+	padding: 0px 3px;
+}
+.csg-table-tree td.td-tree {
+	text-align: left;
+	vertical-align: middle;
+	padding: 0px;
+	height: 35px;
+}
+
+.csg-table-tree td.td-tree:before {
+	content: "";
+	position: absolute;
+	border-left: 0px solid #666;
+	height: 100%;
+}
+/**-----▶**/
+.csg-table-tree td.td-tree  div.td-tree-l:before {
+	content: "";
+	position: absolute;
+	letter-spacing: -3px;
+	color: #666;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.csg-table-tree td.td-tree div.td-tree-l span {
+	margin-left: 0px;
+	
+}
+/**第一级 ----**/
+.csg-table-tree td.td-tree  div.td-tree-l0 {
+}
+.csg-table-tree td.td-tree  div.td-tree-l0:before {
+	content: "";
+}
+
+.csg-table-tree td.td-tree div.td-tree-l0 span {
+	margin-left: 0px;
+}
+/** 第二级 **/
+.csg-table-tree td.td-tree div.td-tree-l1 {
+	margin-left: 15px;
+}
+/**第三级 **/
+.csg-table-tree td.td-tree div.td-tree-l2 {
+	margin-left: 30px;
+}
+
+/**导览树样式**/
+.tree {
+	min-height: 20px;
+	padding: 0px;
+	background: white;
+	height: 100%;
+}
+.tree ul{
+	padding-left: 15px;
+  -webkit-padding-start: 15px;
+}
+
+.tree ul.tree_ul {
+	padding: 0px;    
+	margin-bottom: 0px;
+}
+
+.tree li {
+	list-style-type: none;
+	margin: 0;
+	padding: 5px 0px 0px 0px;
+	position: relative
+}
+
+.tree li::before, .tree li::after {
+	content: '';
+	left: -10px;
+	position: absolute;
+	right: auto
+}
+
+.tree li::before {
+	border-left: 1px solid #999;
+	bottom: 50px;
+	height: 100%;
+	top: 0;
+	width: 1px
+}
+
+.tree li::after {
+	border-top: 1px solid #999;
+	height: 20px;
+	top: 25px;
+	width: 10px
+}
+
+.tree li span {
+	border: 1px solid #999;width:100%;
+	display: inline-block;
+	padding: 5px 8px;
+	text-decoration: none;
+	color: #000;
+	font-size: 14px;
+
+	cursor: pointer;
+}
+.tree li span.active {
+	background: #cde4fc;
+	border: 1px solid #75a8db;
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.2);
+	box-shadow: 0 1px 1px rgba(0,0,0,.2);
+}
+
+/**分类节点*/
+.tree li span.node {
+	cursor: auto;
+	padding: 5px 8px;
+	text-align: left;
+	font-size: 15px;
+	background: #cde4fc;border:1px solid #75a8db;-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.2);
+	box-shadow: 0 1px 1px rgba(0,0,0,.2);
+}
+.tree li span.node.node-top:not(.disable) {
+	width: 100%;
+	cursor: pointer;
+background:#2d6dcc;color:#fff;
+}
+.tree li span.node.active {
+	border: 1px solid #2463c1;
+}
+
+.icon-time {
+	float: right;
+	width: 0px;/***暂时屏蔽*/
+	height: 0px;
+	margin-top: 3px;
+	border-radius: 10px;
+	background: #eee;
+}
+ 
+.tree>ul>li::before, .tree>ul>li::after {
+	border: 0
+}
+/**每个层级的最后一个叶子节点*/
+.tree li:last-child::before {
+	height: 26px
+}
+ 
+.tree li span.disable {
+	color:#eee;width:100%;
+	cursor: not-allowed;
+}
+.tree li>span:not(.disable):hover {
+	background: #d6e9fc;
+	border: 1px solid #75a8db;
+	color: #000;
+	-webkit-box-shadow: 0 2px 3px rgba(0,0,0,.5);
+	box-shadow: 0 2px 3px rgba(0,0,0,.5);
+}
+.tree li>span.node:not(.disable):hover {
+	background: #CCC;
+	border: 1px solid #75a8db;
+	color: #000;
+}
+ 

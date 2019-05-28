@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7DA70E2A-34BF-4DAE-B158-0E9733CF131B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DWServices</RootNamespace>
+    <AssemblyName>DWServices</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Com.Netframe.DatabaseUtil, Version=1.1.6316.24045, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Com.Netframe.DatabaseUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="Com.Netframe.Enums, Version=1.1.6316.23996, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Com.Netframe.Enums.dll</HintPath>
+    </Reference>
+    <Reference Include="Com.Netframe.Helpers, Version=1.1.6316.24045, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Com.Netframe.Helpers.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Com.Netframe.Models, Version=1.1.6316.24044, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Com.Netframe.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.0.4.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\EPPlus.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\database-dwdb.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Global.asax" />
+    <Content Include="libs\Com.Netframe.DatabaseUtil.dll" />
+    <Content Include="libs\Com.Netframe.Enums.dll" />
+    <Content Include="libs\Com.Netframe.Helpers.dll" />
+    <Content Include="libs\Com.Netframe.Models.dll" />
+    <Content Include="libs\EPPlus.dll" />
+    <Content Include="libs\Oracle.ManagedDataAccess.dll" />
+    <Content Include="login.html" />
+    <Content Include="page\abc\control\css\zyUpload.css" />
+    <Content Include="page\abc\control\images\add_img.png" />
+    <Content Include="page\abc\control\images\bg.png" />
+    <Content Include="page\abc\control\images\delete_blue.png" />
+    <Content Include="page\abc\control\images\delete_white.png" />
+    <Content Include="page\abc\control\images\fileType\file.png" />
+    <Content Include="page\abc\control\images\fileType\rar.png" />
+    <Content Include="page\abc\control\images\fileType\txt.png" />
+    <Content Include="page\abc\control\images\fileType\zip.png" />
+    <Content Include="page\abc\control\images\success.png" />
+    <Content Include="page\abc\control\js\jquery-1.7.2.js" />
+    <Content Include="page\abc\control\js\zyUpload.js" />
+    <Content Include="page\abc\core\zyFile.js" />
+    <Content Include="page\abc\demo.js" />
+    <Content Include="page\abc\index.html" />
+    <Content Include="page\abc\jquery-1.7.2.js" />
+    <Content Include="page\abc\说明.htm" />
+    <Content Include="page\abc\说明.txt" />
+    <Content Include="page\casedata.html" />
+    <Content Include="page\citygoodrate.html" />
+    <Content Include="page\css\bootstrap-editable.css" />
+    <Content Include="page\css\bootstrap-table.css" />
+    <Content Include="page\css\bootstrap.min.css" />
+    <Content Include="page\css\volte-single-search.css" />
+    <Content Include="page\css\datePicker.css" />
+    <Content Include="page\css\map.css" />
+    <Content Include="page\css\jquery.mloading.css" />
+    <Content Include="page\css\mainstyles.css" />
+    <Content Include="page\css\styles.css" />
+    <Content Include="page\css\volte-monitoring.css" />
+    <Content Include="page\css\volte-terminal-search.css" />
+    <Content Include="page\data2.json" />
+    <Content Include="page\data3.json" />
+    <Content Include="page\datalog.html" />
+    <Content Include="page\decision.html" />
+    <Content Include="page\exceltemplate\质差小区模板列表.xlsx" />
+    <Content Include="page\frame\echarts\chart\bar-color.json" />
+    <Content Include="page\frame\echarts\chart\bar-line-color.json" />
+    <Content Include="page\frame\echarts\chart\line.json" />
+    <Content Include="page\frame\echarts\chart\radar.json" />
+    <Content Include="page\frame\echarts\map\map-csg.json" />
+    <Content Include="page\frame\echarts\province\hebei.json" />
+    <Content Include="page\frame\echarts\province\hebei2.json" />
+    <Content Include="page\frame\head.html" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\css\bootstrap-theme.css" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\css\bootstrap-theme.css.map" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\css\bootstrap-theme.min.css" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\css\bootstrap-theme.min.css.map" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\css\bootstrap.css" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\css\bootstrap.css.map" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\css\bootstrap.min.css" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\css\bootstrap.min.css.map" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\js\bootstrap.js" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\js\bootstrap.min.js" />
+    <Content Include="page\frame\libs\bootstrap-3.3.7\js\npm.js" />
+    <Content Include="page\images\arrow_d.png" />
+    <Content Include="page\images\arrow_u.png" />
+    <Content Include="page\images\b.jpg" />
+    <Content Include="page\images\circle.png" />
+    <Content Include="page\images\circle1.png" />
+    <Content Include="page\images\icon\business.png" />
+    <Content Include="page\images\icon\core.png" />
+    <Content Include="page\images\icon\day.png" />
+    <Content Include="page\images\icon\ltime.png" />
+    <Content Include="page\images\icon\mac.png" />
+    <Content Include="page\images\icon\now.png" />
+    <Content Include="page\images\icon\till.png" />
+    <Content Include="page\images\icon\week.png" />
+    <Content Include="page\images\icon\wlan.png" />
+    <Content Include="page\images\load.gif" />
+    <Content Include="page\images\logo.png" />
+    <Content Include="page\index.aspx" />
+    <Content Include="page\index.html" />
+    <Content Include="page\ipran.html" />
+    <Content Include="page\jquery.min.js" />
+    <Content Include="page\json\data2.json" />
+    <Content Include="page\json\rsrp.json" />
+    <Content Include="page\js\bootstrap-collapse.js" />
+    <Content Include="page\js\bootstrap-editable.js" />
+    <Content Include="page\js\bootstrap-table-export.js" />
+    <Content Include="page\js\bootstrap-table-filter-control.js" />
+    <Content Include="page\js\bootstrap-table-filter.js" />
+    <Content Include="page\js\bootstrap-table-zh-CN.js" />
+    <Content Include="page\js\bootstrap-table.js" />
+    <Content Include="page\js\citygoodrate.js" />
+    <Content Include="page\js\csg.js" />
+    <Content Include="page\js\datadetail.js" />
+    <Content Include="page\js\datamap.js" />
+    <Content Include="page\js\datauntil.js" />
+    <Content Include="page\js\echarts.min.js" />
+    <Content Include="page\js\echartsmain.js" />
+    <Content Include="page\js\hebeiMap\district\保定市.js" />
+    <Content Include="page\js\hebeiMap\district\唐山市.js" />
+    <Content Include="page\js\hebeiMap\district\廊坊市.js" />
+    <Content Include="page\js\hebeiMap\district\张家口市.js" />
+    <Content Include="page\js\hebeiMap\district\承德市.js" />
+    <Content Include="page\js\hebeiMap\district\沧州市.js" />
+    <Content Include="page\js\hebeiMap\district\石家庄市.js" />
+    <Content Include="page\js\hebeiMap\district\秦皇岛市.js" />
+    <Content Include="page\js\hebeiMap\district\衡水市.js" />
+    <Content Include="page\js\hebeiMap\district\邢台市.js" />
+    <Content Include="page\js\hebeiMap\district\邯郸市.js" />
+    <Content Include="page\js\hebeiMap\district\雄安新区.js" />
+    <Content Include="page\js\hebeiMap\hebei.js" />
+    <Content Include="page\js\hebeiMap\保定市.js" />
+    <Content Include="page\js\hebeiMap\唐山市.js" />
+    <Content Include="page\js\hebeiMap\廊坊市.js" />
+    <Content Include="page\js\hebeiMap\张家口市.js" />
+    <Content Include="page\js\hebeiMap\承德市.js" />
+    <Content Include="page\js\hebeiMap\沧州市.js" />
+    <Content Include="page\js\hebeiMap\石家庄市.js" />
+    <Content Include="page\js\hebeiMap\秦皇岛市.js" />
+    <Content Include="page\js\hebeiMap\衡水市.js" />
+    <Content Include="page\js\hebeiMap\邢台市.js" />
+    <Content Include="page\js\hebeiMap\邯郸市.js" />
+    <Content Include="page\js\hebeiMap\雄安新区.js" />
+    <Content Include="page\js\jquery-1.12.4.js" />
+    <Content Include="page\js\jquery-ui.min.js" />
+    <Content Include="page\js\jquery.date_input.pack.js" />
+    <Content Include="page\js\jquery.jexcel.css" />
+    <Content Include="page\js\jquery.jexcel.js" />
+    <Content Include="page\js\jquery.min.js" />
+    <Content Include="page\js\jquery.mloading.js" />
+    <Content Include="page\js\laydate\laydate.js" />
+    <Content Include="page\js\laydate\theme\default\font\iconfont.svg" />
+    <Content Include="page\js\laydate\theme\default\laydate.css" />
+    <Content Include="page\js\loginyz.js" />
+    <Content Include="page\js\menu.js" />
+    <Content Include="page\js\menu.json" />
+    <Content Include="page\js\performance.js" />
+    <Content Include="page\js\showlist.js" />
+    <Content Include="page\js\terminal-search.js" />
+    <Content Include="page\js\single-search.js" />
+    <Content Include="page\js\tableExport.js" />
+    <Content Include="page\js\threenet.js" />
+    <Content Include="page\js\volte-monitoring.js" />
+    <Content Include="page\list.html" />
+    <Content Include="page\list2.html" />
+    <Content Include="page\login\1442990676133.jpg" />
+    <Content Include="page\login\bg.jpg" />
+    <Content Include="page\login\bg_shoulei.jpg" />
+    <Content Include="page\login\jquery-1.3.2.min.js" />
+    <Content Include="page\login\jquery.fullscreenr.js" />
+    <Content Include="page\login\jquery.js" />
+    <Content Include="page\login\log.png" />
+    <Content Include="page\login\logo.png" />
+    <Content Include="page\login\style.css" />
+    <Content Include="page\main.html" />
+    <Content Include="page\paidan.html" />
+    <Content Include="page\performance.html" />
+    <Content Include="page\quota.html" />
+    <Content Include="page\themes\default\animate.css" />
+    <Content Include="page\themes\default\ie9.css" />
+    <Content Include="page\themes\default\images\arrow.png" />
+    <Content Include="page\themes\default\images\close.png" />
+    <Content Include="page\themes\default\style.css" />
+    <Content Include="page\themes\default\tree.css" />
+    <Content Include="page\themes\images\excel.png" />
+    <Content Include="page\themes\images\export.png" />
+    <Content Include="page\themes\images\log.png" />
+    <Content Include="page\threenet.html" />
+    <Content Include="page\ttt.html" />
+    <Content Include="page\volte-monitoring.html" />
+    <Content Include="page\volte-single-search.html" />
+    <Content Include="page\volte-terminal-search.html" />
+    <Content Include="WDService.asmx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BLL\AlarmAnalysis.cs" />
+    <Compile Include="BLL\Analysis.cs" />
+    <Compile Include="BLL\Datalog.cs" />
+    <Compile Include="BLL\DataResolve.cs" />
+    <Compile Include="BLL\KPIAnalysis.cs" />
+    <Compile Include="BLL\MeasureAnalysis.cs" />
+    <Compile Include="BLL\MRAnalysis.cs" />
+    <Compile Include="BLL\SearchAround.cs" />
+    <Compile Include="BLL\DecisionDB.cs" />
+    <Compile Include="Common\DataTableConvertJson.cs" />
+    <Compile Include="Common\ECIAndIDConvert.cs" />
+    <Compile Include="Common\GetQuota.cs" />
+    <Compile Include="Common\User.cs" />
+    <Compile Include="DAL\DbConnClass.cs" />
+    <Compile Include="DAL\OraConnect.cs" />
+    <Compile Include="fl.ashx.cs">
+      <DependentUpon>fl.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="index.ashx.cs">
+      <DependentUpon>index.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.ashx.cs">
+      <DependentUpon>Login.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="model\Latlon.cs" />
+    <Compile Include="model\PostParameter.cs" />
+    <Compile Include="page\index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="page\index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="services\AlarmServices.ashx.cs">
+      <DependentUpon>AlarmServices.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\AnalysisOneCell.ashx.cs">
+      <DependentUpon>AnalysisOneCell.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\CaseUpfile.ashx.cs">
+      <DependentUpon>CaseUpfile.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\Citygoodrate.ashx.cs">
+      <DependentUpon>Citygoodrate.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\DataLog.ashx.cs">
+      <DependentUpon>DataLog.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\DataStatus.ashx.cs">
+      <DependentUpon>DataStatus.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\Decision.ashx.cs">
+      <DependentUpon>Decision.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\DecisionMap.ashx.cs">
+      <DependentUpon>DecisionMap.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\Display.ashx.cs">
+      <DependentUpon>Display.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\KPIServices.ashx.cs">
+      <DependentUpon>KPIServices.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\loginyz.ashx.cs">
+      <DependentUpon>loginyz.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\MRDataServices.ashx.cs">
+      <DependentUpon>MRDataServices.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\Performance.ashx.cs">
+      <DependentUpon>Performance.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\Quota.ashx.cs">
+      <DependentUpon>Quota.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\RadarChartServices.ashx.cs">
+      <DependentUpon>RadarChartServices.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\Resolve.ashx.cs">
+      <DependentUpon>Resolve.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\ThreeNet.ashx.cs">
+      <DependentUpon>ThreeNet.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\UploadFile.ashx.cs">
+      <DependentUpon>UploadFile.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\VolteSingleSearch.ashx.cs">
+      <DependentUpon>VolteSingleSearch.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="WDService.asmx.cs">
+      <DependentUpon>WDService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="index.ashx" />
+    <Content Include="Login.ashx" />
+    <Content Include="perdata\201803\20180308_cmcc.csv" />
+    <Content Include="perdata\201803\20180308_ctcc.csv" />
+    <Content Include="perdata\201803\20180308_cucc.csv" />
+    <Content Include="page\js\laydate\theme\default\font\iconfont.eot" />
+    <Content Include="page\js\laydate\theme\default\font\iconfont.ttf" />
+    <Content Include="page\js\laydate\theme\default\font\iconfont.woff" />
+    <Content Include="fl.ashx" />
+    <None Include="Properties\PublishProfiles\WDServices.pubxml" />
+    <Content Include="services\MRDataServices.ashx" />
+    <Content Include="services\AlarmServices.ashx" />
+    <Content Include="services\KPIServices.ashx" />
+    <Content Include="services\UploadFile.ashx" />
+    <Content Include="services\RadarChartServices.ashx" />
+    <Content Include="services\AnalysisOneCell.ashx" />
+    <Content Include="services\Quota.ashx" />
+    <Content Include="services\DataLog.ashx" />
+    <Content Include="services\CaseUpfile.ashx" />
+    <Content Include="services\Display.ashx" />
+    <Content Include="services\Decision.ashx" />
+    <Content Include="services\DecisionMap.ashx" />
+    <Content Include="services\DataStatus.ashx" />
+    <Content Include="services\Resolve.ashx" />
+    <Content Include="services\Performance.ashx" />
+    <Content Include="services\Citygoodrate.ashx" />
+    <Content Include="services\ThreeNet.ashx" />
+    <Content Include="services\loginyz.ashx" />
+    <Content Include="services\VolteSingleSearch.ashx" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DWClientLib\DWClientLib.csproj">
+      <Project>{769804cd-b26e-4160-9f43-efefc594c915}</Project>
+      <Name>DWClientLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>23026</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:21292/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

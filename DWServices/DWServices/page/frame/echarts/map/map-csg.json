@@ -1,0 +1,63 @@
+{
+    "title": {
+        "left": "center",
+        "textStyle": {
+            "color": "#fff"
+        }
+    },
+    "toolbox": {
+	   "show": true ,
+	    "left": "left",
+	   "feature": {
+		"saveAsImage":{}
+	   }
+    },
+     "tooltip": {
+            "trigger": "item",
+            "formatter": "{b}<br/>{c} (p / km2)"
+        },
+
+	 "visualMap": {
+            "min": 50,
+            "max": 300,
+            "text":["High","Low"],
+            "realtime": false,
+            "calculable": true,
+            "inRange": {
+                "color": ["lightskyblue","yellow", "orangered"]
+            }
+        },
+    "series": [
+        {
+            "type": "map",
+            "mapType": "",
+	    "left":"15%",
+            "label": {
+	    "normal": {
+                    "show": true,
+                    "textStyle": {
+                        	"color": "#000000"
+                    }
+                },
+                "emphasis": {
+                    "textStyle": {
+                        "color": "#fff"
+                    }
+                }
+            },  
+	     "itemStyle": {
+                "normal": {
+                    "areaColor": "#87CEFA",
+                    "borderColor": "#fff",
+                    "borderWidth": 1
+                },
+                "emphasis": {
+                    "areaColor": "#fde9c4",
+                    "borderColor": "#fde9c4",
+                    "borderWidth": 3
+                }
+            },
+            "animation": false
+        }
+    ]
+}

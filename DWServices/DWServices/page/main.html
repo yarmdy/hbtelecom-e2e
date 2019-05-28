@@ -1,0 +1,430 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>主页面展示</title>
+
+
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="/page/js/loginyz.js"></script>
+    <script src="frame/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="frame/libs/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-table.css">
+    <link rel="stylesheet" href="css/mainstyles.css">
+    <link rel="stylesheet" href="themes/default/style.css">
+    <style>
+        .table-responsive > .table > tbody > tr > td, .table-responsive > .table > tbody > tr > th, .table-responsive > .table > tfoot > tr > td, .table-responsive > .table > tfoot > tr > th, .table-responsive > .table > thead > tr > td, .table-responsive > .table > thead > tr > th {
+            white-space: nowrap;
+        }
+    </style>
+    <script type="text/javascript" src="js/jquery.date_input.pack.js"></script>
+    <script src="js/bootstrap-table.js"></script>
+    <script type="text/javascript" src="js/bootstrap-table-export.js"></script>
+    <script src="js/tableExport.js"></script>
+    <script type="text/javascript" src="js/echartsmain.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/datauntil.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("ul.expmenu li > div.header").click(function () {
+                console.log($(this).parent().find("li").length)
+
+                var arrow = $(this).find("span.arrow");
+                console.log("this", arrow.attr("class"));
+                if (arrow.hasClass("up")) {
+                    arrow.removeClass("up");
+                    arrow.addClass("down");
+                } else if (arrow.hasClass("down")) {
+                    arrow.removeClass("down");
+                    arrow.addClass("up");
+                    getcurmenuarr($(this).attr("id"))
+                }
+
+                $(this).parent().siblings().each(function (o, obj) {
+                    var arrow2 = $(obj).find("span.arrow");
+                    if (arrow2.hasClass("up")) {
+                        arrow2.removeClass("up");
+                        arrow2.addClass("down");
+                        $(obj).find("ul.menu").slideToggle();
+                    }
+                })
+                $(this).parent().find("ul.menu").slideToggle();
+            });
+            $(".hrefclick").click(function () {
+                console.log($(this).attr("id"));
+                $(this).addClass("hrddd");
+                //$(this).siblings().removeClass("hrddd");
+                $(".hrefclick[id!='" + $(this).attr("id") + "']").removeClass("hrddd");
+                $(".pitchdiv").removeClass("pitchdiv");
+                $("#" + $(this).attr("id") + "div").parent().addClass("pitchdiv").addClass("animated");
+
+            })
+            $(document).on("click", '.csg-clink', function () {
+                console.log($(this).parent().attr("id"))
+
+
+            });
+            $(document).on("click", '.closebutton', function () {
+                $(this).parent().parent().hide(400);
+            });
+
+        });
+
+        var zcdata;
+
+    </script>
+    <script language="JavaScript">
+	 
+        
+<!--//
+    function ShowMenu(obj, n) {
+        var Nav = obj.parentNode;
+        if (!Nav.id) {
+            var BName = Nav.getElementsByTagName("ol");
+            var HName = Nav.getElementsByTagName("t5");
+            var t = 5;
+        } else {
+            var BName = document.getElementById(Nav.id).getElementsByTagName("span");
+            var HName = document.getElementById(Nav.id).getElementsByTagName(".header");
+            var t = 1;
+        }
+        for (var i = 0; i < HName.length; i++) {
+            HName[i].innerHTML = HName[i].innerHTML.replace("-", "+");
+            HName[i].className = "";
+        }
+        obj.className = "t" + t;
+        for (var i = 0; i < BName.length; i++) { if (i != n) { BName[i].className = "no"; } }
+        if (BName[n].className == "no") {
+            BName[n].className = "";
+            obj.innerHTML = obj.innerHTML.replace("+", "-");
+        } else {
+            BName[n].className = "no";
+            obj.className = "";
+            obj.innerHTML = obj.innerHTML.replace("-", "+");
+        }
+        showson(n);
+    }
+
+    window.onload = function () {
+        setTimeout(function () {
+            if (rowOne.ISEIGHT == 1) {
+                $("#iseight").html("800M");
+            }
+            getcurmenuarr("dwxx", 1);
+        }, 100);
+    }
+    </script>
+    <style>
+        .hrtitle {
+            margin-top: 0;
+            padding-bottom: 7px;
+            border-bottom: 1px solid #ebebeb;
+            margin-bottom: 21px;
+            position: relative;
+        }
+        .widget {
+            background: #fff;
+            padding: 13px 30px;
+            margin-bottom: 15px;
+        }
+         .widget .hrtitle:after {
+                content: "";
+                width: 90px;
+                height: 1px;
+                background: #00b4fb;
+                position: absolute;
+                left: 0;
+                bottom: -1px;
+            }
+    </style>
+</head>
+<body>
+    <div class="row" id="showdddd">
+        <div class="col-md-2 csg-col" style="padding: 0px;">
+            <ul class="expmenu">
+                <li>
+                    <div class="header" id="dwxx">
+                        <span class="label">定位信息</span>
+                        <span class="arrow down"></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="header" id="KPI">
+                        <span class="label">KPI指标</span>
+                        <span class="arrow down"></span>
+                    </div>
+                    <ul class="menu" style="display: none;">
+                        <li onclick="javascript:ShowMenu(this,0);"><a href="javascript:void(0)"><i>+</i> 接入性能</a></li>
+                        <ol class="no">
+                            <a id="rrcljcgl" class="hrefclick" href="javascript:void(0)">RRC连接建立成功次数(率)</a>
+                          
+                            <a id="xhysl" class="hrefclick" href="javascript:void(0)">寻呼拥塞次数(率)</a> 
+
+
+                            <a id="rrcljcjbl" class="hrefclick" href="javascript:void(0)">RRC连接重建次数(率)</a>
+
+                             
+                        </ol>
+                        <li onclick="javascript:ShowMenu(this,1)"><a href="javascript:void(0)"><i>+</i> 保持性能</a></li>
+                        <ol class="no">
+                            <a id="uesxwdxl" class="hrefclick" href="javascript:void(0)">UE上下文掉线次数(率)</a> 
+
+                            <a id="erabdxl" class="hrefclick" href="javascript:void(0)">E-RAB掉线次数(率)</a>
+                             
+                            <a id="rrccjbl" class="hrefclick" href="javascript:void(0)">RRC重建次数(比例)</a>
+                             
+                        </ol>
+                        <li id="ydxn" onclick="javascript:ShowMenu(this,2)"><a href="javascript:void(0)"><i>+</i> 移动性能</a></li>
+                        <ol class="no">
+                            <a id="xtnqhcgl" class="hrefclick" href="javascript:void(0)">系统内切换成功次数(率)</a> 
+                            <a id="cdsbl" class="hrefclick" href="javascript:void(0)">4G重定向到3G的比例次数(%)</a> 
+                        </ol>
+                        <li id="qt" onclick="javascript:ShowMenu(this,3)"><a href="javascript:void(0)"><i>+</i> 其他</a></li>
+                        <ol class="no">
+                            <a id="cqibl" class="hrefclick" href="javascript:void(0)">CQI≥7的比例</a>
+                            <a id="xxprbslzb" class="hrefclick" href="javascript:void(0)">11.1 下行PRB双流占比</a>
+                            <a id="yhtysxpjsl" class="hrefclick" href="javascript:void(0)">8.13 用户体验上行平均速率(%)</a>
+                            <a id="yhtyxxpjsl" class="hrefclick" href="javascript:void(0)">8.14用户体验下行平均速率</a>
+                            <a id="xqtfsc" class="hrefclick" href="javascript:void(0)">小区退服时长</a>
+                            <a id="xqzdl" class="hrefclick" href="javascript:void(0)">小区中断率</a>
+                            <a id="xqkyl" class="hrefclick" href="javascript:void(0)">小区可用率</a>
+                            <a id="grzspjz" class="hrefclick" href="javascript:void(0)">干扰噪声的平均值</a>
+                        </ol>
+                    </ul>
+                </li>
+                <li>
+                    <div class="header" id="fgwt">
+                        <span class="label">覆盖问题</span>
+                        <span class="arrow down"></span>
+                    </div>
+                    <ul class="menu">
+                        <li id="rfgbl" class="hrefclick">弱覆盖</li>
+                         <li id="cdfgk" class="hrefclick">重叠覆盖</li>
+                        <li id="gfglqgs" class="hrefclick">过覆盖</li>
+                        <li id="xqpjrsrp" class="hrefclick">小区平均RSRP</li>
+                        <li id="pjjl" class="hrefclick">平均TA距离</li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <div class="header" id="grwt">
+                        <span class="label">干扰问题</span>
+                        <span class="arrow down"></span>
+                    </div>
+                    <ul class="menu">
+                       
+                        <li id="modgrcd" class="hrefclick">下行模三干扰</li>
+                        <li id="sxgr" class="hrefclick">上行干扰</li>
+                    </ul>
+                </li>
+
+
+                <li>
+                    <div class="header" id="rlwt">
+                        <span class="label">容量问题</span>
+                        <span class="arrow down"></span>
+                    </div>
+                    <ul class="menu" style="display: none;">
+                        <li onclick="javascript:ShowMenu(this,0)"><a href="javascript:void(0)"><i>+</i> <span id="iseight">1800M</span></a></li>
+                        <ol class="no">
+                            <a id="sxprbpjlyl18" class="hrefclick " href="javascript:void(0)">上行PRB平均利用率</a>
+                            <a id="xxprbpjlyl18" class="hrefclick" href="javascript:void(0)">下行PRB平均利用率</a>
+                            <a id="pjrrcljyhs18" class="hrefclick" href="javascript:void(0)">RRC连接用户数</a>
+                            <a id="pdcpxx18" class="hrefclick" href="javascript:void(0)">下行流量</a>
+                            <a id="pdcpsx18" class="hrefclick" href="javascript:void(0)">上行流量</a>
+                            <a id="pjjhyhs18" class="hrefclick" href="javascript:void(0)">平均激活用户数</a>
+
+                        </ol> 
+                    </ul>
+                </li>
+                
+                <li>
+                    <div class="header" id="sbgj">
+                        <span id="" class="label">设备告警</span>
+                        <span class="arrow down"></span>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="col-md-10 csg-col" id="showview">
+             <div class="row" >
+        <div class="bs-example col-md-4 csg-co" style="height: 720px;float:left;"> 
+             <div calss="row" > 
+                 <div class="widget">
+                        <h4 class="hrtitle">KQI信息</h4>
+                    <div class="content community">
+                         <p id="KQIINFO">出现覆盖问题请核查问题数据出现覆盖问题请核查问题数据出现覆盖问题请核查问题数据出现覆盖问题请核查问题数据</p>
+                   </div>
+                 </div>
+            </div>  
+
+             <div calss="row" >
+                    
+                     <div class="widget">
+                        <h4 class="hrtitle">KPI差指标</h4>
+                    <div class="content community">
+                         <p id="KQIINDEX">出现覆盖问题请核查问题数据</p><p> 
+                   </div>
+                 </div>
+            </div>  
+
+               
+             <div calss="row" >
+                    
+                     <div class="widget">
+                        <h4 class="hrtitle">质差原因</h4>
+                    <div class="content community">
+                         <p id="REASON">出现覆盖问题请核查问题数据</p><p>
+                   </div>
+                 </div>
+            </div>   
+             <div calss="row" >
+                    
+                     <div class="widget">
+                        <h4 class="hrtitle">解决措施</h4>
+                    <div class="content community">
+                         <p id="MEASURES">出现覆盖问题请核查问题数据</p>
+                   </div>
+                 </div>
+            </div>   
+        </div>
+        <div class="col-md-8 csg-co bs-example" style="margin-left: 0px;float:left;height:720px;padding-right:0px; width:667px"> 
+              <div id="dwxxmap" style="height: 690px;"></div>
+                
+        </div>
+   </div>
+        </div>
+    </div>
+
+
+
+    <script type="text/template" id="sbgjtemplate"> 
+                 <div>
+	                <ul id="myTab" class="nav nav-tabs  ">
+		                <li class="active">
+			                <a href="#home" data-toggle="tab" onclick="showtableview('zcxq')">
+				                 质差小区
+			                </a>
+		                </li>
+		                <li><a href="#ios" data-toggle="tab" onclick="showtableview('ljxq')">相邻站点</a></li> 
+	                </ul>
+                </div>
+                <div id="myTabContent" class="tab-content">
+	                <div class="tab-pane fade in active bs-example" style="float:initial;background-color: #fff;" id="home">  
+                           <table id="zcxq" data-height="" data-pagination="true" striped="true"></table>
+	                </div>
+	                <div class="tab-pane fade bs-example" style="float:initial;background-color: #fff;" id="ios">
+	                   <table id="ljxq" data-height="" data-pagination="true" striped="true"></table>
+	                </div> 
+                </div>
+
+         
+            </div> 
+    </script>
+
+
+    <script type="text/template" id="dwxxtemplate"> 
+   <div class="row" >
+        <div class="bs-example col-md-4 csg-co" style="height: 720px;float:left;"> 
+             <div calss="row" > 
+                 <div class="widget">
+                        <h4 class="hrtitle">KQI信息</h4>
+                    <div class="content community">
+                         <p id="KQIINFO">内容：出现覆盖问题请核查问题数据出现覆盖问题请核查问题数据出现覆盖问题请核查问题数据出现覆盖问题请核查问题数据</p>
+                   </div>
+                 </div>
+            </div>  
+
+             <div calss="row" >
+                    
+                     <div class="widget">
+                        <h4 class="hrtitle">KPI差指标</h4>
+                    <div class="content community">
+                         <p id="KQIINDEX">内容：出现覆盖问题请核查问题数据</p><p> 
+                   </div>
+                 </div>
+            </div>  
+
+               
+             <div calss="row" >
+                    
+                     <div class="widget">
+                        <h4 class="hrtitle">质差原因</h4>
+                    <div class="content community">
+                         <p id="REASON">内容：出现覆盖问题请核查问题数据</p><p>
+                   </div>
+                 </div>
+            </div>   
+             <div calss="row" >
+                    
+                     <div class="widget">
+                        <h4 class="hrtitle">解决措施</h4>
+                    <div class="content community">
+                         <p id="MEASURES">内容：出现覆盖问题请核查问题数据</p>
+                   </div>
+                 </div>
+            </div> 
+          <div calss="row" > 
+                    <div class="widget">
+                        <h4 class="hrtitle">最热门关联案例</h4>
+                    <div class="content community">
+                        <!--TODO 
+                            待插入数据 ..... 表CASE_DATA 查询对应数据
+                        -->
+                        <ul id="eciCase">
+        <li>
+                         <a>文档一</a>
+        </li>
+        <li>
+                         <a>文档二</a>
+        </li><li>
+                         <a>文档三</a></li>
+        </ul>
+                   </div>
+                 </div>
+            </div>     
+        </div>
+        <div class="col-md-8 csg-co bs-example" style="margin-left: 0px;float:left;height:720px;padding-right:0px; "> 
+              <div id="dwxxmap" style="height: 550px; width:90%"></div>
+                <div class="table-responsive" style="height: 150px; width:100%;margin:0">
+                    <table class="table">
+                    <thead>
+                        <tr>
+                            <td>CL是否共天线</td>
+                            <td>天线挂高(m)</td>
+                            <td>天线方位角(度)</td>
+                            <td>总下倾角(度)</td>
+                            <td>电子倾角(度)</td>
+                            <td>机械物理倾角(度)</td>
+                            <td>覆盖区域类型</td>
+                            <td>覆盖热点类型</td>
+                            <td>热点名称</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="SFGTX"></td>
+                            <td id="ANTENNAH"></td>
+                            <td id="ANTENNAAZIMUTH"></td>
+                            <td id="DIPANGLE"></td>
+                            <td id="EDIPANGLE"></td>
+                            <td id="MPDIPANGLE"></td>
+                            <td id="MRCLASS"></td>
+                            <td id="HOTSPOTCLASS"></td>
+                            <td id="HOTSPOTNAME"></td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+        </div>
+   </div>
+
+    </script>
+</body>
+
+</html>

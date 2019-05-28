@@ -1,0 +1,89 @@
+[{key:"fgwt",value:"覆盖问题",childs:[
+				{key:"xqpjrsrp",value:"小区平均RSRP"},
+				{key:"rfgbl",value:"弱覆盖比例"},
+				{key:"pjjl",value:"平均TA距离"},
+				{key:"cdfgk",value:"重叠覆盖率(6db)"},
+				{key:"gfglqgs",value:"过覆盖邻区个数"},
+				{key:"modgrcd":,value:"mod3干扰-重度"}
+			] 
+},{
+	key:"rlwt",value:"容量问题",childs:[{
+			key:"1800M":value:'1800M',childs:[
+				{key:"sxprbpjlyl",value:"上行PRB平均利用率"},
+				{key:"xxprbpjlyl",value:"下行PRB平均利用率"},
+				{key:"pjrrcljyhs",value:"平均RRC连接用户数"},
+				{key:"pdcpxx",value:"8.3 PDCP层下行用户面流量"},
+				{key:"pdcpsx",value:"8.1 PDCP层上行用户面流量"},
+				{key:"pjjhyhs",value:"4.19 平均激活用户数"} 
+			]
+		},
+		{
+			key:"800M":value:'1800M',childs:[
+			{key:"sxprbpjlyl",value:"上行PRB平均利用率"},
+			{key:"xxprbpjlyl",value:"下行PRB平均利用率"},
+			{key:"pjrrcljyhs",value:"平均RRC连接用户数"},
+			{key:"pdcpxx",value:"8.3 PDCP层下行用户面流量"},
+			{key:"pdcpsx",value:"8.1 PDCP层上行用户面流量"},
+			{key:"pjjhyhs",value:"4.19 平均激活用户数"} 
+		]
+		}
+	]
+},{
+	key:"KPI",value:"KPI指标",childs:[{
+			key:"jrxn":value:'接入性能',childs:[
+				{key:"rrcljcgl",value:"RRC连接建立成功率(%)"},
+				{key:"rrcsbcs",value:"RRC建立失败次数"},
+				{key:"xhysl",value:"寻呼拥塞率"},
+				{key:"xhyscs",value:"寻呼拥塞次数"},
+				{key:"rrcljcjbl",value:"RRC连接重建比例"},
+				{key:"rrcljcjcgcs",value:"RRC连接重建成功次数"} 
+			]
+		},
+		{
+			key:"bcsx":value:'保持性能',childs:[
+			{key:"uesxwdxl",value:"UE上下文掉线率"},
+			{key:"uesxycsfcs",value:"UE上下文异常释放次数"},
+			{key:"erabdxl",value:"E-RAB掉线率"},
+			{key:"erabdxcs",value:"E-RAB掉线次数"},
+			{key:"rrccjbl",value:"RRC重建比例"},
+			{key:"rrccjqqcs",value:"RRC重建请求次数"} 
+		]
+		},
+		{
+			key:"ydxn":value:'移动性能',childs:[
+			{key:"xtnqhcgl",value:"系统内切换成功率"},
+			{key:"xtnqsbcs",value:"系统内切换失败次数"},
+			{key:"cdsbl",value:"4G重定向到3G的比例(%)"},
+			{key:"ltecdxcs",value:"LTE重定向到3G的次数"} 
+		]
+		},
+		{
+			key:"ydxn":value:'移动性能',childs:[
+			{key:"xtnqhcgl",value:"系统内切换成功率"},
+			{key:"xtnqsbcs",value:"系统内切换失败次数"},
+			{key:"cdsbl",value:"4G重定向到3G的比例(%)"},
+			{key:"ltecdxcs",value:"LTE重定向到3G的次数"} 
+		]
+		},
+		{
+			key:"qt":value:'其他',childs:[
+			{key:"cqibl",value:"CQI≥7的比例"},
+			{key:"xxprbslzb",value:"11.1 下行PRB双流占比"},
+			{key:"yhtysxpjsl",value:"8.13 用户体验上行平均速率(%)"},
+			{key:"yhtyxxpjsl",value:"8.14用户体验下行平均速率"} ,
+			{key:"xqtfsc",value:"小区退服时长"},
+			{key:"xqzdl",value:"小区中断率"},
+			{key:"xqkyl",value:"小区可用率"},
+			{key:"grzspjz",value:"干扰噪声的平均值"} 
+		]
+		}
+	]
+},{
+	key:"sbgj",:value:'设备告警' ,childs:[{
+		key:'zhongxing',value:'中兴'
+	},{
+		key:'huawei',value:'华为'
+	},{
+		key:'nuojiya',value:'诺基亚'
+	}]
+}];

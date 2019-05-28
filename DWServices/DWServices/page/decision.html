@@ -1,0 +1,1014 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>指挥调度</title>
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="/page/js/loginyz.js"></script>
+    <script src="frame/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="frame/libs/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-table.css">
+    <link rel="stylesheet" href="css/jquery.mloading.css">
+    <link rel="stylesheet" href="themes/default/style.css">
+    <link rel="stylesheet" href="css/map.css">
+    <!--<link href="new_index_source/css/bootstrap.min.css" rel="stylesheet">-->
+    <script type="text/javascript" src="js/jquery.date_input.pack.js"></script>
+    <script src="js/bootstrap-table.js"></script>
+    <script type="text/javascript" src="js/bootstrap-table-export.js"></script>
+    <script src="js/tableExport.js"></script>
+    <script src="js/datauntil.js"></script>
+    <script type="text/javascript" src="js/datadetail.js"></script>
+    <script type="text/javascript" src="js/datamap.js"></script>
+    <script type="text/javascript" src="js/jquery.mloading.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-table-filter-control.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/hebei.js"></script>
+
+
+    <script type="text/javascript" src="js/hebeiMap/district/保定市.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/district/沧州市.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/district/承德市.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/district/邯郸市.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/district/衡水市.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/district/廊坊市.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/district/秦皇岛市.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/district/石家庄市.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/district/唐山市.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/district/邢台市.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/district/张家口市.js"></script>
+    <script type="text/javascript" src="js/hebeiMap/district/雄安新区.js"></script>
+    <link href="css/datePicker.css" rel="stylesheet" type="text/css" media="all" />
+    <style>
+        .left {
+            padding-right: 2px;
+        }
+
+        .right {
+            padding-left: 2px;
+        }
+
+        .bttm4 {
+            margin-bottom: 4px
+        }
+
+        .biaoti {
+            width: 100%;
+            height: 120px;
+            margin-bottom: 4px;
+            border-radius: 4px;
+            box-shadow: 2px 2px 2px #888888;
+            text-align: center;
+            background-color: #4086BF;
+            position: relative;
+            text-shadow: 1px 2px 2px #888;
+        }
+
+        .jianbian {
+            background-image: linear-gradient(to top,rgba(255,255,255,0.6) 0%,rgba(255,255,255,0) 50%);
+        }
+
+        .biaoti > b {
+            width: 100%;
+            color: #fff;
+            font-size: 14px;
+            position: absolute;
+            top: 86px;
+            left: 0px;
+        }
+
+        .biaoti > span {
+            width: 100%;
+            color: #fff;
+            font-size: 40px;
+            position: absolute;
+            top: 35px;
+            left: 0px;
+        }
+
+        .hlght {
+            position: absolute;
+            width: 96%;
+            height: 49%;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9;
+            margin: 4px auto;
+            border-radius: 4px 4px 30px 30px;
+            background-image: linear-gradient(to top,rgba(255,255,255,0.02) 0%,rgba(255,255,255,0.9) 100%);
+        }
+
+        .item {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 4px;
+            border-radius: 4px;
+            position: relative;
+            box-shadow: 2px 2px 2px #888888;
+            background-color: #F9FCFF;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+            .item .hlght {
+                margin-top: 1px
+            }
+
+            .item > .time {
+                width: 100%;
+                position: absolute;
+                top: 0;
+                height: 25px;
+                background-color: #eee;
+                line-height: 25px;
+                text-align: left;
+                font-size: 12px;
+                color: #333;
+                z-index: 2;
+            }
+
+                .item > .time > p {
+                    padding-left: 6px;
+                }
+
+                .item > .time > span {
+                    position: absolute;
+                    right: 10px;
+                    display: block;
+                    height: 8px;
+                    width: 8px;
+                    top: 0;
+                    bottom: 0;
+                    margin: auto 0;
+                    background-color: red;
+                    border-radius: 10px;
+                    border: 1px solid #999;
+                    box-shadow: inset 1px 1px 1px #888
+                }
+
+            .item > .status {
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                height: 20px;
+                background-color: #eee;
+                line-height: 20px;
+                text-align: right;
+                font-size: 10px;
+                opacity: 1;
+                z-index: 2;
+            }
+
+                .item > .status > p {
+                    animation: statusA ease 2s infinite;
+                }
+
+            .item > .number {
+                position: absolute;
+                width: 100%;
+                top: 0;
+                bottom: 0;
+                margin: auto 0;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                font-size: 20px;
+                font-weight: lighter;
+                color: #f00;
+                z-index: 0;
+            }
+
+            .item .item_tables {
+                width: 100%;
+                height: 100%;
+                overflow-x: hidden;
+                overflow-y: auto;
+                background-color: #eef;
+                top: 0;
+                left: 0;
+                position: absolute;
+                z-index: 1;
+            }
+
+        .wait {
+            color: #999;
+        }
+
+        .download {
+            color: #0d0;
+        }
+
+        .anlysis {
+            color: #dd0;
+        }
+
+        .import {
+            color: #0dd;
+        }
+
+        .error {
+            color: #d00;
+        }
+
+        .colleft {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 4px;
+            background-color: white;
+            position: relative;
+        }
+
+            .colleft > .lefttxt {
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                right: 0;
+                box-shadow: 2px 2px 2px #888
+            }
+
+            .colleft .leftdian {
+                border: 1px solid #000;
+                position: absolute;
+                width: 18px;
+                height: 18px;
+                border-radius: 100%;
+                top: 4px;
+                left: 0;
+                right: 0;
+                margin: auto;
+            }
+
+                .colleft .leftdian .hlght {
+                    margin-top: 1px;
+                    width: 75%;
+                    border-radius: 100%;
+                }
+
+            .colleft > .lefttxt > p {
+                height: 80px;
+                width: 20px;
+                text-align: center;
+                color: #4086BF;
+                text-shadow: 1px 1px 1px #fff;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 28px;
+                margin: auto;
+            }
+
+        .c5 .lefttxt > p {
+            top: 20px;
+        }
+
+        .c1 > .time, .c1.colleft > div.lefttxt {
+            background-color: #D5ECFF
+        }
+
+        .c2 > .time, .c2.colleft > div.lefttxt {
+            background-color: #AAD9FF
+        }
+
+        .c3 > .time, .c3.colleft > div.lefttxt {
+            background-color: #80C6FF
+        }
+
+        .c4 > .time, .c4.colleft > div.lefttxt {
+            background-color: #55B3FF
+        }
+
+        .c5 > .time, .c5.colleft > div.lefttxt {
+            background-color: #2B9FFF
+        }
+
+        .c1 > .time > span, .c1 .leftdian {
+            background-color: #00B0F0;
+        }
+
+        .c2 > .time > span, .c2 .leftdian {
+            background-color: #92D050;
+        }
+
+        .c3 > .time > span, .c3 .leftdian {
+            background-color: #ff0;
+        }
+
+        .c4 > .time > span, .c4 .leftdian {
+            background-color: #FF6600;
+        }
+
+        .c5 > .time > span, .c5 .leftdian {
+            background-color: #f00;
+        }
+        .xuan {
+            animation: xuanzhong 0.2s;
+            z-index: 999;
+            transform: scale3d(1.1,1.1,1.1);
+            box-shadow: 10px 10px 30px #888888;
+        }
+
+        @keyframes xuanzhong {
+            from {
+                transform: scale3d(1,1,1);
+                box-shadow: 2px 2px 2px #888888
+            }
+            to {
+                transform: scale3d(1.1,1.1,1.1);
+                box-shadow: 10px 10px 30px #888888
+            }
+        }
+
+        @keyframes statusA {
+            from {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .5
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+        .item_tables {
+            padding-top:40px;
+            padding-bottom:20px;
+        }
+        .hand:hover {
+            cursor:pointer;
+        }
+        .table-responsive > .table > tbody > tr > td, .table-responsive > .table > tbody > tr > th, .table-responsive > .table > tfoot > tr > td, .table-responsive > .table > tfoot > tr > th, .table-responsive > .table > thead > tr > td, .table-responsive > .table > thead > tr > th {
+            white-space: nowrap;
+        }
+        .tdbgcolor {
+            background-color:red;
+        }
+    </style>
+
+</head>
+<body style="overflow: auto; overflow-x:hidden;">
+    <div class="districtshadow"></div>
+    <div id="city"></div>
+    <div id="district"></div>
+    <script type="text/javascript">
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "H+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        var serverTime=new Date();
+        var clienTime=new Date();
+        //查询状态
+        function queryStatus() {
+            $.ajax({
+                url: "../services/DataStatus.ashx",
+                type: "post",
+                success: function (result) {
+                    var dataJson = eval('(' + result + ')');
+                    var status = dataJson.status;
+                    if (dataJson.ok) {
+                        $(".webqstatus p").removeClass();
+                        $(".webdstatus p").removeClass();
+                        $(".coreqstatus p").removeClass();
+                        $(".coredstatus p").removeClass();
+                        $(".wifiqstatus p").removeClass();
+                        $(".wifidstatus p").removeClass();
+                        $(".terqstatus p").removeClass();
+                        $(".terdstatus p").removeClass();
+                        for (i = 0; i < status.length; i++) {
+                            var name = status[i].name;
+                            if (name == "Web") {
+                                console.log(status[i].sttsq);
+                                $(".webqstatus p").html(status[i].sttsq+"...");
+                                $(".webdstatus p").html(status[i].sttsd + "...");
+                                $(".webqstatus p").addClass(status[i].sttsq);
+                                $(".webdstatus p").addClass(status[i].sttsq);
+                            }
+                            else if (name == "Core") {
+                                $(".coreqstatus p").html(status[i].sttsq + "...");
+                                $(".coredstatus p").html(status[i].sttsd + "...");
+                                $(".coreqstatus p").addClass(status[i].sttsq);
+                                $(".coredstatus p").addClass(status[i].sttsq);
+                            }
+                            else if (name == "Wifi") {
+                                $(".wifiqstatus p").html(status[i].sttsq + "...");
+                                $(".wifidstatus p").html(status[i].sttsd + "...");
+                                $(".wifiqstatus p").addClass(status[i].sttsq);
+                                $(".wifidstatus p").addClass(status[i].sttsq);
+                            }
+                            else {
+                                $(".terqstatus p").html(status[i].sttsq + "...");
+                                $(".terdstatus p").html(status[i].sttsd + "...");
+                                $(".terqstatus p").addClass(status[i].sttsq);
+                                $(".terdstatus p").addClass(status[i].sttsq);
+                            }
+                        }
+                    } else {
+                        console.log("There is no data");
+                    }
+                },
+                error: function () {
+                    alert("未知错误(Data Status)");
+                },
+            });
+        }
+        //查询数据
+        function query() {
+            $.ajax({
+                url: "../services/Display.ashx",
+                type: "post",
+                success: function (result) {
+                    var dataJson = eval('(' + result + ')');
+                    if (dataJson.ok) {
+                        serverTime = new Date(dataJson.time);
+                        clienTime = new Date();
+                        $("#time").html(dataJson.time);
+                        var data = dataJson.data;
+                        for (i = 0; i < data.length; i++) {
+                            var name = data[i].name;
+                            var count = data[i].count;
+                            var t = data[i].date;
+                            //var t = '2017/9/20 14:22:30'
+                            if (name == "APPCURRENT") {
+                                $("#appc").html(count);
+                                $("#appc").prev().find("p").html(t.substr(11));
+                            } else if (name == "CORECURRENT") {
+                                $("#corec").html(count);
+                                $("#corec").prev().find("p").html(t.substr(11));
+                            } else if (name == "WIFICURRENT") {
+                                $("#wific").html(count);
+                                $("#wific").prev().find("p").html(t.substr(11));
+                            } else if (name == "APPMORE") {
+                                $("#appm").html(count);
+                                $("#appm").prev().find("p").html(t.substr(11));
+                            } else if (name == "COREMORE") {
+                                $("#corem").html(count);
+                                $("#corem").prev().find("p").html(t.substr(11));
+                            } else if (name == "WIFIMORE") {
+                                $("#wifim").html(count);
+                                $("#wifim").prev().find("p").html(t.substr(11));
+                            } else if (name == "APPDAY") {
+                                $("#appd").html(count);
+                                $("#appd").prev().find("p").html(t.substr(0, 10));
+                            } else if (name == "COREDAY") {
+                                $("#cored").html(count);
+                                $("#cored").prev().find("p").html(t.substr(0, 10));
+                            } else if (name == "WIFIDAY") {
+                                $("#wifid").html(count);
+                                $("#wifid").prev().find("p").html(t.substr(0, 10));
+                            } else if (name == "TERMINALDAY") {
+                                $("#terd").html(count);
+                                $("#terd").prev().find("p").html(t.substr(0, 10));
+                            } else if (name == "APPWEEK") {
+                                $("#appw").html(count);
+                                $("#appw").prev().find("p").html(t.substr(0, 10));
+                            } else if (name == "COREWEEK") {
+                                $("#corew").html(count);
+                                $("#corew").prev().find("p").html(t.substr(0, 10));
+                            } else if (name == "WIFIWEEK") {
+                                $("#wifiw").html(count);
+                                $("#wifiw").prev().find("p").html(t.substr(0, 10));
+                            } else if (name == "TERMINALWEEK") {
+                                $("#terw").html(count);
+                                $("#terw").prev().find("p").html(t.substr(0, 10));
+                            } else if (name == "APPLONG") {
+                                $("#appl").html(count);
+                                $("#appl").prev().find("p").html(t.substr(0, 10));
+                            } else if (name == "WIFILONG") {
+                                $("#wifil").html(count);
+                                $("#wifil").prev().find("p").html(t.substr(0, 10));
+                            } else if (name == "CORELONG") {
+                                $("#corel").html(count);
+                                $("#corel").prev().find("p").html(t.substr(0, 10));
+                            } else {
+                                $("#terl").html(count);
+                                $("#terl").prev().find("p").html(t.substr(0, 10));
+                            }
+                        }
+                    } else {
+                        alert("No More Data!");
+                    }
+                },
+                error: function () {
+                    alert("未知错误(Data Display)");
+                },
+            });
+        }
+        $(function () {
+            query();
+            queryStatus();
+            setInterval(function () {
+                var currentTime = new Date();
+                var span = currentTime.getTime() - clienTime.getTime();
+                var now = new Date(serverTime.getTime() + span);
+                $("#time").html(now.Format("yyyy-MM-dd HH:mm:ss"));
+            }, 1000);
+            setInterval(query, 60 * 1000);
+            showDetail();
+        });
+    </script>
+    <div style="width: 100%; overflow:auto" id="sshow">
+        <div style="width: 88%; margin-left: auto; margin-right: auto; margin-top: 21px">
+
+            <div class="custom-filter" style="height: 110px; padding-top: 0px;">
+                <h3 id="pagination-table" style="margin: 0px; font-size: 18px; height: 50px; line-height: 50px; text-indent: 14px; border-bottom: 1px solid #eee;">指挥调度页面<a href="ipran.html" style="float:right">新版页面（IPRAN）</a></h3>
+                <div id="time" class="list-inline" style="height:35px;margin-top: 10px;line-height:35px;font-size:16px;font-weight:200;">
+                </div>
+            </div>
+
+            <div class="row">
+                <div id="tableNum" class="bs-example col-md-8 csg-co" style="height: 743px;">
+                    <div class="panel panel-info">
+                        <div class="panel-body content">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-1 right"></div>
+                                    <div class="col-md-11 right">
+                                        <div class="row">
+                                            <div class="col-md-3 left right">
+                                                <div class="biaoti jianbian"><span class="glyphicon glyphicon-tasks"></span><b>业务应用</b><div class="hlght"></div></div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="biaoti jianbian"><span class="glyphicon glyphicon-globe"></span><b>核心网</b><div class="hlght"></div></div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="biaoti jianbian"><span class="glyphicon glyphicon-signal"></span><b>无线</b><div class="hlght"></div></div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="biaoti jianbian"><span class="glyphicon glyphicon-phone"></span><b>终端</b><div class="hlght"></div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1 right"><div class="colleft c1"><div class="lefttxt"><div class="leftdian jianbian"><div class="hlght"></div></div><p><b>准实时</b></p></div></div></div>
+                                    <div class="col-md-11 right">
+                                        <!--准实时-->
+                                        <div class="row">
+                                            <div class="col-md-3 left right">
+                                                <div class="item c1">
+                                                    <div class="time jianbian currenttime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="appc"></div>
+                                                    <div class="status webqstatus"><p class="wait"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c1">
+                                                    <div class="time jianbian currenttime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="corec"></div>
+                                                    <div class="status coreqstatus"><p class="download"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c1">
+                                                    <div class="time jianbian currenttime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="wific"></div>
+                                                    <div class="status wifiqstatus"><p class="anlysis"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <!--<div class="item c1"></div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--多时段-->
+                                <div class="row">
+                                    <div class="col-md-1 right"><div class="colleft c2"><div class="lefttxt"><div class="leftdian jianbian"><div class="hlght"></div></div><p><b>多时段</b></p></div></div></div>
+                                    <div class="col-md-11 right">
+                                        <div class="row">
+                                            <div class="col-md-3 left right">
+                                                <div class="item c2">
+                                                    <div class="time jianbian moretime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="appm"></div>
+                                                    <div class="status webqstatus"><p class="import"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c2">
+                                                    <div class="time jianbian moretime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="corem"></div>
+                                                    <div class="status coreqstatus"><p class="error"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c2">
+                                                    <div class="time jianbian moretime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="wifim"></div>
+                                                    <div class="status wifiqstatus"><p class="error"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <!--<div class="item c2"></div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--天-->
+                                <div class="row">
+                                    <div class="col-md-1 right"><div class="colleft c3"><div class="lefttxt"><div class="leftdian jianbian"><div class="hlght"></div></div><p><b>天质差</b></p></div></div></div>
+                                    <div class="col-md-11 right">
+                                        <div class="row">
+                                            <div class="col-md-3 left right">
+                                                <div class="item c3">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="appd"></div>
+                                                    <div class="status webdstatus"><p class="import"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c3">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="cored"></div>
+                                                    <div class="status coredstatus"><p class="anlysis"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c3">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="wifid"></div>
+                                                    <div class="status wifidstatus"><p class="error"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c3">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="terd"></div>
+                                                    <div class="status terdstatus"><p class="import"></p></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--周-->
+                                <div class="row">
+                                    <div class="col-md-1 right"><div class="colleft c4"><div class="lefttxt"><div class="leftdian jianbian"><div class="hlght"></div></div><p><b>周质差</b></p></div></div></div>
+                                    <div class="col-md-11 right">
+                                        <div class="row">
+                                            <div class="col-md-3 left right">
+                                                <div class="item c4">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="appw"></div>
+                                                    <div class="status webdstatus"><p class="error"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c4">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="corew"></div>
+                                                    <div class="status coredstatus"><p class="download"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c4">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="wifiw"></div>
+                                                    <div class="status wifidstatus"><p class="import"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c4">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="terw"></div>
+                                                    <div class="status terdstatus"><p class="anlysis"></p></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--长期-->
+                                <div class="row">
+                                    <div class="col-md-1 right"><div class="colleft c5"><div class="lefttxt"><div class="leftdian jianbian"><div class="hlght"></div></div><p><b>长期质差</b></p></div></div></div>
+                                    <div class="col-md-11 right">
+                                        <div class="row">
+                                            <div class="col-md-3 left right">
+                                                <div class="item c5">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="appl"></div>
+                                                    <div class="status webdstatus"><p class="anlysis"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c5">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="corel"></div>
+                                                    <div class="status coredstatus"><p class="import"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c5">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="wifil"></div>
+                                                    <div class="status wifidstatus"><p class="download"></p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 left right">
+                                                <div class="item c5">
+                                                    <div class="time jianbian daytime"><p></p><span></span><div class="hlght"></div></div>
+                                                    <div class="number" id="terl"></div>
+                                                    <div class="status terdstatus"><p class="error"></p></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 csg-co bs-example" style="height: 743px;margin-left: 0px; ">
+                    <div><label>质差小区</label></div>
+                    <div id="citynum" style="border:0;">
+                        <span>石家庄：<b>1</b></span>&nbsp;&nbsp;
+                        <span>唐山：<b>2</b></span>&nbsp;&nbsp;
+                        <span>廊坊：<b>3</b></span>&nbsp;&nbsp;
+                        <span>保定：<b>4</b></span>&nbsp;&nbsp;
+                        <span>邯郸：<b>5</b></span>&nbsp;&nbsp;
+                        <br/><span>秦皇岛：<b>6</b></span>&nbsp;&nbsp;
+                        <span>承德：<b>7</b></span>&nbsp;&nbsp;
+                        <span>张家口：<b>8</b></span>&nbsp;&nbsp;
+                        <span>邢台：<b>9</b></span>&nbsp;&nbsp;
+                        <span>沧州：<b>10</b></span>&nbsp;&nbsp;
+                        <br/><span>衡水：<b>11</b></span>
+                    </div>
+                    <div id="showhbmap" style="height: 640px; width: 100%;display: none"></div>
+                    <div id="liuliangmap" style="height: 640px; width: 100%; display: none"></div>
+                    <div id="hebei" style="height: 640px; width: 100%;"></div>
+                    <div class="shadow"></div>
+                    <div id="dd" style="width:60px;height:100px;position:absolute;bottom:30px;right:70px;z-index:999">
+                        <div id="cmap" class="hand"><img src="images/circle1.png" />准实时</div>
+                        <div id="mmap" class="hand"><img src="images/circle1.png" />多时段</div>
+                        <div id="dmap" class="hand"><img src="images/circle1.png" />天粒度</div>
+                        <div id="wmap" class="hand"><img src="images/circle.png" />周粒度</div>
+                        <div id="lmap" class="hand"><img src="images/circle1.png" />长期</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <blockquote style="text-align:center">
+        <p>版权所有©2017 中国电信河北电信公司 推荐谷歌浏览器分辨率1920*1080 </p>
+    </blockquote>
+    <style>
+        .modal-dialog {
+            width: 80%
+        }
+    </style>
+    <!-- 模态框（Modal） -->
+    <!-- /.modal -->
+    <div id="dataDetail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">数据详情</h4>
+                </div>
+                <div class="modal-body" id="tables">
+                    <div id="app" class="table-responsive" style="display:none; height:100%">
+                        <p><b>网页</b><a onclick="downloadcsv(this)">导出</a></p>
+                        <table id='web_t' class="tableDetail table-bordered table table-striped">
+                        </table>
+                        <p><b>视频</b><a onclick="downloadcsv(this,1)">导出</a></p>
+                        <table id='video_t' class="tableDetail table-bordered table table-striped">
+                        </table>
+                        <p><b>游戏</b><a onclick="downloadcsv(this,2)">导出</a></p>
+                        <table id='play_t' class="tableDetail table-bordered table table-striped">
+                        </table>
+                        <p><b>即时通讯</b><a onclick="downloadcsv(this,3)">导出</a></p>
+                        <table id='single_t' class="tableDetail table-bordered table table-striped">
+                        </table>
+                    </div>
+                    <div id="core" class="table-responsive" style="display:none; height:100%">
+						<div id="flow_k">
+						<p><b>全省流量</b><a onclick="downloadcsv(this,1)">导出</a></p>
+                        <table id='flow_t' class="tableDetail table-bordered table table-striped">
+                        </table>
+						</div>
+						
+                        <p><b>核心网</b> <a onclick="downloadcsv(this)">导出</a></p>
+                        <table id='core_t' class="tableDetail table-bordered table table-striped">
+                        </table>
+                    </div>
+                    <div id="wifi" class="table-responsive" style="display:none; height:100%">
+                        <p><b>无线小区</b> <a onclick="downloadcsv(this)">导出</a></p>
+                        <div class="aa1" style="display:none;">
+                            <input type="text" class="start_t" value="" />--
+                            <input type="text" class="end_t" value="" />
+                            <input type="button" value="查询" onclick="wifiChaxun();" />
+                            <span class="q_msg" style="color:red;"></span>
+                        </div>
+                        <table id='wifi_t' class="tableDetail table-bordered table table-striped"></table>
+                    </div>
+                    <div id="terminal" class="table-responsive" style="display:none; height:100%">
+                        <p><b>终端</b><a onclick="downloadcsv(this)">导出</a></p>
+                        <table id='ter_t' class="tableDetail table-bordered table table-striped">
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $(".item").on("mouseenter", function (e) {
+                //window.event ? window.event.cancelBubble = true : e.stopPropagation();
+                $(this).addClass("xuan");
+            });
+            $(".item").on("mouseleave", function (e) {
+                //window.event ? window.event.cancelBubble = true : e.stopPropagation();
+                $(this).removeClass("xuan");
+                $(this).removeClass("dian");
+            });
+            $(".item").on("click", function () {
+                var $this = $(this);
+                var $data = $this.children(".number");
+                var id = $data.attr("id");
+                var num = $data.html();
+                if (num == 0 && id != "corec"){
+                    return false;
+                }
+                var parent = $this.parent();
+                var w = parent.width() + 1;
+                var h = parent.height() - 4;
+                var x = parent.offset().left + 2;
+                var y = parent.offset().top;
+                var sch = $(document).scrollTop();
+                var color = $this.css("background-color");
+                //$this.addClass("dian");
+                //$this.css({ "position": "absolute", "top": y+"px", "left": x+"px", "width": w + "px", "z-index": "9999" });
+                //$this.appendTo($("body"));
+                $this.hide();
+                var ele = $("<div class=\"item\"></div>");
+                ele.html($this.html());
+                ele.attr("iid",id);
+                ele.appendTo($("body"));
+                ele.css({ "position": "fixed", "top": (y - sch) + "px", "left": x + "px", "width": w + "px", "z-index": "9999", "background-color": color, "box-shadow": "10px 10px 50px #888888" });
+                ele.addClass("dian");
+                var ww = $(window).width() * 0.8;
+                var wh = $(window).height() * 0.8;
+                var bg = $("<div class=\"bg\" style=\"background-color:black;position: fixed;width:100%;height:100%;left:0;top:0;opacity:0.3\"></div>");
+                bg.appendTo($("body"));
+                bg.on("click", function () {
+                    ele.css({ "left": (ww / 8) + "px", "top": (wh / 8) + "px", "right": "auto", "bottom": "auto", "margin": "0" });
+                    var c = ele.children(".item_tables");
+                    c.remove();
+                    ele.animate({ "width": w + "px", "height": h + "px", "left": x + "px", "top": (y - sch) + "px", "right": "auto", "bottom": "auto" }, 300, "swing", function () {
+                        bg.remove();
+                        ele.remove();
+                        $this.show();
+                    });
+                });
+                ele.find(".time>span").on("click", function () {
+                    ele.css({ "left": (ww / 8) + "px", "top": (wh / 8) + "px", "right": "auto", "bottom": "auto", "margin": "0" });
+                    var c = ele.children(".item_tables");
+                    c.remove();
+                    ele.animate({ "width": w + "px", "height": h + "px", "left": x + "px", "top": (y - sch) + "px", "right": "auto", "bottom": "auto" }, 300, "swing", function () {
+                        bg.remove();
+                        ele.remove();
+                        $this.show();
+                    });
+                });
+                ele.animate({ "width": ww + "px", "height": wh + "px", "left": (ww / 8) + "px", "top": (wh / 8) + "px" }, 300, "swing", function () {
+                    ele.css({ "background-color": "white", "width": "80%", "height": "80%", "left": "0", "right": "0", "top": "0", "bottom": "0", "margin": "auto" });
+                    var itemlist = $("<div class=\"item_tables\"></div>");
+                    setTables(itemlist,id,num);
+                    ele.append(itemlist);
+                });
+            });
+            function setTables(itemlist,id) {
+                itemlist.html("<h3 style=\"width:100px;height:20px;line-height:20px; position:absolute; top:0;bottom:0;left:0;right:0;margin:auto\">加载中...</h3>");
+                console.log(id);
+                $.ajax({
+                    url: "../services/Decision.ashx",
+                    type: "post",
+                    data: { "id": id },
+                    dataType: "json",
+                    success: function (data) {
+                        
+                        $("#app").hide();
+                        $("#wifi").hide();
+                        $("#core").hide();
+                        $("#terminal").hide();
+                        if (data.ok) {
+                            //$("#dataDetail").modal('show');
+                            $("#web_t").empty();
+                            $("#video_t").empty();
+                            $("#play_t").empty();
+                            $("#single_t").empty();
+                            $("#wifi_t").empty();
+                            $("#core_t").empty();
+                            $("#ter_t").empty();
+							$("#flow_t").empty();
+                            if (id.indexOf("app") != -1) {
+                                var c1 = exeWeb(data);
+                                var c2 = exeVideo(data);
+                                var c3 = exePlay(data);
+                                var c4 = exeSingle(data);
+                                $("#web_t").append(c1);
+                                $("#video_t").append(c2);
+                                $("#play_t").append(c3);
+                                $("#single_t").append(c4);
+                                $("#app").show();
+                            } else if (id.indexOf("wifi") != -1) {
+                                var c = exeWifi(data);
+                                $("#wifi_t").append(c);
+                                if (id == "wific") {
+                                    $(".aa1").show();
+                                } else {
+                                    $(".aa1").hide();
+                                }
+                                $("#wifi").show();
+                            } else if (id.indexOf("core") != -1) {
+                                var c = exeCore(data);
+								if(id=="corec"){
+								var c2=exeFlow(data);
+                                $("#flow_t").append(c2);
+								$("#flow_k").show();
+								}else{
+									$("#flow_k").hide();
+									
+								}
+                                $("#core_t").append(c);
+                                $("#core").show();
+                            } else {
+                                var c = exeTer(data);
+                                $("#ter_t").append(c);
+                                $("#terminal").show();
+                            }
+                            itemlist.html($("#tables").html());
+                        } else {
+                            console.log("can't find data");
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("No any information");
+                    }
+                });
+            }
+        });
+        function downloadcsv(a,b){
+            var $this = $(a);
+            var id = $this.closest(".item").attr("iid");
+            var tableid = b ? "&tableid=" + b : "";
+            if (id == "wific") {
+                var start_t = $(".item .start_t").val();
+                var end_t = $(".item .end_t").val();
+                href = "../services/Decision.ashx?id=" + id + "&act=down" + tableid + "&start=" + start_t + "&end=" + end_t;
+            } else {
+                href = "../services/Decision.ashx?id=" + id + "&act=down" + tableid;
+            }
+            $this.attr("href", href);
+        }
+
+        function wifiChaxun() {
+            //var item = $("#item");
+            var start_t =$(".item .start_t").val();
+            var end_t = $(".item .end_t").val();
+            if (start_t == null || start_t == "" || end_t == null || end_t == "") {
+                return false;
+            }
+            var exp = /[0-2][\d]:[0-5][\d]/;
+            if (!exp.test(start_t) && !exp.test(end_t)) {
+                $(".item .q_msg").html("输入格式有误，正确格式为{ xx:xx }");
+                return false;
+            }
+            var id = "wifi_chaxun";
+            $.ajax({
+                url: "../services/Decision.ashx",
+                type: "post",
+                data: { "id": id, "start_t": start_t, "end_t": end_t },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    $(".item #wifi_t").empty();
+                    var c = exeWifi(data);
+                    $(".item #wifi_t").append(c);
+                },
+                error: function () {
+                    console.log("查询错误");
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

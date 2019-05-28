@@ -1,0 +1,42 @@
+#hebei {
+    position: absolute;
+    z-index: 12;
+}
+#city,#district {
+    width:1000px;
+    position:absolute;
+    left:200px;
+    top:0px;
+    height:1000px;
+    display:none;
+    margin: 0 auto;
+    z-index:10;
+}
+.shadow{
+    width:100%;
+	height:100%;
+	position:fixed;
+	top:0;
+	left:0;
+	background:#000;
+	opacity:0.6;
+    display:none;
+	margin:auto;
+	z-index:9;
+}
+.districtshadow{
+    width:100%;
+	height:100%;
+	position:fixed;
+	top:0;
+	left:0;
+	background:#000;
+	opacity:0.6;
+    display:none;
+	margin:auto;
+	z-index:9;
+}
+#citynum {
+    position:absolute;
+
+}
