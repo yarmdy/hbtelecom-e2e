@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="ZXAlarm_FTP 连接"
+  DTS:DTSID="{9E540A08-E87F-42B7-9A6B-E80E2213B770}"
+  DTS:CreationName="FTP">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="136.158.194.154:21111">
+      <DTS:FtpConnection
+        DTS:ServerName="136.158.194.154"
+        DTS:ServerPort="21111"
+        DTS:ServerUserName="zte_uems_naf">
+        <DTS:Property
+          DTS:Name="ServerPassword"
+          Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA1oGd5OPlAEiaIbQdOlDzyQAAAAACAAAAAAAQZgAAAAEAACAAAADZe7BdjYQD7ewrwrgekKe7wFvKTN8kshsEDrIl+JH1FwAAAAAOgAAAAAIAACAAAACRoI1x+6sb0ihk8KAIKkloqqmvxIMzFzuLLqkoSsM4VpAAAABWTRGSXXb6JvBcIQsd2f9cnHKOXvIxUPENOTbWqt7PCJdOsZBOdQWUBtu0GrYFy4Eyf+x0E5RY63YtG0UdVbKGkXdYSCO5R9JWaDto6pYDuwcQyVJAf15lx1dAmF60SMfdZskspq/n06IbbavXXBW2X8rxVg4mpucCj3L27kSBpuQOgvFDLmXgni7OmZbLX91AAAAAlbKWHCHDDYYe3BluLHFIJQ+5nhrbkM82DMK/QyPBZL9ZBqyAT/DlQCF02yNl1/R5SHIKV0rGPwC7tYUNADcAdw==</DTS:Property>
+      </DTS:FtpConnection>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

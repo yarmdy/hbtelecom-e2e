@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="KPI_FTP 连接"
+  DTS:DTSID="{5CDBC852-9D64-42CA-B79A-77A749C9B186}"
+  DTS:CreationName="FTP">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="136.158.195.147:2111">
+      <DTS:FtpConnection
+        DTS:ServerName="136.158.195.147"
+        DTS:ServerPort="2111"
+        DTS:ServerUserName="administrator">
+        <DTS:Property
+          DTS:Name="ServerPassword"
+          Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA1oGd5OPlAEiaIbQdOlDzyQAAAAACAAAAAAAQZgAAAAEAACAAAABu++6d+d4pB3mAFsMTjtRkvsdaISCRL20Oh0AbMyBcbQAAAAAOgAAAAAIAACAAAADmU7bjgcWlLUK/uTW0iOMt75md/Zn0v78jVcV/kKbOMYAAAABzw1gz9x0KcxUiERYTWLA4N+xuSfF9qyr0Up6qHqy0CMdB7GkdRtokPUwEM5YKWRHLdGBd/t3anMAlz15KVX0oGtNIty0CmmEWi5wrIDT+byaS/W8o5y0QCOYHB0YblSPzZ8ZXCzqwWPWaDQ/6F4qX/g/WjNuO2cXn6uhwcqcNuUAAAAC+rARMj6aiUouLZ96UQBypmHh7X67e7KUr1TE9HWTEMRZ+Sw3fM+L/Cs/z3cD2w6c/lNU+VDZWNODqbErHOa/w</DTS:Property>
+      </DTS:FtpConnection>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

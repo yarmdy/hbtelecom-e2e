@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="localhost_orcl.mis"
+  DTS:DTSID="{EF1B0189-C787-45D6-ABB7-2CA7A436C369}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=orcl;User ID=kpimis;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAEypqJeL/I0yjSQjFvSOhIQAAAAACAAAAAAAQZgAAAAEAACAAAABbYrnm0xlCrrKcVjMRbxyLIFv7Uv+N+/e2ktPcadqorAAAAAAOgAAAAAIAACAAAACHEBLkFZTs/3VaHe3gUITUMNokm+/0H6tcDiBhPwXrTIAAAABpJnCXAM75RwzGMhejg6igqCtEhTkOt5TuxvxUORhsXZBg3CMIS3O/HT8CBMAEIeSWzbFZT5lr9+QdLeFQzQX4G+SU4RI6AO+wUJJnwfC3sKdIdFjlKl05c7O0hxx88ZscJzFnmVpV5HbK8f+D1tU8lnobEvpVSFG15m3Qr94y4EAAAABuVX8tXvcAoPeDlmi3YtYSLnfWP3yPsgdDVAXx14Qa7FxfnhMNa3GjYmaZ4+62Qv1rS8MM+ZIOqP7CEz5EGAL0</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

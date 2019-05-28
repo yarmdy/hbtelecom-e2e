@@ -1,0 +1,1504 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/3/2017 5:31:23 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="CHINANET01"
+  DTS:CreatorName="CHINANET01\Administrator"
+  DTS:DTSID="{206D4C8C-61D4-4D84-8E85-4F961A2338B0}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5583.0"
+  DTS:LocaleID="2052"
+  DTS:ObjectName="Analysis"
+  DTS:PackageType="5"
+  DTS:VersionBuild="34"
+  DTS:VersionGUID="{314DB84D-3E81-4ECD-B93A-55DE51DF61B8}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[平面文件连接管理器]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{8838863C-A50C-45F7-AFE5-532F3E3D0CD7}"
+      DTS:ObjectName="平面文件连接管理器">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::resultpath]+ (DT_STR,4,1252)DATEPART( "yyyy" , @[System::StartTime] ) +RIGHT("0" + (DT_STR,4,1252)DATEPART( "mm" ,@[System::StartTime] ), 2) +RIGHT("0" + (DT_STR,4,1252)(DATEPART( "dd" , @[System::StartTime] )-1), 2) +".csv"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="2052"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="936"
+          DTS:ConnectionString="F:\WDSystemData\FTPDATA\hbapsdata\kqi\results\KQI_20180507.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="135"
+              DTS:TextQualified="True"
+              DTS:ObjectName="CREATETIME"
+              DTS:DTSID="{DCB45889-13DC-404A-9FAD-0D6A910B1EB1}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="38"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="SC_ENBID"
+              DTS:DTSID="{884FF864-A172-4817-AB18-E3ECC6A50102}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="38"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="SC_LCRID"
+              DTS:DTSID="{188D16C2-F3BA-4FE6-BA24-0933AA8AFC58}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="38"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ECI"
+              DTS:DTSID="{ACE374A8-A367-4659-9DAA-A26E76A46436}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="CITY"
+              DTS:DTSID="{DB37440B-DD5E-47A3-B4A1-61B626EDE138}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="MANUFACTOR"
+              DTS:DTSID="{F6F4BE35-601B-4AEE-B0AF-BF6712A258CF}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="200"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="CELLNAME"
+              DTS:DTSID="{2C5DBE4A-022B-4226-A29B-E8C2AD1BB008}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="250"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="KQIINFO"
+              DTS:DTSID="{F701D3F2-7DC8-4A13-AF3A-4A7D61CC738B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="300"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="KQIINDEX"
+              DTS:DTSID="{E205D273-E858-405C-9374-4DCA92DC0925}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="300"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="REASON"
+              DTS:DTSID="{E295FEBD-01D9-462F-8F28-52B03D618C92}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="600"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="MEASURES"
+              DTS:DTSID="{64CA8068-C03C-4BA4-9B29-6398E281A788}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[平面文件连接管理器 1]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{2318379E-3413-49CE-BB46-622E6C1977E8}"
+      DTS:ObjectName="平面文件连接管理器 1">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::wresultpath]+ (DT_STR,4,1252)DATEPART( "yyyy" , @[System::StartTime] ) +RIGHT("0" + (DT_STR,4,1252)DATEPART( "mm" ,@[System::StartTime] ), 2) +RIGHT("0" + (DT_STR,4,1252)(DATEPART( "dd" , @[System::StartTime] )-1), 2) +".csv"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="2052"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="936"
+          DTS:ConnectionString="F:\WDSystemData\FTPDATA\hbapsdata\kqi\otherresults\正常KQI_20180507.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="135"
+              DTS:TextQualified="True"
+              DTS:ObjectName="CREATETIME"
+              DTS:DTSID="{30FED7C6-507B-4CE9-95DC-F6CBE8AB5A27}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="38"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="SC_ENBID"
+              DTS:DTSID="{F2B6662E-07D4-4C0E-A4E4-2905140B904F}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="38"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="SC_LCRID"
+              DTS:DTSID="{567A2D57-E8F9-4E9C-8D19-88B711FB7196}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="38"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ECI"
+              DTS:DTSID="{04C9E28D-228C-43EC-8551-F821F97A8C23}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="CITY"
+              DTS:DTSID="{B27935AF-B4B9-4A62-9E1A-9D7CA5612FA9}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="MANUFACTOR"
+              DTS:DTSID="{03768043-F2FE-4B17-8159-15F0EDBA48CF}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="200"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="CELLNAME"
+              DTS:DTSID="{9C9074B5-52E3-41EA-BB6C-FE4211942C86}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="250"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="KQIINFO"
+              DTS:DTSID="{F3ADFEA8-E76A-47E5-839B-84C768CD5478}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="300"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="KQIINDEX"
+              DTS:DTSID="{A07D71CD-1659-4E7C-B93A-E289B8B45908}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="300"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="REASON"
+              DTS:DTSID="{A567BF92-8DE9-455A-A273-084FFEF251FC}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="600"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="MEASURES"
+              DTS:DTSID="{BBD4DC9E-DE1E-4073-8F98-76202EE69590}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F4C02D3D-BF01-4A10-B8A8-5E473F790534}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="result">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{231BA7A9-A5CC-4B82-89CC-6886E13020D4}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="resultpath">
+      <DTS:VariableValue
+        DTS:DataType="8">F:\WDSystemData\FTPDATA\hbapsdata\kqi\results\KQI_</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{23AA950C-B4C8-40D3-93CD-98D0D90BC207}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="wresultpath">
+      <DTS:VariableValue
+        DTS:DataType="8">F:\WDSystemData\FTPDATA\hbapsdata\kqi\otherresults\正常KQI_</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\执行 SQL 任务"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="执行 SQL 任务"
+      DTS:DTSID="{9B2F941D-4801-4DF9-8765-D7EDBA9C5DCD}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="执行 SQL 任务"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{EF1B0189-C787-45D6-ABB7-2CA7A436C369}"
+          SQLTask:SqlStatementSource="BEGIN&#xA;update PDTABLE set STATE = 3 where STATE = 0;&#xA;update PDTABLE set TIMES = TIMES+1 where STATE = 3;&#xA;update PDTABLE p set p.TIMES = 0 where exists(&#xA;select * from DATA_KQIINFO a where TO_CHAR(a.CREATETIME, 'yyyy/MM/dd') =&#xA;TO_CHAR(sysdate-1,'yyyy/MM/dd') AND a.kqiindex &lt;&gt;'暂无' and a.reason&#xA;is not null and p.eci = a.eci and p.TYPE = 'dw' and p.STATE = 3&#xA;);&#xA;update PDTABLE p set p.TIMES = 0 where exists(&#xA;select * from NB_DAY a where TO_CHAR(a.CREATETIME, 'yyyy/MM/dd') =&#xA;TO_CHAR(sysdate-1,'yyyy/MM/dd') AND kqiindex &lt;&gt;'暂无' and reason is not null&#xA; and p.eci = a.eci and p.TYPE = 'nb' and p.STATE = 3&#xA;);&#xA;update PDTABLE set STATE = 1,TIMES=0 where (sysdate-1-createtime&gt;=9 and TYPE='dw') and STATE =3;&#xA;update PDTABLE set STATE = 2,TIMES=0 where (TIMES &gt;= 3 and TYPE='nb' or TIMES &gt;= 3 and TYPE='dw') and STATE = 3;&#xA;delete from UNSOLVED_INFO u where ECGI in (select p.ECI from (SELECT p.ECI,p.STATE,p.TYPE,row_number() over(partition by eci order by CREATETIME desc) top1 FROM PDTABLE p)p where top1=1 and (p.STATE=2) and p.TYPE = u.TYPE );&#xA;insert into PDTABLE select distinct s.*,0,0,'dw' from (select * from (select p.*,row_number()over(partition by eci,type order by createtime desc)top1 from PDTABLE p) where top1=1) p right JOIN (&#xA;  SELECT CREATETIME,&#xA;    SC_ENBID,&#xA;    SC_LCRID,&#xA;    ECI,&#xA;    CITY,&#xA;    MANUFACTOR,&#xA;    CELLNAME,&#xA;    KQIINFO,&#xA;    KQIINDEX,&#xA;    REASON,&#xA;    MEASURES&#xA;  FROM DATA_KQIINFO&#xA;  WHERE TO_CHAR(CREATETIME, 'yyyy/MM/dd') = TO_CHAR(sysdate-1,'yyyy/MM/dd')&#xA;  AND kqiindex &lt;&gt;'暂无'&#xA;  and reason is not null&#xA;  ) s on s.eci = p.eci and p.TYPE = 'dw' where p.eci is null or p.STATE = 2 or p.state=1;&#xA;insert into PDTABLE select distinct s.CREATETIME,s.SC_ENBID,s.SC_LCRID,s.ECI,&#xA;s.CITY,s.MANUFACYOR,s.CELLNAME,s.KQIINFO,s.KQIINDEX,&#xA;s.REASON,s.MEASURES,0,0,'nb' from (select * from (select p.*,row_number()over(partition by eci,type order by createtime desc)top1 from PDTABLE p) where top1=1) p right JOIN (&#xA;SELECT *&#xA;FROM NB_DAY&#xA;WHERE TO_CHAR(CREATETIME, 'yyyy/MM/dd') = TO_CHAR(sysdate-1,'yyyy/MM/dd')&#xA;) s on s.eci = p.eci and p.TYPE = 'nb' where p.eci is null or p.STATE = 2 or p.state=1;&#xA;insert into UNSOLVED_INFO select distinct b.Start_TIme,p.ECI,trunc(0.5 *(decode(b.PAGE_SUM, 0, 0.8, 0.8 * (1 - 1.0 * b.PAGE_NUM / b.PAGE_SUM))&#xA;+ 0.2 * (decode(b.FD_SUM, 0, 1, 1-1.0 * b.FDG_NUM / b.FD_SUM))) + 0.3 *&#xA;(decode(b.VIDEO_SNUM, 0, 0.8, 0.8 * (1-1.0 * b.VIDEO_GNUM / b.VIDEO_SNUM)) + 0.2 *&#xA;(decode(b.VIDEO_SNUM, 0, 1, 1-1.0 * b.VIDEO_BNUM / b.VIDEO_SNUM))) + 0.1 *&#xA;(decode(b.GAME_SUM, 0, 1, 1-1.0 * b.GAME_NUM / b.GAME_SUM)) + 0.1 *&#xA;(decode(b.NEWS_SUM, 0, 1, 1-1.0 * b.NEWS_NUM / b.NEWS_SUM)), 4)&#xA;,'dw' from PDTABLE p JOIN&#xA;KQI_DAY b on p.eci = b.ECGI and p.TYPE = 'dw' and (p.STATE &lt;&gt; 2 or p.state&lt;&gt;1) where TO_CHAR(b.Start_TIme, 'yyyy/MM/dd') = TO_CHAR(sysdate-1,'yyyy/MM/dd');&#xA;insert into UNSOLVED_INFO select distinct n.CREATETIME,p.ECI,n.SUCRATE,'nb' from PDTABLE p JOIN&#xA;  NB_DAY n on p.eci = n.eci and p.TYPE = 'nb' and (p.STATE &lt;&gt; 2 or p.state&lt;&gt;1) where TO_CHAR(n.CREATETIME, 'yyyy/MM/dd') = TO_CHAR(sysdate-1,'yyyy/MM/dd');&#xA;END;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\执行进程任务"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteProcess.ExecuteProcess, Microsoft.SqlServer.ExecProcTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="执行进程任务"
+      DTS:DTSID="{025ED9CA-E539-4B8B-85CA-715E107DE9E3}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteProcess.ExecuteProcess, Microsoft.SqlServer.ExecProcTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="执行进程任务"
+      DTS:TaskContact="Execute Process Task;Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="E:\WebSite\SSIS\EXE\DWAnalysis.exe" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\数据流任务"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="数据流任务"
+      DTS:DTSID="{E23430A9-76F1-49EA-A5A0-290955FB0F9E}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="数据流任务"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\数据流任务\KPI正常OLE DB 源"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB 源;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;7"
+              description="OLE DB 源"
+              name="KPI正常OLE DB 源"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="命令超时前等待的时间(秒)。值为 0，表示无限期等待。"
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="指定用于打开行集的数据库对象的名称。"
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="指定包含用于打开行集的数据库对象名的变量。"
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="要执行的 SQL 命令。"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT CREATETIME, SC_ENBID, SC_LCRID, ECI, CITY, MANUFACTOR, CELLNAME, 
+      KQIINFO, KQIINDEX, REASON, MEASURES
+FROM KPIMIS.DATA_KQIINFO
+WHERE to_char(CREATETIME, 'yyyy/MM/dd') =to_char(sysdate-1,'yyyy/MM/dd') and (kqiindex is null or kqiindex='暂无' or kqiindex='')</property>
+                <property
+                  dataType="System.String"
+                  description="包含要执行的 SQL 命令的变量。"
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="指定当数据源中没有代码页信息时使用的列代码页。"
+                  name="DefaultCodePage">936</property>
+                <property
+                  dataType="System.Boolean"
+                  description="描述字符数据时，强制使用 DefaultCodePage 属性值。"
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定用于访问数据库的模式。"
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="SQL 命令中的参数与变量之间的映射。"
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\数据流任务\KPI正常OLE DB 源.Connections[OleDbConnection]"
+                  connectionManagerID="{EF1B0189-C787-45D6-ABB7-2CA7A436C369}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[localhost_orcl.mis]"
+                  description="指定用于访问数据库的 OLE DB 运行时连接。"
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出]"
+                  name="OLE DB 源输出">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[CREATETIME]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CREATETIME]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[CREATETIME]"
+                      name="CREATETIME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_ENBID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[SC_ENBID]"
+                      length="38"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_ENBID]"
+                      name="SC_ENBID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_LCRID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[SC_LCRID]"
+                      length="38"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_LCRID]"
+                      name="SC_LCRID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[ECI]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[ECI]"
+                      length="38"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[ECI]"
+                      name="ECI"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[CITY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CITY]"
+                      length="50"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[CITY]"
+                      name="CITY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[MANUFACTOR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[MANUFACTOR]"
+                      length="50"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[MANUFACTOR]"
+                      name="MANUFACTOR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[CELLNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CELLNAME]"
+                      length="200"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[CELLNAME]"
+                      name="CELLNAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINFO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[KQIINFO]"
+                      length="250"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINFO]"
+                      name="KQIINFO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINDEX]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[KQIINDEX]"
+                      length="300"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINDEX]"
+                      name="KQIINDEX"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[REASON]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[REASON]"
+                      length="300"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[REASON]"
+                      name="REASON"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[MEASURES]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[MEASURES]"
+                      length="600"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[MEASURES]"
+                      name="MEASURES"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CREATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[SC_ENBID]"
+                      dataType="wstr"
+                      length="38"
+                      name="SC_ENBID" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[SC_LCRID]"
+                      dataType="wstr"
+                      length="38"
+                      name="SC_LCRID" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[ECI]"
+                      dataType="wstr"
+                      length="38"
+                      name="ECI" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CITY]"
+                      dataType="wstr"
+                      length="50"
+                      name="CITY" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[MANUFACTOR]"
+                      dataType="wstr"
+                      length="50"
+                      name="MANUFACTOR" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CELLNAME]"
+                      dataType="wstr"
+                      length="200"
+                      name="CELLNAME" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[KQIINFO]"
+                      dataType="wstr"
+                      length="250"
+                      name="KQIINFO" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[KQIINDEX]"
+                      dataType="wstr"
+                      length="300"
+                      name="KQIINDEX" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[REASON]"
+                      dataType="wstr"
+                      length="300"
+                      name="REASON" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[MEASURES]"
+                      dataType="wstr"
+                      length="600"
+                      name="MEASURES" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出]"
+                  isErrorOut="true"
+                  name="OLE DB 源错误输出">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CREATETIME]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CREATETIME]"
+                      name="CREATETIME" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[SC_ENBID]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[SC_ENBID]"
+                      name="SC_ENBID" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[SC_LCRID]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[SC_LCRID]"
+                      name="SC_LCRID" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ECI]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ECI]"
+                      name="ECI" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CITY]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CITY]"
+                      name="CITY" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[MANUFACTOR]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[MANUFACTOR]"
+                      name="MANUFACTOR" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CELLNAME]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CELLNAME]"
+                      name="CELLNAME" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[KQIINFO]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[KQIINFO]"
+                      name="KQIINFO" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[KQIINDEX]"
+                      dataType="wstr"
+                      length="300"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[KQIINDEX]"
+                      name="KQIINDEX" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[REASON]"
+                      dataType="wstr"
+                      length="300"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[REASON]"
+                      name="REASON" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[MEASURES]"
+                      dataType="wstr"
+                      length="600"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[MEASURES]"
+                      name="MEASURES" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\数据流任务\KPI正常目标"
+              componentClassID="{8DA75FED-1B7C-407D-B2AD-2B24209CCCA4}"
+              contactInfo="平面文件目标;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;0"
+              description="平面文件目标"
+              localeId="2052"
+              name="KPI正常目标">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="指定数据是覆盖目标文件还是追加到目标文件中。"
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="指定在将任何数据写入目标文件之前应先写入的文本。"
+                  expressionType="Notify"
+                  name="Header" />
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\数据流任务\KPI正常目标.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[平面文件连接管理器 1]"
+                  connectionManagerRefId="Package.ConnectionManagers[平面文件连接管理器 1]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入]"
+                  hasSideEffects="true"
+                  name="平面文件目标输入">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].Columns[CREATETIME]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="CREATETIME"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[CREATETIME]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[CREATETIME]" />
+                    <inputColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].Columns[SC_ENBID]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="SC_ENBID"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[SC_ENBID]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_ENBID]" />
+                    <inputColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].Columns[SC_LCRID]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="SC_LCRID"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[SC_LCRID]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_LCRID]" />
+                    <inputColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].Columns[ECI]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="ECI"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[ECI]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[ECI]" />
+                    <inputColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].Columns[CITY]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="CITY"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[CITY]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[CITY]" />
+                    <inputColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].Columns[MANUFACTOR]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="MANUFACTOR"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[MANUFACTOR]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[MANUFACTOR]" />
+                    <inputColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].Columns[CELLNAME]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="CELLNAME"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[CELLNAME]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[CELLNAME]" />
+                    <inputColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].Columns[KQIINFO]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="KQIINFO"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[KQIINFO]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINFO]" />
+                    <inputColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].Columns[KQIINDEX]"
+                      cachedDataType="wstr"
+                      cachedLength="300"
+                      cachedName="KQIINDEX"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[KQIINDEX]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINDEX]" />
+                    <inputColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].Columns[REASON]"
+                      cachedDataType="wstr"
+                      cachedLength="300"
+                      cachedName="REASON"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[REASON]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[REASON]" />
+                    <inputColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].Columns[MEASURES]"
+                      cachedDataType="wstr"
+                      cachedLength="600"
+                      cachedName="MEASURES"
+                      externalMetadataColumnId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[MEASURES]"
+                      lineageId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出].Columns[MEASURES]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[CREATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[SC_ENBID]"
+                      dataType="wstr"
+                      length="38"
+                      name="SC_ENBID" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[SC_LCRID]"
+                      dataType="wstr"
+                      length="38"
+                      name="SC_LCRID" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[ECI]"
+                      dataType="wstr"
+                      length="38"
+                      name="ECI" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[CITY]"
+                      dataType="wstr"
+                      length="50"
+                      name="CITY" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[MANUFACTOR]"
+                      dataType="wstr"
+                      length="50"
+                      name="MANUFACTOR" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[CELLNAME]"
+                      dataType="wstr"
+                      length="200"
+                      name="CELLNAME" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[KQIINFO]"
+                      dataType="wstr"
+                      length="250"
+                      name="KQIINFO" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[KQIINDEX]"
+                      dataType="wstr"
+                      length="300"
+                      name="KQIINDEX" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[REASON]"
+                      dataType="wstr"
+                      length="300"
+                      name="REASON" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入].ExternalColumns[MEASURES]"
+                      dataType="wstr"
+                      length="600"
+                      name="MEASURES" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+            <component
+              refId="Package\数据流任务\OLE DB 源"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB 源;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;7"
+              description="OLE DB 源"
+              name="OLE DB 源"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="命令超时前等待的时间(秒)。值为 0，表示无限期等待。"
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="指定用于打开行集的数据库对象的名称。"
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="指定包含用于打开行集的数据库对象名的变量。"
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="要执行的 SQL 命令。"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select CREATETIME,SC_ENBID,SC_LCRID,ECI,CITY,MANUFACYOR MANUFACTOR,CELLNAME,KQIINFO,KQIINDEX,REASON,MEASURES from PDTABLE where STATE = 0</property>
+                <property
+                  dataType="System.String"
+                  description="包含要执行的 SQL 命令的变量。"
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="指定当数据源中没有代码页信息时使用的列代码页。"
+                  name="DefaultCodePage">936</property>
+                <property
+                  dataType="System.Boolean"
+                  description="描述字符数据时，强制使用 DefaultCodePage 属性值。"
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="指定用于访问数据库的模式。"
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="SQL 命令中的参数与变量之间的映射。"
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\数据流任务\OLE DB 源.Connections[OleDbConnection]"
+                  connectionManagerID="{EF1B0189-C787-45D6-ABB7-2CA7A436C369}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[localhost_orcl.mis]"
+                  description="指定用于访问数据库的 OLE DB 运行时连接。"
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出]"
+                  name="OLE DB 源输出">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[CREATETIME]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CREATETIME]"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[CREATETIME]"
+                      name="CREATETIME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_ENBID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[SC_ENBID]"
+                      length="38"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_ENBID]"
+                      name="SC_ENBID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_LCRID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[SC_LCRID]"
+                      length="38"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_LCRID]"
+                      name="SC_LCRID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[ECI]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[ECI]"
+                      length="38"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[ECI]"
+                      name="ECI"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[CITY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CITY]"
+                      length="100"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[CITY]"
+                      name="CITY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[MANUFACTOR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[MANUFACTOR]"
+                      length="100"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[MANUFACTOR]"
+                      name="MANUFACTOR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[CELLNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CELLNAME]"
+                      length="600"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[CELLNAME]"
+                      name="CELLNAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINFO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[KQIINFO]"
+                      length="600"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINFO]"
+                      name="KQIINFO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINDEX]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[KQIINDEX]"
+                      length="600"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINDEX]"
+                      name="KQIINDEX"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[REASON]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[REASON]"
+                      length="600"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[REASON]"
+                      name="REASON"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[MEASURES]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="转换"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[MEASURES]"
+                      length="600"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[MEASURES]"
+                      name="MEASURES"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CREATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[SC_ENBID]"
+                      dataType="wstr"
+                      length="38"
+                      name="SC_ENBID" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[SC_LCRID]"
+                      dataType="wstr"
+                      length="38"
+                      name="SC_LCRID" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[ECI]"
+                      dataType="wstr"
+                      length="38"
+                      name="ECI" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CITY]"
+                      dataType="wstr"
+                      length="100"
+                      name="CITY" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[MANUFACTOR]"
+                      dataType="wstr"
+                      length="100"
+                      name="MANUFACTOR" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[CELLNAME]"
+                      dataType="wstr"
+                      length="600"
+                      name="CELLNAME" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[KQIINFO]"
+                      dataType="wstr"
+                      length="600"
+                      name="KQIINFO" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[KQIINDEX]"
+                      dataType="wstr"
+                      length="600"
+                      name="KQIINDEX" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[REASON]"
+                      dataType="wstr"
+                      length="600"
+                      name="REASON" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].ExternalColumns[MEASURES]"
+                      dataType="wstr"
+                      length="600"
+                      name="MEASURES" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出]"
+                  isErrorOut="true"
+                  name="OLE DB 源错误输出">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CREATETIME]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CREATETIME]"
+                      name="CREATETIME" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[SC_ENBID]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[SC_ENBID]"
+                      name="SC_ENBID" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[SC_LCRID]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[SC_LCRID]"
+                      name="SC_LCRID" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ECI]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ECI]"
+                      name="ECI" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CITY]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CITY]"
+                      name="CITY" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[MANUFACTOR]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[MANUFACTOR]"
+                      name="MANUFACTOR" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CELLNAME]"
+                      dataType="wstr"
+                      length="600"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[CELLNAME]"
+                      name="CELLNAME" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[KQIINFO]"
+                      dataType="wstr"
+                      length="600"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[KQIINFO]"
+                      name="KQIINFO" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[KQIINDEX]"
+                      dataType="wstr"
+                      length="600"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[KQIINDEX]"
+                      name="KQIINDEX" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[REASON]"
+                      dataType="wstr"
+                      length="600"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[REASON]"
+                      name="REASON" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[MEASURES]"
+                      dataType="wstr"
+                      length="600"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[MEASURES]"
+                      name="MEASURES" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源错误输出].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\数据流任务\平面文件目标"
+              componentClassID="{8DA75FED-1B7C-407D-B2AD-2B24209CCCA4}"
+              contactInfo="平面文件目标;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;0"
+              description="平面文件目标"
+              localeId="2052"
+              name="平面文件目标">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="指定数据是覆盖目标文件还是追加到目标文件中。"
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="指定在将任何数据写入目标文件之前应先写入的文本。"
+                  expressionType="Notify"
+                  name="Header" />
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\数据流任务\平面文件目标.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[平面文件连接管理器]"
+                  connectionManagerRefId="Package.ConnectionManagers[平面文件连接管理器]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入]"
+                  hasSideEffects="true"
+                  name="平面文件目标输入">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].Columns[CREATETIME]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="CREATETIME"
+                      externalMetadataColumnId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[CREATETIME]"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[CREATETIME]" />
+                    <inputColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].Columns[SC_ENBID]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="SC_ENBID"
+                      externalMetadataColumnId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[SC_ENBID]"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_ENBID]" />
+                    <inputColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].Columns[SC_LCRID]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="SC_LCRID"
+                      externalMetadataColumnId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[SC_LCRID]"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[SC_LCRID]" />
+                    <inputColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].Columns[ECI]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="ECI"
+                      externalMetadataColumnId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[ECI]"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[ECI]" />
+                    <inputColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].Columns[CITY]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="CITY"
+                      externalMetadataColumnId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[CITY]"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[CITY]" />
+                    <inputColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].Columns[CELLNAME]"
+                      cachedDataType="wstr"
+                      cachedLength="600"
+                      cachedName="CELLNAME"
+                      externalMetadataColumnId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[CELLNAME]"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[CELLNAME]" />
+                    <inputColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].Columns[KQIINFO]"
+                      cachedDataType="wstr"
+                      cachedLength="600"
+                      cachedName="KQIINFO"
+                      externalMetadataColumnId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[KQIINFO]"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINFO]" />
+                    <inputColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].Columns[KQIINDEX]"
+                      cachedDataType="wstr"
+                      cachedLength="600"
+                      cachedName="KQIINDEX"
+                      externalMetadataColumnId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[KQIINDEX]"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[KQIINDEX]" />
+                    <inputColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].Columns[REASON]"
+                      cachedDataType="wstr"
+                      cachedLength="600"
+                      cachedName="REASON"
+                      externalMetadataColumnId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[REASON]"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[REASON]" />
+                    <inputColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].Columns[MEASURES]"
+                      cachedDataType="wstr"
+                      cachedLength="600"
+                      cachedName="MEASURES"
+                      externalMetadataColumnId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[MEASURES]"
+                      lineageId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出].Columns[MEASURES]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[CREATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[SC_ENBID]"
+                      dataType="wstr"
+                      length="38"
+                      name="SC_ENBID" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[SC_LCRID]"
+                      dataType="wstr"
+                      length="38"
+                      name="SC_LCRID" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[ECI]"
+                      dataType="wstr"
+                      length="38"
+                      name="ECI" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[CITY]"
+                      dataType="wstr"
+                      length="50"
+                      name="CITY" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[MANUFACTOR]"
+                      dataType="wstr"
+                      length="50"
+                      name="MANUFACTOR" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[CELLNAME]"
+                      dataType="wstr"
+                      length="200"
+                      name="CELLNAME" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[KQIINFO]"
+                      dataType="wstr"
+                      length="250"
+                      name="KQIINFO" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[KQIINDEX]"
+                      dataType="wstr"
+                      length="300"
+                      name="KQIINDEX" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[REASON]"
+                      dataType="wstr"
+                      length="300"
+                      name="REASON" />
+                    <externalMetadataColumn
+                      refId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入].ExternalColumns[MEASURES]"
+                      dataType="wstr"
+                      length="600"
+                      name="MEASURES" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\数据流任务.Paths[OLE DB 源输出]"
+              endId="Package\数据流任务\平面文件目标.Inputs[平面文件目标输入]"
+              name="OLE DB 源输出"
+              startId="Package\数据流任务\OLE DB 源.Outputs[OLE DB 源输出]" />
+            <path
+              refId="Package\数据流任务.Paths[OLE DB 源输出1]"
+              endId="Package\数据流任务\KPI正常目标.Inputs[平面文件目标输入]"
+              name="OLE DB 源输出"
+              startId="Package\数据流任务\KPI正常OLE DB 源.Outputs[OLE DB 源输出]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[约束]"
+      DTS:CreationName=""
+      DTS:DTSID="{6E7EB058-F4D6-4756-9D34-F83DF25EC94D}"
+      DTS:From="Package\执行进程任务"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="约束"
+      DTS:To="Package\执行 SQL 任务" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[约束 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{19852D49-3E0B-4013-BC70-DFB1AE834260}"
+      DTS:From="Package\执行 SQL 任务"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="约束 1"
+      DTS:To="Package\数据流任务" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--此 CDATA 部分包含包的布局信息。该部分包括(x,y)坐标、宽度和高度之类的信息。-->
+<!--如果您手动编辑此部分并且出错，则可以删除此部分。 -->
+<!--该包仍将能够正常加载，但以前的布局信息将丢失，并且设计器将自动在设计图面上重新排列这些元素。-->
+<Objects
+  Version="sql11">
+  <!--下面的每个节点都将包含不会影响运行时行为的属性。-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="141,42"
+          Id="Package\数据流任务"
+          TopLeft="194.833325551616,337.928554112815" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\执行 SQL 任务"
+          TopLeft="20.6666658057107,215.357131803523" />
+        <NodeLayout
+          Size="153,42"
+          Id="Package\执行进程任务"
+          TopLeft="27.3333322074683,28.714284196192" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[约束]"
+          TopLeft="101.999999006589,70.714284196192">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,144.642847607331"
+              Start="0,0"
+              End="0,137.142847607331">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,137.142847607331" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[约束 1]"
+          TopLeft="100.166665805711,257.357131803523">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="165.166659745905,80.571422309292"
+              Start="0,0"
+              End="165.166659745905,73.071422309292">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.285711154646" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,36.285711154646"
+                    Point2="0,40.285711154646"
+                    Point3="4,40.285711154646" />
+                  <mssgle:LineSegment
+                    End="161.166659745905,40.285711154646" />
+                  <mssgle:CubicBezierSegment
+                    Point1="161.166659745905,40.285711154646"
+                    Point2="165.166659745905,40.285711154646"
+                    Point3="165.166659745905,44.285711154646" />
+                  <mssgle:LineSegment
+                    End="165.166659745905,73.071422309292" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\数据流任务">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="153,42"
+          Id="Package\数据流任务\平面文件目标"
+          TopLeft="169.833326545027,270.142843290252" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\数据流任务\KPI正常OLE DB 源"
+          TopLeft="390.333326247004,115.999994022506" />
+        <NodeLayout
+          Size="147,42"
+          Id="Package\数据流任务\KPI正常目标"
+          TopLeft="405.333325650957,271.071414671383" />
+        <NodeLayout
+          Size="135,42"
+          Id="Package\数据流任务\OLE DB 源"
+          TopLeft="177.333326247004,115.999994022506" />
+        <EdgeLayout
+          Id="Package\数据流任务.Paths[OLE DB 源输出1]"
+          TopLeft="478.83332594898,157.999994022506">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,113.071420648877"
+              Start="0,0"
+              End="0,105.571420648877">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,105.571420648877" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\数据流任务.Paths[OLE DB 源输出]"
+          TopLeft="245.583326396015,157.999994022506">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,112.142849267746"
+              Start="0,0"
+              End="0,104.642849267746">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,104.642849267746" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\数据流任务\KPI正常OLE DB 源">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\数据流任务\OLE DB 源">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,3432 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/7/2017 9:51:17 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="PC201411071828"
+  DTS:CreatorName="PC201411071828\Administrator"
+  DTS:DTSID="{AF2CCA4F-8500-4229-96BC-FF48E57B4DBF}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5583.0"
+  DTS:LocaleID="2052"
+  DTS:ObjectName="ZXAlarmData"
+  DTS:PackageType="5"
+  DTS:VersionBuild="76"
+  DTS:VersionGUID="{E8702F58-A4F8-4070-AADB-ABE30DD7406B}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[平面文件连接管理器]"
+      DTS:CreationName="FLATFILE"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{051BAF9A-F397-4308-9B4A-C195AB0E7637}"
+      DTS:ObjectName="平面文件连接管理器">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::ZXAlarmloadFile]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="2052"
+          DTS:HeaderRowsToSkip="1"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:DataRowsToSkip="1"
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="936">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="根源告警标识"
+              DTS:DTSID="{C4A6DFEB-15C3-4412-A434-FC242F2EECBC}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="确认状态"
+              DTS:DTSID="{26B1A591-3715-4992-B753-02FD71818470}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警级别"
+              DTS:DTSID="{24ACD42B-6587-44C9-873F-0A1FA8530D72}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="发生时间"
+              DTS:DTSID="{2C16180A-5E1F-4EE8-93D6-F1EA2EF8520E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警码"
+              DTS:DTSID="{BB485213-D3A1-475D-9640-55FFF5020070}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="网元"
+              DTS:DTSID="{21FED6FF-1F20-4876-83C8-362334CD4A3C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="网元内定位"
+              DTS:DTSID="{569CEB30-A408-4F62-822E-797B83A4A552}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="网元类型"
+              DTS:DTSID="{4E5ECA0D-59A3-4AC5-8663-4B84B018FB9A}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警类型"
+              DTS:DTSID="{DEB00B09-719F-4B18-8BFE-A69076821E7F}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警原因"
+              DTS:DTSID="{FD6435B2-4326-4417-A21C-ED41699F55FB}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="附加文本"
+              DTS:DTSID="{90E05228-86C8-4BFD-97D5-ABA5D239B593}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ADMC告警"
+              DTS:DTSID="{DD694B20-960B-4100-9E25-82253B047B5B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警恢复时间"
+              DTS:DTSID="{81CCF890-B858-4D7C-9CE1-6D6676B519FF}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="重复计数"
+              DTS:DTSID="{4531D941-F269-4B31-9C2E-9CB143CB1788}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警对象类型"
+              DTS:DTSID="{DB0DA2CD-E2BD-4473-98E3-BE7BD8B09A12}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警对象DN"
+              DTS:DTSID="{752A1C2C-E220-4A2D-83DE-585885F79651}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="单板类型"
+              DTS:DTSID="{D594451C-D110-48A9-B449-9050D7FC92C9}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警对象ID"
+              DTS:DTSID="{2DDAC28A-A850-46B3-A2E4-289F81F90175}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="站点名称(局向)"
+              DTS:DTSID="{069C2237-EAC1-4C06-9F78-1C29970E8952}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="站点ID(局向)"
+              DTS:DTSID="{B7B4F825-DCD1-4EA9-B417-264F9F5BD592}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警对象名称"
+              DTS:DTSID="{18668D2B-51E9-42E7-AA92-5C6EB9A6864D}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="标准告警码"
+              DTS:DTSID="{2021905D-39AC-4915-9E8B-6693CBCC4ACE}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="产品"
+              DTS:DTSID="{D6F853C6-53D3-4069-9EDD-2134BE9F94AF}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警标识"
+              DTS:DTSID="{B1C7970D-8E8A-4CDE-BE57-26AF415E45E1}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="影响网元"
+              DTS:DTSID="{A07ECF5C-40C2-4CCA-8321-1290E2DAA66D}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="影响网元内定位"
+              DTS:DTSID="{E0DB2FA1-A5E1-4915-90B3-9A114C95635E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警修改时间"
+              DTS:DTSID="{49E0775F-77ED-46E9-8CD7-DB35D8DA27FB}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="附加内容"
+              DTS:DTSID="{FFE6614C-7401-4F6C-9BBE-141115E9259E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="确认 反确认用户"
+              DTS:DTSID="{CD5353D2-BA35-4BEB-9B34-C59DF163BEB3}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="确认 反确认系统"
+              DTS:DTSID="{60C88FFB-B14B-4A19-A8F6-3B4D5B110C17}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警确认 反确认时间"
+              DTS:DTSID="{2ACAA337-10F9-4BD0-9E87-2D58D8129D11}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警确认 反确认信息"
+              DTS:DTSID="{30045503-AA38-48A6-94EC-D87F57BC3516}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="清除用户"
+              DTS:DTSID="{C9F19392-9FB5-40AE-84E4-8804A8E069E4}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="清除系统"
+              DTS:DTSID="{C54A2303-A59C-4F1E-8F3F-5716E6F3B81A}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="恢复方式"
+              DTS:DTSID="{9F6DC9D4-5517-4AA8-8CBC-9C05A7B9DC6A}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="清除信息"
+              DTS:DTSID="{FA1EF52F-06CB-4A46-98D3-1E1412714144}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警注释"
+              DTS:DTSID="{454E4E62-D7D4-4D2F-8EE1-9D25E50DB6DE}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="注释用户"
+              DTS:DTSID="{764207D4-7B62-40C2-9345-E6F9538F9713}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="注释系统"
+              DTS:DTSID="{71066C9F-96FD-4F91-B38B-B1AEA24864F5}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="注释时间"
+              DTS:DTSID="{98C8F1EE-98F4-4F07-A305-CC278B56A378}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警编号"
+              DTS:DTSID="{D376790E-4B6A-425D-9BD3-28420F4F2E72}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="网元IP"
+              DTS:DTSID="{B3B10B83-5A88-4181-8728-DC64F6D4BF4A}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="链路"
+              DTS:DTSID="{82BBE1E2-1786-4B4D-9FFF-3F50B456D500}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="网元分组"
+              DTS:DTSID="{C27EC5D1-D30D-43D9-8744-A83706EF94A1}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="网元代理"
+              DTS:DTSID="{D7CF8645-EDBA-4F9F-8A79-DF034454269B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="系统类型"
+              DTS:DTSID="{2A4981EC-3242-455E-949C-3758AADF3F89}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="持续时间(hh mm ss)"
+              DTS:DTSID="{AE49AF93-8593-46AD-92AC-0B5F954288F7}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="关联业务"
+              DTS:DTSID="{DD73B241-A563-4AA1-999B-0BD86FB05969}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="产生方式"
+              DTS:DTSID="{2C37936F-28D8-46D4-A4EF-906C014E67B6}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="门限任务信息"
+              DTS:DTSID="{B9D71BFF-E431-4946-9A60-7B130B8C55BB}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="调测状态"
+              DTS:DTSID="{625A7600-83E0-4DDD-B18D-EEE916FA7000}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="告警进入系统时间"
+              DTS:DTSID="{0F8FB31D-C092-4392-9D0D-4DAD73FC054B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="恢复进入系统时间"
+              DTS:DTSID="{842F26F1-7158-4D3F-A536-C8997E98E494}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{78EB0CF7-5A1D-42DB-B595-D257F209D8C7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ZXAlarmCompleteFile">
+      <DTS:VariableValue
+        DTS:DataType="8">F:\WDSystemData\Complete\Alarm\ZXalarm\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F0DCC73D-2537-4A1A-9D3A-353653030BC8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ZXAlarmloadFile">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{18944472-1BD5-4BBF-8A00-46322242CAD0}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ZXAlarmLocFile">
+      <DTS:VariableValue
+        DTS:DataType="8">F:\WDSystemData\WorkData\Alarm\ZXalarm\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6EDC8FB0-F488-47FE-898D-49FBE320B10B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ZXAlarmRemote">
+      <DTS:VariableValue
+        DTS:DataType="8">/comm/fm/</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{56ED66D7-4E0C-4D3E-AB04-5448308BAD21}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ZXlogfilePath">
+      <DTS:VariableValue
+        DTS:DataType="8">E:\WebSite\SSIS_log\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9E7C5050-4896-413B-840B-B024DE604A52}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ZXPassword">
+      <DTS:VariableValue
+        DTS:DataType="8">U_tywg_2008_ftp</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{40D41A57-EA21-4C88-B603-32ED319E7FA3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ZXServerIP">
+      <DTS:VariableValue
+        DTS:DataType="8">136.158.194.154</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DC992CC8-FA81-4975-BED3-EA5B5288A045}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ZXUserName">
+      <DTS:VariableValue
+        DTS:DataType="8">zte_uems_naf</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\下载中兴告警数据"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ScriptTask.ScriptTask, Microsoft.SqlServer.ScriptTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="脚本任务"
+      DTS:DTSID="{60609b97-a9a6-484f-b979-497a2d77a8dd}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ScriptTask.ScriptTask, Microsoft.SqlServer.ScriptTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="下载中兴告警数据"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ScriptProject
+          Name="ST_043767d317ec44b5a3ae0e287f3d9828"
+          VSTAMajorVersion="3"
+          VSTAMinorVersion="0"
+          Language="CSharp"
+          ReadOnlyVariables="User::ZXAlarmCompleteFile,User::ZXAlarmLocFile,User::ZXAlarmRemote,User::ZXlogfilePath,User::ZXPassword,User::ZXServerIP,User::ZXUserName"
+          ReadWriteVariables="User::ZXAlarmloadFile">
+          <ProjectItem
+            Name="Properties\Resources.resx"
+            Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Settings.Designer.cs"
+            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_d06a98aaf79e47edb6c2d03f506fae2d.Properties.Settings.get_Default():ST_d06a98aaf79e47edb6c2d03f506fae2d.Properties.Sett" +
+    "ings")]
+
+namespace ST_d06a98aaf79e47edb6c2d03f506fae2d.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}]]></ProjectItem>
+          <ProjectItem
+            Name="ScriptMain.cs"
+            Encoding="UTF8"><![CDATA[#region Help:  Introduction to the script task
+/* The Script Task allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services control flow. 
+ * 
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script task. */
+#endregion
+
+
+#region Namespaces
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Runtime;
+using System.Windows.Forms;
+using WinSCP;
+using System.IO;
+using ICSharpCode.SharpZipLib.Tar;
+using ICSharpCode.SharpZipLib.GZip;
+#endregion
+
+namespace ST_d06a98aaf79e47edb6c2d03f506fae2d
+{
+    /// <summary>
+    /// ScriptMain is the entry point class of the script.  Do not change the name, attributes,
+    /// or parent of this class.
+    /// </summary>
+	[Microsoft.SqlServer.Dts.Tasks.ScriptTask.SSISScriptTaskEntryPointAttribute]
+	public partial class ScriptMain : Microsoft.SqlServer.Dts.Tasks.ScriptTask.VSTARTScriptObjectModelBase
+	{
+        #region Help:  Using Integration Services variables and parameters in a script
+        /* To use a variable in this script, first ensure that the variable has been added to 
+         * either the list contained in the ReadOnlyVariables property or the list contained in 
+         * the ReadWriteVariables property of this script task, according to whether or not your
+         * code needs to write to the variable.  To add the variable, save this script, close this instance of
+         * Visual Studio, and update the ReadOnlyVariables and 
+         * ReadWriteVariables properties in the Script Transformation Editor window.
+         * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+         * 
+         * Example of reading from a variable:
+         *  DateTime startTime = (DateTime) Dts.Variables["System::StartTime"].Value;
+         * 
+         * Example of writing to a variable:
+         *  Dts.Variables["User::myStringVariable"].Value = "new value";
+         * 
+         * Example of reading from a package parameter:
+         *  int batchId = (int) Dts.Variables["$Package::batchId"].Value;
+         *  
+         * Example of reading from a project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].Value;
+         * 
+         * Example of reading from a sensitive project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].GetSensitiveValue();
+         * */
+
+        #endregion
+
+        #region Help:  Firing Integration Services events from a script
+        /* This script task can fire events for logging purposes.
+         * 
+         * Example of firing an error event:
+         *  Dts.Events.FireError(18, "Process Values", "Bad value", "", 0);
+         * 
+         * Example of firing an information event:
+         *  Dts.Events.FireInformation(3, "Process Values", "Processing has started", "", 0, ref fireAgain)
+         * 
+         * Example of firing a warning event:
+         *  Dts.Events.FireWarning(14, "Process Values", "No values received for input", "", 0);
+         * */
+        #endregion
+
+        #region Help:  Using Integration Services connection managers in a script
+        /* Some types of connection managers can be used in this script task.  See the topic 
+         * "Working with Connection Managers Programatically" for details.
+         * 
+         * Example of using an ADO.Net connection manager:
+         *  object rawConnection = Dts.Connections["Sales DB"].AcquireConnection(Dts.Transaction);
+         *  SqlConnection myADONETConnection = (SqlConnection)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Sales DB"].ReleaseConnection(rawConnection);
+         *
+         * Example of using a File connection manager
+         *  object rawConnection = Dts.Connections["Prices.zip"].AcquireConnection(Dts.Transaction);
+         *  string filePath = (string)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Prices.zip"].ReleaseConnection(rawConnection);
+         * */
+        #endregion
+
+
+		/// <summary>
+        /// This method is called when this script task executes in the control flow.
+        /// Before returning from this method, set the value of Dts.TaskResult to indicate success or failure.
+        /// To open Help, press F1.
+        /// </summary>
+		public void Main()
+		{
+            String remotepath = "";
+            String localpath = "";
+            String local_bakpath = "";
+            String logpath = "";
+            String date = DateTime.Now.AddDays(-1).ToString("yyyyMMdd");
+            try
+            {
+                // Setup session options
+                remotepath = Dts.Variables["User::ZXAlarmRemote"].Value.ToString();
+                localpath = Dts.Variables["User::ZXAlarmLocFile"].Value.ToString();
+                local_bakpath = Dts.Variables["User::ZXAlarmCompleteFile"].Value.ToString();
+                logpath = Dts.Variables["User::ZXlogfilePath"].Value.ToString();
+                SessionOptions sessionOptions = new SessionOptions
+                {
+                    Protocol = Protocol.Ftp,
+                    HostName = Dts.Variables["User::ZXServerIP"].Value.ToString(),
+                    UserName = Dts.Variables["User::ZXUserName"].Value.ToString(),
+                    Password = Dts.Variables["User::ZXPassword"].Value.ToString(),
+                    PortNumber=21111
+                };
+
+                using (Session session = new Session())
+                {
+                    session.Open(sessionOptions);
+
+                    TransferOptions transferOptions = new TransferOptions();
+                    transferOptions.TransferMode = TransferMode.Binary;
+                    TransferOperationResult transferResult;
+                    remotepath = remotepath + date + "/";
+                    RemoteDirectoryInfo dirinfo=session.ListDirectory(remotepath);
+                    foreach(RemoteFileInfo info in dirinfo.Files)
+                    {
+                        String filename = info.FullName;
+                        if (filename.Contains("csv") && filename.Contains(date))
+                        {
+                            transferResult = session.GetFiles(filename, localpath, false, transferOptions);
+                            transferResult.Check();
+                            foreach (TransferEventArgs transfer in transferResult.Transfers)
+                            {
+                                WriteLog(String.Format("Download of {0} succeeded", transfer.FileName), logpath);
+                                //Console.WriteLine("Download of {0} succeeded", transfer.FileName);
+                            }
+                        }
+                    }
+                }
+
+                Dts.TaskResult = (int)ScriptResults.Success;
+            }
+            catch (Exception e)
+            {
+                WriteLog(String.Format("错误: {0}", e.ToString()), logpath);
+                //Console.WriteLine("Error: {0}", e);
+                Dts.TaskResult = (int)ScriptResults.Success;
+            }
+
+            Dts.TaskResult = (int)ScriptResults.Success;
+		}
+
+        public static void WriteLog(string strLog,String logpath)
+        {
+            string sFilePath = logpath;
+            string sFileName = "SYNCDATA_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
+            sFileName = sFilePath + "\\" + sFileName; //文件的绝对路径
+            if (!Directory.Exists(sFilePath))//验证路径是否存在
+            {
+                Directory.CreateDirectory(sFilePath);
+                //不存在则创建
+            }
+            FileStream fs;
+            StreamWriter sw;
+            if (File.Exists(sFileName))
+            //验证文件是否存在，有则追加，无则创建
+            {
+                fs = new FileStream(sFileName, FileMode.Append, FileAccess.Write);
+            }
+            else
+            {
+                fs = new FileStream(sFileName, FileMode.Create, FileAccess.Write);
+            }
+            sw = new StreamWriter(fs);
+            sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "   ---   " + strLog);
+            sw.Close();
+            fs.Close();
+        }
+
+        #region ScriptResults declaration
+        /// <summary>
+        /// This enum provides a convenient shorthand within the scope of this class for setting the
+        /// result of the script.
+        /// 
+        /// This code was generated automatically.
+        /// </summary>
+        enum ScriptResults
+        {
+            Success = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Success,
+            Failure = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Failure
+        };
+        #endregion
+
+	}
+}]]></ProjectItem>
+          <ProjectItem
+            Name="ST_043767d317ec44b5a3ae0e287f3d9828.csproj"
+            Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?><Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProductVersion>8.0.30703</ProductVersion><SchemaVersion>2.0</SchemaVersion><ProjectGuid>{D7437FD1-EA49-4FF7-B724-51CDD423E556}</ProjectGuid><OutputType>Library</OutputType><AppDesignerFolder>Properties</AppDesignerFolder><RootNamespace>ST_d06a98aaf79e47edb6c2d03f506fae2d</RootNamespace><AssemblyName>ST_043767d317ec44b5a3ae0e287f3d9828</AssemblyName><TargetFrameworkVersion>v4.0</TargetFrameworkVersion><FileAlignment>512</FileAlignment></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Debug' "><DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize><OutputPath>.\bin\Debug\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>DEBUG;TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Release' "><DebugSymbols>false</DebugSymbols><Optimize>true</Optimize><OutputPath>.\bin\Release\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><ItemGroup><Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL"><SpecificVersion>False</SpecificVersion><HintPath>C:\Windows\Microsoft.NET\Framework\v2.0.50727\ICSharpCode.SharpZipLib.dll</HintPath></Reference><Reference Include="System" /><Reference Include="System.Data" /><Reference Include="System.Windows.Forms" /><Reference Include="System.Xml" /><Reference Include="Microsoft.SqlServer.ManagedDTS, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.ScriptTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="WinSCPnet, Version=1.3.7.7601, Culture=neutral, PublicKeyToken=2271ec4a3c56d0bf, processorArchitecture=MSIL"><SpecificVersion>False</SpecificVersion><HintPath>C:\Windows\Microsoft.NET\Framework\v4.0.30319\WinSCPnet.dll</HintPath></Reference></ItemGroup><ItemGroup><AppDesigner Include="Properties\" /><Compile Include="Properties\AssemblyInfo.cs"><SubType>Code</SubType></Compile><EmbeddedResource Include="Properties\Resources.resx"><Generator>ResXFileCodeGenerator</Generator><LastGenOutput>Resources.Designer.cs</LastGenOutput></EmbeddedResource><Compile Include="Properties\Resources.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Resources.resx</DependentUpon></Compile><None Include="Properties\Settings.settings"><Generator>SettingsSingleFileGenerator</Generator><LastGenOutput>Settings.Designer.cs</LastGenOutput></None><Compile Include="Properties\Settings.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Settings.settings</DependentUpon></Compile><Compile Include="ScriptMain.cs"><SubType>Code</SubType></Compile></ItemGroup><!-- Include the build rules for a C# project.--><Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /><ProjectExtensions><VisualStudio><FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}"><ProjectProperties HostName="VSTAHostName" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoExeName="devenv.exe" DebugInfoCommandLine="/vstaHostDebugUri:&quot;vstadebug78931a5d-d360-4bc2-9b59-e3e7135a6786/bf620b91-4715-40a2-8c67-8ebb8afcd6ef&quot;" /><Host Name="ScriptTask" /><ProjectClient><HostIdentifier>SSIS_ST110</HostIdentifier></ProjectClient></FlavorProperties></VisualStudio></ProjectExtensions></Project>]]></ProjectItem>
+          <ProjectItem
+            Name="Project"
+            Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="3.0" schemaVersion="1.0">
+	<msb:PropertyGroup>
+		<msb:CodeName>ST_d06a98aaf79e47edb6c2d03f506fae2d</msb:CodeName>
+		<msb:DisplayName>ST_d06a98aaf79e47edb6c2d03f506fae2d</msb:DisplayName>
+		<msb:ProjectId>{8F2A9775-1AD5-4FA6-AE6B-DBA39976C372}</msb:ProjectId>
+		<msb:Language>msBuild</msb:Language>
+	</msb:PropertyGroup>
+	<msb:ItemGroup>
+		<msb:Project Include="ST_043767d317ec44b5a3ae0e287f3d9828.csproj"/>
+		<msb:File Include="Properties\AssemblyInfo.cs"/>
+		<msb:File Include="Properties\Resources.resx"/>
+		<msb:File Include="Properties\Settings.Designer.cs"/>
+		<msb:File Include="Properties\Resources.Designer.cs"/>
+		<msb:File Include="Properties\Settings.settings"/>
+		<msb:File Include="ScriptMain.cs"/>
+	</msb:ItemGroup>
+</c:Project>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\AssemblyInfo.cs"
+            Encoding="UTF8"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("ST_d06a98aaf79e47edb6c2d03f506fae2d")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("ST_d06a98aaf79e47edb6c2d03f506fae2d")]
+[assembly: AssemblyCopyright("Copyright @ Microsoft 2017")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Settings.settings"
+            Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Resources.Designer.cs"
+            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_d06a98aaf79e47edb6c2d03f506fae2d.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_d06a98aaf79e47edb6c2d03f506fae2d.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_d06a98aaf79e47edb6c2d03f506fae2d.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace ST_d06a98aaf79e47edb6c2d03f506fae2d.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ST_d06a98aaf79e47edb6c2d03f506fae2d.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}]]></ProjectItem>
+          <BinaryItem
+            Name="ST_043767d317ec44b5a3ae0e287f3d9828.dll">TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
+ZGUuDQ0KJAAAAAAAAABQRQAATAEDAL6OXFkAAAAAAAAAAOAAAiELAQsAABoAAAAIAAAAAAAAvjgA
+AAAgAAAAQAAAAAAAEAAgAAAAAgAABAAAAAAAAAAEAAAAAAAAAACAAAAAAgAAAAAAAAMAQIUAABAA
+ABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAGw4AABPAAAAAEAAAFAEAAAAAAAAAAAAAAAAAAAA
+AAAAAGAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAAxBgAAAAgAAAAGgAAAAIA
+AAAAAAAAAAAAAAAAACAAAGAucnNyYwAAAFAEAAAAQAAAAAYAAAAcAAAAAAAAAAAAAAAAAABAAABA
+LnJlbG9jAAAMAAAAAGAAAAACAAAAIgAAAAAAAAAAAAAAAAAAQAAAQgAAAAAAAAAAAAAAAAAAAACg
+OAAAAAAAAEgAAAACAAUAMCUAADwTAAABAAAAAAAAAHgkAAC4AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4CKA4AAAoqEzACAC0AAAABAAARfgEAAAQtIHIBAABw0AIA
+AAIoDwAACm8QAAAKcxEAAAoKBoABAAAEfgEAAAQqGn4CAAAEKh4CgAIAAAQqGn4DAAAEKi5zBgAA
+BoADAAAEKh4CKBQAAAoqABswBQCfAgAAAgAAEXJzAABwCnJzAABwC3JzAABwDCgWAAAKEw4SDiMA
+AAAAAADwvygXAAAKEw8SD3J1AABwKBgAAAoNAigZAAAKbxoAAApyhwAAcG8bAAAKbxwAAApvHQAA
+CgoCKBkAAApvGgAACnKvAABwbxsAAApvHAAACm8dAAAKCwIoGQAACm8aAAAKctkAAHBvGwAACm8c
+AAAKbx0AAAomAigZAAAKbxoAAApyDQEAcG8bAAAKbxwAAApvHQAACgxzHgAAChMMEQwYbx8AAAoR
+DAIoGQAACm8aAAAKcjUBAHBvGwAACm8cAAAKbx0AAApvIAAAChEMAigZAAAKbxoAAApyVwEAcG8b
+AAAKbxwAAApvHQAACm8hAAAKEQwCKBkAAApvGgAACnJ5AQBwbxsAAApvHAAACm8dAAAKbyIAAAoR
+DCB3UgAAbyMAAAoRDBMEcyQAAAoTBREFEQRvJQAACnMmAAAKEwYRBhZvJwAACgYJcpsBAHAoKAAA
+CgoRBQZvKQAAChMIEQhvKgAACm8rAAAKExA4mgAAABEQbywAAAp0KQAAARMJEQlvLQAAChMKEQpy
+nwEAcG8uAAAKLHURCglvLgAACixrEQURCgcWEQZvLwAAChMHEQdvMAAAChEHbzEAAApvMgAAChMR
+KyUREW8sAAAKdC0AAAETC3KnAQBwEQtvMwAACig0AAAKCCgJAAAGERFvNQAACi3S3hUREXUvAAAB
+ExIREiwHERJvNgAACtwREG81AAAKOlr////eFREQdS8AAAETExETLAcRE282AAAK3N4MEQUsBxEF
+bzYAAArcAigZAAAKFm83AAAK3icTDXLbAQBwEQ1vHQAACig0AAAKCCgJAAAGAigZAAAKFm83AAAK
+3gACKBkAAAoWbzcAAAoqAEFkAAACAAAA5QEAADIAAAAXAgAAFQAAAAAAAAACAAAAjQEAAK0AAAA6
+AgAAFQAAAAAAAAACAAAAUAEAAAEBAABRAgAADAAAAAAAAAAAAAAAOAAAADMCAABrAgAAJwAAADAA
+AAETMAQAlQAAAAMAABEDCnLrAQBwKBYAAAoTBBIEcnUAAHAoGAAACnL/AQBwKCgAAAoLBnIJAgBw
+BygoAAAKCwYoOAAACi0HBig5AAAKJgcoOgAACiwLBxwYczsAAAoMKwkHGBhzOwAACgwIczwAAAoN
+CSgWAAAKEwUSBXINAgBwKBgAAApyNQIAcAIoKAAACm89AAAKCW8+AAAKCG8/AAAKKh4CKEAAAAoq
+AAAAtAAAAM7K774BAAAAkQAAAGxTeXN0ZW0uUmVzb3VyY2VzLlJlc291cmNlUmVhZGVyLCBtc2Nv
+cmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3
+N2E1YzU2MTkzNGUwODkjU3lzdGVtLlJlc291cmNlcy5SdW50aW1lUmVzb3VyY2VTZXQCAAAAAAAA
+AAAAAABQQURQQURQtAAAAEJTSkIBAAEAAAAAAAwAAAB2NC4wLjMwMzE5AAAAAAUAbAAAAIQFAAAj
+fgAA8AUAALAIAAAjU3RyaW5ncwAAAACgDgAATAIAACNVUwDsEAAAEAAAACNHVUlEAAAA/BAAAEAC
+AAAjQmxvYgAAAAAAAAACAAABVx2iAQkDAAAA+iUzABYAAAEAAAA5AAAABQAAAAYAAAAKAAAAAwAA
+AEAAAAACAAAADwAAAAMAAAACAAAAAwAAAAQAAAABAAAABgAAAAEAAAABAAAAAAAKAAEAAAAAAAYA
+wQC6AAoA3QDIAA4APQEUAQYAWQG6AAYAbwFeAQYAoAGLAQYAbwJVAgYAmgKIAgYAsQKIAgYAzgKI
+AgYA7QKIAgYABgOIAgYAHwOIAgYAOgOIAgYAVQOIAgYAbgOIAgYApwOHAwYAxwOHAwYAHAQJBAYA
+OQS6AAYAPgS6AAYAYgSIAgoAjgR4BAoApwR4BAYAvASHAw4A3gQUAQYAAAW6AA4AIgUUARIAewVb
+BRIAkwVbBRYAwAW5BRYAzwW5BRYAGwa5BRYAKAa5BRYAOAa5BQYAVga6ABYAZAa5BRYAhga5BRoA
+vAapBgYAvAapBhYA4ga5BRYABwe5BRYAKAe5BRYAQge5BRYAbAe5BRYAfge5BQYAsge6AAYA1Qe6
+AAYA6QffBwYA+gffBwYAGAjfBwYAHQjfBwYAKAjfBwYAMQjfBwYAPAjfBwYASQjfBwYAUAjfBwAA
+AAABAAAAAAABAAEAAAAQADIAPAAFAAEAAQAAARAAawA8AAkAAwAFAAEAEAB0AH8ADQAEAAgAAwEA
+AKMAAAARAAQACwARAH8BEwARAKwBFwARAPYBOQAGBigCTQBWgDACUABWgDgCUABQIAAAAACDGLwB
+GwABAFggAAAAAJMIwgEfAAEAkSAAAAAAkwjWASQAAQCYIAAAAACTCOIBKQABAKAgAAAAAJYIBgI9
+AAIAsyAAAAAAhhi8ARsAAgCnIAAAAACRGNcEjwACALwgAAAAAIYAGgIbAAIAzCMAAAAAlgAfAkcA
+AgBtJAAAAACGGLwBGwAEAAAAAQBAAgAAAQBGAgAAAgBNAjkAvAFeAEEAvAFeAEkAvAFeAFEAvAFe
+AFkAvAFeAGEAvAFeAGkAvAFeAHEAvAFeAHkAvAFeAIEAvAFeAIkAvAFjAJEAvAEbAJkAvAEbAAkA
+vAEbAKEAUARoAKEAawRvACkAvAF0ALkAvAGAAMkAvAEbABEAvAEbANEAvAEbANkACQWTANkAEQWY
+ANkAGQWeABkANAWjAOEAhQWoAOkAnAWtAPEApQWzAAkAGQW3APkAvAEbAPkA2AXEAPkA5QVeAPkA
+8gVeAPkA/wVeAPkADAZjAAkBvAEbAAkBIwbLABEBvAEbABEBRQbRACEBXQbYAAkBeAbfACkBnwbm
+ADEByAbsAEEB1gazAEkB8Qa3ACEB/gbyAAkBHwf3AFkBPAcbAFEBXgcDAWEByAbsAHEBlQe3ACEB
+ogcJAUEBqQcPAXkBvgcbAOEAxgdjAIkB8wdEAYkBCAhJAZkB8wdEAaEBvAFQAbkBvAFbAckBWwhe
+AMkBZQgbAMEBZQgbABkAvAEbAAgAFABUAAgAGABZACkAkwCGAC4AGwDiAS4AIwDiAS4AYwAgAi4A
+CwBxAS4AEwC5AS4AMwC5AS4AKwDoAS4AOwD3AS4AQwDiAS4AWwAXAkMAawBZAEkAkwCGAGEAmwBZ
+AIMAqwBZAHsAEwFiAQIAAQADAAMAAABvAS8AAADuATQAAAASAkIAAgACAAMAAgADAAUAAQAEAAUA
+AgAFAAcABIAAAAEAAAD7GJ9pAAAAAAAA5QMAAAQAAAAAAAAAAAAAAAEAsQAAAAAABAAAAAAAAAAA
+AAAAAQC6AAAAAAALAAAAAAAAAAAAAAAKAPUAAAAAAAsAAAAAAAAAAAAAAAoAPAUAAAAAAQADAAcA
+sR0AAAAAuwCvBQAAAAACAAAAAAAAAAAAAAABALEAAAAAAAAAAAABAAAAawgAAAUABAAAAAAAADxN
+b2R1bGU+AFNUXzA0Mzc2N2QzMTdlYzQ0YjVhM2FlMGUyODdmM2Q5ODI4LmRsbABSZXNvdXJjZXMA
+U1RfZDA2YTk4YWFmNzllNDdlZGI2YzJkMDNmNTA2ZmFlMmQuUHJvcGVydGllcwBTZXR0aW5ncwBT
+Y3JpcHRNYWluAFNUX2QwNmE5OGFhZjc5ZTQ3ZWRiNmMyZDAzZjUwNmZhZTJkAFNjcmlwdFJlc3Vs
+dHMAbXNjb3JsaWIAU3lzdGVtAE9iamVjdABTeXN0ZW0uQ29uZmlndXJhdGlvbgBBcHBsaWNhdGlv
+blNldHRpbmdzQmFzZQBNaWNyb3NvZnQuU3FsU2VydmVyLlNjcmlwdFRhc2sATWljcm9zb2Z0LlNx
+bFNlcnZlci5EdHMuVGFza3MuU2NyaXB0VGFzawBWU1RBUlRTY3JpcHRPYmplY3RNb2RlbEJhc2UA
+RW51bQBTeXN0ZW0uUmVzb3VyY2VzAFJlc291cmNlTWFuYWdlcgByZXNvdXJjZU1hbgBTeXN0ZW0u
+R2xvYmFsaXphdGlvbgBDdWx0dXJlSW5mbwByZXNvdXJjZUN1bHR1cmUALmN0b3IAZ2V0X1Jlc291
+cmNlTWFuYWdlcgBnZXRfQ3VsdHVyZQBzZXRfQ3VsdHVyZQBDdWx0dXJlAGRlZmF1bHRJbnN0YW5j
+ZQBnZXRfRGVmYXVsdABEZWZhdWx0AE1haW4AV3JpdGVMb2cAdmFsdWVfXwBTdWNjZXNzAEZhaWx1
+cmUAdmFsdWUAc3RyTG9nAGxvZ3BhdGgAU3lzdGVtLlJ1bnRpbWUuVmVyc2lvbmluZwBUYXJnZXRG
+cmFtZXdvcmtBdHRyaWJ1dGUAU3lzdGVtLlJlZmxlY3Rpb24AQXNzZW1ibHlUaXRsZUF0dHJpYnV0
+ZQBBc3NlbWJseURlc2NyaXB0aW9uQXR0cmlidXRlAEFzc2VtYmx5Q29uZmlndXJhdGlvbkF0dHJp
+YnV0ZQBBc3NlbWJseUNvbXBhbnlBdHRyaWJ1dGUAQXNzZW1ibHlQcm9kdWN0QXR0cmlidXRlAEFz
+c2VtYmx5Q29weXJpZ2h0QXR0cmlidXRlAEFzc2VtYmx5VHJhZGVtYXJrQXR0cmlidXRlAEFzc2Vt
+Ymx5Q3VsdHVyZUF0dHJpYnV0ZQBBc3NlbWJseVZlcnNpb25BdHRyaWJ1dGUAU3lzdGVtLlJ1bnRp
+bWUuQ29tcGlsZXJTZXJ2aWNlcwBDb21waWxhdGlvblJlbGF4YXRpb25zQXR0cmlidXRlAFJ1bnRp
+bWVDb21wYXRpYmlsaXR5QXR0cmlidXRlAFNUXzA0Mzc2N2QzMTdlYzQ0YjVhM2FlMGUyODdmM2Q5
+ODI4AFN5c3RlbS5EaWFnbm9zdGljcwBEZWJ1Z2dlck5vblVzZXJDb2RlQXR0cmlidXRlAFR5cGUA
+UnVudGltZVR5cGVIYW5kbGUAR2V0VHlwZUZyb21IYW5kbGUAQXNzZW1ibHkAZ2V0X0Fzc2VtYmx5
+AFN5c3RlbS5Db21wb25lbnRNb2RlbABFZGl0b3JCcm93c2FibGVBdHRyaWJ1dGUARWRpdG9yQnJv
+d3NhYmxlU3RhdGUAQ29tcGlsZXJHZW5lcmF0ZWRBdHRyaWJ1dGUALmNjdG9yAFNTSVNTY3JpcHRU
+YXNrRW50cnlQb2ludEF0dHJpYnV0ZQBEYXRlVGltZQBnZXRfTm93AEFkZERheXMAVG9TdHJpbmcA
+U2NyaXB0T2JqZWN0TW9kZWwAZ2V0X0R0cwBNaWNyb3NvZnQuU3FsU2VydmVyLk1hbmFnZWREVFMA
+TWljcm9zb2Z0LlNxbFNlcnZlci5EdHMuUnVudGltZQBWYXJpYWJsZXMAZ2V0X1ZhcmlhYmxlcwBW
+YXJpYWJsZQBnZXRfSXRlbQBnZXRfVmFsdWUAV2luU0NQbmV0AFdpblNDUABTZXNzaW9uT3B0aW9u
+cwBQcm90b2NvbABzZXRfUHJvdG9jb2wAc2V0X0hvc3ROYW1lAHNldF9Vc2VyTmFtZQBzZXRfUGFz
+c3dvcmQAc2V0X1BvcnROdW1iZXIAU2Vzc2lvbgBPcGVuAFRyYW5zZmVyT3B0aW9ucwBUcmFuc2Zl
+ck1vZGUAc2V0X1RyYW5zZmVyTW9kZQBTdHJpbmcAQ29uY2F0AFJlbW90ZURpcmVjdG9yeUluZm8A
+TGlzdERpcmVjdG9yeQBSZW1vdGVGaWxlSW5mb0NvbGxlY3Rpb24AZ2V0X0ZpbGVzAFN5c3RlbS5D
+b2xsZWN0aW9ucwBJRW51bWVyYXRvcgBHZXRFbnVtZXJhdG9yAGdldF9DdXJyZW50AFJlbW90ZUZp
+bGVJbmZvAGdldF9GdWxsTmFtZQBDb250YWlucwBUcmFuc2Zlck9wZXJhdGlvblJlc3VsdABHZXRG
+aWxlcwBPcGVyYXRpb25SZXN1bHRCYXNlAENoZWNrAFRyYW5zZmVyRXZlbnRBcmdzQ29sbGVjdGlv
+bgBnZXRfVHJhbnNmZXJzAFRyYW5zZmVyRXZlbnRBcmdzAEZpbGVPcGVyYXRpb25FdmVudEFyZ3MA
+Z2V0X0ZpbGVOYW1lAEZvcm1hdABNb3ZlTmV4dABJRGlzcG9zYWJsZQBEaXNwb3NlAHNldF9UYXNr
+UmVzdWx0AEV4Y2VwdGlvbgBTeXN0ZW0uSU8ARGlyZWN0b3J5AEV4aXN0cwBEaXJlY3RvcnlJbmZv
+AENyZWF0ZURpcmVjdG9yeQBGaWxlAEZpbGVTdHJlYW0ARmlsZU1vZGUARmlsZUFjY2VzcwBTdHJl
+YW1Xcml0ZXIAU3RyZWFtAFRleHRXcml0ZXIAV3JpdGVMaW5lAENsb3NlAFNUX2QwNmE5OGFhZjc5
+ZTQ3ZWRiNmMyZDAzZjUwNmZhZTJkLlByb3BlcnRpZXMuUmVzb3VyY2VzLnJlc291cmNlcwAAAABx
+UwBUAF8AZAAwADYAYQA5ADgAYQBhAGYANwA5AGUANAA3AGUAZABiADYAYwAyAGQAMAAzAGYANQAw
+ADYAZgBhAGUAMgBkAC4AUAByAG8AcABlAHIAdABpAGUAcwAuAFIAZQBzAG8AdQByAGMAZQBzAAAB
+ABF5AHkAeQB5AE0ATQBkAGQAACdVAHMAZQByADoAOgBaAFgAQQBsAGEAcgBtAFIAZQBtAG8AdABl
+AAApVQBzAGUAcgA6ADoAWgBYAEEAbABhAHIAbQBMAG8AYwBGAGkAbABlAAAzVQBzAGUAcgA6ADoA
+WgBYAEEAbABhAHIAbQBDAG8AbQBwAGwAZQB0AGUARgBpAGwAZQAAJ1UAcwBlAHIAOgA6AFoAWABs
+AG8AZwBmAGkAbABlAFAAYQB0AGgAACFVAHMAZQByADoAOgBaAFgAUwBlAHIAdgBlAHIASQBQAAAh
+VQBzAGUAcgA6ADoAWgBYAFUAcwBlAHIATgBhAG0AZQAAIVUAcwBlAHIAOgA6AFoAWABQAGEAcwBz
+AHcAbwByAGQAAAMvAAAHYwBzAHYAADNEAG8AdwBuAGwAbwBhAGQAIABvAGYAIAB7ADAAfQAgAHMA
+dQBjAGMAZQBlAGQAZQBkAAAPGZXvizoAIAB7ADAAfQABE1MAWQBOAEMARABBAFQAQQBfAAAJLgBs
+AG8AZwAAA1wAACd5AHkAeQB5AC0ATQBNAC0AZABkACAASABIADoAbQBtADoAcwBzAAETIAAgACAA
+LQAtAC0AIAAgACAAAQAAAMGIwX/gnpxGhgAxhOBpxz8ACLd6XFYZNOCJCImEXc2AgMyRAwYSFQMG
+EhkDIAABBAAAEhUEAAASGQUAAQESGQQIABIVBAgAEhkDBhIMBAAAEgwECAASDAUAAgEODgIGCAMG
+ERQEAAAAAAQBAAAABCABAQ4EIAEBCAYAARJREVUEIAASWQYgAgEOElkEBwESFQUgAQERYQgBAAIA
+AAAAAAMAAAEEAAARbQUgARFtDQQgAQ4OBCAAEnEEIAASdQUgARJ5HAMgABwDIAAOCCJx7Eo8VtC/
+BiABARGAgQUgAQESfQYgAQERgI0GAAMODg4OBiABEoCVDgUgABKAmQUgABKAnQQgAQIOCyAEEoCp
+Dg4CEoCJBSAAEoCxBQACDg4cAyAAAjAHFA4ODg4SfRKAhRKAiRKAqRKAlRKApQ4SgLUSfRKAwRFt
+EW0SgKESgKESgL0SgL0EAAECDgYAARKAyQ4KIAMBDhGA1RGA2QYgAQESgOEOBwYODhKA0RKA3RFt
+EW1HAQAaLk5FVEZyYW1ld29yayxWZXJzaW9uPXY0LjABAFQOFEZyYW1ld29ya0Rpc3BsYXlOYW1l
+EC5ORVQgRnJhbWV3b3JrIDQoAQAjU1RfZDA2YTk4YWFmNzllNDdlZGI2YzJkMDNmNTA2ZmFlMmQA
+AAUBAAAAAA4BAAlNaWNyb3NvZnQAAB8BABpDb3B5cmlnaHQgQCBNaWNyb3NvZnQgMjAxNwAACAEA
+CAAAAAAAHgEAAQBUAhZXcmFwTm9uRXhjZXB0aW9uVGhyb3dzAQCUOAAAAAAAAAAAAACuOAAAACAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAoDgAAAAAAAAAAAAAAABfQ29yRGxsTWFpbgBtc2NvcmVlLmRs
+bAAAAAAA/yUAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AQAQAAAAGAAAgAAAAAAAAAAAAAAAAAAAAQABAAAAMAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAASAAA
+AFhAAAD4AwAAAAAAAAAAAAD4AzQAAABWAFMAXwBWAEUAUgBTAEkATwBOAF8ASQBOAEYATwAAAAAA
+vQTv/gAAAQAAAAEAn2n7GAAAAQCfafsYPwAAAAAAAAAEAAAAAgAAAAAAAAAAAAAAAAAAAEQAAAAB
+AFYAYQByAEYAaQBsAGUASQBuAGYAbwAAAAAAJAAEAAAAVAByAGEAbgBzAGwAYQB0AGkAbwBuAAAA
+AAAAALAEWAMAAAEAUwB0AHIAaQBuAGcARgBpAGwAZQBJAG4AZgBvAAAANAMAAAEAMAAwADAAMAAw
+ADQAYgAwAAAANAAKAAEAQwBvAG0AcABhAG4AeQBOAGEAbQBlAAAAAABNAGkAYwByAG8AcwBvAGYA
+dAAAAHAAJAABAEYAaQBsAGUARABlAHMAYwByAGkAcAB0AGkAbwBuAAAAAABTAFQAXwBkADAANgBh
+ADkAOABhAGEAZgA3ADkAZQA0ADcAZQBkAGIANgBjADIAZAAwADMAZgA1ADAANgBmAGEAZQAyAGQA
+AABAAA8AAQBGAGkAbABlAFYAZQByAHMAaQBvAG4AAAAAADEALgAwAC4ANgAzADkANQAuADIANwAw
+ADMAOQAAAAAAcAAoAAEASQBuAHQAZQByAG4AYQBsAE4AYQBtAGUAAABTAFQAXwAwADQAMwA3ADYA
+NwBkADMAMQA3AGUAYwA0ADQAYgA1AGEAMwBhAGUAMABlADIAOAA3AGYAMwBkADkAOAAyADgALgBk
+AGwAbAAAAFwAGwABAEwAZQBnAGEAbABDAG8AcAB5AHIAaQBnAGgAdAAAAEMAbwBwAHkAcgBpAGcA
+aAB0ACAAQAAgAE0AaQBjAHIAbwBzAG8AZgB0ACAAMgAwADEANwAAAAAAeAAoAAEATwByAGkAZwBp
+AG4AYQBsAEYAaQBsAGUAbgBhAG0AZQAAAFMAVABfADAANAAzADcANgA3AGQAMwAxADcAZQBjADQA
+NABiADUAYQAzAGEAZQAwAGUAMgA4ADcAZgAzAGQAOQA4ADIAOAAuAGQAbABsAAAAaAAkAAEAUABy
+AG8AZAB1AGMAdABOAGEAbQBlAAAAAABTAFQAXwBkADAANgBhADkAOABhAGEAZgA3ADkAZQA0ADcA
+ZQBkAGIANgBjADIAZAAwADMAZgA1ADAANgBmAGEAZQAyAGQAAABEAA8AAQBQAHIAbwBkAHUAYwB0
+AFYAZQByAHMAaQBvAG4AAAAxAC4AMAAuADYAMwA5ADUALgAyADcAMAAzADkAAAAAAEgADwABAEEA
+cwBzAGUAbQBiAGwAeQAgAFYAZQByAHMAaQBvAG4AAAAxAC4AMAAuADYAMwA5ADUALgAyADcAMAAz
+ADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAMAAAAwDgAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
+        </ScriptProject>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\导入中兴告警数据"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach 循环容器"
+      DTS:DTSID="{0a7e4281-1e9f-4240-a36b-320ac3f3d0c3}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="导入中兴告警数据">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="DTS.ForEachFileEnumerator.3"
+        DTS:DTSID="{E8872DE4-1491-4AC8-A91B-ED4D04E5EE1F}"
+        DTS:ObjectName="{E8872DE4-1491-4AC8-A91B-ED4D04E5EE1F}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[User::ZXAlarmLocFile]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="F:\WDSystemData\WorkData\Alarm\ZXalarm\" />
+            <FEFEProperty
+              FileSpec="*.csv" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="-1" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\导入中兴告警数据\数据流任务"
+          DTS:CreationName="SSIS.Pipeline.3"
+          DTS:Description="数据流任务"
+          DTS:DTSID="{6dca2684-b548-4c2f-8c0d-48e0d7cb83ec}"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="数据流任务"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              engineThreads="32"
+              version="1">
+              <components>
+                <component
+                  refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标"
+                  componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+                  contactInfo="OLE DB 目标;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB 目标"
+                  name="OLE DB 目标"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="命令超时前等待的时间(秒)。值为 0，表示无限期等待。"
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="指定用于打开行集的数据库对象的名称。"
+                      name="OpenRowset">"KPIMIS"."DATA_ALARMINFO"</property>
+                    <property
+                      dataType="System.String"
+                      description="指定包含用于打开行集的数据库对象名的变量。"
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="要执行的 SQL 命令。"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定当数据源中没有代码页信息时使用的列代码页。"
+                      name="DefaultCodePage">936</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="描述字符数据时，强制使用 DefaultCodePage 属性值。"
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定用于访问数据库的模式。"
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="指示是否将为标识列提供的值复制到目标。如果设置为 False，则将在目标中为标识列自动生成值。仅当启用了快速加载时适用。"
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="指示对于包含 Null 值的列是否将 Null 值插入目标中。如果为 False，则对于包含 Null 值的列会将其默认值插入目标中。仅当启用了快速加载时适用。"
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="指定将用于快速加载的选项。仅当启用了快速加载时适用。"
+                      name="FastLoadOptions"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定在插入数据期间何时发出提交命令。如果值为 0，则指定在数据插入结束时发出一个提交命令。仅当启用了快速加载时适用。"
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Connections[OleDbConnection]"
+                      connectionManagerID="{EF1B0189-C787-45D6-ABB7-2CA7A436C369}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[localhost_orcl.mis]"
+                      description="指定用于访问数据库的 OLE DB 运行时连接。"
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入]"
+                      errorOrTruncationOperation="插入"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB 目标输入">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[SC_ENBID]"
+                          cachedDataType="i4"
+                          cachedName="SC_ENBID"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_ENBID]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[SC_ENBID]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[CITY]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="CITY"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CITY]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CITY]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[MANUFACTOR]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="MANUFACTOR"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[MANUFACTOR]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[MANUFACTOR]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[RRU]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="RRU"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[RRU]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[RRU]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[ALARMCODE]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="ALARMCODE"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ALARMCODE]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ALARMCODE]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[ALARMNE]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="ALARMNE"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ALARMNE]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ALARMNE]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[CREATETIME]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="CREATETIME"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CREATETIME]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CREATETIME]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[CLEARTIME]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="CLEARTIME"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CLEARTIME]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CLEARTIME]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[CLEARSTATIC]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="CLEARSTATIC"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CLEARSTATIC]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CLEARSTATIC]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[ALARMCONTENT]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="ALARMCONTENT"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ALARMCONTENT]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ALARMCONTENT]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[ECI]"
+                          cachedDataType="i4"
+                          cachedName="ECI"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ECI]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ECI]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[Cellid]"
+                          cachedDataType="i4"
+                          cachedName="Cellid"
+                          externalMetadataColumnId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_LCRID]"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[Cellid]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_ENBID]"
+                          dataType="wstr"
+                          length="38"
+                          name="SC_ENBID" />
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_LCRID]"
+                          dataType="wstr"
+                          length="38"
+                          name="SC_LCRID" />
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ECI]"
+                          dataType="wstr"
+                          length="38"
+                          name="ECI" />
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CITY]"
+                          dataType="wstr"
+                          length="50"
+                          name="CITY" />
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[MANUFACTOR]"
+                          dataType="wstr"
+                          length="50"
+                          name="MANUFACTOR" />
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[RRU]"
+                          dataType="wstr"
+                          length="50"
+                          name="RRU" />
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ALARMCODE]"
+                          dataType="wstr"
+                          length="150"
+                          name="ALARMCODE" />
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ALARMCONTENT]"
+                          dataType="wstr"
+                          length="400"
+                          name="ALARMCONTENT" />
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ALARMNE]"
+                          dataType="wstr"
+                          length="50"
+                          name="ALARMNE" />
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CREATETIME]"
+                          dataType="dbTimeStamp"
+                          name="CREATETIME" />
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CLEARTIME]"
+                          dataType="dbTimeStamp"
+                          name="CLEARTIME" />
+                        <externalMetadataColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CLEARSTATIC]"
+                          dataType="wstr"
+                          length="10"
+                          name="CLEARSTATIC" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Outputs[OLE DB 目标错误输出]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB 目标错误输出"
+                      synchronousInputId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Outputs[OLE DB 目标错误输出].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Outputs[OLE DB 目标错误输出].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\导入中兴告警数据\数据流任务\数据转换"
+                  componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+                  contactInfo="数据转换;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;0"
+                  description="数据转换"
+                  name="数据转换"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\导入中兴告警数据\数据流任务\数据转换.Inputs[数据转换输入]"
+                      name="数据转换输入">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\数据转换.Inputs[数据转换输入].Columns[CLEARTIME]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="CLEARTIME"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CLEARTIME]" />
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\数据转换.Inputs[数据转换输入].Columns[CREATETIME]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="CREATETIME"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CREATETIME]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\导入中兴告警数据\数据流任务\数据转换.Outputs[数据转换输出]"
+                      exclusionGroup="1"
+                      name="数据转换输出"
+                      synchronousInputId="Package\导入中兴告警数据\数据流任务\数据转换.Inputs[数据转换输入]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\数据转换.Outputs[数据转换输出].Columns[CLEARTIME 的副本]"
+                          dataType="dbTimeStamp2"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\导入中兴告警数据\数据流任务\数据转换.Outputs[数据转换输出].Columns[CLEARTIME 的副本]"
+                          name="CLEARTIME 的副本"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="指定用作转换数据源的输入列。"
+                              name="SourceInputColumnLineageID">#{Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CLEARTIME]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="指示该列是否使用更快、不分区域设置的分析例程。"
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\数据转换.Outputs[数据转换输出].Columns[CREATETIME 的副本]"
+                          dataType="dbTimeStamp2"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\导入中兴告警数据\数据流任务\数据转换.Outputs[数据转换输出].Columns[CREATETIME 的副本]"
+                          name="CREATETIME 的副本"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="指定用作转换数据源的输入列。"
+                              name="SourceInputColumnLineageID">#{Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CREATETIME]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="指示该列是否使用更快、不分区域设置的分析例程。"
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\导入中兴告警数据\数据流任务\数据转换.Outputs[数据转换错误输出]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="数据转换错误输出"
+                      synchronousInputId="Package\导入中兴告警数据\数据流任务\数据转换.Inputs[数据转换输入]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\数据转换.Outputs[数据转换错误输出].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\导入中兴告警数据\数据流任务\数据转换.Outputs[数据转换错误输出].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\数据转换.Outputs[数据转换错误输出].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\导入中兴告警数据\数据流任务\数据转换.Outputs[数据转换错误输出].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\导入中兴告警数据\数据流任务\查找"
+                  componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+                  contactInfo="查找;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;6"
+                  description="通过在表中查找值，将其他列与数据流联接起来。例如，将 &quot;employee id&quot; 列与 employees 表联接，以获取 &quot;hire date&quot; 和 &quot;employee name&quot;。建议在可将查找表放入内存中的情况下使用此转换。"
+                  name="查找"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="指定生成查找表的 SQL 语句。"
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from "KPIMIS"."DATA_ALARM"</property>
+                    <property
+                      dataType="System.String"
+                      description="指定使用参数生成查找表的 SQL 语句。"
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from "KPIMIS"."DATA_ALARM") "refTable"
+where "refTable"."ALARMCONTEXT" = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定用于访问引用数据集的连接类型。"
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定查找表的缓存类型。"
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定查找转换如何处理在引用数据集中无匹配项的行。"
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">1</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定为在引用数据集中没有匹配项的行分配的缓存百分比。"
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="引用缓存在 32 位平台上的最大内存使用量。"
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="引用缓存在 64 位平台上的最大内存使用量。"
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="指示是否引用 XML 格式的元数据。"
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ALARMCODE" dataType="DT_WSTR" length="150" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ALARMCONTEXT" dataType="DT_WSTR" length="150" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ALARMLEVEL" dataType="DT_WSTR" length="150" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ALARMCLASS" dataType="DT_WSTR" length="150" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="INFLUENCE" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="MANUFACTOR" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="指定沿袭标识符列表，这些标识符映射到 SQLCommand 属性中 SQL 语句使用的参数。列表中的项与项之间用分号分隔。"
+                      name="ParameterMap">#{Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ALARMCODE]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定当数据源中没有代码页信息时使用的列代码页。"
+                      name="DefaultCodePage">936</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="确定在使用完全缓存模式时引用数据中的重复键是否应视作错误。"
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\导入中兴告警数据\数据流任务\查找.Connections[OleDbConnection]"
+                      connectionManagerID="{EF1B0189-C787-45D6-ABB7-2CA7A436C369}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[localhost_orcl.mis]"
+                      description="用于访问查找数据的连接管理器。"
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\导入中兴告警数据\数据流任务\查找.Inputs[查找输入]"
+                      name="查找输入">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\查找.Inputs[查找输入].Columns[ALARMCODE]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="ALARMCODE"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ALARMCODE]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="指定某列在引用表中联接的列。"
+                              name="JoinToReferenceColumn">ALARMCONTEXT</property>
+                            <property
+                              dataType="System.Null"
+                              description="指定属于某列复制源的引用表中的列。"
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\导入中兴告警数据\数据流任务\查找.Outputs[查找匹配输出]"
+                      errorOrTruncationOperation="查找"
+                      exclusionGroup="1"
+                      name="查找匹配输出"
+                      synchronousInputId="Package\导入中兴告警数据\数据流任务\查找.Inputs[查找输入]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\导入中兴告警数据\数据流任务\查找.Outputs[查找无匹配输出]"
+                      description="用于处理在引用数据集中无匹配项的行的查找输出。当 NoMatchBehavior 属性设置为“将没有匹配项的行发送至无匹配输出。”时使用此输出。"
+                      exclusionGroup="1"
+                      name="查找无匹配输出"
+                      synchronousInputId="Package\导入中兴告警数据\数据流任务\查找.Inputs[查找输入]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\导入中兴告警数据\数据流任务\查找.Outputs[查找错误输出]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="查找错误输出"
+                      synchronousInputId="Package\导入中兴告警数据\数据流任务\查找.Inputs[查找输入]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\查找.Outputs[查找错误输出].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\导入中兴告警数据\数据流任务\查找.Outputs[查找错误输出].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\查找.Outputs[查找错误输出].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\导入中兴告警数据\数据流任务\查找.Outputs[查找错误输出].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\导入中兴告警数据\数据流任务\脚本组件"
+                  componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+                  contactInfo="包含并运行自定义脚本代码。例如，应用限制 &quot;income&quot; 列中的有效值范围的业务规则，或在两个列中添加值并计算和的平均值。;Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;8"
+                  description="包含并运行自定义脚本代码。例如，应用限制 &quot;income&quot; 列中的有效值范围的业务规则，或在两个列中添加值并计算和的平均值。"
+                  name="脚本组件"
+                  version="8">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="存储组件的源代码"
+                      isArray="true"
+                      name="SourceCode"
+                      state="cdata">
+                      <arrayElements
+                        arrayElementCount="30">
+                        <arrayElement
+                          dataType="System.String"><![CDATA[SC_9586a5757c234fe9823ca25b395a749f.csproj]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?><Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProductVersion>8.0.30703</ProductVersion><SchemaVersion>2.0</SchemaVersion><ProjectGuid>{ECBF7C0F-AC5B-44EE-BE7C-1D873C963926}</ProjectGuid><OutputType>Library</OutputType><AppDesignerFolder>Properties</AppDesignerFolder><RootNamespace>SC_9586a5757c234fe9823ca25b395a749f</RootNamespace><AssemblyName>SC_C6388AC587CC4A868B616190CA27B389</AssemblyName><TargetFrameworkVersion>v4.0</TargetFrameworkVersion><FileAlignment>512</FileAlignment></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Debug' "><DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize><OutputPath>.\bin\Debug\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>DEBUG;TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Release' "><DebugSymbols>false</DebugSymbols><Optimize>true</Optimize><OutputPath>.\bin\Release\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><ItemGroup><Reference Include="System" /><Reference Include="System.Data" /><Reference Include="System.Windows.Forms" /><Reference Include="System.Xml" /><Reference Include="Microsoft.SqlServer.TxScript, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.DTSRuntimeWrap, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.DTSPipelineWrap, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.PipelineHost, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" /><Compile Include="main.cs" /><Compile Include="BufferWrapper.cs" /><Compile Include="ComponentWrapper.cs" /></ItemGroup><ItemGroup><AppDesigner Include="Properties\" /><Compile Include="Properties\AssemblyInfo.cs"><SubType>Code</SubType></Compile><EmbeddedResource Include="Properties\Resources.resx"><Generator>ResXFileCodeGenerator</Generator><LastGenOutput>Resources.Designer.cs</LastGenOutput></EmbeddedResource><Compile Include="Properties\Resources.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Resources.resx</DependentUpon></Compile><None Include="Properties\Settings.settings"><Generator>SettingsSingleFileGenerator</Generator><LastGenOutput>Settings.Designer.cs</LastGenOutput></None><Compile Include="Properties\Settings.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Settings.settings</DependentUpon></Compile></ItemGroup><!-- Include the build rules for a C# project.--><Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /><!-- This section defines VSTA properties that describe the host-changable project properties. --><ProjectExtensions><VisualStudio><FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}"><ProjectProperties HostName="VSTAHostName" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" /><Host Name="ScriptComponent" IconIndex="0" /><ProjectClient><HostIdentifier>SSIS_SC110</HostIdentifier></ProjectClient></FlavorProperties></VisualStudio></ProjectExtensions></Project>]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[main.cs]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[#region Help:  Introduction to the Script Component
+/* The Script Component allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services data flow.
+ *
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script component. */
+#endregion
+
+#region Namespaces
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Text;
+using System.Globalization;
+#endregion
+
+/// <summary>
+/// This is the class to which to add your code.  Do not change the name, attributes, or parent
+/// of this class.
+/// </summary>
+[Microsoft.SqlServer.Dts.Pipeline.SSISScriptComponentEntryPointAttribute]
+public class ScriptMain : UserComponent
+{
+    #region Help:  Using Integration Services variables and parameters
+    /* To use a variable in this script, first ensure that the variable has been added to
+     * either the list contained in the ReadOnlyVariables property or the list contained in
+     * the ReadWriteVariables property of this script component, according to whether or not your
+     * code needs to write into the variable.  To do so, save this script, close this instance of
+     * Visual Studio, and update the ReadOnlyVariables and ReadWriteVariables properties in the
+     * Script Transformation Editor window.
+     * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+     *
+     * Example of reading from a variable or parameter:
+     *  DateTime startTime = Variables.MyStartTime;
+     *
+     * Example of writing to a variable:
+     *  Variables.myStringVariable = "new value";
+     */
+    #endregion
+
+    #region Help:  Using Integration Services Connnection Managers
+    /* Some types of connection managers can be used in this script component.  See the help topic
+     * "Working with Connection Managers Programatically" for details.
+     *
+     * To use a connection manager in this script, first ensure that the connection manager has
+     * been added to either the list of connection managers on the Connection Managers page of the
+     * script component editor.  To add the connection manager, save this script, close this instance of
+     * Visual Studio, and add the Connection Manager to the list.
+     *
+     * If the component needs to hold a connection open while processing rows, override the
+     * AcquireConnections and ReleaseConnections methods.
+     * 
+     * Example of using an ADO.Net connection manager to acquire a SqlConnection:
+     *  object rawConnection = Connections.SalesDB.AcquireConnection(transaction);
+     *  SqlConnection salesDBConn = (SqlConnection)rawConnection;
+     *
+     * Example of using a File connection manager to acquire a file path:
+     *  object rawConnection = Connections.Prices_zip.AcquireConnection(transaction);
+     *  string filePath = (string)rawConnection;
+     *
+     * Example of releasing a connection manager:
+     *  Connections.SalesDB.ReleaseConnection(rawConnection);
+     */
+    #endregion
+
+    #region Help:  Firing Integration Services Events
+    /* This script component can fire events.
+     *
+     * Example of firing an error event:
+     *  ComponentMetaData.FireError(10, "Process Values", "Bad value", "", 0, out cancel);
+     *
+     * Example of firing an information event:
+     *  ComponentMetaData.FireInformation(10, "Process Values", "Processing has started", "", 0, fireAgain);
+     *
+     * Example of firing a warning event:
+     *  ComponentMetaData.FireWarning(10, "Process Values", "No rows were received", "", 0);
+     */
+    #endregion
+
+    private StreamReader textReader;
+    private string exportedAddressFile;
+
+    public override void AcquireConnections(object Transaction)
+    {
+
+        IDTSConnectionManager100 connMgr = this.Connections.conn;
+        exportedAddressFile = (string)connMgr.AcquireConnection(null);
+
+    }
+
+    /// <summary>
+    /// This method is called once, before rows begin to be processed in the data flow.
+    ///
+    /// You can remove this method if you don't need to do anything here.
+    /// </summary>
+    public override void PreExecute()
+    {
+        base.PreExecute();
+        textReader = new StreamReader(exportedAddressFile, Encoding.Default);
+        /*
+         * Add your code here
+         */
+    }
+
+    /// <summary>
+    /// This method is called after all the rows have passed through this component.
+    ///
+    /// You can delete this method if you don't need to do anything here.
+    /// </summary>
+    public override void PostExecute()
+    {
+        base.PostExecute();
+        textReader.Close(); 
+    }
+
+    public override void CreateNewOutputRows()
+    {
+        string nextLine;
+        List<String> columns=new List<string>();
+
+        char[] delimiters;
+        delimiters = ",".ToCharArray();
+
+        char[] yinghao;
+        yinghao = "\"".ToCharArray();
+        int alarmcode = -1;
+        int enbid=-1;
+        int cellid=-1;
+        int time1 = -1;
+        int time2 = -1;
+        int city=-1;
+
+        nextLine = textReader.ReadLine();
+        nextLine = textReader.ReadLine();
+        String[] arrcolumns = nextLine.Split(',');
+        for (int r = 0; r < arrcolumns.Length; r++)
+        {
+            if (arrcolumns[r] == "Alarm Code")
+                alarmcode = r;
+            if (arrcolumns[r] == "Custom Attribute 1")
+                enbid = r;
+            if (arrcolumns[r] == "Custom Attribute 4")
+                cellid = r;
+            if (arrcolumns[r] == "Raised Time")
+                time1 = r;
+            if (arrcolumns[r] == "Cleared Time")
+                time2 = r;
+            if (arrcolumns[r] == "NE Agent")
+                city = r;
+        }
+        nextLine = textReader.ReadLine();
+        while (nextLine != null)
+        {
+            try {
+                List<String> list = new List<string>();
+                String[] arr = nextLine.Split(yinghao);
+                String linestr = "";
+                for (int i = 1; i < arr.Length; )
+                {
+                    if (!String.IsNullOrEmpty(arr[i]))
+                        arr[i] = arr[i].Replace(",", "|");
+                    i = i + 2;
+                }
+                for (int j = 0; j < arr.Length; j++)
+                {
+                    if (j == 0)
+                    {
+                        linestr = arr[j];
+                    }
+                    else
+                    {
+                        linestr = linestr + "\"" + arr[j];
+                    }
+                }
+                String[] dataarr = linestr.Split(delimiters);
+                if (String.IsNullOrEmpty(dataarr[alarmcode].ToString().Trim()))
+                {
+                    nextLine = textReader.ReadLine();
+                    continue;
+                }
+                if(String.IsNullOrEmpty(dataarr[enbid].ToString().Trim()))
+                {
+                    nextLine = textReader.ReadLine();
+                    continue;
+                }
+
+                try
+                {
+                    int temp = Convert.ToInt32(dataarr[enbid]);
+                }
+                catch
+                {
+                    nextLine = textReader.ReadLine();
+                    continue;
+                }
+                exportBuffer.AddRow();
+                exportBuffer.SCENBID = Convert.ToInt32(dataarr[enbid]);
+                exportBuffer.ALARMCODE = dataarr[alarmcode];
+                exportBuffer.MANUFACTOR = "中兴";
+                exportBuffer.RRU = "BBU";
+                if (dataarr[enbid] != dataarr[cellid])
+                {
+                    exportBuffer.Cellid = Convert.ToInt32(dataarr[cellid]);
+                    exportBuffer.ECI = Convert.ToInt32(dataarr[enbid]) * 256 + Convert.ToInt32(dataarr[cellid]);
+                    exportBuffer.RRU = "RRU";
+                }
+                exportBuffer.CREATETIME = dataarr[time1];
+                if (time2 > -1)
+                {
+                    exportBuffer.CLEARSTATIC = "历史";
+                    exportBuffer.CLEARTIME = dataarr[time2];
+                }
+                if (city > -1)
+                    exportBuffer.CITY = dataarr[city];
+            }
+            catch(Exception err){
+                
+            }
+            
+            nextLine = textReader.ReadLine();
+        }  
+    }
+
+    private String gettime(String time)
+    {
+        //2017年5月30日 17时30分16秒 GMT+08:00
+        int n = time.IndexOf("年");
+        int y = time.IndexOf("月");
+        int r = time.IndexOf("日");
+        string mm = time.Substring(n + 1, y - n - 1);
+        string dd = time.Substring(y + 1, r - y - 1);
+        if (mm.Length == 1)
+        {
+            time = time.Replace(mm + "月", "0" + mm + "月");
+        }
+        if (dd.Length == 1)
+        {
+            time = time.Replace(dd + "日", "0" + dd + "日");
+        }
+        String createtime = time.Replace("年", "-").Replace("月", "-").Replace("日", "")
+            .Replace("时", ":").Replace("分", ":").Replace("秒", "").Replace(" GMT+08:00", "");
+        return createtime;
+    }
+
+}
+]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[Properties\Resources.resx]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[ComponentWrapper.cs]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services component wrapper
+*  This module defines the base class for your component
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+
+public class UserComponent: ScriptComponent
+{
+    public Connections Connections;
+    public Variables Variables;
+    public UserComponent()
+    {
+        Connections = new Connections(this);
+        Variables = new Variables(this);
+    }
+
+    public exportBuffer exportBuffer;
+
+    public virtual void FinishOutputs()
+    {
+    }
+
+    private void MarkOutputsFinished()
+    {
+
+        if (null != exportBuffer)
+        {
+            exportBuffer.SetEndOfRowset();
+            exportBuffer = null;
+        }
+
+    }
+
+    public override void PrimeOutput(int Outputs, int[] OutputIDs, PipelineBuffer[] Buffers, OutputNameMap OutputMap)
+    {
+       for(int Idx = 0; Idx < Outputs; Idx++)
+       {
+            if(OutputIDs[Idx] == GetOutputID(OutputMap, @"export"))
+            {
+                exportBuffer = new exportBuffer(Buffers[Idx], GetColumnIndexes(OutputIDs[Idx]), OutputMap);
+            }
+        }
+
+        CreateNewOutputRows();
+
+        FinishOutputs();
+        MarkOutputsFinished();
+
+    }
+
+    public virtual void CreateNewOutputRows()
+    {
+    }
+
+}
+
+public class Connections
+{
+    ScriptComponent ParentComponent;
+
+    public Connections(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+    public IDTSConnectionManager100 conn
+    {
+        get
+        {
+            return ParentComponent.ComponentMetaData.RuntimeConnectionCollection.GetRuntimeConnectionByName(@"conn").ConnectionManager;
+        }
+    }
+
+}
+
+public class Variables
+{
+    ScriptComponent ParentComponent;
+
+    public Variables(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+}
+]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[Properties\Settings.Designer.cs]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_9586a5757c234fe9823ca25b395a749f.Properties.Settings.get_Default():SC_9586a5757c234fe9823ca25b395a749f.Properties.Sett" +
+    "ings")]
+
+namespace SC_9586a5757c234fe9823ca25b395a749f.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[BufferWrapper.cs]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services buffer wrappers
+*  This module defines classes for accessing data flow buffers
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+
+public class exportBuffer: ScriptBuffer
+
+{
+    public exportBuffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public Int32 SCENBID
+    {
+        set
+        {
+            this[0] = value;
+        }
+    }
+    public bool SCENBID_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(0);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public String CITY
+    {
+        set
+        {
+            this[1] = value;
+        }
+    }
+    public bool CITY_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(1);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public String MANUFACTOR
+    {
+        set
+        {
+            this[2] = value;
+        }
+    }
+    public bool MANUFACTOR_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(2);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public String RRU
+    {
+        set
+        {
+            this[3] = value;
+        }
+    }
+    public bool RRU_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(3);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public String ALARMCODE
+    {
+        set
+        {
+            this[4] = value;
+        }
+    }
+    public bool ALARMCODE_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(4);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public String ALARMNE
+    {
+        set
+        {
+            this[5] = value;
+        }
+    }
+    public bool ALARMNE_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(5);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public String CREATETIME
+    {
+        set
+        {
+            this[6] = value;
+        }
+    }
+    public bool CREATETIME_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(6);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public String CLEARTIME
+    {
+        set
+        {
+            this[7] = value;
+        }
+    }
+    public bool CLEARTIME_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(7);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public String CLEARSTATIC
+    {
+        set
+        {
+            this[8] = value;
+        }
+    }
+    public bool CLEARSTATIC_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(8);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public String ALARMCONTENT
+    {
+        set
+        {
+            this[9] = value;
+        }
+    }
+    public bool ALARMCONTENT_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(9);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public Int32 IForm
+    {
+        set
+        {
+            this[10] = value;
+        }
+    }
+    public bool IForm_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(10);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public Int32 Cellid
+    {
+        set
+        {
+            this[11] = value;
+        }
+    }
+    public bool Cellid_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(11);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    public Int32 ECI
+    {
+        set
+        {
+            this[12] = value;
+        }
+    }
+    public bool ECI_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(12);
+            }
+            else
+            {
+                throw new InvalidOperationException("无法将 IsNull 属性设置为 False。请为该列赋值。");
+            }
+        }
+    }
+
+    new public void AddRow()
+    {
+        base.AddRow();
+    }
+
+    new public void SetEndOfRowset()
+    {
+        base.SetEndOfRowset();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[Project]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[UTF16LE]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="3.0" schemaVersion="1.0">
+	<msb:PropertyGroup>
+		<msb:CodeName>SC_9586a5757c234fe9823ca25b395a749f</msb:CodeName>
+		<msb:DisplayName>SC_9586a5757c234fe9823ca25b395a749f</msb:DisplayName>
+		<msb:ProjectId>{B879927E-1F56-4500-877C-1697753ADDFE}</msb:ProjectId>
+		<msb:Language>msBuild</msb:Language>
+	</msb:PropertyGroup>
+	<msb:ItemGroup>
+		<msb:Project Include="SC_9586a5757c234fe9823ca25b395a749f.csproj"/>
+		<msb:File Include="main.cs"/>
+		<msb:File Include="Properties\AssemblyInfo.cs"/>
+		<msb:File Include="ComponentWrapper.cs"/>
+		<msb:File Include="Properties\Resources.resx"/>
+		<msb:File Include="BufferWrapper.cs"/>
+		<msb:File Include="Properties\Settings.Designer.cs"/>
+		<msb:File Include="Properties\Resources.Designer.cs"/>
+		<msb:File Include="Properties\Settings.settings"/>
+	</msb:ItemGroup>
+</c:Project>]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[Properties\AssemblyInfo.cs]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("SC_9586a5757c234fe9823ca25b395a749f")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("SC_9586a5757c234fe9823ca25b395a749f")]
+[assembly: AssemblyCopyright("Copyright @  2017")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]
+]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[Properties\Settings.settings]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[Properties\Resources.Designer.cs]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_9586a5757c234fe9823ca25b395a749f.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_9586a5757c234fe9823ca25b395a749f.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_9586a5757c234fe9823ca25b395a749f.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace SC_9586a5757c234fe9823ca25b395a749f.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SC_9586a5757c234fe9823ca25b395a749f.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                      </arrayElements>
+                    </property>
+                    <property
+                      dataType="System.String"
+                      description="存储组件的二进制表示形式"
+                      isArray="true"
+                      name="BinaryCode"
+                      state="cdata">
+                      <arrayElements
+                        arrayElementCount="2">
+                        <arrayElement
+                          dataType="System.String"><![CDATA[SC_C6388AC587CC4A868B616190CA27B389.dll]]></arrayElement>
+                        <arrayElement
+                          dataType="System.String"><![CDATA[TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
+ZGUuDQ0KJAAAAAAAAABQRQAATAEDAEEKVlkAAAAAAAAAAOAAAiELAQsAACQAAAAIAAAAAAAAjkMA
+AAAgAAAAYAAAAAAAEAAgAAAAAgAABAAAAAAAAAAEAAAAAAAAAACgAAAAAgAAAAAAAAMAQIUAABAA
+ABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAADRDAABXAAAAAGAAAAgEAAAAAAAAAAAAAAAAAAAA
+AAAAAIAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAAlCMAAAAgAAAAJAAAAAIA
+AAAAAAAAAAAAAAAAACAAAGAucnNyYwAAAAgEAAAAYAAAAAYAAAAmAAAAAAAAAAAAAAAAAABAAABA
+LnJlbG9jAAAMAAAAAIAAAAACAAAALAAAAAAAAAAAAAAAAAAAQAAAQgAAAAAAAAAAAAAAAAAAAABw
+QwAAAAAAAEgAAAACAAUAACkAADQaAAABAAAAAAAAAEgoAAC4AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAH4CKA0AAAoCAnMqAAAGfQEAAAQCAnMsAAAGfQIAAAQqBipu
+AnsDAAAELBICewMAAARvKAAABgIUfQMAAAQqAAATMAUASQAAAAEAABEWCisuBAaUDgRyAQAAcCgO
+AAAKMxkCBQaaAgQGlCgPAAAKDgRzDAAABn0DAAAEBhdYCgYDMs4CbwUAAAYCbwIAAAYCKAMAAAYq
+BioAEzADAB8AAAACAAARAnsBAAAEbysAAAYKAgYUbxEAAAp0GAAAAX0FAAAEKnYCKBIAAAoCAnsF
+AAAEKBMAAApzFAAACn0EAAAEKkoCKBUAAAoCewQAAARvFgAACiobMAUACAMAAAMAABFzFwAACiZy
+DwAAcG8YAAAKC3ITAABwbxgAAAoMFQ0VEwQVEwUVEwYVEwcVEwgCewQAAARvGQAACgoCewQAAARv
+GQAACgoGF40cAAABExAREBYfLJ0REG8aAAAKEwkWEwo4gwAAABEJEQqachcAAHAoGwAACiwDEQoN
+EQkRCppyLQAAcCgbAAAKLAQRChMEEQkRCppyUwAAcCgbAAAKLAQRChMFEQkRCppyeQAAcCgbAAAK
+LAQRChMGEQkRCppykQAAcCgbAAAKLAQRChMHEQkRCppyqwAAcCgbAAAKLAQRChMIEQoXWBMKEQoR
+CY5pP3L///8CewQAAARvGQAACgo4/QEAAHMXAAAKJgYIbxoAAAoTC3K9AABwEwwXEw0rKxELEQ2a
+KBwAAAotGRELEQ0RCxENmnIPAABwcr8AAHBvHQAACqIRDRhYEw0RDRELjmkyzRYTDismEQ4tCREL
+EQ6aEwwrExEMchMAAHARCxEOmigeAAAKEwwRDhdYEw4RDhELjmky0hEMB28aAAAKEw8RDwmabx8A
+AApvIAAACigcAAAKLBECewQAAARvGQAACgrdTAEAABEPEQSabx8AAApvIAAACigcAAAKLBECewQA
+AARvGQAACgrdJQEAABEPEQSaKCEAAAom3hImAnsEAAAEbxkAAAoK3QYBAAACewMAAARvJwAABgJ7
+AwAABBEPEQSaKCEAAApvDQAABgJ7AwAABBEPCZpvFQAABgJ7AwAABHLDAABwbxEAAAYCewMAAARy
+yQAAcG8TAAAGEQ8RBJoRDxEFmigiAAAKLEsCewMAAAQRDxEFmighAAAKbyMAAAYCewMAAAQRDxEE
+mighAAAKIAABAABaEQ8RBZooIQAAClhvJQAABgJ7AwAABHLRAABwbxMAAAYCewMAAAQRDxEGmm8Z
+AAAGEQcVMSACewMAAARy2QAAcG8dAAAGAnsDAAAEEQ8RB5pvGwAABhEIFTEQAnsDAAAEEQ8RCJpv
+DwAABt4DJt4AAnsEAAAEbxkAAAoKBjr9/f//KkE0AAAAAAAA3AEAAA0AAADpAQAAEgAAAAMAAAEA
+AAAABAEAAO4BAADyAgAAAwAAAB4AAAETMAUADQEAAAQAABEDct8AAHBvIwAACgoDcuMAAHBvIwAA
+CgsDcucAAHBvIwAACgwDBhdYBwZZF1lvJAAACg0DBxdYCAdZF1lvJAAAChMECW8lAAAKFzMjAwly
+4wAAcCgmAAAKcusAAHAJcuMAAHAoHgAACm8dAAAKEAERBG8lAAAKFzMlAxEEcucAAHAoJgAACnLr
+AABwEQRy5wAAcCgeAAAKbx0AAAoQAQNy3wAAcHLvAABwbx0AAApy4wAAcHLvAABwbx0AAApy5wAA
+cHK9AABwbx0AAApy8wAAcHL3AABwbx0AAApy+wAAcHL3AABwbx0AAApy/wAAcHK9AABwbx0AAApy
+AwEAcHK9AABwbx0AAAoTBREFKh4CKAEAAAYqKgIDBAUoJwAACio6AhYDjB8AAAEoKAAACipaAywI
+AhYoKQAACipyGQEAcHMqAAAKeiYCFwMoKAAACipaAywIAhcoKQAACipyGQEAcHMqAAAKeiYCGAMo
+KAAACipaAywIAhgoKQAACipyGQEAcHMqAAAKeiYCGQMoKAAACipaAywIAhkoKQAACipyGQEAcHMq
+AAAKeiYCGgMoKAAACipaAywIAhooKQAACipyGQEAcHMqAAAKeiYCGwMoKAAACipaAywIAhsoKQAA
+CipyGQEAcHMqAAAKeiYCHAMoKAAACipaAywIAhwoKQAACipyGQEAcHMqAAAKeiYCHQMoKAAACipa
+AywIAh0oKQAACipyGQEAcHMqAAAKeiYCHgMoKAAACipaAywIAh4oKQAACipyGQEAcHMqAAAKeioC
+HwkDKCgAAAoqXgMsCQIfCSgpAAAKKnIZAQBwcyoAAAp6PgIfCgOMHwAAASgoAAAKKl4DLAkCHwoo
+KQAACipyGQEAcHMqAAAKej4CHwsDjB8AAAEoKAAACipeAywJAh8LKCkAAAoqchkBAHBzKgAACno+
+Ah8MA4wfAAABKCgAAAoqXgMsCQIfDCgpAAAKKnIZAQBwcyoAAAp6HgIoKwAACioeAigsAAAKKh4C
+KC0AAAoqOgIoLgAACgIDfQYAAAQqggJ7BgAABG8vAAAKbzAAAApyVwEAcG8xAAAKbzIAAAoqOgIo
+LgAACgIDfQcAAAQqHgIoLgAACioTMAIALQAAAAUAABF+CAAABC0gcmEBAHDQBwAAAig0AAAKbzUA
+AApzNgAACgoGgAgAAAR+CAAABCoafgkAAAQqHgKACQAABCoafgoAAAQqLnMyAAAGgAoAAAQqHgIo
+OQAACioAAAAAALQAAADOyu++AQAAAJEAAABsU3lzdGVtLlJlc291cmNlcy5SZXNvdXJjZVJlYWRl
+ciwgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlU
+b2tlbj1iNzdhNWM1NjE5MzRlMDg5I1N5c3RlbS5SZXNvdXJjZXMuUnVudGltZVJlc291cmNlU2V0
+AgAAAAAAAAAAAAAAUEFEUEFEULQAAABCU0pCAQABAAAAAAAMAAAAdjQuMC4zMDMxOQAAAAAFAGwA
+AACQCQAAI34AAPwJAAAQDAAAI1N0cmluZ3MAAAAADBYAANQBAAAjVVMA4BcAABAAAAAjR1VJRAAA
+APAXAABEAgAAI0Jsb2IAAAAAAAAAAgAAAVcVogkJAQAAAPolMwAWAAABAAAAKgAAAAgAAAAKAAAA
+MwAAACYAAAA5AAAADwAAAAUAAAAEAAAAHgAAAB8AAAABAAAAAQAAAAYAAAABAAAAAAAKAAEAAAAA
+AAYA7gDNAAYA/gDNAAoAGwEUAQ4ANwEiARIAmAHNAAYApwHNAAoA3wHVARYAjAVkBQoAxAWzBQoA
+9QXgBQoA4wbJBgoADgf8BgoAJQf8BgoAQgf8BgoAYQf8BgoAegf8BgoAkwf8BgoArgf8BgoAyQf8
+BgoA4gf8BgoAGwj7BwoAOwj7BwYAmgjNAAoA0wgUAQoA5gjaCAoA7wjVAQoAGwkACQoANwkUAQoA
+eQkUAQoAlwkUAQoAvgkUAQoA1QkUARoAPAoTChoAawoTChoArgoTCgoACwv4CgoAKAsUAQoALQsU
+AQoAUQv8Bg4AfQtnCw4AlgtnCwoAqwv7BwAAAAABAAAAAAABAAEAAQAQADIAAAAFAAEAAQABABAA
+QAAAAAgABAAGAAEAEABLAAAACQAGAAwAAQAQAFgAAAANAAYAKgABABAAZAAAAA0ABwAsAAAAEABu
+AHgADQAIAC0AAAEQAKcAeAARAAoAMQAGAFgAEwAGAGQAFwAGAEsAHwABAOwBLwABAPcBMwABADEF
+aQABADEFaQARANQFfQARAAEGgQARAEUGnwBQIAAAAACGGE8BGwABAHAgAAAAAMYBVQEbAAEAciAA
+AAAAgQBjARsAAQCQIAAAAADGALUBIwABAOUgAAAAAMYBwQEbAAUA6CAAAAAAxgALAjYABQATIQAA
+AADGAB4CGwAGADEhAAAAAMYAKQIbAAYARCEAAAAAxgDBARsABgCMJAAAAACBADUCOwAGAKUlAAAA
+AIYYTwEbAAcArSUAAAAAhhhPAUAABwC4JQAAAACGCD0CSgAKAMclAAAAAIYISQJPAAsA3iUAAAAA
+hghcAlQADADoJQAAAACGCGUCTwANAP8lAAAAAIYIdQJUAA4ACSYAAAAAhgiEAk8ADwAgJgAAAACG
+CJoCVAAQAComAAAAAIYIogJPABEAQSYAAAAAhgixAlQAEgBLJgAAAACGCL8CTwATAGImAAAAAIYI
+1AJUABQAbCYAAAAAhgjgAk8AFQCDJgAAAACGCPMCVAAWAI0mAAAAAIYIAgNPABcApCYAAAAAhggY
+A1QAGACuJgAAAACGCCYDTwAZAMUmAAAAAIYIOwNUABoAzyYAAAAAhghLA08AGwDmJgAAAACGCGID
+VAAcAPEmAAAAAIYIcwNPAB0ACScAAAAAhgiLA0oAHgAZJwAAAACGCJUDTwAfADEnAAAAAIYIpgNK
+ACAAQScAAAAAhgixA08AIQBZJwAAAACGCMMDSgAiAGknAAAAAIYIywNPACMAgScAAAAAhgDaAxsA
+JACJJwAAAACGAOEDGwAkAJEnAAAAAIYA8ANZACQAmScAAAAAhhhPAW0AJACoJwAAAACGCKUFcwAl
+AMknAAAAAIYYTwFtACUA2CcAAAAAgxhPARsAJgDgJwAAAACTCBEGhQAmABkoAAAAAJMIJQaKACYA
+ICgAAAAAkwgxBo8AJgAoKAAAAACWCFUGowAnADsoAAAAAIYYTwEbACcALygAAAAAkRjGC4kBJwAA
+AAEAaQYAAAIAcQYAAAMAewYAAAQAgwYAAAEAjQYAAAEAmQYAAAEAngYAAAIApQYAAAMAgwYAAAEA
+uQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYA
+AAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEA
+uQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAuQYAAAEAvwYAAAEAvwYAAAEAuQZZ
+AE8BVABhAE8BVABpAE8BVABxAE8BVAB5AE8BVACBAE8BVACJAE8BVACRAE8BVACZAE8BVAChAE8B
+VACpAE8BSgCxAE8BGwAJAE8BGwAJAH0IrQAJAIkItAC5AE8BGwBBAMEIwwAJAB4CGwDJAFUGzQA5
+AE8B0gAJACkCGwDRAPoIGwAMAE8BGwDBACIJ3wDRAC4J5ADBADwJ6ADBAEIJ7wDBAE4J9QDBAFwJ
++gDBAGQJAAEZAGsJ5ADBAHQJ5ADpAIEJBwHBAIkJ7wDBAKEJJgHBAKkJKwHBALMJMQHBAGQJNQER
+AE8BQAARAMQJRAERAM0JSgABAU8BVAARANoDGwARAOEDGwARAPADWQAZAE8BGwAJAFUKSgEJAY4K
+UAERAccKVgEZAeIKcwAhAU8BGwApAT8LXQEpAVoLZgFJAE8BbAFBAU8BeQFRAU8BGwAhAE8BGwAu
+ABsA/gEuAGMAJAIuAAsAjQEuABMA1QEuACMA/gEuACsA/gEuADMA1QEuADsABAIuAEMA/gEuAFsA
+GwJjAIMAvgDjAJsBvgBBAcMBvgCJA7sBgAGpA7sBgAG6AMgADAE7AXQBBAABAAUAGwAHABwACAAe
+AAAA/ANdAAAABARhAAAAEwRlAAAAGARhAAAAJARlAAAALwRhAAAAQQRlAAAARQRhAAAAUARlAAAA
+WgRhAAAAawRlAAAAcwRhAAAAggRlAAAAjQRhAAAAnwRlAAAAqQRhAAAAugRlAAAAxgRhAAAA2QRl
+AAAA5gRhAAAA+gRdAAAAAAVhAAAADQVdAAAAFAVhAAAAIgVdAAAAJgVhAAAArgV4AAAAxAWVAAAA
+PQaaAAAAYQaoAAEADQADAAEADgAFAAEADwAHAAEAEAAJAAEAEQALAAEAEgANAAEAEwAPAAEAFAAR
+AAEAFQATAAEAFgAVAAEAFwAXAAEAGAAZAAEAGQAbAAEAGgAdAAEAGwAfAAEAHAAhAAEAHQAjAAEA
+HgAlAAEAHwAnAAEAIAApAAEAIQArAAEAIgAtAAEAIwAvAAEAJAAxAAEAJQAzAAEAJgA1AAIAKwA3
+AAIALgA5AAIALwA7AAEAMAA7AAIAMQA9ANkABIAAAAEAAAD2GCBzAAAAAAAAWQgAAAsAAAAAAAAA
+AAAAAAEAsAAAAAAABAAAAAAAAAAAAAAACgALAQAAAAAEAAAAAAAAAAAAAAAKABQBAAAAAAsAAAAA
+AAAAAAAAAAEAdwEAAAAACwAAAAAAAAAAAAAAAQBBBQAAAAALAAAAAAAAAAAAAAABAO8JAAAAAAAA
+AAABAAAAzQsAAAAAAAAAPE1vZHVsZT4AU0NfQzYzODhBQzU4N0NDNEE4NjhCNjE2MTkwQ0EyN0Iz
+ODkuZGxsAFVzZXJDb21wb25lbnQAU2NyaXB0TWFpbgBleHBvcnRCdWZmZXIAQ29ubmVjdGlvbnMA
+VmFyaWFibGVzAFJlc291cmNlcwBTQ185NTg2YTU3NTdjMjM0ZmU5ODIzY2EyNWIzOTVhNzQ5Zi5Q
+cm9wZXJ0aWVzAFNldHRpbmdzAE1pY3Jvc29mdC5TcWxTZXJ2ZXIuVHhTY3JpcHQATWljcm9zb2Z0
+LlNxbFNlcnZlci5EdHMuUGlwZWxpbmUAU2NyaXB0Q29tcG9uZW50AFNjcmlwdEJ1ZmZlcgBtc2Nv
+cmxpYgBTeXN0ZW0AT2JqZWN0AFN5c3RlbS5Db25maWd1cmF0aW9uAEFwcGxpY2F0aW9uU2V0dGlu
+Z3NCYXNlAC5jdG9yAEZpbmlzaE91dHB1dHMATWFya091dHB1dHNGaW5pc2hlZABNaWNyb3NvZnQu
+U3FsU2VydmVyLlBpcGVsaW5lSG9zdABQaXBlbGluZUJ1ZmZlcgBPdXRwdXROYW1lTWFwAFByaW1l
+T3V0cHV0AENyZWF0ZU5ld091dHB1dFJvd3MAU3lzdGVtLklPAFN0cmVhbVJlYWRlcgB0ZXh0UmVh
+ZGVyAGV4cG9ydGVkQWRkcmVzc0ZpbGUAQWNxdWlyZUNvbm5lY3Rpb25zAFByZUV4ZWN1dGUAUG9z
+dEV4ZWN1dGUAZ2V0dGltZQBzZXRfU0NFTkJJRABzZXRfU0NFTkJJRF9Jc051bGwAc2V0X0NJVFkA
+c2V0X0NJVFlfSXNOdWxsAHNldF9NQU5VRkFDVE9SAHNldF9NQU5VRkFDVE9SX0lzTnVsbABzZXRf
+UlJVAHNldF9SUlVfSXNOdWxsAHNldF9BTEFSTUNPREUAc2V0X0FMQVJNQ09ERV9Jc051bGwAc2V0
+X0FMQVJNTkUAc2V0X0FMQVJNTkVfSXNOdWxsAHNldF9DUkVBVEVUSU1FAHNldF9DUkVBVEVUSU1F
+X0lzTnVsbABzZXRfQ0xFQVJUSU1FAHNldF9DTEVBUlRJTUVfSXNOdWxsAHNldF9DTEVBUlNUQVRJ
+QwBzZXRfQ0xFQVJTVEFUSUNfSXNOdWxsAHNldF9BTEFSTUNPTlRFTlQAc2V0X0FMQVJNQ09OVEVO
+VF9Jc051bGwAc2V0X0lGb3JtAHNldF9JRm9ybV9Jc051bGwAc2V0X0NlbGxpZABzZXRfQ2VsbGlk
+X0lzTnVsbABzZXRfRUNJAHNldF9FQ0lfSXNOdWxsAEFkZFJvdwBTZXRFbmRPZlJvd3NldABFbmRP
+ZlJvd3NldABTQ0VOQklEAFNDRU5CSURfSXNOdWxsAENJVFkAQ0lUWV9Jc051bGwATUFOVUZBQ1RP
+UgBNQU5VRkFDVE9SX0lzTnVsbABSUlUAUlJVX0lzTnVsbABBTEFSTUNPREUAQUxBUk1DT0RFX0lz
+TnVsbABBTEFSTU5FAEFMQVJNTkVfSXNOdWxsAENSRUFURVRJTUUAQ1JFQVRFVElNRV9Jc051bGwA
+Q0xFQVJUSU1FAENMRUFSVElNRV9Jc051bGwAQ0xFQVJTVEFUSUMAQ0xFQVJTVEFUSUNfSXNOdWxs
+AEFMQVJNQ09OVEVOVABBTEFSTUNPTlRFTlRfSXNOdWxsAElGb3JtAElGb3JtX0lzTnVsbABDZWxs
+aWQAQ2VsbGlkX0lzTnVsbABFQ0kARUNJX0lzTnVsbABQYXJlbnRDb21wb25lbnQATWljcm9zb2Z0
+LlNxbFNlcnZlci5EVFNSdW50aW1lV3JhcABNaWNyb3NvZnQuU3FsU2VydmVyLkR0cy5SdW50aW1l
+LldyYXBwZXIASURUU0Nvbm5lY3Rpb25NYW5hZ2VyMTAwAGdldF9jb25uAGNvbm4AU3lzdGVtLlJl
+c291cmNlcwBSZXNvdXJjZU1hbmFnZXIAcmVzb3VyY2VNYW4AU3lzdGVtLkdsb2JhbGl6YXRpb24A
+Q3VsdHVyZUluZm8AcmVzb3VyY2VDdWx0dXJlAGdldF9SZXNvdXJjZU1hbmFnZXIAZ2V0X0N1bHR1
+cmUAc2V0X0N1bHR1cmUAQ3VsdHVyZQBkZWZhdWx0SW5zdGFuY2UAZ2V0X0RlZmF1bHQARGVmYXVs
+dABPdXRwdXRzAE91dHB1dElEcwBCdWZmZXJzAE91dHB1dE1hcABUcmFuc2FjdGlvbgB0aW1lAEJ1
+ZmZlcgBCdWZmZXJDb2x1bW5JbmRleGVzAHZhbHVlAENvbXBvbmVudABTeXN0ZW0uUnVudGltZS5W
+ZXJzaW9uaW5nAFRhcmdldEZyYW1ld29ya0F0dHJpYnV0ZQBTeXN0ZW0uUmVmbGVjdGlvbgBBc3Nl
+bWJseVRpdGxlQXR0cmlidXRlAEFzc2VtYmx5RGVzY3JpcHRpb25BdHRyaWJ1dGUAQXNzZW1ibHlD
+b25maWd1cmF0aW9uQXR0cmlidXRlAEFzc2VtYmx5Q29tcGFueUF0dHJpYnV0ZQBBc3NlbWJseVBy
+b2R1Y3RBdHRyaWJ1dGUAQXNzZW1ibHlDb3B5cmlnaHRBdHRyaWJ1dGUAQXNzZW1ibHlUcmFkZW1h
+cmtBdHRyaWJ1dGUAQXNzZW1ibHlDdWx0dXJlQXR0cmlidXRlAEFzc2VtYmx5VmVyc2lvbkF0dHJp
+YnV0ZQBTeXN0ZW0uUnVudGltZS5Db21waWxlclNlcnZpY2VzAENvbXBpbGF0aW9uUmVsYXhhdGlv
+bnNBdHRyaWJ1dGUAUnVudGltZUNvbXBhdGliaWxpdHlBdHRyaWJ1dGUAU0NfQzYzODhBQzU4N0ND
+NEE4NjhCNjE2MTkwQ0EyN0IzODkAR2V0T3V0cHV0SUQAR2V0Q29sdW1uSW5kZXhlcwBTU0lTU2Ny
+aXB0Q29tcG9uZW50RW50cnlQb2ludEF0dHJpYnV0ZQBBY3F1aXJlQ29ubmVjdGlvbgBTdHJpbmcA
+U3lzdGVtLlRleHQARW5jb2RpbmcAVGV4dFJlYWRlcgBDbG9zZQBTeXN0ZW0uQ29sbGVjdGlvbnMu
+R2VuZXJpYwBMaXN0YDEAVG9DaGFyQXJyYXkAUmVhZExpbmUAQ2hhcgBTcGxpdABvcF9FcXVhbGl0
+eQBJc051bGxPckVtcHR5AFJlcGxhY2UAQ29uY2F0AFRvU3RyaW5nAFRyaW0AQ29udmVydABUb0lu
+dDMyAG9wX0luZXF1YWxpdHkARXhjZXB0aW9uAEluZGV4T2YAU3Vic3RyaW5nAGdldF9MZW5ndGgA
+SW50MzIAc2V0X0l0ZW0AU2V0TnVsbABJbnZhbGlkT3BlcmF0aW9uRXhjZXB0aW9uAE1pY3Jvc29m
+dC5TcWxTZXJ2ZXIuRFRTUGlwZWxpbmVXcmFwAE1pY3Jvc29mdC5TcWxTZXJ2ZXIuRHRzLlBpcGVs
+aW5lLldyYXBwZXIASURUU0NvbXBvbmVudE1ldGFEYXRhMTAwAGdldF9Db21wb25lbnRNZXRhRGF0
+YQBJRFRTUnVudGltZUNvbm5lY3Rpb25Db2xsZWN0aW9uMTAwAGdldF9SdW50aW1lQ29ubmVjdGlv
+bkNvbGxlY3Rpb24ASURUU1J1bnRpbWVDb25uZWN0aW9uMTAwAEdldFJ1bnRpbWVDb25uZWN0aW9u
+QnlOYW1lAGdldF9Db25uZWN0aW9uTWFuYWdlcgBTeXN0ZW0uRGlhZ25vc3RpY3MARGVidWdnZXJO
+b25Vc2VyQ29kZUF0dHJpYnV0ZQBUeXBlAFJ1bnRpbWVUeXBlSGFuZGxlAEdldFR5cGVGcm9tSGFu
+ZGxlAEFzc2VtYmx5AGdldF9Bc3NlbWJseQBTeXN0ZW0uQ29tcG9uZW50TW9kZWwARWRpdG9yQnJv
+d3NhYmxlQXR0cmlidXRlAEVkaXRvckJyb3dzYWJsZVN0YXRlAENvbXBpbGVyR2VuZXJhdGVkQXR0
+cmlidXRlAC5jY3RvcgBTQ185NTg2YTU3NTdjMjM0ZmU5ODIzY2EyNWIzOTVhNzQ5Zi5Qcm9wZXJ0
+aWVzLlJlc291cmNlcy5yZXNvdXJjZXMAAA1lAHgAcABvAHIAdAAAAywAAAMiAAAVQQBsAGEAcgBt
+ACAAQwBvAGQAZQAAJUMAdQBzAHQAbwBtACAAQQB0AHQAcgBpAGIAdQB0AGUAIAAxAAAlQwB1AHMA
+dABvAG0AIABBAHQAdAByAGkAYgB1AHQAZQAgADQAABdSAGEAaQBzAGUAZAAgAFQAaQBtAGUAABlD
+AGwAZQBhAHIAZQBkACAAVABpAG0AZQAAEU4ARQAgAEEAZwBlAG4AdAAAAQADfAAABS1OdFEBB0IA
+QgBVAAAHUgBSAFUAAAWGU/JTAQN0XgEDCGcBA+VlAQMwAAADLQABA/ZlAQM6AAADBlIBA9J5ARUg
+AEcATQBUACsAMAA4ADoAMAAwAAA94GXVbAZcIABJAHMATgB1AGwAbAAgAF5cJ2C+i25/Ok4gAEYA
+YQBsAHMAZQACMPeLOk7lixdSS408UAIwAQljAG8AbgBuAABxUwBDAF8AOQA1ADgANgBhADUANwA1
+ADcAYwAyADMANABmAGUAOQA4ADIAMwBjAGEAMgA1AGIAMwA5ADUAYQA3ADQAOQBmAC4AUAByAG8A
+cABlAHIAdABpAGUAcwAuAFIAZQBzAG8AdQByAGMAZQBzAAAAKlYzhH+yh02E0FoHjZxSiAAIiYRd
+zYCAzJEIt3pcVhk04IkDBhIUAwYSGAMgAAEDBhIQCyAEAQgdCB0SFRIZAwYSHQIGDgQgAQEcBCAB
+Dg4JIAMBEhUdCBIZBCABAQgEIAEBAgQgAQEOAyAAAgMoAAgDKAACAygADgMGEgUFIAEBEgUEIAAS
+IQQoABIhAwYSJQMGEikEAAASJQQAABIpBQABARIpBAgAEiUECAASKQMGEiAEAAASIAQIABIgBgAC
+CBIZDgUgAR0ICAMHAQgEAQAAAAQgARwcBAcBEiEEAAASZQYgAgEOEmUFFRJtAQ4EIAAdAwMgAA4G
+IAEdDh0DBQACAg4OBAABAg4FIAIODg4GAAMODg4OBAABCA4ZBxEOHQMdAwgICAgICB0OCB0ODggI
+HQ4dAwQgAQgOBSACDggIAyAACAUAAg4ODggHBggICA4ODgUgAgEIHAUgABKAhQUgABKAiQYgARKA
+jQ4IAAESgJURgJkFIAASgJ0HIAIBDhKAnQQHARIlBiABARGApQgBAAIAAAAAAAMAAAFHAQAaLk5F
+VEZyYW1ld29yayxWZXJzaW9uPXY0LjABAFQOFEZyYW1ld29ya0Rpc3BsYXlOYW1lEC5ORVQgRnJh
+bWV3b3JrIDQoAQAjU0NfOTU4NmE1NzU3YzIzNGZlOTgyM2NhMjViMzk1YTc0OWYAAAUBAAAAABYB
+ABFDb3B5cmlnaHQgQCAgMjAxNwAACAEACAAAAAAAHgEAAQBUAhZXcmFwTm9uRXhjZXB0aW9uVGhy
+b3dzAQBcQwAAAAAAAAAAAAB+QwAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcEMAAAAAAAAAAAAA
+AAAAAAAAAAAAAF9Db3JEbGxNYWluAG1zY29yZWUuZGxsAAAAAAD/JQAgABAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAA
+ABgAAIAAAAAAAAAAAAAAAAAAAAEAAQAAADAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAEgAAABYYAAA
+sAMAAAAAAAAAAAAAsAM0AAAAVgBTAF8AVgBFAFIAUwBJAE8ATgBfAEkATgBGAE8AAAAAAL0E7/4A
+AAEAAAABACBz9hgAAAEAIHP2GD8AAAAAAAAABAAAAAIAAAAAAAAAAAAAAAAAAABEAAAAAQBWAGEA
+cgBGAGkAbABlAEkAbgBmAG8AAAAAACQABAAAAFQAcgBhAG4AcwBsAGEAdABpAG8AbgAAAAAAAACw
+BBADAAABAFMAdAByAGkAbgBnAEYAaQBsAGUASQBuAGYAbwAAAOwCAAABADAAMAAwADAAMAA0AGIA
+MAAAAHAAJAABAEYAaQBsAGUARABlAHMAYwByAGkAcAB0AGkAbwBuAAAAAABTAEMAXwA5ADUAOAA2
+AGEANQA3ADUANwBjADIAMwA0AGYAZQA5ADgAMgAzAGMAYQAyADUAYgAzADkANQBhADcANAA5AGYA
+AABAAA8AAQBGAGkAbABlAFYAZQByAHMAaQBvAG4AAAAAADEALgAwAC4ANgAzADkAMAAuADIAOQA0
+ADcAMgAAAAAAcAAoAAEASQBuAHQAZQByAG4AYQBsAE4AYQBtAGUAAABTAEMAXwBDADYAMwA4ADgA
+QQBDADUAOAA3AEMAQwA0AEEAOAA2ADgAQgA2ADEANgAxADkAMABDAEEAMgA3AEIAMwA4ADkALgBk
+AGwAbAAAAEgAEgABAEwAZQBnAGEAbABDAG8AcAB5AHIAaQBnAGgAdAAAAEMAbwBwAHkAcgBpAGcA
+aAB0ACAAQAAgACAAMgAwADEANwAAAHgAKAABAE8AcgBpAGcAaQBuAGEAbABGAGkAbABlAG4AYQBt
+AGUAAABTAEMAXwBDADYAMwA4ADgAQQBDADUAOAA3AEMAQwA0AEEAOAA2ADgAQgA2ADEANgAxADkA
+MABDAEEAMgA3AEIAMwA4ADkALgBkAGwAbAAAAGgAJAABAFAAcgBvAGQAdQBjAHQATgBhAG0AZQAA
+AAAAUwBDAF8AOQA1ADgANgBhADUANwA1ADcAYwAyADMANABmAGUAOQA4ADIAMwBjAGEAMgA1AGIA
+MwA5ADUAYQA3ADQAOQBmAAAARAAPAAEAUAByAG8AZAB1AGMAdABWAGUAcgBzAGkAbwBuAAAAMQAu
+ADAALgA2ADMAOQAwAC4AMgA5ADQANwAyAAAAAABIAA8AAQBBAHMAcwBlAG0AYgBsAHkAIABWAGUA
+cgBzAGkAbwBuAAAAMQAuADAALgA2ADMAOQAwAC4AMgA5ADQANwAyAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAADAAAAJAzAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
+                      </arrayElements>
+                    </property>
+                    <property
+                      dataType="System.String"
+                      description="指定 Microsoft Visual Studio Tools for Applications 项目的名称。项目名称在包中必须是唯一的。"
+                      name="VSTAProjectName"
+                      typeConverter="NOTBROWSABLE">SC_c6388ac587cc4a868b616190ca27b389</property>
+                    <property
+                      dataType="System.String"
+                      description="指定脚本使用的编程语言。"
+                      name="ScriptLanguage"
+                      typeConverter="Microsoft.SqlServer.VSTAHosting.ScriptingLanguages, Microsoft.SqlServer.VSTAScriptingLib, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">CSharp</property>
+                    <property
+                      dataType="System.String"
+                      description="指定以逗号分隔的只读变量列表。"
+                      name="ReadOnlyVariables"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIVariablePickerDlg, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.String"
+                      description="指定以逗号分隔的读/写变量列表。"
+                      name="ReadWriteVariables"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIWriteableVariablePickerDlg, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.String"
+                      description="该脚本中存在断点列表。"
+                      isArray="true"
+                      name="BreakpointCollection"
+                      typeConverter="NOTBROWSABLE">
+                      <arrayElements
+                        arrayElementCount="0" />
+                    </property>
+                    <property
+                      dataType="System.String"
+                      description="执行校验和检查以便根据编译后的代码匹配组件元数据。"
+                      name="MetadataChecksum"
+                      typeConverter="NOTBROWSABLE">73adf63f9c76839b042bf68c63af74b8</property>
+                    <property
+                      dataType="System.String"
+                      name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.ScriptComponentHost, Microsoft.SqlServer.TxScript, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\导入中兴告警数据\数据流任务\脚本组件.Connections[conn]"
+                      connectionManagerID="Package.ConnectionManagers[平面文件连接管理器]"
+                      connectionManagerRefId="Package.ConnectionManagers[平面文件连接管理器]"
+                      name="conn" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export]"
+                      hasSideEffects="true"
+                      name="export">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[SC_ENBID]"
+                          dataType="i4"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[SC_ENBID]"
+                          name="SC_ENBID" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CITY]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CITY]"
+                          name="CITY" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[MANUFACTOR]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[MANUFACTOR]"
+                          name="MANUFACTOR" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[RRU]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[RRU]"
+                          name="RRU" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ALARMCODE]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ALARMCODE]"
+                          name="ALARMCODE" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ALARMNE]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ALARMNE]"
+                          name="ALARMNE" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CREATETIME]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CREATETIME]"
+                          name="CREATETIME" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CLEARTIME]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CLEARTIME]"
+                          name="CLEARTIME" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CLEARSTATIC]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[CLEARSTATIC]"
+                          name="CLEARSTATIC" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ALARMCONTENT]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ALARMCONTENT]"
+                          name="ALARMCONTENT" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[IForm]"
+                          dataType="i4"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[IForm]"
+                          name="IForm" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[Cellid]"
+                          dataType="i4"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[Cellid]"
+                          name="Cellid" />
+                        <outputColumn
+                          refId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ECI]"
+                          dataType="i4"
+                          lineageId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export].Columns[ECI]"
+                          name="ECI" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\导入中兴告警数据\数据流任务.Paths[export]"
+                  endId="Package\导入中兴告警数据\数据流任务\数据转换.Inputs[数据转换输入]"
+                  name="export"
+                  startId="Package\导入中兴告警数据\数据流任务\脚本组件.Outputs[export]" />
+                <path
+                  refId="Package\导入中兴告警数据\数据流任务.Paths[数据转换输出]"
+                  endId="Package\导入中兴告警数据\数据流任务\查找.Inputs[查找输入]"
+                  name="数据转换输出"
+                  startId="Package\导入中兴告警数据\数据流任务\数据转换.Outputs[数据转换输出]" />
+                <path
+                  refId="Package\导入中兴告警数据\数据流任务.Paths[查找匹配输出]"
+                  endId="Package\导入中兴告警数据\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入]"
+                  name="查找匹配输出"
+                  startId="Package\导入中兴告警数据\数据流任务\查找.Outputs[查找匹配输出]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\导入中兴告警数据\文件系统任务"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.FileSystemTask.FileSystemTask, Microsoft.SqlServer.FileSystemTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:DelayValidation="True"
+          DTS:Description="文件系统任务"
+          DTS:DTSID="{ac87de73-609a-4204-bb78-1e7639479e8d}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.FileSystemTask.FileSystemTask, Microsoft.SqlServer.FileSystemTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="文件系统任务"
+          DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="MoveFile"
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="User::ZXAlarmloadFile"
+              TaskIsSourceVariable="True"
+              TaskDestinationPath="User::ZXAlarmCompleteFile"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\导入中兴告警数据.PrecedenceConstraints[约束]"
+          DTS:CreationName=""
+          DTS:DTSID="{6E657829-2E72-4241-A3C5-DB3781468488}"
+          DTS:From="Package\导入中兴告警数据\数据流任务"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="约束"
+          DTS:To="Package\导入中兴告警数据\文件系统任务" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{72C6ABBF-9243-4D4D-A02B-ADC9A973F107}"
+          DTS:ObjectName="{72C6ABBF-9243-4D4D-A02B-ADC9A973F107}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::ZXAlarmloadFile" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[约束]"
+      DTS:CreationName=""
+      DTS:DTSID="{0189CA95-8682-48A3-B848-5BB02182535F}"
+      DTS:From="Package\下载中兴告警数据"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="约束"
+      DTS:To="Package\导入中兴告警数据" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--此 CDATA 部分包含包的布局信息。该部分包括(x,y)坐标、宽度和高度之类的信息。-->
+<!--如果您手动编辑此部分并且出错，则可以删除此部分。 -->
+<!--该包仍将能够正常加载，但以前的布局信息将丢失，并且设计器将自动在设计图面上重新排列这些元素。-->
+<Objects
+  Version="sql11">
+  <!--下面的每个节点都将包含不会影响运行时行为的属性。-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="141,42"
+          Id="Package\导入中兴告警数据\数据流任务"
+          TopLeft="48.699995805323,18.088884404265" />
+        <NodeLayout
+          Size="152,42"
+          Id="Package\导入中兴告警数据\文件系统任务"
+          TopLeft="48.699995805323,120.088884404265" />
+        <EdgeLayout
+          Id="Package\导入中兴告警数据.PrecedenceConstraints[约束]"
+          TopLeft="121.949995805323,60.088884404265">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="274,218"
+          Size="274,261"
+          Id="Package\导入中兴告警数据"
+          TopLeft="355.166659512454,66.2222204467397" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\下载中兴告警数据"
+          TopLeft="63.9999974171322,181.928562082807" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[约束]"
+          TopLeft="240.999997417132,199.825391264773">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="114.166662095321,0"
+              Start="0,0"
+              End="106.666662095321,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="106.666662095321,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\导入中兴告警数据\数据流任务">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\导入中兴告警数据\数据流任务\脚本组件"
+          TopLeft="226.199991215766,35.6841370112371" />
+        <NodeLayout
+          Size="147,42"
+          Id="Package\导入中兴告警数据\数据流任务\OLE DB 目标"
+          TopLeft="401.499984006088,404.785693554247" />
+        <NodeLayout
+          Size="129,42"
+          Id="Package\导入中兴告警数据\数据流任务\数据转换"
+          TopLeft="229.833324160841,141.071421313043" />
+        <EdgeLayout
+          Id="Package\导入中兴告警数据\数据流任务.Paths[export]"
+          TopLeft="292.266657688303,77.6841370112371">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,63.3872843018058"
+              Start="0,0"
+              End="0,55.8872843018058">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.8872843018058" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="105,42"
+          Id="Package\导入中兴告警数据\数据流任务\查找"
+          TopLeft="429.833316213556,225.571416995964" />
+        <EdgeLayout
+          Id="Package\导入中兴告警数据\数据流任务.Paths[数据转换输出]"
+          TopLeft="294.333324160841,183.071421313043">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="187.999992052715,42.4999956829209"
+              Start="0,0"
+              End="187.999992052715,34.9999956829209">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.2499978414604" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.2499978414604"
+                    Point2="0,21.2499978414604"
+                    Point3="4,21.2499978414604" />
+                  <mssgle:LineSegment
+                    End="183.999992052715,21.2499978414604" />
+                  <mssgle:CubicBezierSegment
+                    Point1="183.999992052715,21.2499978414604"
+                    Point2="187.999992052715,21.2499978414604"
+                    Point3="187.999992052715,25.2499978414604" />
+                  <mssgle:LineSegment
+                    End="187.999992052715,34.9999956829209" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\导入中兴告警数据\数据流任务.Paths[查找匹配输出]"
+          TopLeft="478.666650109822,267.571416995964">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,137.214276558283"
+              Start="0,0"
+              End="0,129.714276558283">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,129.714276558283" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-30.47265625,59.0182710916415,60.9453125,11.677734375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\导入中兴告警数据\数据流任务\查找">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">"KPIMIS"."DATA_ALARM"</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\导入中兴告警数据\数据流任务\OLE DB 目标">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

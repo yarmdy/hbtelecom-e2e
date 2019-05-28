@@ -1,0 +1,2005 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/8/2017 9:26:01 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="PC201411071828"
+  DTS:CreatorName="PC201411071828\Administrator"
+  DTS:DTSID="{3AA6BD38-3314-4FAA-9996-64AD07AD2590}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5583.0"
+  DTS:LocaleID="2052"
+  DTS:ObjectName="GCData"
+  DTS:PackageType="5"
+  DTS:VersionBuild="71"
+  DTS:VersionGUID="{DEF19BD9-3B1B-4DE0-8516-0CFEF27D6DB3}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel 连接管理器]"
+      DTS:CreationName="EXCEL"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{C49BACED-9B58-48B0-8111-A24733C67226}"
+      DTS:ObjectName="Excel 连接管理器">
+      <DTS:PropertyExpression
+        DTS:Name="ExcelFilePath">@[User::GCloadFile]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{51032032-DAB4-4758-8285-198AE44B682B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="GCCompleteFile">
+      <DTS:VariableValue
+        DTS:DataType="8">D:\Work\河北项目\Data\Complete\GC\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{67F138A9-B73A-40B7-95A6-0BCEF205AE3F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="GCloadFile">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{ED68872C-52EF-492C-A768-6DF2209CDD7D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="GCLocFile">
+      <DTS:VariableValue
+        DTS:DataType="8">D:\Work\河北项目\Data\WorkData\GC\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7FBC0169-0621-4D28-AC2D-05FBB72D2478}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="GCRemoteFile">
+      <DTS:VariableValue
+        DTS:DataType="8">/HBData/GC/*</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Foreach 循环容器"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach 循环容器"
+      DTS:DTSID="{0490d54a-f780-4244-9847-f9a94639347f}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach 循环容器">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="DTS.ForEachFileEnumerator.3"
+        DTS:DTSID="{bd6a3b6a-8bea-4abb-9c5d-99d7807e6fef}"
+        DTS:ObjectName="{85EAF8E4-FB8E-4EF8-8254-DD56A11A2E7E}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[GCLocFile]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="D:\Work\河北项目\Data\WorkData\GC\" />
+            <FEFEProperty
+              FileSpec="*.*" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="-1" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach 循环容器\数据流任务"
+          DTS:CreationName="SSIS.Pipeline.3"
+          DTS:DelayValidation="True"
+          DTS:Description="数据流任务"
+          DTS:DTSID="{84db97f0-ff1f-4670-9115-922da5dc7e7e}"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="数据流任务"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标"
+                  componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+                  contactInfo="OLE DB 目标;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB 目标"
+                  name="OLE DB 目标"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="命令超时前等待的时间(秒)。值为 0，表示无限期等待。"
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="指定用于打开行集的数据库对象的名称。"
+                      name="OpenRowset">"KPIMIS"."WORKPARAMETER"</property>
+                    <property
+                      dataType="System.String"
+                      description="指定包含用于打开行集的数据库对象名的变量。"
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="要执行的 SQL 命令。"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定当数据源中没有代码页信息时使用的列代码页。"
+                      name="DefaultCodePage">936</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="描述字符数据时，强制使用 DefaultCodePage 属性值。"
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定用于访问数据库的模式。"
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="指示是否将为标识列提供的值复制到目标。如果设置为 False，则将在目标中为标识列自动生成值。仅当启用了快速加载时适用。"
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="指示对于包含 Null 值的列是否将 Null 值插入目标中。如果为 False，则对于包含 Null 值的列会将其默认值插入目标中。仅当启用了快速加载时适用。"
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="指定将用于快速加载的选项。仅当启用了快速加载时适用。"
+                      name="FastLoadOptions"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定在插入数据期间何时发出提交命令。如果值为 0，则指定在数据插入结束时发出一个提交命令。仅当启用了快速加载时适用。"
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Connections[OleDbConnection]"
+                      connectionManagerID="{EF1B0189-C787-45D6-ABB7-2CA7A436C369}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[localhost_orcl.mis]"
+                      description="指定用于访问数据库的 OLE DB 运行时连接。"
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入]"
+                      errorOrTruncationOperation="插入"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB 目标输入">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[ECI]"
+                          cachedDataType="numeric"
+                          cachedName="ECI"
+                          cachedPrecision="30"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ECI]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\派生列.Outputs[派生列输出].Columns[ECI]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[eNodeBID 的副本]"
+                          cachedDataType="numeric"
+                          cachedName="eNodeBID 的副本"
+                          cachedPrecision="18"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_ENBID]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出].Columns[eNodeBID 的副本]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[本地小区标识 的副本]"
+                          cachedDataType="numeric"
+                          cachedName="本地小区标识 的副本"
+                          cachedPrecision="18"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_LCRID]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出].Columns[本地小区标识 的副本]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[城市]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="城市"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CITY]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[城市]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[归属区县]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="归属区县"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ATTRIBUTION]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[归属区县]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[小区名称]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="小区名称"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_NAME]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区名称]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[小区经度]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="小区经度"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_LON]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区经度]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[小区纬度]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="小区纬度"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_LAT]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区纬度]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[频段标识]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="频段标识"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[FCHANNEL]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[频段标识]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[室内室外]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="室内室外"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[INOROUT]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[室内室外]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[天线挂高（m）]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="天线挂高（m）"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ANTENNAH]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[天线挂高（m）]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[天线方位角（度）]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="天线方位角（度）"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ANTENNAAZIMUTH]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[天线方位角（度）]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[总下倾角（度）]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="总下倾角（度）"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[DIPANGLE]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[总下倾角（度）]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[预置倾角(度)]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="预置倾角(度)"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[PRESETDIPANGLE]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[预置倾角(度)]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[电子倾角（度）]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="电子倾角（度）"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[EDIPANGLE]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[电子倾角（度）]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[机械物理倾角（度）]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="机械物理倾角（度）"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[MPDIPANGLE]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[机械物理倾角（度）]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[eNodeB名称]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="eNodeB名称"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_ENBNAME]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[eNodeB名称]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[设备厂家]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="设备厂家"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[MANUFACTOR]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[设备厂家]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[覆盖区域类型]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="覆盖区域类型"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[MRCLASS]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[覆盖区域类型]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[覆盖道路类型]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="覆盖道路类型"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ROADCLASS]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[覆盖道路类型]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[覆盖热点类型]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="覆盖热点类型"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[HOTSPOTCLASS]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[覆盖热点类型]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[道路名称]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="道路名称"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ROADNAME]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[道路名称]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[热点名称]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="热点名称"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[HOTSPOTNAME]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[热点名称]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].Columns[小区状态]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="小区状态"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CELLSTATE]"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区状态]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_ENBID]"
+                          dataType="wstr"
+                          length="38"
+                          name="SC_ENBID" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ECI]"
+                          dataType="wstr"
+                          length="38"
+                          name="ECI" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_LCRID]"
+                          dataType="wstr"
+                          length="38"
+                          name="SC_LCRID" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CITY]"
+                          dataType="wstr"
+                          length="100"
+                          name="CITY" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ATTRIBUTION]"
+                          dataType="wstr"
+                          length="100"
+                          name="ATTRIBUTION" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_NAME]"
+                          dataType="wstr"
+                          length="100"
+                          name="SC_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_LON]"
+                          dataType="wstr"
+                          length="38"
+                          name="SC_LON" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_LAT]"
+                          dataType="wstr"
+                          length="38"
+                          name="SC_LAT" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[FCHANNEL]"
+                          dataType="wstr"
+                          length="38"
+                          name="FCHANNEL" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[INOROUT]"
+                          dataType="wstr"
+                          length="20"
+                          name="INOROUT" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ANTENNAH]"
+                          dataType="wstr"
+                          length="38"
+                          name="ANTENNAH" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ANTENNAAZIMUTH]"
+                          dataType="wstr"
+                          length="38"
+                          name="ANTENNAAZIMUTH" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[DIPANGLE]"
+                          dataType="wstr"
+                          length="38"
+                          name="DIPANGLE" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[PRESETDIPANGLE]"
+                          dataType="wstr"
+                          length="38"
+                          name="PRESETDIPANGLE" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[EDIPANGLE]"
+                          dataType="wstr"
+                          length="38"
+                          name="EDIPANGLE" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[MPDIPANGLE]"
+                          dataType="wstr"
+                          length="38"
+                          name="MPDIPANGLE" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[SC_ENBNAME]"
+                          dataType="wstr"
+                          length="100"
+                          name="SC_ENBNAME" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[MANUFACTOR]"
+                          dataType="wstr"
+                          length="50"
+                          name="MANUFACTOR" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[MRCLASS]"
+                          dataType="wstr"
+                          length="50"
+                          name="MRCLASS" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ROADCLASS]"
+                          dataType="wstr"
+                          length="50"
+                          name="ROADCLASS" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[HOTSPOTCLASS]"
+                          dataType="wstr"
+                          length="50"
+                          name="HOTSPOTCLASS" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[ROADNAME]"
+                          dataType="wstr"
+                          length="100"
+                          name="ROADNAME" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[HOTSPOTNAME]"
+                          dataType="wstr"
+                          length="150"
+                          name="HOTSPOTNAME" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[CELLSTATE]"
+                          dataType="wstr"
+                          length="50"
+                          name="CELLSTATE" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入].ExternalColumns[FLCRID]"
+                          dataType="wstr"
+                          length="38"
+                          name="FLCRID" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Outputs[OLE DB 目标错误输出]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB 目标错误输出"
+                      synchronousInputId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Outputs[OLE DB 目标错误输出].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Outputs[OLE DB 目标错误输出].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Outputs[OLE DB 目标错误输出].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Foreach 循环容器\数据流任务\工参数据源"
+                  componentClassID="{8C084929-27D1-479F-9641-ABB7CDADF1AC}"
+                  contactInfo="Excel 源;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;1"
+                  description="Excel 源"
+                  name="工参数据源"
+                  usesDispositions="true"
+                  validateExternalMetadata="False"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="命令超时前等待的时间(秒)。值为 0，表示无限期等待。"
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="指定用于打开行集的数据库对象的名称。"
+                      name="OpenRowset">sheet1$</property>
+                    <property
+                      dataType="System.String"
+                      description="指定包含用于打开行集的数据库对象名的变量。"
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="要执行的 SQL 命令。"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.String"
+                      description="包含要执行的 SQL 命令的变量。"
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定用于访问数据库的模式。"
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="从 SQL 命令中的参数到变量的映射。"
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Foreach 循环容器\数据流任务\工参数据源.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Excel 连接管理器]"
+                      connectionManagerRefId="Package.ConnectionManagers[Excel 连接管理器]"
+                      description="指定用于访问数据库的 OLE DB 运行时连接。"
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出]"
+                      name="Excel 源输出">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[城市]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[城市]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[城市]"
+                          name="城市"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[归属区县]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[归属区县]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[归属区县]"
+                          name="归属区县"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[本地小区标识]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[本地小区标识]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[本地小区标识]"
+                          name="本地小区标识"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区名称]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[小区名称]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区名称]"
+                          name="小区名称"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区经度]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[小区经度]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区经度]"
+                          name="小区经度"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区纬度]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[小区纬度]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区纬度]"
+                          name="小区纬度"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[频段标识]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[频段标识]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[频段标识]"
+                          name="频段标识"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[室内室外]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[室内室外]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[室内室外]"
+                          name="室内室外"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[天线挂高（m）]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[天线挂高（m）]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[天线挂高（m）]"
+                          name="天线挂高（m）"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[天线方位角（度）]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[天线方位角（度）]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[天线方位角（度）]"
+                          name="天线方位角（度）"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[总下倾角（度）]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[总下倾角（度）]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[总下倾角（度）]"
+                          name="总下倾角（度）"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[预置倾角(度)]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[预置倾角(度)]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[预置倾角(度)]"
+                          name="预置倾角(度)"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[电子倾角（度）]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[电子倾角（度）]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[电子倾角（度）]"
+                          name="电子倾角（度）"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[机械物理倾角（度）]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[机械物理倾角（度）]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[机械物理倾角（度）]"
+                          name="机械物理倾角（度）"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[eNodeBID]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[eNodeBID]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[eNodeBID]"
+                          name="eNodeBID"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[eNodeB名称]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[eNodeB名称]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[eNodeB名称]"
+                          name="eNodeB名称"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[设备厂家]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[设备厂家]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[设备厂家]"
+                          name="设备厂家"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[覆盖区域类型]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[覆盖区域类型]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[覆盖区域类型]"
+                          name="覆盖区域类型"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[覆盖道路类型]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[覆盖道路类型]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[覆盖道路类型]"
+                          name="覆盖道路类型"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[覆盖热点类型]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[覆盖热点类型]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[覆盖热点类型]"
+                          name="覆盖热点类型"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[道路名称]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[道路名称]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[道路名称]"
+                          name="道路名称"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[热点名称]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[热点名称]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[热点名称]"
+                          name="热点名称"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区状态]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[小区状态]"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区状态]"
+                          name="小区状态"
+                          truncationRowDisposition="IgnoreFailure" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[城市]"
+                          dataType="wstr"
+                          length="255"
+                          name="城市" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[归属区县]"
+                          dataType="wstr"
+                          length="255"
+                          name="归属区县" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[乡镇]"
+                          dataType="wstr"
+                          length="255"
+                          name="乡镇" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[片区]"
+                          dataType="wstr"
+                          length="255"
+                          name="片区" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[子网ID]"
+                          dataType="wstr"
+                          length="255"
+                          name="子网ID" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[eNodeBID&amp;CellID]"
+                          dataType="wstr"
+                          length="255"
+                          name="eNodeBID&amp;CellID" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[TAC]"
+                          dataType="wstr"
+                          length="255"
+                          name="TAC" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[PCI]"
+                          dataType="wstr"
+                          length="255"
+                          name="PCI" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[本地小区标识]"
+                          dataType="wstr"
+                          length="255"
+                          name="本地小区标识" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[厂家小区标识]"
+                          dataType="wstr"
+                          length="255"
+                          name="厂家小区标识" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[超级小区编号]"
+                          dataType="wstr"
+                          length="255"
+                          name="超级小区编号" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[参考超级小区]"
+                          dataType="wstr"
+                          length="255"
+                          name="参考超级小区" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[小区名称]"
+                          dataType="wstr"
+                          length="255"
+                          name="小区名称" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[小区经度]"
+                          dataType="wstr"
+                          length="255"
+                          name="小区经度" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[小区纬度]"
+                          dataType="wstr"
+                          length="255"
+                          name="小区纬度" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[频段标识]"
+                          dataType="wstr"
+                          length="255"
+                          name="频段标识" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[室内室外]"
+                          dataType="wstr"
+                          length="255"
+                          name="室内室外" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[天线厂家]"
+                          dataType="wstr"
+                          length="255"
+                          name="天线厂家" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[是否天线RRU一体化]"
+                          dataType="wstr"
+                          length="255"
+                          name="是否天线RRU一体化" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[天线型号]"
+                          dataType="wstr"
+                          length="255"
+                          name="天线型号" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[CL是否共天线]"
+                          dataType="wstr"
+                          length="255"
+                          name="CL是否共天线" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[天线端口数]"
+                          dataType="wstr"
+                          length="255"
+                          name="天线端口数" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[天线挂高（m）]"
+                          dataType="wstr"
+                          length="255"
+                          name="天线挂高（m）" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[天线方位角（度）]"
+                          dataType="wstr"
+                          length="255"
+                          name="天线方位角（度）" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[总下倾角（度）]"
+                          dataType="wstr"
+                          length="255"
+                          name="总下倾角（度）" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[预置倾角(度)]"
+                          dataType="wstr"
+                          length="255"
+                          name="预置倾角(度)" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[电子倾角（度）]"
+                          dataType="wstr"
+                          length="255"
+                          name="电子倾角（度）" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[机械物理倾角（度）]"
+                          dataType="wstr"
+                          length="255"
+                          name="机械物理倾角（度）" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[远程网管可调]"
+                          dataType="wstr"
+                          length="255"
+                          name="远程网管可调" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[水平半功率角]"
+                          dataType="wstr"
+                          length="255"
+                          name="水平半功率角" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[垂直半功率角]"
+                          dataType="wstr"
+                          length="255"
+                          name="垂直半功率角" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[天线增益（dBi）]"
+                          dataType="wstr"
+                          length="255"
+                          name="天线增益（dBi）" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[天线架设方式]"
+                          dataType="wstr"
+                          length="255"
+                          name="天线架设方式" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[天线地址]"
+                          dataType="wstr"
+                          length="255"
+                          name="天线地址" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[基站代维单位]"
+                          dataType="wstr"
+                          length="255"
+                          name="基站代维单位" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[天馈代维单位]"
+                          dataType="wstr"
+                          length="255"
+                          name="天馈代维单位" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[所在铁塔平台位置]"
+                          dataType="wstr"
+                          length="255"
+                          name="所在铁塔平台位置" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[铁塔平台数量]"
+                          dataType="wstr"
+                          length="255"
+                          name="铁塔平台数量" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[站址编码]"
+                          dataType="wstr"
+                          length="255"
+                          name="站址编码" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[站址名称]"
+                          dataType="wstr"
+                          length="255"
+                          name="站址名称" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[站址等级]"
+                          dataType="wstr"
+                          length="255"
+                          name="站址等级" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[站址经度]"
+                          dataType="wstr"
+                          length="255"
+                          name="站址经度" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[站址纬度]"
+                          dataType="wstr"
+                          length="255"
+                          name="站址纬度" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[站址机房共用情况]"
+                          dataType="wstr"
+                          length="255"
+                          name="站址机房共用情况" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[站址机房产权方]"
+                          dataType="wstr"
+                          length="255"
+                          name="站址机房产权方" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[站址塔桅产权方]"
+                          dataType="wstr"
+                          length="255"
+                          name="站址塔桅产权方" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[站址发电责任方]"
+                          dataType="wstr"
+                          length="255"
+                          name="站址发电责任方" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[是否布放BBU]"
+                          dataType="wstr"
+                          length="255"
+                          name="是否布放BBU" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[是否CL共站]"
+                          dataType="wstr"
+                          length="255"
+                          name="是否CL共站" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[是否布放RRU设备]"
+                          dataType="wstr"
+                          length="255"
+                          name="是否布放RRU设备" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[eNodeBID]"
+                          dataType="wstr"
+                          length="255"
+                          name="eNodeBID" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[eNodeB名称]"
+                          dataType="wstr"
+                          length="255"
+                          name="eNodeB名称" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[设备厂家]"
+                          dataType="wstr"
+                          length="255"
+                          name="设备厂家" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[RRU标识]"
+                          dataType="wstr"
+                          length="255"
+                          name="RRU标识" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[RRU名称]"
+                          dataType="wstr"
+                          length="255"
+                          name="RRU名称" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[双工模式]"
+                          dataType="wstr"
+                          length="255"
+                          name="双工模式" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[覆盖区域类型]"
+                          dataType="wstr"
+                          length="255"
+                          name="覆盖区域类型" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[覆盖道路类型]"
+                          dataType="wstr"
+                          length="255"
+                          name="覆盖道路类型" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[覆盖热点类型]"
+                          dataType="wstr"
+                          length="255"
+                          name="覆盖热点类型" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[边界类型]"
+                          dataType="wstr"
+                          length="255"
+                          name="边界类型" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[道路名称]"
+                          dataType="wstr"
+                          length="255"
+                          name="道路名称" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[热点名称]"
+                          dataType="wstr"
+                          length="255"
+                          name="热点名称" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[ECI]"
+                          dataType="wstr"
+                          length="255"
+                          name="ECI" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[归属区域4]"
+                          dataType="wstr"
+                          length="255"
+                          name="归属区域4" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[归属区域5]"
+                          dataType="wstr"
+                          length="255"
+                          name="归属区域5" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[小区状态]"
+                          dataType="wstr"
+                          length="255"
+                          name="小区状态" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].ExternalColumns[入库日期]"
+                          dataType="wstr"
+                          length="255"
+                          name="入库日期" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出]"
+                      isErrorOut="true"
+                      name="Excel 源错误输出">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[城市]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[城市]"
+                          name="城市" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[归属区县]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[归属区县]"
+                          name="归属区县" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[本地小区标识]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[本地小区标识]"
+                          name="本地小区标识" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[小区名称]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[小区名称]"
+                          name="小区名称" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[小区经度]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[小区经度]"
+                          name="小区经度" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[小区纬度]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[小区纬度]"
+                          name="小区纬度" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[频段标识]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[频段标识]"
+                          name="频段标识" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[室内室外]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[室内室外]"
+                          name="室内室外" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[天线挂高（m）]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[天线挂高（m）]"
+                          name="天线挂高（m）" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[天线方位角（度）]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[天线方位角（度）]"
+                          name="天线方位角（度）" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[总下倾角（度）]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[总下倾角（度）]"
+                          name="总下倾角（度）" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[预置倾角(度)]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[预置倾角(度)]"
+                          name="预置倾角(度)" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[电子倾角（度）]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[电子倾角（度）]"
+                          name="电子倾角（度）" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[机械物理倾角（度）]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[机械物理倾角（度）]"
+                          name="机械物理倾角（度）" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[eNodeBID]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[eNodeBID]"
+                          name="eNodeBID" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[eNodeB名称]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[eNodeB名称]"
+                          name="eNodeB名称" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[设备厂家]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[设备厂家]"
+                          name="设备厂家" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[覆盖区域类型]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[覆盖区域类型]"
+                          name="覆盖区域类型" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[覆盖道路类型]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[覆盖道路类型]"
+                          name="覆盖道路类型" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[覆盖热点类型]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[覆盖热点类型]"
+                          name="覆盖热点类型" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[道路名称]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[道路名称]"
+                          name="道路名称" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[热点名称]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[热点名称]"
+                          name="热点名称" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[小区状态]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源错误输出].Columns[小区状态]"
+                          name="小区状态" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Foreach 循环容器\数据流任务\数据转换"
+                  componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+                  contactInfo="数据转换;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;0"
+                  description="数据转换"
+                  name="数据转换"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Foreach 循环容器\数据流任务\数据转换.Inputs[数据转换输入]"
+                      name="数据转换输入">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\数据转换.Inputs[数据转换输入].Columns[eNodeBID]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="eNodeBID"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[eNodeBID]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\数据转换.Inputs[数据转换输入].Columns[本地小区标识]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="本地小区标识"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[本地小区标识]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出]"
+                      exclusionGroup="1"
+                      name="数据转换输出"
+                      synchronousInputId="Package\Foreach 循环容器\数据流任务\数据转换.Inputs[数据转换输入]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出].Columns[eNodeBID 的副本]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="IgnoreFailure"
+                          lineageId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出].Columns[eNodeBID 的副本]"
+                          name="eNodeBID 的副本"
+                          precision="18"
+                          truncationRowDisposition="IgnoreFailure">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="指定用作转换数据源的输入列。"
+                              name="SourceInputColumnLineageID">#{Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[eNodeBID]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="指示该列是否使用更快、不分区域设置的分析例程。"
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出].Columns[本地小区标识 的副本]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="转换"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出].Columns[本地小区标识 的副本]"
+                          name="本地小区标识 的副本"
+                          precision="18"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="指定用作转换数据源的输入列。"
+                              name="SourceInputColumnLineageID">#{Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[本地小区标识]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="指示该列是否使用更快、不分区域设置的分析例程。"
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换错误输出]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="数据转换错误输出"
+                      synchronousInputId="Package\Foreach 循环容器\数据流任务\数据转换.Inputs[数据转换输入]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换错误输出].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换错误输出].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换错误输出].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换错误输出].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Foreach 循环容器\数据流任务\派生列"
+                  componentClassID="{49928E82-9C4E-49F0-AABE-3812B82707EC}"
+                  contactInfo="派生列;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;0"
+                  description="通过对转换输入列应用表达式来创建新的列值。创建新列或覆盖现有列。例如，将 &quot;first name&quot; 列和 &quot;last name&quot; 列中的值连接在一起以创建一个 &quot;full name&quot; 列。"
+                  name="派生列"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Foreach 循环容器\数据流任务\派生列.Inputs[派生列输入]"
+                      description="派生列转换的输入"
+                      name="派生列输入">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\派生列.Inputs[派生列输入].Columns[eNodeBID 的副本]"
+                          cachedDataType="numeric"
+                          cachedName="eNodeBID 的副本"
+                          cachedPrecision="18"
+                          lineageId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出].Columns[eNodeBID 的副本]" />
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\派生列.Inputs[派生列输入].Columns[本地小区标识 的副本]"
+                          cachedDataType="numeric"
+                          cachedName="本地小区标识 的副本"
+                          cachedPrecision="18"
+                          lineageId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出].Columns[本地小区标识 的副本]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach 循环容器\数据流任务\派生列.Outputs[派生列输出]"
+                      description="派生列转换的默认输出"
+                      exclusionGroup="1"
+                      name="派生列输出"
+                      synchronousInputId="Package\Foreach 循环容器\数据流任务\派生列.Inputs[派生列输入]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\派生列.Outputs[派生列输出].Columns[ECI]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="计算"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\Foreach 循环容器\数据流任务\派生列.Outputs[派生列输出].Columns[ECI]"
+                          name="ECI"
+                          precision="30"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="派生列表达式"
+                              name="Expression">#{Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出].Columns[eNodeBID 的副本]} * 256 + #{Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出].Columns[本地小区标识 的副本]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="派生列友好表达式"
+                              expressionType="Notify"
+                              name="FriendlyExpression">[eNodeBID 的副本] * 256 + [本地小区标识 的副本]</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Foreach 循环容器\数据流任务\派生列.Outputs[派生列错误输出]"
+                      description="派生列转换的错误输出"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="派生列错误输出"
+                      synchronousInputId="Package\Foreach 循环容器\数据流任务\派生列.Inputs[派生列输入]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\派生列.Outputs[派生列错误输出].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach 循环容器\数据流任务\派生列.Outputs[派生列错误输出].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\派生列.Outputs[派生列错误输出].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach 循环容器\数据流任务\派生列.Outputs[派生列错误输出].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入"
+                  componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+                  contactInfo="查找;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; 保留所有权利; http://www.microsoft.com/sql/support;6"
+                  description="通过在表中查找值，将其他列与数据流联接起来。例如，将 &quot;employee id&quot; 列与 employees 表联接，以获取 &quot;hire date&quot; 和 &quot;employee name&quot;。建议在可将查找表放入内存中的情况下使用此转换。"
+                  name="筛选录入完成待录入"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="指定生成查找表的 SQL 语句。"
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select regexp_substr('录入完成.待录入', '[^.]+', 1, level) static
+from dual connect by level &lt;= regexp_count('录入完成.待录入', '\.') + 1</property>
+                    <property
+                      dataType="System.String"
+                      description="指定使用参数生成查找表的 SQL 语句。"
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select regexp_substr('录入完成.待录入', '[^.]+', 1, level) static
+from dual connect by level &lt;= regexp_count('录入完成.待录入', '\.') + 1) "refTable"
+where "refTable"."STATIC" = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定用于访问引用数据集的连接类型。"
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定查找表的缓存类型。"
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定查找转换如何处理在引用数据集中无匹配项的行。"
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">1</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定为在引用数据集中没有匹配项的行分配的缓存百分比。"
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="引用缓存在 32 位平台上的最大内存使用量。"
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="引用缓存在 64 位平台上的最大内存使用量。"
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="指示是否引用 XML 格式的元数据。"
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="STATIC" dataType="DT_WSTR" length="16" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="指定沿袭标识符列表，这些标识符映射到 SQLCommand 属性中 SQL 语句使用的参数。列表中的项与项之间用分号分隔。"
+                      name="ParameterMap">#{Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区状态]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="指定当数据源中没有代码页信息时使用的列代码页。"
+                      name="DefaultCodePage">936</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="确定在使用完全缓存模式时引用数据中的重复键是否应视作错误。"
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Connections[OleDbConnection]"
+                      connectionManagerID="{EF1B0189-C787-45D6-ABB7-2CA7A436C369}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[localhost_orcl.mis]"
+                      description="用于访问查找数据的连接管理器。"
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Inputs[查找输入]"
+                      name="查找输入">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Inputs[查找输入].Columns[小区状态]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="小区状态"
+                          lineageId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出].Columns[小区状态]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="指定某列在引用表中联接的列。"
+                              name="JoinToReferenceColumn">STATIC</property>
+                            <property
+                              dataType="System.Null"
+                              description="指定属于某列复制源的引用表中的列。"
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Outputs[查找匹配输出]"
+                      errorOrTruncationOperation="查找"
+                      exclusionGroup="1"
+                      name="查找匹配输出"
+                      synchronousInputId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Inputs[查找输入]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Outputs[查找无匹配输出]"
+                      description="用于处理在引用数据集中无匹配项的行的查找输出。当 NoMatchBehavior 属性设置为“将没有匹配项的行发送至无匹配输出。”时使用此输出。"
+                      exclusionGroup="1"
+                      name="查找无匹配输出"
+                      synchronousInputId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Inputs[查找输入]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Outputs[查找错误输出]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="查找错误输出"
+                      synchronousInputId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Inputs[查找输入]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Outputs[查找错误输出].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Outputs[查找错误输出].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Outputs[查找错误输出].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Outputs[查找错误输出].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Foreach 循环容器\数据流任务.Paths[Excel 源输出]"
+                  endId="Package\Foreach 循环容器\数据流任务\数据转换.Inputs[数据转换输入]"
+                  name="Excel 源输出"
+                  startId="Package\Foreach 循环容器\数据流任务\工参数据源.Outputs[Excel 源输出]" />
+                <path
+                  refId="Package\Foreach 循环容器\数据流任务.Paths[数据转换输出]"
+                  endId="Package\Foreach 循环容器\数据流任务\派生列.Inputs[派生列输入]"
+                  name="数据转换输出"
+                  startId="Package\Foreach 循环容器\数据流任务\数据转换.Outputs[数据转换输出]" />
+                <path
+                  refId="Package\Foreach 循环容器\数据流任务.Paths[查找匹配输出]"
+                  endId="Package\Foreach 循环容器\数据流任务\OLE DB 目标.Inputs[OLE DB 目标输入]"
+                  name="查找匹配输出"
+                  startId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Outputs[查找匹配输出]" />
+                <path
+                  refId="Package\Foreach 循环容器\数据流任务.Paths[派生列输出]"
+                  endId="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入.Inputs[查找输入]"
+                  name="派生列输出"
+                  startId="Package\Foreach 循环容器\数据流任务\派生列.Outputs[派生列输出]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Foreach 循环容器\文件归档任务"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.FileSystemTask.FileSystemTask, Microsoft.SqlServer.FileSystemTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:DelayValidation="True"
+          DTS:Description="文件系统任务"
+          DTS:DTSID="{2506b0e9-4403-4bb9-820c-9d0faf2c54f8}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.FileSystemTask.FileSystemTask, Microsoft.SqlServer.FileSystemTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="文件归档任务"
+          DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="MoveFile"
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="User::GCloadFile"
+              TaskIsSourceVariable="True"
+              TaskDestinationPath="User::GCCompleteFile"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Foreach 循环容器.PrecedenceConstraints[约束]"
+          DTS:CreationName=""
+          DTS:DTSID="{03f19f8e-4a3c-47d4-98c6-ec41e47e702d}"
+          DTS:From="Package\Foreach 循环容器\数据流任务"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="约束"
+          DTS:To="Package\Foreach 循环容器\文件归档任务" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{8B6E5C9B-01FB-42A7-9BE3-FBB349D9DD9F}"
+          DTS:ObjectName="{8B6E5C9B-01FB-42A7-9BE3-FBB349D9DD9F}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::GCloadFile" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\FTP 任务"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.FtpTask.FtpTask, Microsoft.SqlServer.FtpTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="FTP 任务"
+      DTS:DTSID="{54b92d90-e879-44bb-b6e2-057791397b45}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.FtpTask.FtpTask, Microsoft.SqlServer.FtpTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="FTP 任务"
+      DTS:TaskContact="FTP Task; Microsoft Corporation; SQL Server 2012; (c) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FtpData
+          ConnectionName="{8517B27D-7DA3-4A2C-975C-9860C7CD0299}"
+          TaskOperationType="Receive"
+          TaskIsLocalPathVar="True"
+          TaskLocalPath="User::GCLocFile"
+          TaskIsRemotePathVar="True"
+          TaskRemotePath="User::GCRemoteFile"
+          TaskOverwriteDest="True"
+          TaskTransferAscii="True" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[约束]"
+      DTS:CreationName=""
+      DTS:DTSID="{04359e62-b960-43b2-a30b-20ff9d2486b2}"
+      DTS:From="Package\FTP 任务"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="约束"
+      DTS:To="Package\Foreach 循环容器" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--此 CDATA 部分包含包的布局信息。该部分包括(x,y)坐标、宽度和高度之类的信息。-->
+<!--如果您手动编辑此部分并且出错，则可以删除此部分。 -->
+<!--该包仍将能够正常加载，但以前的布局信息将丢失，并且设计器将自动在设计图面上重新排列这些元素。-->
+<Objects
+  Version="sql11">
+  <!--下面的每个节点都将包含不会影响运行时行为的属性。-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="141,42"
+          Id="Package\Foreach 循环容器\数据流任务"
+          TopLeft="31.6999964758754,19.4222186559513" />
+        <NodeLayout
+          Size="152,42"
+          Id="Package\Foreach 循环容器\文件归档任务"
+          TopLeft="26.1999965578318,114.177771701342" />
+        <EdgeLayout
+          Id="Package\Foreach 循环容器.PrecedenceConstraints[约束]"
+          TopLeft="102.149996516854,61.0222186559513">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53.1555530453907"
+              Start="0,0"
+              End="0,45.6555530453907">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.6555530453907" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="205,211"
+          Size="205,254"
+          Id="Package\Foreach 循环容器"
+          TopLeft="228.799994814396,60" />
+        <NodeLayout
+          Size="128,42"
+          Id="Package\FTP 任务"
+          TopLeft="60,162.977771425836" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[约束]"
+          TopLeft="188,185.288885712918">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="40.7999948143959,0"
+              Start="0,0"
+              End="33.2999948143959,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="33.2999948143959,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Foreach 循环容器\数据流任务">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="189,42"
+          Id="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入"
+          TopLeft="278.199995842576,137.288885230783" />
+        <NodeLayout
+          Size="128,42"
+          Id="Package\Foreach 循环容器\数据流任务\数据转换"
+          TopLeft="54.6999991729856,95.6888863328063" />
+        <NodeLayout
+          Size="117,42"
+          Id="Package\Foreach 循环容器\数据流任务\派生列"
+          TopLeft="58.6999991133809,181.199995178647" />
+        <NodeLayout
+          Size="147,42"
+          Id="Package\Foreach 循环容器\数据流任务\OLE DB 目标"
+          TopLeft="341.199994903803,240.13332695078" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\Foreach 循环容器\数据流任务\工参数据源"
+          TopLeft="45.6999993070961,11.3333330119097" />
+        <EdgeLayout
+          Id="Package\Foreach 循环容器\数据流任务.Paths[查找匹配输出]"
+          TopLeft="372.599995842576,178.888885230783">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="42.199999061227,61.2444417199972"
+              Start="0,0"
+              End="42.199999061227,53.7444417199972">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.6222208599986" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26.6222208599986"
+                    Point2="0,30.6222208599986"
+                    Point3="4,30.6222208599986" />
+                  <mssgle:LineSegment
+                    End="38.199999061227,30.6222208599986" />
+                  <mssgle:CubicBezierSegment
+                    Point1="38.199999061227,30.6222208599986"
+                    Point2="42.199999061227,30.6222208599986"
+                    Point3="42.199999061227,34.6222208599986" />
+                  <mssgle:LineSegment
+                    End="42.199999061227,53.7444417199972" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-9.3726567193865,35.6222208599986,60.9453125,11.677734375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach 循环容器\数据流任务.Paths[数据转换输出]"
+          TopLeft="117.899999143183,137.288886332806">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.9111088458402"
+              Start="0,0"
+              End="0,36.4111088458402">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.4111088458402" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach 循环容器\数据流任务.Paths[Excel 源输出]"
+          TopLeft="117.399999240041,52.9333330119097">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.7555533208966"
+              Start="0,0"
+              End="0,35.2555533208966">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.2555533208966" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach 循环容器\数据流任务.Paths[派生列输出]"
+          TopLeft="175.499999113381,201.999995178647">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="102.699996729195,-43.9111099478642"
+              Start="0,0"
+              End="95.1999967291951,-43.9111099478642">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="47.3499983645975,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="47.3499983645975,0"
+                    Point2="51.3499983645975,0"
+                    Point3="51.3499983645975,-4" />
+                  <mssgle:LineSegment
+                    End="51.3499983645975,-39.9111099478642" />
+                  <mssgle:CubicBezierSegment
+                    Point1="51.3499983645975,-39.9111099478642"
+                    Point2="51.3499983645975,-43.9111099478642"
+                    Point3="55.3499983645975,-43.9111099478642" />
+                  <mssgle:LineSegment
+                    End="95.1999967291951,-43.9111099478642" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Foreach 循环容器\数据流任务\筛选录入完成待录入">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Foreach 循环容器\数据流任务\工参数据源">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Foreach 循环容器\数据流任务\OLE DB 目标">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
