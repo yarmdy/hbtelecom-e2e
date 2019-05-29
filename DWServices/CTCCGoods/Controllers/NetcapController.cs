@@ -92,6 +92,10 @@ namespace CTCCGoods.Controllers
             ctasksHandle.addtask(11, filename, targetname, "");
             return Content("<script>alert(\"已上传到服务器，进入后台任务\");location=\"/task\"</script>");
         }
+
+        public ActionResult Sbusycomp() {
+            return View();
+        }
         #region 通用
         public ActionResult File(string b, string r, string n, string city, string chang, string pinduan, string leixing, string xz, string fh)
         {
