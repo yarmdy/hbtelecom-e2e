@@ -173,6 +173,7 @@
     <Content Include="js\FileSaver.min.js" />
     <Content Include="js\goodsrefer.js" />
     <Content Include="js\html5shiv.min.js" />
+    <Content Include="js\multiselect.js" />
     <Content Include="js\newJquery\jquery-3.3.1.min.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\laydate\laydate.js" />

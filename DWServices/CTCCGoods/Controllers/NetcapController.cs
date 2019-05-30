@@ -94,6 +94,26 @@ namespace CTCCGoods.Controllers
         }
 
         public ActionResult Sbusycomp() {
+            DirectoryInfo dir = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/table1"));
+            cuser user = (cuser)Session["loginuser"];
+            List<Dictionary<string, string>> list = new List<Dictionary<string, string>>();
+            if (dir.Exists)
+            {
+                FileInfo[] files = dir.GetFiles();
+                //Array.Sort(files, (f1, f2) => f1.CreationTime.CompareTo(f2.CreationTime));
+                Array.Sort(files, (f1, f2) => f1.Name.CompareTo(f2.Name));
+                Array.Reverse(files);
+                foreach (FileInfo fi in files)
+                {
+                    var a = new Dictionary<string, string>();
+                    if (user.utype != 0 && fi.Name.Contains("[hidden]")) continue;
+                    a.Add("code", fi.FullName);
+                    a.Add("text", fi.Name);
+                    list.Add(a);
+                }
+            }
+            ViewBag.history = list;
+            ViewBag.user = user;
             return View();
         }
         #region 通用
