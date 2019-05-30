@@ -19,6 +19,15 @@
 @section script {
     <script src="/js/multiselect.js"></script>
     <script>
+        function getPostData() {
+            var info = $("#txtselect").multiselect("info");
+            info.cm = $("#btncm").find("span").hasClass("glyphicon-ok-circle");
+            info.cmts = $("#txtcmdays").val();
+            for (var i = 0; i < info.list.length; i++) {
+                info["list["+i+"]"]=info.list[i];
+            }
+            return info;
+        }
         $(function () {
             $("#btncm").on("click", function () {
                 var $this = $(this);
@@ -38,12 +47,21 @@
                     @:filesdata.push({ id: "@(item["text"])", name: "@(item["text"])", year: "@(item["text"].Substring(0, 4))", month: "@(item["text"].Substring(4, 2))" });
                 }
             }
-            $("#txtselect").multiselect("init", {all:filesdata});
+            $("#txtselect").on("selected", function () {
+                var list = $("#txtselect").multiselect("selected");
+                $(this).val("选择日期：已选择"+list.length+"天");
+            });
+            $("#txtselect").multiselect("init", {data:filesdata,start:"",end:""});
             $("#btnselect").on("click", function () {
                 $("#txtselect").multiselect("edit");
             });
             $("#btnshow").on("click", function () {
                 $("#txtselect").multiselect("show");
+            });
+            $("#btncomp").on("click", function () {
+                $.post("/netcap/csbusy", getPostData(), function (data) {
+                    alert(data.msg);
+                });
             });
         });
         var baseCols = [{
@@ -150,9 +168,9 @@
             <div class="input-group-btn">
                 <button type="button" class="btn btn-primary" id="btncm"><span class="glyphicon glyphicon-remove-circle"></span> 是否计算超忙</button>
             </div>
-            <input type="number" class="form-control hidden" value="" placeholder="超忙天数设置" id="txtcmdays"  />
+            <input type="number" class="form-control hidden" value="4" placeholder="超忙天数设置" id="txtcmdays"  />
         </div>
-        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-list-alt"></span> 计算</button>
+        <button type="button" class="btn btn-success" id="btncomp"><span class="glyphicon glyphicon-list-alt"></span> 计算</button>
     </div>
     <div class="form-inline" id="toolbar"></div>
     <table id="table1"></table>

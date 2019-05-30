@@ -101,7 +101,14 @@ namespace CTCCGoods.Controllers
             {
                 FileInfo[] files = dir.GetFiles();
                 //Array.Sort(files, (f1, f2) => f1.CreationTime.CompareTo(f2.CreationTime));
-                Array.Sort(files, (f1, f2) => f1.Name.CompareTo(f2.Name));
+                Array.Sort(files, (f1, f2) => {
+                    var res=0;
+                    res = f1.Name.Substring(0, 6).CompareTo(f2.Name.Substring(0, 6));
+                    if (res == 0) {
+                        res = f2.Name.Substring(6, 2).CompareTo(f1.Name.Substring(6, 2));
+                    }
+                    return res;
+                });
                 Array.Reverse(files);
                 foreach (FileInfo fi in files)
                 {
@@ -115,6 +122,9 @@ namespace CTCCGoods.Controllers
             ViewBag.history = list;
             ViewBag.user = user;
             return View();
+        }
+        public ActionResult Csbusy(string[] list,int count,string start,string end,bool cm,int cmts) {
+            return null;
         }
         #region 通用
         public ActionResult File(string b, string r, string n, string city, string chang, string pinduan, string leixing, string xz, string fh)
