@@ -9,6 +9,7 @@ using NPOI.OpenXml4Net.OPC;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace CTCCGoods.Controllers
 {
@@ -215,6 +216,9 @@ namespace CTCCGoods.Controllers
                         break;
                     case 11:
                         res = importTable1(ct, out msg);
+                        break;
+                    case 12:
+                        res = sbusycomp(ct, out msg);
                         break;
                     default:
                         res = false;
@@ -1695,7 +1699,7 @@ namespace CTCCGoods.Controllers
 
             StringBuilder sbres = new StringBuilder();
 
-            sbres.Append("本地网,本地网编码,基站ID,小区ID,小区名称,小区覆盖类别,频段标识,厂家,经度,纬度,PRB上行利用率（%）,PRB下行利用率（%）,RRC连接用户数（个）,小区流量（GB)-上行,小区流量（GB)-下行,计费用户数\r\n");
+            sbres.Append("地市,地市编码,基站ID,小区ID,小区名称,小区覆盖类别,频段标识,厂家,经度,纬度,PRB上行利用率（%）,PRB下行利用率（%）,RRC连接用户数（个）,小区流量（GB)-上行,小区流量（GB)-下行,计费用户数\r\n");
             foreach (var kv in dic)
             {
                 var cols = new List<string>();
@@ -1941,6 +1945,222 @@ namespace CTCCGoods.Controllers
             {
                 msg = sbr.ToString();
             }
+        }
+        private static bool sbusycomp(ctasks ct, out string msg)
+        {
+            msg = "";
+            var res = true;
+
+            #region 超忙计算代码
+            var filepathtmp = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/sbusycomptmp");
+            var filenametmp = Path.Combine(filepathtmp,ct.filename);
+
+            var filepath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/sbusycomp");
+            if (!Directory.Exists(filepath)) {
+                Directory.CreateDirectory(filepath);
+            }
+            var xmlfilename = Path.Combine(filepath, ct.tfilename + ".xml");
+            var csvfilename = Path.Combine(filepath, ct.tfilename + ".csv");
+
+            var table1path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/table1");
+            var xml=XDocument.Load(filenametmp);
+
+            var table1files = Directory.GetFiles(table1path);
+
+            if (table1files == null || table1files.Length <= 0) {
+                msg = "原始数据为空";
+                File.Delete(filenametmp);
+                return false;
+            }
+            table1files = table1files.Select(a => a.Substring(a.LastIndexOf("\\") + 1)).ToArray();
+            var tfiles = xml.Descendants("item").Select(a=>a.Value).ToArray();
+            var cm = O2.O2B(xml.Descendants("cm").FirstOrDefault());
+            var cmts = O2.O2I(xml.Descendants("cmts").FirstOrDefault());
+
+            var errorfiles = tfiles.Where(a=>!table1files.Contains(a)).ToArray();
+
+            if (errorfiles.Length > 0) {
+                msg = "以下日期不存在：\r\n";
+                msg += string.Join("\r\n",errorfiles);
+                File.Delete(filenametmp);
+                return false;
+            }
+
+            var menxian=DB.QueryAsDics("select * from ckrmen order by id");
+
+            Dictionary<int, Dictionary<string, object>> dic = new Dictionary<int, Dictionary<string, object>>();
+            foreach (var file in tfiles) {
+                var tfilename = Path.Combine(table1path,file);
+                Dictionary<int, Dictionary<string, object>> tdic = new Dictionary<int, Dictionary<string, object>>();
+                string tmsg;
+                readtable1csv(tfilename,tdic,out tmsg);
+
+                foreach (var dd in tdic) {
+                    if (!dic.ContainsKey(dd.Key)) {
+                        dic[dd.Key] = new Dictionary<string, object>();
+                        dic[dd.Key]["prbup"] = 0f;
+                        dic[dd.Key]["prbupno"] = 0;
+
+                        dic[dd.Key]["prbdown"] = 0f;
+                        dic[dd.Key]["prbdownno"] = 0;
+
+                        dic[dd.Key]["rrc"] = 0;
+                        dic[dd.Key]["rrcno"] = 0;
+
+                        dic[dd.Key]["flowup"] = 0f;
+                        dic[dd.Key]["flowupno"] = 0;
+
+                        dic[dd.Key]["flowdown"] = 0f;
+                        dic[dd.Key]["flowdownno"] = 0;
+
+                        dic[dd.Key]["ucount"] = 0;
+                        dic[dd.Key]["ucountno"] = 0;
+
+                        dic[dd.Key]["sbusydays"] = 0;
+                        dic[dd.Key]["overflowdays"] = 0;
+                        dic[dd.Key]["overuserdays"] = 0;
+
+                        dic[dd.Key]["days"] = 0;
+                    }
+                    dic[dd.Key]["city"] = dd.Value["city"];
+                    dic[dd.Key]["cityno"] = dd.Value["cityno"];
+                    dic[dd.Key]["bid"] = dd.Value["bid"];
+                    dic[dd.Key]["cid"] = dd.Value["cid"];
+                    dic[dd.Key]["cname"] = dd.Value["cname"];
+                    dic[dd.Key]["fugai"] = dd.Value["fugai"];
+                    dic[dd.Key]["pinduan"] = dd.Value["pinduan"];
+                    dic[dd.Key]["chang"] = dd.Value["chang"];
+                    dic[dd.Key]["lon"] = dd.Value["lon"];
+                    dic[dd.Key]["lat"] = dd.Value["lat"];
+                    dic[dd.Key]["days"] = (int)dic[dd.Key]["days"] + 1;
+
+                    var prbup=O2F(dd.Value["prbup"]);
+                    var prbdown = O2F(dd.Value["prbdown"]);
+                    var rrc = O2I(dd.Value["rrc"]);
+                    var flowup = O2F(dd.Value["flowup"]);
+                    var flowdown = O2F(dd.Value["flowdown"]);
+                    var ucount = O2I(dd.Value["ucount"]);
+
+                    if (prbup.HasValue) {
+                        dic[dd.Key]["prbup"] = (float)dic[dd.Key]["prbup"] + prbup.Value;
+                        dic[dd.Key]["prbupno"] = (int)dic[dd.Key]["prbupno"] + 1;
+                    }
+                    if (prbdown.HasValue)
+                    {
+                        dic[dd.Key]["prbdown"] = (float)dic[dd.Key]["prbdown"] + prbdown.Value;
+                        dic[dd.Key]["prbdownno"] = (int)dic[dd.Key]["prbdownno"] + 1;
+                    }
+                    if (rrc.HasValue)
+                    {
+                        dic[dd.Key]["rrc"] = (int)dic[dd.Key]["rrc"] + rrc.Value;
+                        dic[dd.Key]["rrcno"] = (int)dic[dd.Key]["rrcno"] + 1;
+                    }
+                    if (flowup.HasValue)
+                    {
+                        dic[dd.Key]["flowup"] = (float)dic[dd.Key]["flowup"] + flowup.Value;
+                        dic[dd.Key]["flowupno"] = (int)dic[dd.Key]["flowupno"] + 1;
+                    }
+                    if (flowdown.HasValue)
+                    {
+                        dic[dd.Key]["flowdown"] = (float)dic[dd.Key]["flowdown"] + flowdown.Value;
+                        dic[dd.Key]["flowdownno"] = (int)dic[dd.Key]["flowdownno"] + 1;
+                    }
+                    if (ucount.HasValue)
+                    {
+                        dic[dd.Key]["ucount"] = (int)dic[dd.Key]["ucount"] + ucount.Value;
+                        dic[dd.Key]["ucountno"] = (int)dic[dd.Key]["ucountno"] + 1;
+                    }
+
+                    int menno = dd.Value["pinduan"].ToString()=="800M"?0:2;
+                    bool chaomang=false;
+                    if (prbdown.HasValue && flowdown.HasValue && prbdown.Value >= (double)menxian[menno]["prbdown"] && flowdown.Value >= (double)menxian[menno]["flowdown"]) {
+                        chaomang = true;
+                        dic[dd.Key]["overflowdays"] = (int)dic[dd.Key]["overflowdays"] + 1;
+                    }
+                    if (prbdown.HasValue && rrc.HasValue && ucount.HasValue && prbdown.Value >= (double)menxian[menno + 1]["prbdown"] && rrc.Value >= (int)menxian[menno + 1]["rrc"] && ucount.Value >= (int)menxian[menno + 1]["ucount"])
+                    {
+                        chaomang = true;
+                        dic[dd.Key]["overuserdays"] = (int)dic[dd.Key]["overuserdays"] + 1;
+                    }
+                    if (chaomang) {
+                        dic[dd.Key]["sbusydays"] = (int)dic[dd.Key]["sbusydays"] + 1;
+                    }
+                }
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.Append("地市,地市编码,基站ID,小区ID,小区名称,小区覆盖类别,频段标识,厂家,经度,纬度,PRB上行利用率（%）,PRB下行利用率（%）,RRC连接用户数（个）,小区流量（GB)-上行,小区流量（GB)-下行,计费用户数,可查询天数,有数据天数,是否在超忙原始清单,是否在新扩容小区"+(cm?",超忙/闲小区,超忙类别":"")+"\r\n");
+            foreach (var dd in dic) {
+                var prbup = (int)dd.Value["prbupno"] == 0 ? "" : ((float)dd.Value["prbup"] / (int)dd.Value["prbupno"]).ToString();
+                var prbdown = (int)dd.Value["prbdownno"] == 0 ? "" : ((float)dd.Value["prbdown"] / (int)dd.Value["prbdownno"]).ToString();
+                var rrc=(int)dd.Value["rrcno"]==0?"":(((int)dd.Value["rrc"] + 0f) / (int)dd.Value["rrcno"]).ToString();
+                var flowup = (int)dd.Value["flowupno"] == 0 ? "" : ((float)dd.Value["flowup"] / (int)dd.Value["flowupno"]).ToString();
+                var flowdown = (int)dd.Value["flowdownno"] == 0 ? "" : ((float)dd.Value["flowdown"] / (int)dd.Value["flowdownno"]).ToString();
+                var ucount = (int)dd.Value["ucount"] == 0 ? "" : (((int)dd.Value["ucount"] + 0f) / (int)dd.Value["ucount"]).ToString();
+                
+                string line = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19}",
+                    dd.Value["city"], dd.Value["cityno"], dd.Value["bid"], dd.Value["cid"], dd.Value["cname"], dd.Value["fugai"], dd.Value["pinduan"], dd.Value["chang"], dd.Value["lon"], dd.Value["lat"]
+                    ,prbup , prbdown, rrc, flowup, flowdown, ucount
+                    , dd.Value["days"], dd.Value["prbdownno"], "", ""
+                    );
+                if (cm) {
+                    var cmcx = "其他";
+                    var cmlx = "非超忙";
+
+                    var cmcxlist = new List<string>();
+                    var cmlxlist = new List<string>();
+
+                    var sbusydays = (int)dd.Value["sbusydays"];
+                    var overflowdays = (int)dd.Value["overflowdays"];
+                    var overuserdays = (int)dd.Value["overuserdays"];
+
+                    var cx = O2.O2D(flowdown) < (double)menxian[4]["flowdown"] ? true : false;
+
+                    if (sbusydays >= cmts) {
+                        cmcxlist.Add("超忙");
+                        if (overflowdays > 0) {
+                            cmlxlist.Add("大流量");
+                        }
+                        if (overuserdays > 0) {
+                            cmlxlist.Add("多用户");
+                        }
+                        if (cmlxlist.Count > 0) {
+                            cmlx = string.Join("|",cmlxlist);
+                        }
+                    }
+                    if (cx) {
+                        cmcxlist.Add("超闲");
+                    }
+                    if (cmcxlist.Count > 0) {
+                        cmcx = string.Join("|",cmcxlist);
+                    }
+
+
+                    line += ","+cmcx+","+cmlx;
+                }
+                line += "\r\n";
+                sb.Append(line);
+            }
+            File.WriteAllText(csvfilename,sb.ToString(),Encoding.GetEncoding("gbk"));
+            File.Copy(filenametmp,xmlfilename,true);
+            File.Delete(filenametmp);
+            #endregion
+
+            return res;
+        }
+
+        private static int? O2I(object o) {
+            if (o.GetType() == typeof(int)) {
+                return (int)o;
+            }
+            return null;
+        }
+        private static float? O2F(object o)
+        {
+            if (o.GetType() == typeof(float))
+            {
+                return (float)o;
+            }
+            return null;
         }
     }
 }

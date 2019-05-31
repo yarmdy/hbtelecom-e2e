@@ -911,10 +911,20 @@ namespace CTCCGoods.Controllers
                     foreach (var b in brn)
                     {
                         //if (b.Value == "") continue;
-                        if (a[b.Key].ToLower().IndexOf(b.Value.ToLower())<0)
+                        if (b.Value.IndexOf("{==}") == 0) {
+                            if (a[b.Key].ToLower()!=b.Value.ToLower().Replace("{==}",""))
+                            {
+                                res = false;
+                                break;
+                            }
+                        }
+                        else
                         {
-                            res = false;
-                            break;
+                            if (a[b.Key].ToLower().IndexOf(b.Value.ToLower()) < 0)
+                            {
+                                res = false;
+                                break;
+                            }
                         }
                     }
                 }
