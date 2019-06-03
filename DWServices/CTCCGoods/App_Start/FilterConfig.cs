@@ -100,6 +100,15 @@ namespace CTCCGoods
                 case "krmen":
                     act = "超忙门限";
                     break;
+                case "table1":
+                    act = "原始数据";
+                    break;
+                case "sbusycomp":
+                    act = "超忙计算";
+                    break;
+                case "superbusylist":
+                    act = "超忙原始清单";
+                    break;
                 default:
                     act = null;
                     break;

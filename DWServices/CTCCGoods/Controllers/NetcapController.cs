@@ -69,12 +69,12 @@ namespace CTCCGoods.Controllers
         {
             if (Request.Files.Count <= 0)
             {
-                return Content("<script>alert(\"没有检测到上传文件，上传失败\");location=\"/rru\"</script>");
+                return Content("<script>alert(\"没有检测到上传文件，上传失败\");location=\"/netcap/table1\"</script>");
             }
             var table1file = Request.Files[0];
             if (table1file.FileName.IndexOf(".") < 0 || !new string[] { "xlsx", "csv" }.Contains(table1file.FileName.Substring(table1file.FileName.LastIndexOf(".") + 1).ToLower()))
             {
-                return Content("<script>alert(\"上传失败，请上传xlsx、csv格式文件\");location=\"/rru\"</script>");
+                return Content("<script>alert(\"上传失败，请上传xlsx、csv格式文件\");location=\"/netcap/table1\"</script>");
             }
             var uppath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table1tmp");
             if (!Directory.Exists(uppath))
@@ -194,6 +194,38 @@ namespace CTCCGoods.Controllers
             ctasksHandle.addtask(12, filename,"sbusycomp","");
 
             return Json(new { ok=true,msg="已加入任务列表，请在后台任务查看任务状态"},JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Superbusylist() {
+            return View();
+        }
+        public ActionResult Table2import(string[] flimport, string txttime)
+        {
+            if (Request.Files.Count <= 0)
+            {
+                return Content("<script>alert(\"没有检测到上传文件，上传失败\");location=\"/netcap/superbusylist\"</script>");
+            }
+            var table1file = Request.Files[0];
+            if (table1file.FileName.IndexOf(".") < 0 || !new string[] { "xlsx", "csv" }.Contains(table1file.FileName.Substring(table1file.FileName.LastIndexOf(".") + 1).ToLower()))
+            {
+                return Content("<script>alert(\"上传失败，请上传xlsx、csv格式文件\");location=\"/netcap/superbusylist\"</script>");
+            }
+            var uppath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table2tmp");
+            if (!Directory.Exists(uppath))
+            {
+                Directory.CreateDirectory(uppath);
+            }
+            var now = DateTime.Now;
+            var filename = now.ToString("yyyyMMdd_") + table1file.FileName;
+            table1file.SaveAs(Path.Combine(uppath, filename));
+            var targetname = now.ToString("yyyyMMdd") + ".csv";
+            //DateTime tartime;
+            //if (!string.IsNullOrEmpty(txttime) && DateTime.TryParse(txttime, out tartime))
+            //{
+            //    targetname = tartime.ToString("yyyyMMdd") + ".csv";
+            //}
+            ctasksHandle.addtask(13, filename, targetname, "");
+            return Content("<script>alert(\"已上传到服务器，进入后台任务\");location=\"/task\"</script>");
         }
         #region 通用
         public ActionResult File(string b, string r, string n, string city, string chang, string pinduan, string leixing, string xz, string fh)
