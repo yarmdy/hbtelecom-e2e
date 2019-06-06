@@ -109,6 +109,12 @@ namespace CTCCGoods
                 case "superbusylist":
                     act = "超忙原始清单";
                     break;
+                case "superbusyex":
+                    act = "超忙对应扩容清单";
+                    break;
+                case "warning":
+                    act = "任务警告处理";
+                    break;
                 default:
                     act = null;
                     break;

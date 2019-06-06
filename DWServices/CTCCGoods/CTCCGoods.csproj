@@ -330,6 +330,15 @@
   <ItemGroup>
     <Content Include="template\superbusylist_template.xlsx" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="template\superbusyex_template.xlsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Netcap\Superbusyex.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Task\Warning.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

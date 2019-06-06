@@ -10,6 +10,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using System.Data;
 
 namespace CTCCGoods.Controllers
 {
@@ -87,13 +88,16 @@ namespace CTCCGoods.Controllers
                     {
                         starttask(newone);
                         string msg;
-                        var res=dealtask(newone,out msg);
-                        if (res)
+                        int res=dealtask(newone,out msg);
+                        if (res==1)
                         {
                             endtask(newone, "成功");
                         }
-                        else {
+                        else if(res==-1){
                             endtask(newone, "失败",msg);
+                        }
+                        else if (res == 0) {
+                            endtask(newone, "暂停", msg);
                         }
                         GC.Collect();
                     }
@@ -134,17 +138,29 @@ namespace CTCCGoods.Controllers
         private static void endtask(ctasks ct,string tdesc,string errorlog=null)
         {
             var now = DateTime.Now;
-            string errfile = null;
+            string errfile = ct.errurl;
             if (errorlog != null) {
-                errfile = "err"+now.ToString("yyyyMMddHHmmssmsfffffff")+".txt";
-                var errpath=System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"taskerr");
-                if (!System.IO.Directory.Exists(errpath)) {
+                var errpath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "taskerr");
+                if (!System.IO.Directory.Exists(errpath))
+                {
                     System.IO.Directory.CreateDirectory(errpath);
                 }
-                System.IO.File.WriteAllText(System.IO.Path.Combine(errpath,errfile),errorlog,System.Text.Encoding.GetEncoding("gbk"));
+                if (string.IsNullOrEmpty(ct.errurl))
+                {
+                    errfile = "err" + now.ToString("yyyyMMddHHmmssmsfffffff") + ".txt";
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(errpath, errfile), errorlog, System.Text.Encoding.GetEncoding("gbk"));
+                }
+                else {
+                    System.IO.FileStream fs = new System.IO.FileStream(System.IO.Path.Combine(errpath, errfile), System.IO.FileMode.Append);
+                    System.IO.StreamWriter sw = new System.IO.StreamWriter(fs, System.Text.Encoding.GetEncoding("gbk"));
+                    sw.Write(errorlog);
+                    sw.Close();
+                    fs.Close();
+                }
+                
             }
 
-            int res = DB.Exec("update ctasks set tdesc='" + tdesc + "',tstatus=2,endtime='" + now.ToString("yyyy-MM-dd HH:mm:ss") + "',errurl="+(errorlog==null?"null":"'"+errfile+"'")+" where id=" + ct.id.Value);
+            int res = DB.Exec("update ctasks set tdesc='" + tdesc + "',tstatus=2,endtime='" + now.ToString("yyyy-MM-dd HH:mm:ss") + "',errurl="+(string.IsNullOrEmpty(errfile)?"null":"'"+errfile+"'")+" where id=" + ct.id.Value);
             if (res > 0)
             {
                 ct.tdesc = tdesc;
@@ -170,7 +186,7 @@ namespace CTCCGoods.Controllers
         /// </summary>
         /// <param name="dic">字典</param>
         /// <returns>任务对象</returns>
-        private static ctasks dic2ctasks(Dictionary<string, object> dic) {
+        public static ctasks dic2ctasks(Dictionary<string, object> dic) {
             if (dic == null) return null;
             var ct = new ctasks();
             ct.id = dic.ContainsKey("id")?(int?)O2.O2I(dic["id"]):null;
@@ -193,10 +209,10 @@ namespace CTCCGoods.Controllers
         /// <param name="ct">任务对象</param>
         /// <param name="msg">错误详细信息</param>
         /// <returns>成功失败</returns>
-        private static bool dealtask(ctasks ct,out string msg)
+        private static int dealtask(ctasks ct,out string msg)
         {
             msg = "";
-            var res = true;
+            int res = 1;
             try {
                 switch (ct.ttype.Value) { 
                     case 1:
@@ -220,14 +236,20 @@ namespace CTCCGoods.Controllers
                     case 12:
                         res = sbusycomp(ct, out msg);
                         break;
+                    case 13:
+                        res = importTable2(ct, out msg);
+                        break;
+                    case 14:
+                        res = importTable3(ct, out msg);
+                        break;
                     default:
-                        res = false;
+                        res = -1;
                         msg = "任务类型不匹配";
                         break;
                 }
             }
             catch (Exception ex) {
-                res = false;
+                res = -1;
                 msg = ex.Message;
             }
 
@@ -245,15 +267,20 @@ namespace CTCCGoods.Controllers
 
         public static string[] constcfugai = {"室外覆盖","室分覆盖","未知" };
         public static string[] constpinduannc = { "800M", "1.8G", "2.1G", "未知" };
+        public static string[] constpindian = { "800M单模", "800M双模", "1.8G", "2.1G","4T4R" };
+
+        public static string[] constadvises = { "扩容","不扩容"};
+        public static string[] constbuildmodes = { "本小区扩容", "周边站扩容" };
+        public static string[] constcelltypes = { "室分", "宏站" };
         /// <summary>
         /// 发货表导入
         /// </summary>
         /// <param name="ct">任务对象</param>
         /// <param name="msg">错误详细信息</param>
         /// <returns>成功失败</returns>
-        private static bool importSend(ctasks ct, out string msg) {
+        private static int importSend(ctasks ct, out string msg) {
             msg = "";
-            var res = true;
+            var res = 1;
             #region 发货表导入代码
             //开始
             var tmppath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "rrufiles\\nsendtmp");
@@ -270,7 +297,7 @@ namespace CTCCGoods.Controllers
                 if (bjjg <= 0) {
                     msg = "文件日期不能早于最晚新发货表日期";
                     File.Delete(newfilename);
-                    return false;
+                    return -1;
                 }
             }
 
@@ -297,11 +324,11 @@ namespace CTCCGoods.Controllers
             } else {
                 msg = "不支持的文件扩展名";
                 File.Delete(newfilename);
-                return false;
+                return -1;
             }
             if (!string.IsNullOrEmpty(msg))
             {
-                res = false;
+                res = -1;
             }
             else {
                 StringBuilder sb = new StringBuilder();
@@ -632,10 +659,10 @@ namespace CTCCGoods.Controllers
         /// <param name="ct">任务对象</param>
         /// <param name="msg">错误详细信息</param>
         /// <returns>成功失败</returns>
-        private static bool importNetManager(ctasks ct, out string msg)
+        private static int importNetManager(ctasks ct, out string msg)
         {
             msg = "";
-            var res = true;
+            var res = 1;
             #region 网管详表导入代码
             //开始
             var d = DateTime.Now;
@@ -646,10 +673,10 @@ namespace CTCCGoods.Controllers
                 ct.filename = newName;
                 string newPath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "rrufiles\\wangtmp\\" + newName);
 
-                res = xlsx2csv(filename, newPath, out msg);
-                if (!res)
+                var res2 = xlsx2csv(filename, newPath, out msg);
+                if (!res2)
                 {
-                    return res;
+                    return -1;
                 }
             }
 
@@ -668,7 +695,7 @@ namespace CTCCGoods.Controllers
                 {
                     msg = "文件日期不能早于最晚[网管详表]日期";
                     File.Delete(wangPath);
-                    return false;
+                    return -1;
                 }
 
                 readwangcsv(lastwfilename, lastwdic);
@@ -688,7 +715,7 @@ namespace CTCCGoods.Controllers
                 {
                     msg = "文件日期不能早于最晚[新发货表]日期";
                     File.Delete(wangPath);
-                    return false;
+                    return -1;
                 }
 
                 string tmsg;
@@ -705,7 +732,7 @@ namespace CTCCGoods.Controllers
             if (!string.IsNullOrEmpty(msg))
             {
                 File.Delete(wangPath);
-                return false;
+                return -1;
             }
             var lasttjpath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "rrufiles\\wangtj");
             var lasttjfiles = System.IO.Directory.GetFiles(lasttjpath, "*.csv");
@@ -1213,10 +1240,10 @@ namespace CTCCGoods.Controllers
         /// <param name="ct">任务对象</param>
         /// <param name="msg">错误详细信息</param>
         /// <returns>成功失败</returns>
-        private static bool computationNew(ctasks ct, out string msg)
+        private static int computationNew(ctasks ct, out string msg)
         {
             msg = "";
-            var res = true;
+            var res = 1;
             #region 计算新增代码
             //开始
             var filepath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "rrufiles\\wang");
@@ -1232,7 +1259,7 @@ namespace CTCCGoods.Controllers
 
             if (tt.Contains(ct.tfilename.Substring(0, ct.tfilename.LastIndexOf(".")))) {
                 msg = "新增计算失败,此文件已经计算过了";
-                return false;
+                return -1;
             }
 
             StringBuilder sb = new StringBuilder();
@@ -1287,10 +1314,10 @@ namespace CTCCGoods.Controllers
         /// <param name="ct">任务对象</param>
         /// <param name="msg">错误详细信息</param>
         /// <returns>成功失败</returns>
-        private static bool importLterru(ctasks ct, out string msg)
+        private static int importLterru(ctasks ct, out string msg)
         {
             msg = "";
-            var res = true;
+            var res = 1;
             #region lte rru核对表导入代码
             //开始
             if (ct.filename.Substring(ct.filename.LastIndexOf(".") + 1).ToLower() == "xlsx")
@@ -1300,10 +1327,10 @@ namespace CTCCGoods.Controllers
                 ct.filename = newName;
                 string newPath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "rrufiles\\lterrutmp\\" + newName);
 
-                res = xlsx2csv(filename, newPath, out msg);
-                if (!res)
+                var res2 = xlsx2csv(filename, newPath, out msg);
+                if (!res2)
                 {
-                    return res;
+                    return -1;
                 }
             }
             var dtres = DB.Query("select top 0 * from r_lterru");
@@ -1465,7 +1492,7 @@ namespace CTCCGoods.Controllers
             if (sbr.Length > 0)
             {
                 msg = sbr.ToString();
-                return false;
+                return -1;
             }
             System.Data.SqlClient.SqlBulkCopy sbc = new System.Data.SqlClient.SqlBulkCopy(System.Configuration.ConfigurationManager.ConnectionStrings["mssql"].ConnectionString);
             sbc.BulkCopyTimeout = 3600;
@@ -1533,9 +1560,9 @@ namespace CTCCGoods.Controllers
             return res;
         }
 
-        private static bool computationDuibi(ctasks ct, out string msg) {
+        private static int computationDuibi(ctasks ct, out string msg) {
             msg = "";
-            var res = true;
+            var res = 1;
 
             #region 计算对比代码
             var filepath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "rrufiles\\wang");
@@ -1625,7 +1652,7 @@ namespace CTCCGoods.Controllers
             return res;
         }
 
-        private static bool xlsx2csv(string filename,string newFilename,out string msg){
+        private static bool xlsx2csv(string filename,string newFilename,out string msg,int huluerows=0){
             msg = "";
             var res = true;
 
@@ -1633,13 +1660,13 @@ namespace CTCCGoods.Controllers
             IWorkbook workbook = new XSSFWorkbook(fileStream);
             ISheet sheet = workbook.GetSheetAt(0);
             StringBuilder sb = new StringBuilder();
-            if (sheet.LastRowNum == 0)
+            if (sheet.LastRowNum <= huluerows)
             {
                 msg += "空白文件\r\n";
                 return false;
             }
-            int length = sheet.GetRow(0).Cells.Count;
-            for (int i = 0; i <= sheet.LastRowNum; i++)
+            int length = sheet.GetRow(huluerows).Cells.Count;
+            for (int i = huluerows; i <= sheet.LastRowNum; i++)
             {
                 IRow row = sheet.GetRow(i);
                 for (int j = 0; j < length; j++)
@@ -1668,9 +1695,9 @@ namespace CTCCGoods.Controllers
             return res;
         }
 
-        private static bool importTable1(ctasks ct, out string msg) {
+        private static int importTable1(ctasks ct, out string msg) {
             msg = "";
-            var res = true;
+            var res = 1;
 
             #region 导入表1代码
             if (ct.filename.Substring(ct.filename.LastIndexOf(".") + 1).ToLower() == "xlsx")
@@ -1680,10 +1707,10 @@ namespace CTCCGoods.Controllers
                 ct.filename = newName;
                 string newPath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table1tmp\\" + newName);
 
-                res = xlsx2csv(filename,newPath,out msg);
-                if (!res) {
+                var res2 = xlsx2csv(filename,newPath,out msg);
+                if (!res2) {
                     
-                    return res;
+                    return -1;
                 }
             }
             var t1path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table1\\");
@@ -1694,12 +1721,12 @@ namespace CTCCGoods.Controllers
             readtable1csv(t1tmpname,dic,out msg);
             if (msg.Length > 0) {
                 File.Delete(t1tmpname);
-                return false;
+                return -1;
             }
 
             StringBuilder sbres = new StringBuilder();
 
-            sbres.Append("地市,地市编码,基站ID,小区ID,小区名称,小区覆盖类别,频段标识,厂家,经度,纬度,PRB上行利用率（%）,PRB下行利用率（%）,RRC连接用户数（个）,小区流量（GB)-上行,小区流量（GB)-下行,计费用户数\r\n");
+            sbres.Append("省份,省份编码,地市,地市编码,基站ID,小区ID,小区名称,小区覆盖类别,频段标识,厂家,经度,纬度,PRB上行利用率（%）,PRB下行利用率（%）,RRC连接用户数（个）,小区流量（GB)-上行,小区流量（GB)-下行,计费用户数\r\n");
             foreach (var kv in dic)
             {
                 var cols = new List<string>();
@@ -1738,7 +1765,7 @@ namespace CTCCGoods.Controllers
                 var line = sr.ReadLine();
                 Regex reg = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                 var cols = reg.Split(line);
-                if (cols.Length < 16)
+                if (cols.Length < 18)
                 {
                     sbr.Append("第" + rowno + "行，列数不足" + "\r\n");
                     continue;
@@ -1747,14 +1774,17 @@ namespace CTCCGoods.Controllers
                 var chong = false;
                 var dicin = new Dictionary<string, object>();
 
-                var city = cols[0].Trim();
+                dicin["province"] = "河北";
+                dicin["provinceno"] = "813";
+
+                var city = cols[2].Trim();
                 dicin["city"] = city;
                 if (!constcitys.Contains(city))
                 {
                     errline.Add("地市不正确");
                 }
 
-                var cityno = cols[1].Trim();
+                var cityno = cols[3].Trim();
                 dicin["cityno"] = cityno;
                 if (!constcitynos.Contains(cityno))
                 {
@@ -1766,7 +1796,7 @@ namespace CTCCGoods.Controllers
                 }
 
 
-                var bids = cols[2].Trim();
+                var bids = cols[4].Trim();
                 int bid;
                 if (bids == "")
                 {
@@ -1782,7 +1812,7 @@ namespace CTCCGoods.Controllers
                     dicin["bid"] = bid;
                 }
 
-                var cids = cols[3].Trim();
+                var cids = cols[5].Trim();
                 int cid;
                 if (cids == "")
                 {
@@ -1805,35 +1835,35 @@ namespace CTCCGoods.Controllers
                     chong = true;
                 }
 
-                var cname = cols[4].Trim();
+                var cname = cols[6].Trim();
                 dicin["cname"] = cname;
                 if (string.IsNullOrEmpty(cname))
                 {
                     errline.Add("小区名称不能为空");
                 }
 
-                var fugai = cols[5].Trim().ToUpper();
+                var fugai = cols[7].Trim().ToUpper();
                 dicin["fugai"] = fugai;
                 if (!constcfugai.Contains(fugai))
                 {
                     errline.Add("小区覆盖类型不正确");
                 }
 
-                var pinduan = cols[6].Trim().ToUpper();
+                var pinduan = cols[8].Trim().ToUpper();
                 dicin["pinduan"] = pinduan;
                 if (!constpinduannc.Contains(pinduan))
                 {
                     errline.Add("频段不正确");
                 }
 
-                var chang = cols[7].Trim();
+                var chang = cols[9].Trim();
                 dicin["chang"] = chang;
                 if (!constchangs.Contains(chang))
                 {
                     errline.Add("厂家不正确");
                 }
 
-                var lons = cols[8].Trim();
+                var lons = cols[10].Trim();
                 float lon;
                 dicin["lon"] = "";
                 if (lons.Length > 0)
@@ -1844,7 +1874,7 @@ namespace CTCCGoods.Controllers
                     dicin["lon"] = lon;
                 }
 
-                var lats = cols[9].Trim();
+                var lats = cols[11].Trim();
                 float lat;
                 dicin["lat"] = "";
                 if (lats.Length > 0)
@@ -1856,7 +1886,7 @@ namespace CTCCGoods.Controllers
                     dicin["lat"] = lat;
                 }
 
-                var prbups = cols[10].Trim();
+                var prbups = cols[12].Trim();
                 float prbup;
                 dicin["prbup"] = "";
                 if (prbups.Length > 0)
@@ -1868,7 +1898,7 @@ namespace CTCCGoods.Controllers
                     dicin["prbup"] = prbup;
                 }
 
-                var prbdowns = cols[11].Trim();
+                var prbdowns = cols[13].Trim();
                 float prbdown;
                 dicin["prbdown"] = "";
                 if (prbdowns.Length > 0)
@@ -1880,7 +1910,7 @@ namespace CTCCGoods.Controllers
                     dicin["prbdown"] = prbdown;
                 }
 
-                var rrcs = cols[12].Trim();
+                var rrcs = cols[14].Trim();
                 int rrc;
                 dicin["rrc"] = "";
                 if (rrcs.Length > 0)
@@ -1892,7 +1922,7 @@ namespace CTCCGoods.Controllers
                     dicin["rrc"] = rrc;
                 }
 
-                var flowups = cols[13].Trim();
+                var flowups = cols[15].Trim();
                 float flowup;
                 dicin["flowup"] = "";
                 if (flowups.Length > 0)
@@ -1904,19 +1934,19 @@ namespace CTCCGoods.Controllers
                     dicin["flowup"] = flowup;
                 }
 
-                var flowdowns = cols[14].Trim();
+                var flowdowns = cols[16].Trim();
                 float flowdown;
                 dicin["flowdown"] = "";
                 if (flowdowns.Length > 0)
                 {
                     if (!float.TryParse(flowdowns, out flowdown))
                     {
-                        errline.Add("小区流量（GB)-上行必须是数字");
+                        errline.Add("小区流量（GB)-下行必须是数字");
                     }
                     dicin["flowdown"] = flowdown;
                 }
 
-                var ucounts = cols[15].Trim();
+                var ucounts = cols[17].Trim();
                 int ucount;
                 dicin["ucount"] = "";
                 if (ucounts.Length > 0)
@@ -1946,10 +1976,10 @@ namespace CTCCGoods.Controllers
                 msg = sbr.ToString();
             }
         }
-        private static bool sbusycomp(ctasks ct, out string msg)
+        private static int sbusycomp(ctasks ct, out string msg)
         {
             msg = "";
-            var res = true;
+            var res = 1;
 
             #region 超忙计算代码
             var filepathtmp = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/sbusycomptmp");
@@ -1970,7 +2000,7 @@ namespace CTCCGoods.Controllers
             if (table1files == null || table1files.Length <= 0) {
                 msg = "原始数据为空";
                 File.Delete(filenametmp);
-                return false;
+                return -1;
             }
             table1files = table1files.Select(a => a.Substring(a.LastIndexOf("\\") + 1)).ToArray();
             var tfiles = xml.Descendants("item").Select(a=>a.Value).ToArray();
@@ -1983,7 +2013,7 @@ namespace CTCCGoods.Controllers
                 msg = "以下日期不存在：\r\n";
                 msg += string.Join("\r\n",errorfiles);
                 File.Delete(filenametmp);
-                return false;
+                return -1;
             }
 
             var menxian=DB.QueryAsDics("select * from ckrmen order by id");
@@ -2022,6 +2052,8 @@ namespace CTCCGoods.Controllers
 
                         dic[dd.Key]["days"] = 0;
                     }
+                    dic[dd.Key]["province"] = dd.Value["province"];
+                    dic[dd.Key]["provinceno"] = dd.Value["provinceno"];
                     dic[dd.Key]["city"] = dd.Value["city"];
                     dic[dd.Key]["cityno"] = dd.Value["cityno"];
                     dic[dd.Key]["bid"] = dd.Value["bid"];
@@ -2088,7 +2120,7 @@ namespace CTCCGoods.Controllers
                 }
             }
             StringBuilder sb = new StringBuilder();
-            sb.Append("地市,地市编码,基站ID,小区ID,小区名称,小区覆盖类别,频段标识,厂家,经度,纬度,PRB上行利用率（%）,PRB下行利用率（%）,RRC连接用户数（个）,小区流量（GB)-上行,小区流量（GB)-下行,计费用户数,可查询天数,有数据天数,是否在超忙原始清单,是否在新扩容小区"+(cm?",超忙/闲小区,超忙类别":"")+"\r\n");
+            sb.Append("省份,省份编码,地市,地市编码,基站ID,小区ID,小区名称,小区覆盖类别,频段标识,厂家,经度,纬度,PRB上行利用率（%）,PRB下行利用率（%）,RRC连接用户数（个）,小区流量（GB)-上行,小区流量（GB)-下行,计费用户数,可查询天数,有数据天数,是否在超忙原始清单,是否在新扩容小区"+(cm?",超忙/闲小区,超忙类别":"")+"\r\n");
             foreach (var dd in dic) {
                 var prbup = (int)dd.Value["prbupno"] == 0 ? "" : ((float)dd.Value["prbup"] / (int)dd.Value["prbupno"]).ToString();
                 var prbdown = (int)dd.Value["prbdownno"] == 0 ? "" : ((float)dd.Value["prbdown"] / (int)dd.Value["prbdownno"]).ToString();
@@ -2097,8 +2129,8 @@ namespace CTCCGoods.Controllers
                 var flowdown = (int)dd.Value["flowdownno"] == 0 ? "" : ((float)dd.Value["flowdown"] / (int)dd.Value["flowdownno"]).ToString();
                 var ucount = (int)dd.Value["ucount"] == 0 ? "" : (((int)dd.Value["ucount"] + 0f) / (int)dd.Value["ucount"]).ToString();
                 
-                string line = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19}",
-                    dd.Value["city"], dd.Value["cityno"], dd.Value["bid"], dd.Value["cid"], dd.Value["cname"], dd.Value["fugai"], dd.Value["pinduan"], dd.Value["chang"], dd.Value["lon"], dd.Value["lat"]
+                string line = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21}",
+                    dd.Value["province"], dd.Value["provinceno"], dd.Value["city"], dd.Value["cityno"], dd.Value["bid"], dd.Value["cid"], dd.Value["cname"], dd.Value["fugai"], dd.Value["pinduan"], dd.Value["chang"], dd.Value["lon"], dd.Value["lat"]
                     ,prbup , prbdown, rrc, flowup, flowdown, ucount
                     , dd.Value["days"], dd.Value["prbdownno"], "", ""
                     );
@@ -2161,6 +2193,787 @@ namespace CTCCGoods.Controllers
                 return (float)o;
             }
             return null;
+        }
+
+        private static int importTable2(ctasks ct, out string msg)
+        {
+            msg = "";
+            var res = 1;
+
+            #region 导入表2代码
+            if (ct.filename.Substring(ct.filename.LastIndexOf(".") + 1).ToLower() == "xlsx")
+            {
+                var filename = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table2tmp\\" + ct.filename);
+                string newName = ct.filename.Substring(0, ct.filename.LastIndexOf(".")) + ".csv";
+                ct.filename = newName;
+                string newPath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table2tmp\\" + newName);
+
+                var res2 = xlsx2csv(filename, newPath, out msg);
+                if (!res2)
+                {
+                    File.Delete(filename);
+                    return -1;
+                }
+            }
+            var t2path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table2\\");
+            var t2tmppath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table2tmp\\");
+            var t2tmpname = Path.Combine(t2tmppath, ct.filename);
+
+            Dictionary<int, Dictionary<string, object>> dic = new Dictionary<int, Dictionary<string, object>>();
+
+            var ecidt = DB.Query("select enodebid*256+cellid eci from (select enodebid,cellid from csuperbusy)a");
+            var dtres = DB.Query("select top 0 * from csuperbusy");
+            Dictionary<int, object> diceci = new Dictionary<int, object>();
+            if (ecidt != null) {
+                diceci=ecidt.AsEnumerable().ToDictionary(a => (int)a[0], a => (object)null);
+            }
+
+            readtable2csv(t2tmpname, diceci ,dic, out msg);
+            if (msg.Length > 0)
+            {
+                File.Delete(t2tmpname);
+                return -1;
+            }
+
+            foreach (var dicin in dic) {
+                var row = dtres.NewRow();
+                foreach (var key in dicin.Value.Keys) {
+                    if (dtres.Columns[key].DataType == typeof(double) && dicin.Value[key].GetType() == typeof(float))
+                    {
+                        row[key] = O2.O2D(dicin.Value[key].ToString());
+                    }
+                    else if ((dtres.Columns[key].DataType == typeof(double) || dtres.Columns[key].DataType == typeof(int)) && dicin.Value[key].ToString() == "") {
+                        row[key] = DBNull.Value;
+                    }
+                    else
+                    {
+                        row[key] = dicin.Value[key];
+                    }
+                        
+                }
+                dtres.Rows.Add(row);
+            }
+
+            System.Data.SqlClient.SqlBulkCopy sbc = new System.Data.SqlClient.SqlBulkCopy(System.Configuration.ConfigurationManager.ConnectionStrings["mssql"].ConnectionString);
+            sbc.BulkCopyTimeout = 3600;
+            sbc.DestinationTableName = "csuperbusy";
+            foreach (System.Data.DataColumn col in dtres.Columns)
+            {
+                sbc.ColumnMappings.Add(col.ColumnName, col.ColumnName);
+            }
+            sbc.WriteToServer(dtres);
+            sbc.Close();
+
+
+            File.Delete(t2tmpname);
+            #endregion
+
+            return res;
+        }
+        private static void readtable2csv(string filename,Dictionary<int, object> diceci, Dictionary<int, Dictionary<string, object>> dic, out string msg)
+        {
+            msg = "";
+
+            var rowno = 1;
+            System.Text.StringBuilder sbr = new System.Text.StringBuilder();
+            System.IO.FileStream fsm = new System.IO.FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            System.IO.StreamReader sr = new System.IO.StreamReader(fsm, System.Text.Encoding.GetEncoding("gbk"));
+            sr.ReadLine();
+
+            while (!sr.EndOfStream)
+            {
+                rowno++;
+                var line = sr.ReadLine();
+                Regex reg = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                var cols = reg.Split(line);
+                if (cols.Length < 21)
+                {
+                    sbr.Append("第" + rowno + "行，列数不足" + "\r\n");
+                    continue;
+                }
+                var errline = new List<string>();
+                var chong = false;
+                var dicin = new Dictionary<string, object>();
+
+
+                var period = cols[0].Trim();
+                dicin["period"] = period;
+                if (string.IsNullOrEmpty(period))
+                {
+                    errline.Add("账期不能为空");
+                }
+
+                var city = cols[3].Trim();
+                dicin["city"] = city;
+                if (!constcitys.Contains(city))
+                {
+                    errline.Add("地市不正确");
+                }
+
+                var cityno = cols[4].Trim();
+                dicin["cityno"] = cityno;
+                if (!constcitynos.Contains(cityno))
+                {
+                    errline.Add("地市ID不正确");
+                }
+
+                if (constcitys.IndexOf(city) != constcitynos.IndexOf(cityno))
+                {
+                    errline.Add("地市和ID不匹配");
+                }
+
+
+                var bids = cols[5].Trim();
+                int bid;
+                if (bids == "")
+                {
+                    dicin["enodebid"] = bids;
+                    errline.Add("基站ID不能为空");
+                }
+                else if (!int.TryParse(bids, out bid))
+                {
+                    errline.Add("基站ID必须是数字");
+                }
+                else
+                {
+                    dicin["enodebid"] = bid;
+                }
+
+                var cids = cols[6].Trim();
+                int cid;
+                if (cids == "")
+                {
+                    dicin["cellid"] = cids;
+                    errline.Add("小区ID不能为空");
+                }
+                else if (!int.TryParse(cids, out cid))
+                {
+                    errline.Add("小区ID必须是数字");
+                }
+                else
+                {
+                    dicin["cellid"] = cid;
+                }
+
+                var ebcid = O2.O2I(bids) * 256 + O2.O2I(cids);
+                if (dic.ContainsKey(ebcid))
+                {
+                    errline.Add("基站ID小区ID本表重复");
+                    chong = true;
+                }
+                if (diceci.ContainsKey(ebcid)) {
+                    errline.Add("基站ID小区ID已存在");
+                    chong = true;
+                }
+
+                var cname = cols[7].Trim();
+                dicin["cellname"] = cname;
+                if (string.IsNullOrEmpty(cname))
+                {
+                    errline.Add("小区名称不能为空");
+                }
+
+                var chang = cols[8].Trim();
+                dicin["chang"] = chang;
+                if (!constchangs.Contains(chang))
+                {
+                    errline.Add("厂家不正确");
+                }
+
+                var pinduan = cols[9].Trim().ToUpper();
+                dicin["pinduan"] = pinduan;
+                if (!constpindian.Contains(pinduan))
+                {
+                    errline.Add("频点不正确");
+                }
+
+                var flowdowns = cols[10].Trim();
+                float flowdown;
+                dicin["flowdown"] = "";
+                if (flowdowns.Length > 0)
+                {
+                    if (!float.TryParse(flowdowns, out flowdown))
+                    {
+                        errline.Add("计费下行流量GB必须是数字");
+                    }
+                    dicin["flowdown"] = flowdown;
+                }
+
+                var rrcs = cols[11].Trim();
+                int rrc;
+                dicin["rrc"] = "";
+                if (rrcs.Length > 0)
+                {
+                    if (!int.TryParse(rrcs, out rrc))
+                    {
+                        errline.Add("RRC连接 用户数必须是整数");
+                    }
+                    dicin["rrc"] = rrc;
+                }
+
+                var ucounts = cols[12].Trim();
+                int ucount;
+                dicin["ucount"] = "";
+                if (ucounts.Length > 0)
+                {
+                    if (!int.TryParse(ucounts, out ucount))
+                    {
+                        errline.Add("计费用户数必须是整数");
+                    }
+                    dicin["ucount"] = ucount;
+                }
+
+                var prbdowns = cols[13].Trim();
+                float prbdown;
+                dicin["prbdown"] = "";
+                if (prbdowns.Length > 0)
+                {
+                    if (!float.TryParse(prbdowns, out prbdown))
+                    {
+                        errline.Add("PRB下行利用率必须是数字");
+                    }
+                    dicin["prbdown"] = prbdown;
+                }
+
+                var richurates = cols[14].Trim();
+                float richurate;
+                dicin["richurate"] = "";
+                if (richurates.Length > 0)
+                {
+                    if (!float.TryParse(richurates, out richurate))
+                    {
+                        errline.Add("高价值用户占比%必须是数字");
+                    }
+                    dicin["richurate"] = richurate;
+                }
+
+                var richorders = cols[15].Trim();
+                int richorder;
+                dicin["richorder"] = "";
+                if (richorders.Length > 0)
+                {
+                    if (!int.TryParse(richorders, out richorder))
+                    {
+                        errline.Add("价值优先排序必须是整数");
+                    }
+                    dicin["richorder"] = richorder;
+                }
+
+                var reportgroup = cols[16].Trim();
+                dicin["reportgroup"] = reportgroup;
+
+                var cellsetting = cols[17].Trim();
+                dicin["cellsetting"] = cellsetting;
+                if (string.IsNullOrEmpty(cellsetting))
+                {
+                    errline.Add("现小区配置不能为空");
+                }
+
+                var advise = cols[18].Trim().ToUpper();
+                dicin["advise"] = advise;
+                if (!constadvises.Contains(advise))
+                {
+                    errline.Add("省公司建议不正确");
+                }
+
+                var advisepinduan = cols[19].Trim().ToUpper();
+                dicin["advisepinduan"] = advisepinduan;
+                if (!constpindian.Contains(advisepinduan))
+                {
+                    errline.Add("扩容建议频点不正确");
+                }
+
+                var buildmode = cols[20].Trim().ToUpper();
+                dicin["buildmode"] = buildmode;
+                if (!constbuildmodes.Contains(buildmode))
+                {
+                    errline.Add("建设方式不正确");
+                }
+
+                if (errline.Count > 0)
+                {
+                    sbr.Append("第" + rowno + "行：" + string.Join("、", errline) + "\r\n");
+                }
+                if (chong) continue;
+                dic[ebcid] = dicin;
+            }
+            sr.Close();
+            fsm.Close();
+            if (rowno <= 1)
+            {
+                sbr.Append("文件没有数据！\r\n");
+            }
+            if (sbr.Length > 0)
+            {
+                msg = sbr.ToString();
+            }
+        }
+
+        private static int importTable3(ctasks ct, out string msg)
+        {
+            msg = "";
+            var res = 1;
+
+            #region 导入表3代码
+
+            var dtres = DB.Query("select top 0 * from csuperbusyex");
+            int skiprow = 0;
+            if (ct.filename.Substring(ct.filename.LastIndexOf(".") + 1).ToLower() == "xlsx")
+            {
+                skiprow = 1;
+                var filename = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table3tmp\\" + ct.filename);
+                string newName = ct.filename.Substring(0, ct.filename.LastIndexOf(".")) + ".csv";
+                ct.filename = newName;
+                string newPath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table3tmp\\" + newName);
+
+                var res2 = xlsx2csv(filename, newPath, out msg, skiprow);
+                if (!res2)
+                {
+                    File.Delete(filename);
+                    return -1;
+                }
+                DB.Exec("update ctasks set filename='"+newName+"' where id=" + ct.id);
+            }
+            #region 计算七天
+            var table1path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/table1");
+            var t1files = new string[0];
+            var tmpt1files = Directory.GetFiles(table1path, "*.csv");
+
+            if (tmpt1files != null && tmpt1files.Length > 0)
+            {
+                t1files = tmpt1files.OrderByDescending(a => a).Take(7).ToArray();
+            }
+            Dictionary<int, Dictionary<string, object>> dict1 = new Dictionary<int, Dictionary<string, object>>();
+            foreach (var file in t1files)
+            {
+                var tfilename = Path.Combine(table1path, file);
+                Dictionary<int, Dictionary<string, object>> tdic = new Dictionary<int, Dictionary<string, object>>();
+                string tmsg;
+                readtable1csv(tfilename, tdic, out tmsg);
+
+                foreach (var dd in tdic)
+                {
+                    if (!dict1.ContainsKey(dd.Key))
+                    {
+                        dict1[dd.Key] = new Dictionary<string, object>();
+                        dict1[dd.Key]["prbup"] = 0f;
+                        dict1[dd.Key]["prbupno"] = 0;
+
+                        dict1[dd.Key]["prbdown"] = 0f;
+                        dict1[dd.Key]["prbdownno"] = 0;
+
+                        dict1[dd.Key]["rrc"] = 0;
+                        dict1[dd.Key]["rrcno"] = 0;
+
+                        dict1[dd.Key]["flowup"] = 0f;
+                        dict1[dd.Key]["flowupno"] = 0;
+
+                        dict1[dd.Key]["flowdown"] = 0f;
+                        dict1[dd.Key]["flowdownno"] = 0;
+
+                        dict1[dd.Key]["ucount"] = 0;
+                        dict1[dd.Key]["ucountno"] = 0;
+
+                    }
+
+                    var prbup = O2F(dd.Value["prbup"]);
+                    var prbdown = O2F(dd.Value["prbdown"]);
+                    var rrc = O2I(dd.Value["rrc"]);
+                    var flowup = O2F(dd.Value["flowup"]);
+                    var flowdown = O2F(dd.Value["flowdown"]);
+                    var ucount = O2I(dd.Value["ucount"]);
+
+                    if (prbup.HasValue)
+                    {
+                        dict1[dd.Key]["prbup"] = (float)dict1[dd.Key]["prbup"] + prbup.Value;
+                        dict1[dd.Key]["prbupno"] = (int)dict1[dd.Key]["prbupno"] + 1;
+                    }
+                    if (prbdown.HasValue)
+                    {
+                        dict1[dd.Key]["prbdown"] = (float)dict1[dd.Key]["prbdown"] + prbdown.Value;
+                        dict1[dd.Key]["prbdownno"] = (int)dict1[dd.Key]["prbdownno"] + 1;
+                    }
+                    if (rrc.HasValue)
+                    {
+                        dict1[dd.Key]["rrc"] = (int)dict1[dd.Key]["rrc"] + rrc.Value;
+                        dict1[dd.Key]["rrcno"] = (int)dict1[dd.Key]["rrcno"] + 1;
+                    }
+                    if (flowup.HasValue)
+                    {
+                        dict1[dd.Key]["flowup"] = (float)dict1[dd.Key]["flowup"] + flowup.Value;
+                        dict1[dd.Key]["flowupno"] = (int)dict1[dd.Key]["flowupno"] + 1;
+                    }
+                    if (flowdown.HasValue)
+                    {
+                        dict1[dd.Key]["flowdown"] = (float)dict1[dd.Key]["flowdown"] + flowdown.Value;
+                        dict1[dd.Key]["flowdownno"] = (int)dict1[dd.Key]["flowdownno"] + 1;
+                    }
+                    if (ucount.HasValue)
+                    {
+                        dict1[dd.Key]["ucount"] = (int)dict1[dd.Key]["ucount"] + ucount.Value;
+                        dict1[dd.Key]["ucountno"] = (int)dict1[dd.Key]["ucountno"] + 1;
+                    }
+                }
+            }
+            #endregion
+            
+
+            var t3path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table3\\");
+            var t3tmppath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\table3tmp\\");
+            var t3tmpname = Path.Combine(t3tmppath, ct.filename);
+
+            Dictionary<int, Dictionary<string, object>> dic = new Dictionary<int, Dictionary<string, object>>();
+
+            var yecidt = DB.Query("select enodebid*256+cellid eci,chang from (select enodebid,cellid,chang from csuperbusy)a");
+            
+            Dictionary<int, object> dicyeci = new Dictionary<int, object>();
+            if (yecidt != null)
+            {
+                dicyeci = yecidt.AsEnumerable().ToDictionary(a => (int)a[0], a => a[1]);
+            }
+
+            var yexecidt = DB.Query("select enodebid*256+cellid eci from (select yenodebid enodebid,ycellid cellid from csuperbusyex)a");
+
+            Dictionary<int, object> dicyexeci = new Dictionary<int, object>();
+            if (yexecidt != null)
+            {
+                dicyexeci = yexecidt.AsEnumerable().ToDictionary(a => (int)a[0], a => (object)null);
+            }
+
+            var ecidt = DB.Query("select enodebid*256+cellid eci from (select enodebid,cellid from csuperbusyex)a");
+
+            Dictionary<int, object> diceci = new Dictionary<int, object>();
+            if (ecidt != null)
+            {
+                diceci = ecidt.AsEnumerable().ToDictionary(a => (int)a[0], a => (object)null);
+            }
+            string wmsg;
+            readtable3csv(t3tmpname,skiprow,dict1,dicyeci,dicyexeci,diceci,dic,out msg,out wmsg);
+            if (!string.IsNullOrEmpty(msg)) {
+                File.Delete(t3tmpname);
+                return -1;
+            }
+            if (!string.IsNullOrEmpty(wmsg)&&ct.rul!="ok") {
+                msg = wmsg;
+                return 0;
+            }
+
+            #region 入库
+            
+            foreach (var dicin in dic)
+            {
+                var row = dtres.NewRow();
+                foreach (var key in dicin.Value.Keys)
+                {
+                    if (dtres.Columns[key].DataType == typeof(double) && dicin.Value[key].GetType() == typeof(float))
+                    {
+                        row[key] = O2.O2D(dicin.Value[key].ToString());
+                    }
+                    else if ((dtres.Columns[key].DataType == typeof(double) || dtres.Columns[key].DataType == typeof(int) || dtres.Columns[key].DataType == typeof(bool)) && dicin.Value[key].ToString() == "")
+                    {
+                        row[key] = DBNull.Value;
+                    }
+                    else if (dtres.Columns[key].DataType == typeof(bool) && dicin.Value[key].ToString() == "") {
+                        row[key] = (int)dicin.Value[key] == 0 ? false : true;
+                    }
+                    else
+                    {
+                        row[key] = dicin.Value[key];
+                    }
+
+                }
+                dtres.Rows.Add(row);
+            }
+
+            System.Data.SqlClient.SqlBulkCopy sbc = new System.Data.SqlClient.SqlBulkCopy(System.Configuration.ConfigurationManager.ConnectionStrings["mssql"].ConnectionString);
+            sbc.BulkCopyTimeout = 3600;
+            sbc.DestinationTableName = "csuperbusyex";
+            foreach (System.Data.DataColumn col in dtres.Columns)
+            {
+                sbc.ColumnMappings.Add(col.ColumnName, col.ColumnName);
+            }
+            sbc.WriteToServer(dtres);
+            sbc.Close();
+            #endregion
+            
+
+
+
+            File.Delete(t3tmpname);
+            #endregion
+
+            return res;
+        }
+        private static void readtable3csv(string filename, int skiprow, Dictionary<int, Dictionary<string, object>> dict1, Dictionary<int, object> dicyeci, Dictionary<int, object> dicyexeci, Dictionary<int, object> diceci, Dictionary<int, Dictionary<string, object>> dic, out string msg, out string wmsg)
+        {
+            msg = ""; wmsg = "";
+
+            var rowno = 1;
+            System.Text.StringBuilder sbr = new System.Text.StringBuilder();
+            System.Text.StringBuilder sbw = new System.Text.StringBuilder();
+            System.IO.FileStream fsm = new System.IO.FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            System.IO.StreamReader sr = new System.IO.StreamReader(fsm, System.Text.Encoding.GetEncoding("gbk"));
+            sr.ReadLine();
+            float idlemx = (float)O2.O2D(DB.QueryOne("select flowdown from ckrmen where id=5")["flowdown"]);
+            while (!sr.EndOfStream)
+            {
+                rowno++;
+                var line = sr.ReadLine();
+                Regex reg = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                var cols = reg.Split(line);
+                if (cols.Length < 29)
+                {
+                    sbr.Append("第" + (rowno+skiprow) + "行，列数不足" + "\r\n");
+                    continue;
+                }
+                var errline = new List<string>();
+                var warning = new List<string>();
+                var chong = false;
+                var dicin = new Dictionary<string, object>();
+
+                #region 原eci
+                var ybids = cols[5].Trim();
+                int ybid;
+                if (ybids == "")
+                {
+                    dicin["yenodebid"] = ybids;
+                    errline.Add("原基站ID不能为空");
+                }
+                else if (!int.TryParse(ybids, out ybid))
+                {
+                    errline.Add("原基站ID必须是数字");
+                }
+                else
+                {
+                    dicin["yenodebid"] = ybid;
+                }
+
+                var ycids = cols[6].Trim();
+                int ycid;
+                if (ycids == "")
+                {
+                    dicin["ycellid"] = ycids;
+                    errline.Add("原小区ID不能为空");
+                }
+                else if (!int.TryParse(ycids, out ycid))
+                {
+                    errline.Add("原小区ID必须是数字");
+                }
+                else
+                {
+                    dicin["ycellid"] = ycid;
+                }
+
+                var yebcid = O2.O2I(ybids) * 256 + O2.O2I(ycids);
+                if (dic.ContainsKey(yebcid))
+                {
+                    errline.Add("原基站ID原小区ID本表重复");
+                }
+                if (!dicyeci.ContainsKey(yebcid))
+                {
+                    errline.Add("原基站ID原小区ID在扩容原始清单中不存在");
+                }
+                if (dicyexeci.ContainsKey(yebcid))
+                {
+                    errline.Add("原基站ID原小区ID已扩容");
+                }
+                #endregion
+
+                var chang = cols[21].Trim();
+                dicin["chang"] = chang;
+                if (!constchangs.Contains(chang))
+                {
+                    errline.Add("厂家不正确");
+                }
+                if (dicyeci.ContainsKey(yebcid)&&dicyeci[yebcid].ToString()!=chang) {
+                    errline.Add("新扩容厂家与原厂家不一致");
+                }
+
+                var celltype = cols[22].Trim();
+                dicin["celltype"] = celltype;
+                if (!constcelltypes.Contains(celltype))
+                {
+                    errline.Add("小区类型不正确");
+                }
+                var pinduan = cols[23].Trim().ToUpper();
+                dicin["pinduan"] = pinduan;
+                if (!constpindian.Contains(pinduan))
+                {
+                    errline.Add("频点不正确");
+                }
+
+                #region 新eci
+                var bids = cols[24].Trim();
+                int bid;
+                if (bids == "")
+                {
+                    dicin["enodebid"] = bids;
+                    errline.Add("基站ID不能为空");
+                }
+                else if (!int.TryParse(bids, out bid))
+                {
+                    errline.Add("基站ID必须是数字");
+                }
+                else
+                {
+                    dicin["enodebid"] = bid;
+                }
+
+                var cids = cols[25].Trim();
+                int cid;
+                if (cids == "")
+                {
+                    dicin["cellid"] = cids;
+                    errline.Add("小区ID不能为空");
+                }
+                else if (!int.TryParse(cids, out cid))
+                {
+                    errline.Add("小区ID必须是数字");
+                }
+                else
+                {
+                    dicin["cellid"] = cid;
+                }
+
+                var ebcid = O2.O2I(bids) * 256 + O2.O2I(cids);
+                if (dic.ContainsKey(ebcid))
+                {
+                    errline.Add("基站ID小区ID本表重复");
+                    chong = true;
+                }
+                if (diceci.ContainsKey(ebcid))
+                {
+                    errline.Add("基站ID小区ID在扩容清单已存在");
+                    chong = true;
+                }
+                if (yebcid==ebcid)
+                {
+                    errline.Add("原基站ID原小区ID与基站ID小区ID不能相等");
+                    chong = true;
+                }
+                if (!dict1.ContainsKey(ebcid)) {
+                    warning.Add("基站ID小区ID在原始数据中不存在");
+                }
+                #endregion
+
+                var cname = cols[26].Trim();
+                dicin["cellname"] = cname;
+                if (string.IsNullOrEmpty(cname))
+                {
+                    errline.Add("小区名称不能为空");
+                }
+
+                var realex = cols[27].Trim();
+                dicin["realex"] = realex;
+                if (string.IsNullOrEmpty(realex))
+                {
+                    errline.Add("是否真实扩容不能为空");
+                }
+                var innettimes = cols[28].Trim();
+                DateTime innettime;
+                if (string.IsNullOrEmpty(innettimes) || !DateTime.TryParse(innettimes, out innettime))
+                {
+                    errline.Add("入网时间不正确");
+                }
+                else
+                {
+                    dicin["innettime"] = innettime;
+                }
+
+                #region 计算后续
+                dicin["yexist"] = 0;
+                dicin["yprbup"] = "";
+                dicin["yprbdown"] = "";
+                dicin["yrrc"] = "";
+                dicin["yflowup"] = "";
+                dicin["yflowdown"] = "";
+                dicin["yucount"] = "";
+                if (dict1.ContainsKey(yebcid)) {
+                    dicin["yexist"] = 1;
+                    dicin["yprbup"] = dict1[yebcid]["prbup"];
+                    dicin["yprbdown"] = dict1[yebcid]["prbdown"];
+                    dicin["yrrc"] = dict1[yebcid]["rrc"];
+                    dicin["yflowup"] = dict1[yebcid]["flowup"];
+                    dicin["yflowdown"] = dict1[yebcid]["flowdown"];
+                    dicin["yucount"] = dict1[yebcid]["ucount"];
+                }
+                dicin["exist"] = 0;
+                dicin["prbup"] = "";
+                dicin["prbdown"] = "";
+                dicin["rrc"] = "";
+                dicin["flowup"] = "";
+                dicin["flowdown"] = "";
+                dicin["ucount"] = "";
+                if (dict1.ContainsKey(ebcid))
+                {
+                    dicin["exist"] = 1;
+                    dicin["prbup"] = dict1[ebcid]["prbup"];
+                    dicin["prbdown"] = dict1[ebcid]["prbdown"];
+                    dicin["rrc"] = dict1[ebcid]["rrc"];
+                    dicin["flowup"] = dict1[ebcid]["flowup"];
+                    dicin["flowdown"] = dict1[ebcid]["flowdown"];
+                    dicin["ucount"] = dict1[ebcid]["ucount"];
+                }
+                dicin["idle"] = "";
+                var flowdown = O2F(dicin["flowdown"]);
+                if (flowdown.HasValue) {
+                    if (flowdown.Value < idlemx) {
+                        dicin["idle"] = 1;
+                        warning.Add("新小区超闲");
+                    } else {
+                        dicin["idle"] = 0;
+                    }
+                }
+                dicin["flowbi"] = "";
+                if (dicin["yflowdown"].ToString() != "" && dicin["flowdown"].ToString() != "" && (float)dicin["yflowdown"] + (float)dicin["flowdown"] != 0) {
+                    dicin["flowbi"] = (float)dicin["flowdown"]/((float)dicin["yflowdown"] + (float)dicin["flowdown"]);
+                }
+                dicin["loadreasonable"] = "";
+                if (dicin["flowbi"].ToString() != "") {
+                    if ((float)dicin["flowbi"] >= 0.3)
+                    {
+                        dicin["loadreasonable"] = 1;
+                    }
+                    else {
+                        dicin["loadreasonable"] = 0;
+                        warning.Add("新小区流量负荷不合理");
+                    }
+                }
+                dicin["reasonable"] = "";
+                if (dicin["yexist"].ToString() == "1" && dicin["exist"].ToString() == "1" && dicin["idle"].ToString() == "0" && dicin["loadreasonable"].ToString() == "1")
+                {
+                    dicin["reasonable"] = 1;
+                }
+                else {
+                    dicin["reasonable"] = 0;
+                }
+
+                #endregion
+
+                if (errline.Count > 0)
+                {
+                    sbr.Append("第" + (rowno + skiprow) + "行：" + string.Join("、", errline) + "\r\n");
+                }
+                if (warning.Count > 0) {
+                    sbw.Append("第" + (rowno + skiprow) + "行：" + string.Join("、", warning) + "\r\n");
+                }
+                if (chong) continue;
+                dic[ebcid] = dicin;
+            }
+            sr.Close();
+            fsm.Close();
+            if (rowno <= 1)
+            {
+                sbr.Append("文件没有数据！\r\n");
+            }
+            if (sbr.Length > 0)
+            {
+                msg = sbr.ToString();
+            }
+            if (sbw.Length > 0)
+            {
+                wmsg = sbw.ToString();
+            }
         }
     }
 }

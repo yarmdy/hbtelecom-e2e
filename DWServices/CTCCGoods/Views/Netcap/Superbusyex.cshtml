@@ -1,0 +1,378 @@
+﻿@{
+    ViewBag.Title = "超忙对应扩容清单";
+}
+@section style {
+    <style>
+        #record:hover {
+            cursor: pointer;
+            color: deepskyblue;
+        }
+
+        #recordInfo {
+            display: none;
+        }
+        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            white-space:nowrap
+        }
+    </style>
+}
+@section script {
+    <script src="/js/multiselect.js"></script>
+    <script>
+        
+        $(function () {
+            $("#btn_export").on("click", function () {
+                $("#btn_export").attr("href", "/netcap/exportt3");
+            })
+            $("#flimport").val("");
+            
+
+            $("#btnimport").on("click", function () {
+                if ($("#btnopen").hasClass("hidden")) {
+                    //$("#txttime").removeClass("hidden")
+                    $("#btnopen").removeClass("hidden")
+                } else {
+                    if ($("#flimport").val()) {
+                        $("#toolbar").submit();
+                    } else {
+                        $("#txttime").addClass("hidden")
+                        $("#btnopen").addClass("hidden")
+                    }
+                }
+
+            });
+            $("#btnopen").on("click", function () {
+                $("#flimport").trigger("click");
+            });
+            $("#flimport").on("change", function () {
+                //$("#toolbar").submit();
+                //$("#txttime").removeClass("hidden")
+                $("#btnopen").removeClass("btn-warning").addClass("btn-success");
+            });
+            $("#btnfull").on("click", function () {
+                var da = $("#divwai").hasClass("container-fluit");
+                if (da) {
+                    $("#divwai").removeClass("container-fluit").addClass("container");
+                    $("#btnfull").html("<span class=\"glyphicon glyphicon-fullscreen\" aria-hidden=\"true\"></span> 放大");
+                } else {
+                    $("#divwai").removeClass("container").addClass("container-fluit");
+                    $("#btnfull").html("<span class=\"glyphicon glyphicon-resize-small\" aria-hidden=\"true\"></span> 缩小");
+                }
+            });
+        });
+        var baseCols = [
+            [{
+                title: "原超忙小区信息",
+                colspan: 21
+            }, {
+                title: "新扩容小区",
+                colspan: 8
+            }, {
+                title: "原扩容小区数据",
+                colspan: 7
+            }, {
+                title: "新扩容小区数据",
+                colspan: 8
+            }, {
+                title: "计算合理",
+                colspan: 3
+            }, ],
+            [
+                {
+                    title: "账期",
+                    field: "b_period"
+                },
+                {
+                    title: "省份",
+                    field: "b_province"
+                },
+                {
+                    title: "省份编码",
+                    field: "b_province"
+                },
+                {
+                    title: "地市",
+                    field: "b_city"
+                },
+                {
+                    title: "地市编码",
+                    field: "b_cityno"
+                },
+                {
+                    title: "基站ID",
+                    field: "b_enodebid"
+                },
+                {
+                    title: "小区ID",
+                    field: "b_cellid"
+                },
+                {
+                    title: "小区名称",
+                    field: "b_cellname"
+                },
+                {
+                    title: "厂家",
+                    field: "b_chang"
+                },
+                {
+                    title: "频点",
+                    field: "b_pinduan"
+                },
+                {
+                    title: "计费下行流量GB",
+                    field: "b_flowdown"
+                },
+                {
+                    title: "RRC连接 用户数",
+                    field: "b_rrc"
+                },
+                {
+                    title: "计费用户数",
+                    field: "b_ucount"
+                },
+                {
+                    title: "PRB下行利用率",
+                    field: "b_prbdown"
+                },
+                {
+                    title: "高价值用户占比%",
+                    field: "b_richurate"
+                },
+                {
+                    title: "价值优先排序",
+                    field: "b_richorder"
+                },
+                {
+                    title: "是否上报集团扩容",
+                    field: "b_reportgroup"
+                },
+                {
+                    title: "现小区配置",
+                    field: "b_cellsetting"
+                },
+                {
+                    title: "省公司建议",
+                    field: "b_advise"
+                },
+                {
+                    title: "扩容建议频点",
+                    field: "b_advisepinduan"
+                },
+                {
+                    title: "建设方式",
+                    field: "b_buildmode"
+                },
+                {
+                    title: "厂家",
+                    field: "chang"
+                },
+                {
+                    title: "小区类型",
+                    field: "celltype"
+                },
+                {
+                    title: "频点",
+                    field: "pinduan"
+                },
+                {
+                    title: "基站ID",
+                    field: "enodebid"
+                },
+                {
+                    title: "小区ID",
+                    field: "cellid"
+                },
+                {
+                    title: "小区名称",
+                    field: "cellname"
+                },
+                {
+                    title: "是否真实扩容",
+                    field: "realex"
+                },
+                {
+                    title: "入网时间",
+                    field: "innettime"
+                },
+                {
+                    title: "是否存在",
+                    field: "yexist"
+                },
+                {
+                    title: "PRB上行利用率（%）",
+                    field: "yprbup"
+                },
+                {
+                    title: "PRB下行利用率（%）",
+                    field: "yprbdown"
+                },
+                {
+                    title: "RRC连接用户数（个）",
+                    field: "yrrc"
+                },
+                {
+                    title: "小区流量（GB)-上行",
+                    field: "yflowup"
+                },
+                {
+                    title: "小区流量（GB)-下行",
+                    field: "yflowdown"
+                },
+                {
+                    title: "计费用户数",
+                    field: "yucount"
+                },
+                {
+                    title: "是否存在",
+                    field: "exist"
+                },
+                {
+                    title: "PRB上行利用率（%）",
+                    field: "prbup"
+                },
+                {
+                    title: "PRB下行利用率（%）",
+                    field: "prbdown"
+                },
+                {
+                    title: "RRC连接用户数（个）",
+                    field: "rrc"
+                },
+                {
+                    title: "小区流量（GB)-上行",
+                    field: "flowup"
+                },
+                {
+                    title: "小区流量（GB)-下行",
+                    field: "flowdown"
+                },
+                {
+                    title: "计费用户数",
+                    field: "ucount"
+                },
+                {
+                    title: "新扩容小区是否过闲",
+                    field: "idle"
+                },
+                {
+                    title: "新小区流量/（原小区+新小区流量）",
+                    field: "flowbi"
+                },
+                {
+                    title: "流量负载是否合理",
+                    field: "loadreasonable"
+                },
+                {
+                    title: "是否合理",
+                    field: "reasonable"
+                }
+                
+            ]
+        ];
+        var TableInit = function () {
+            var oTableInit = new Object();
+            //初始化Table
+            oTableInit.Init = function () {
+                $('#table1').bootstrapTable({
+                    url: "/netcap/ft3",
+                    method: "GET",
+                    toolbar: '#toolbar',                //工具按钮用哪个容器
+                    striped: true,                      //是否显示行间隔色
+                    cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pagination: true,                   //是否显示分页（*）
+                    sortable: true,                     //是否启用排序
+                    sortOrder: "asc",                   //排序方式
+                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                    pageNumber: 1,                       //初始化加载第一页，默认第一页
+                    pageSize: 10,                       //每页的记录行数（*）
+                    pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                    search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    strictSearch: false,
+                    showColumns: true,                  //是否显示所有的列
+                    showRefresh: true,                  //是否显示刷新按钮
+                    minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: true,                //是否启用点击选中行
+                    uniqueId: "no",                     //每一行的唯一标识，一般为主键列
+                    showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+                    cardView: false,                    //是否显示详细视图
+                    detailView: false,                   //是否显示父子表
+                    columns: baseCols,
+                    //onLoadSuccess: function (data) {
+                    //    if (data.rows && data.rows.length > 0) {
+                    //        var same = true;
+                    //        if (same) {
+                    //            var ccount = 0;
+                    //            for (var col in data.rows[0]) {
+                    //                ccount++;
+                    //                if (!same) continue;
+                    //                var has = false;
+                    //                for (var col2 in this.columns[0]) {
+                    //                    if (col == this.columns[0][col2].field) {
+                    //                        has = true;
+                    //                        break;
+                    //                    }
+                    //                }
+                    //                if (!has) {
+                    //                    same = false;
+                    //                }
+                    //            }
+                    //        }
+                    //        same = same && (ccount == this.columns[0].length);
+                    //        if (!same) {
+                    //            var newcols = [];
+                    //            for (var col in data.rows[0]) {
+                    //                newcols.push({
+                    //                    field: col,
+                    //                    title: col,
+                    //                });
+                    //            }
+                    //            $('#table1').bootstrapTable("refreshOptions", {
+                    //                columns:newcols
+                    //            });
+                    //        }
+                            
+                    //    }
+                    //}
+                })
+            };
+
+            //得到查询的参数
+            oTableInit.queryParams = function (params) {
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    limit: params.limit,   //页面大小
+                    offset: params.offset,  //页码
+                    
+                };
+                return temp;
+            };
+            return oTableInit;
+        };
+
+        var oTable = new TableInit();
+        oTable.Init();
+
+    </script>
+
+}
+
+<div class="container" id="divwai">
+    <form class="form-inline" id="toolbar" action="/netcap/table3import" method="post" enctype="multipart/form-data">
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" id="btnfull"><span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> 放大</button>
+        </div>
+        <input type="file" id="flimport" class="hidden" name="flimport" />
+        <a class="btn btn-info" href="/template/superbusyex_template.xlsx" auth><span class="glyphicon glyphicon-book" aria-hidden="true"></span> 模板下载</a>
+        <div class="input-group" auth>
+            <input type="text" readonly placeholder="选择文件" class="form-control hidden" name="txttime" id="txttime" />
+            <div class="input-group-btn">
+                <button class="btn btn-warning hidden" type="button" id="btnopen"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> 浏览</button>
+                <button class="btn btn-success" type="button" id="btnimport"><span class="glyphicon glyphicon-import" aria-hidden="true"></span> 导入</button>
+            </div>
+        </div>
+        <a id="btn_export" class="btn btn-primary" href="###">
+            <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
+        </a>
+    </form>
+    <table id="table1"></table>
+</div>

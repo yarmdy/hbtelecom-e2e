@@ -806,7 +806,7 @@ namespace CTCCGoods.Controllers
             return e.ToArray(); ;
         }
 
-        public static List<string> SelectUserData(string content, int index, cuser user, Dictionary<int, string> brn = null)
+        public static List<string> SelectUserData(string content, int index, cuser user, Dictionary<int, string> brn = null,int usercolno=0)
         {
             if (brn == null) {
                 brn = new Dictionary<int, string>();
@@ -829,7 +829,8 @@ namespace CTCCGoods.Controllers
                 //    list.Add(lines[i]);
                 //}
                 var vals = Regex.Split(lines[i], ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-                if (user.utype != 0 && index != -1 && vals[index] != user.wname) {
+                if (user.utype != 0 && index != -1 && vals[usercolno] != user.wname)
+                {
                     continue;
                 }
                 var tjb = true;
@@ -878,7 +879,7 @@ namespace CTCCGoods.Controllers
         //    return result;
         //}
 
-        public static Dictionary<string, object> CsvToJson(string content, cuser user, int limit, int offset, int index, Dictionary<int, string> brn = null)
+        public static Dictionary<string, object> CsvToJson(string content, cuser user, int limit, int offset, int index, Dictionary<int, string> brn = null,int citycolno=0)
         {
             if (brn != null) {
                 brn = brn.Where(a => !string.IsNullOrEmpty(a.Value)).ToDictionary(a => a.Key, a => a.Value);
@@ -902,7 +903,7 @@ namespace CTCCGoods.Controllers
             {
                 var res = true;
 
-                if (user.utype != 0 && user.wname != a[0])
+                if (user.utype != 0 && user.wname != a[citycolno])
                 {
                     res = false;
                 }

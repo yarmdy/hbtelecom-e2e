@@ -21,6 +21,9 @@
     <script>
         
         $(function () {
+            $("#btn_export").on("click", function () {
+                $("#btn_export").attr("href", "/netcap/exportt2");
+            })
             $("#flimport").val("");
             
 
@@ -57,7 +60,7 @@
             //初始化Table
             oTableInit.Init = function () {
                 $('#table1').bootstrapTable({
-                    url: "",
+                    url: "/netcap/ft2",
                     method: "GET",
                     toolbar: '#toolbar',                //工具按钮用哪个容器
                     striped: true,                      //是否显示行间隔色
@@ -150,6 +153,9 @@
                 <button class="btn btn-success" type="button" id="btnimport"><span class="glyphicon glyphicon-import" aria-hidden="true"></span> 导入</button>
             </div>
         </div>
+        <a id="btn_export" class="btn btn-primary" href="###">
+            <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
+        </a>
     </form>
     <table id="table1"></table>
 </div>

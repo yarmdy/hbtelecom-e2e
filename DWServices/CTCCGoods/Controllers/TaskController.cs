@@ -73,5 +73,52 @@ namespace CTCCGoods.Controllers
             }
             return Json(new { ok = true, msg = "已清空失败"+ts+"条" }, JsonRequestBehavior.AllowGet);
         }
+        [Breadcrumb(Auth = "0")]
+        public ActionResult Warning(int id) {
+            var taskq = DB.QueryOne("select * from ctasks where id='"+id+"'");
+            if (taskq == null) {
+                return Content("任务不存在");
+            }
+            var task = ctasksHandle.dic2ctasks(taskq);
+            if (task.tdesc != "暂停") {
+                return Content("非法操作");
+            }
+            ViewBag.task = task;
+            ViewBag.errinfo = "";
+            if (task.errurl != null) {
+                var errfile = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "taskerr/"+task.errurl);
+                ViewBag.errinfo = System.IO.File.ReadAllText(errfile,System.Text.Encoding.GetEncoding("gbk"));
+            }
+            return View();
+        }
+        [Breadcrumb(Auth = "0")]
+        public ActionResult Prowarning(int id,int conti)
+        {
+            var taskq = DB.QueryOne("select * from ctasks where id='" + id + "'");
+            if (taskq == null)
+            {
+                return Json(new { ok=false,msg="任务不存在"},JsonRequestBehavior.AllowGet);
+            }
+            var task = ctasksHandle.dic2ctasks(taskq);
+            if (task.tdesc != "暂停")
+            {
+                return Json(new { ok = false, msg = "非法操作" }, JsonRequestBehavior.AllowGet);
+            }
+            if (conti == 0) {
+                DB.Exec("update ctasks set tdesc='失败' where id='"+id+"'");
+                if (task.errurl != null) {
+                    var errfile = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "taskerr/" + task.errurl);
+                    System.IO.FileStream fs = new System.IO.FileStream(errfile,System.IO.FileMode.Append);
+                    System.IO.StreamWriter sw = new System.IO.StreamWriter(fs,System.Text.Encoding.GetEncoding("gbk"));
+                    sw.Write("任务已中断\r\n");
+                    sw.Close();
+                    fs.Close();
+                }
+            } else {
+                DB.Exec("update ctasks set tdesc='等待',tstatus=0,rul='ok' where id='" + id + "'");
+                ctasksHandle.reset();
+            }
+            return Json(new { ok = true, msg = "成功" }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

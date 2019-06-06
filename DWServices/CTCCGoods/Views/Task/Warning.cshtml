@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "任务警告处理";
+    var task = (CTCCGoods.Controllers.ctasks)ViewBag.task;
+    var errinfo = (string)ViewBag.errinfo;
+}
+@section script {
+<script>
+    function warninghandle(e){
+        $.post("/task/prowarning/@(task.id)", { conti: e.data.conti }, function (data) {
+            if (data.ok) {
+                location = "/task";
+            } else {
+                alert(data.msg);
+            }
+        });
+    }
+    $(function () {
+        $("#btncontinue").on("click", null, { conti: 1 }, warninghandle);
+        $("#btnstop").on("click", null, { conti: 0 }, warninghandle);
+    });
+</script>
+}
+<div class="container">
+    <div class="alert alert-warning" role="alert"><strong>任务执行过程中出现警告，是否继续？</strong>
+        <button class="btn btn-success" type="button" id="btncontinue">继续</button>
+        <button class="btn btn-danger" type="button" id="btnstop">停止</button>
+    </div>
+    <pre>@errinfo</pre>
+</div>

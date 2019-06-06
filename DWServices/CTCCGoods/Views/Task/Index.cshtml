@@ -14,7 +14,10 @@
 @section script{
     <script>
         function errurlf(value, row, index) {
-            return value?"<a href=\"/taskerr/" + value + "\"  class=\"ordercode\" oidx=\"" + index + "\" target=\"_bland\">" + "查看" + "</a>":null;
+            if (row.tdesc == "暂停") {
+                return value ? "<a href=\"/task/warning/" + row.id + "\"  class=\"ordercode\" oidx=\"" + index + "\">" + "查看" + "</a>" : null;
+            }
+            return value ? "<a href=\"/taskerr/" + value + "\"  class=\"ordercode\" oidx=\"" + index + "\" target=\"_bland\">" + "查看" + "</a>" : null;
         }
         function typeformat(value) {
             var res = "";
@@ -39,6 +42,12 @@
                     break;
                 case 12:
                     res = "超忙计算";
+                    break;
+                case 13:
+                    res = "超忙原始清单导入";
+                    break;
+                case 14:
+                    res = "超忙对应扩容清单导入";
                     break;
                 default:
                     res = "未知";
