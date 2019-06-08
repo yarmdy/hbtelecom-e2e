@@ -1,6 +1,16 @@
 ﻿@{
     ViewBag.Title = "首页";
 }
+@section style{
+<style>
+    html,body {
+        height:100%
+    }
+    #cont {
+        height:calc(100% - 150px);
+    }
+</style>
+}
 @section script{
     <script src="/js/echarts.min.js"></script>
     <script src="/js/hebei.js"></script>
@@ -17,11 +27,119 @@
     <script src="/js/district/雄安新区.js"></script>
     <script src="/js/district/张家口市.js"></script>
 <script>
+    var mapdata = {};
     $(function () {
+        var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+            limit: 100,   //页面大小
+            offset: 0,  //页码
+            type: "@(ViewBag.file==null?"":((string)ViewBag.file).Replace("\\","\\\\"))",
+                    d: "wangtongji",
+                    s: "",
+                    g: 1
+        };
+        hebeiMap = echarts.init(document.getElementById("map"));
+        var option = {
+            geo: {
+                map: "河北",
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            color: "red"
+                        }
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: "rgb(135,206,250)",
+                        borderColor: "white"
+                    },
+                    emphasis: {
+                        color: "rgb(253,233,196)",
+                    }
+                }
+            },
+            visualMap: {
+                min: 0.0,
+                max: 100.0,
+                calculable: true,
+                inRange: {
+                    color: ['#d94e5d', '#eac736', '#50a3ba']
+                },
+                textStyle: {
+                    color: '#000'
+                }
+            },
+            series: [
+                {
+                    name: "hebei",
+                    type: "map",
+                    geoIndex: 0,
+                    data: []
+                }
+            ]
+        }
+        hebeiMap.setOption(option);
+        
+        $.get("/rru/filetongji", temp, function (data) {
+            console.log(data);
+            mapdata = data;
+            var series = {};
+            series.data = [];
+            $.each(data.rows, function () {
+                var thiscity = {};
+                thiscity.name = this.city=="雄安"?"雄安新区": this.city+"市";
+                thiscity.value = (parseFloat(this.rrumd) + parseFloat(this.rrugd) + parseFloat(this.prrud)) / (parseFloat(this.rrum4) + parseFloat(this.rrug4) + parseFloat(this.prru4))*100;
+                series.data.push(thiscity);
+            });
+            hebeiMap.setOption({ series: series });
+        });
+        $("#smwin").css({ top: $("#map").offset().top, left: $("#map").offset().left+20 });
+        //$("#smwin").removeClass("hidden");
+        hebeiMap.on("mouseover", function (param) {
+            event.stopPropagation();
+            var mapName = param.name;
+            if (!mapName) {
+                return;
+            }
+            mapName = mapName.substr(0,mapName.length - 1);
+            if (mapName == "雄安新") {
+                mapName = "雄安";
+            }
+            $("#smcity").html(mapName);
+            var $this = null;
+            $.each(mapdata.rows, function () {
+                if (this.city == mapName) {
+                    $this = this;
+                    return;
+                }
+            });
+            if ($this == null) {
+                return;
+            }
 
+            $("#smd").html((parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud)));
+            $("#sm4").html((parseFloat($this.rrum4) + parseFloat($this.rrug4) + parseFloat($this.prru4)));
+            $("#smrate").html(Math.round((parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud)) / (parseFloat($this.rrum4) + parseFloat($this.rrug4) + parseFloat($this.prru4)) * 10000)/100+"%");
+            $("#smwin").removeClass("hidden");
+        });
+        hebeiMap.on("mouseout", function (param) {
+            event.stopPropagation();
+            $("#smwin").addClass("hidden");
+            
+        });
     });
 </script>
 }
-<div class="container">
-    <div id="map" style="height:700px"></div>
+<div class="container" id="cont">
+    <div id="map" style="height:100%"></div>
+    <div id="smwin" style="position:absolute;width:400px;height:130px;left:0;top:0;padding:30px;border-radius:5px;box-shadow:0 0 5px 0 rgba(0,0,0,.5) " class="hidden row">
+        <div class="col-md-8"><strong>地市：</strong></div><div class="col-md-4" id="smcity"></div>
+        <div class="col-md-8"><strong>历史到货数(含减免)：</strong></div><div class="col-md-4" id="smd"></div>
+        <div class="col-md-8"><strong>累计RRU序列号出现数：</strong></div><div class="col-md-4" id="sm4"></div>
+        <div class="col-md-8"><strong>到货率：</strong></div><div class="col-md-4" id="smrate"></div>
+    </div>
 </div>

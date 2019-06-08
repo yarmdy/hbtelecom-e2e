@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Data;
 
 namespace CTCCGoods.Controllers
 {
@@ -14,6 +15,9 @@ namespace CTCCGoods.Controllers
         [Breadcrumb(Auth = "1")]
         public ActionResult Index()
         {
+            var wangtongjipath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "rrufiles\\wangtongji");
+            var file = Directory.GetFiles(wangtongjipath, "*.csv").OrderByDescending(a => a).FirstOrDefault();
+            ViewBag.file = file;
             return View();
         }
         [Breadcrumb(Auth = "1")]
