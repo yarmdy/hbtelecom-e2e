@@ -242,6 +242,9 @@ namespace CTCCGoods.Controllers
                     case 14:
                         res = importTable3(ct, out msg);
                         break;
+                    case 15:
+                        res = sbusycomp(ct, out msg);
+                        break;
                     default:
                         res = -1;
                         msg = "任务类型不匹配";
@@ -1744,6 +1747,42 @@ namespace CTCCGoods.Controllers
 
             sbres.Clear();
 
+            #region 数据完整率
+            var hasprbdown = dic.Where(a => a.Value["prbdown"]+""!="").Count();
+            var hasprbdownlv = (float)hasprbdown / dic.Count*100;
+            var crpath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\completerate");
+            if (!Directory.Exists(crpath)) {
+                Directory.CreateDirectory(crpath);
+            }
+            var crname = Path.Combine(crpath, "completerate.xml");
+            XDocument crxml = null;
+            if (File.Exists(crname))
+            {
+                crxml = XDocument.Load(crname);
+            }
+            else {
+                crxml = XDocument.Parse("<root></root>");
+                crxml.Declaration = new XDeclaration("1.0","gbk","yes");
+            }
+            var xmlfiles = crxml.Descendants("files").FirstOrDefault();
+            if (xmlfiles == null) {
+                xmlfiles = new XElement("files");
+                crxml.Root.Add(xmlfiles);
+            }
+            var xmlfilelist = crxml.Descendants("file").ToDictionary(a => a.Attribute("name").Value, a => new Dictionary<string, string> { { "value", a.Attribute("value").Value }, { "zcount", a.Attribute("zcount").Value }, { "ccount", a.Attribute("ccount").Value } });
+            xmlfilelist[ct.tfilename] = new Dictionary<string, string> { { "value", hasprbdownlv.ToString() }, { "zcount", dic.Count.ToString() }, { "ccount", hasprbdown.ToString() } };
+            xmlfilelist = xmlfilelist.OrderBy(a => a.Key).ToDictionary(a=>a.Key,a=>a.Value);
+            xmlfiles.RemoveAll();
+            foreach (var item in xmlfilelist) {
+                var xmlfile = new XElement("file");
+                xmlfile.SetAttributeValue("name",item.Key);
+                xmlfile.SetAttributeValue("value", item.Value["value"]);
+                xmlfile.SetAttributeValue("zcount", item.Value["zcount"]);
+                xmlfile.SetAttributeValue("ccount", item.Value["ccount"]);
+                xmlfiles.Add(xmlfile);
+            }
+            crxml.Save(crname);
+            #endregion
 
             File.Delete(t1tmpname);
             #endregion
@@ -2018,6 +2057,24 @@ namespace CTCCGoods.Controllers
 
             var menxian=DB.QueryAsDics("select * from ckrmen order by id");
 
+            #region 超忙原始清单和超忙对应扩容清单
+            var yecidt = DB.Query("select enodebid*256+cellid eci,chang from (select enodebid,cellid,chang from csuperbusy)a");
+
+            Dictionary<int, object> dicyeci = new Dictionary<int, object>();
+            if (yecidt != null)
+            {
+                dicyeci = yecidt.AsEnumerable().ToDictionary(a => (int)a[0], a => a[1]);
+            }
+
+            var ecidt = DB.Query("select enodebid*256+cellid eci from (select enodebid,cellid from csuperbusyex)a");
+
+            Dictionary<int, object> diceci = new Dictionary<int, object>();
+            if (ecidt != null)
+            {
+                diceci = ecidt.AsEnumerable().ToDictionary(a => (int)a[0], a => (object)null);
+            }
+            #endregion
+
             Dictionary<int, Dictionary<string, object>> dic = new Dictionary<int, Dictionary<string, object>>();
             foreach (var file in tfiles) {
                 var tfilename = Path.Combine(table1path,file);
@@ -2051,6 +2108,9 @@ namespace CTCCGoods.Controllers
                         dic[dd.Key]["overuserdays"] = 0;
 
                         dic[dd.Key]["days"] = 0;
+
+                        dic[dd.Key]["existsb"] = dicyeci.ContainsKey(dd.Key) ? "是" : "否";
+                        dic[dd.Key]["existsbex"] = diceci.ContainsKey(dd.Key) ? "是" : "否";
                     }
                     dic[dd.Key]["province"] = dd.Value["province"];
                     dic[dd.Key]["provinceno"] = dd.Value["provinceno"];
@@ -2119,61 +2179,216 @@ namespace CTCCGoods.Controllers
                     }
                 }
             }
-            StringBuilder sb = new StringBuilder();
-            sb.Append("省份,省份编码,地市,地市编码,基站ID,小区ID,小区名称,小区覆盖类别,频段标识,厂家,经度,纬度,PRB上行利用率（%）,PRB下行利用率（%）,RRC连接用户数（个）,小区流量（GB)-上行,小区流量（GB)-下行,计费用户数,可查询天数,有数据天数,是否在超忙原始清单,是否在新扩容小区"+(cm?",超忙/闲小区,超忙类别":"")+"\r\n");
-            foreach (var dd in dic) {
-                var prbup = (int)dd.Value["prbupno"] == 0 ? "" : ((float)dd.Value["prbup"] / (int)dd.Value["prbupno"]).ToString();
-                var prbdown = (int)dd.Value["prbdownno"] == 0 ? "" : ((float)dd.Value["prbdown"] / (int)dd.Value["prbdownno"]).ToString();
-                var rrc=(int)dd.Value["rrcno"]==0?"":(((int)dd.Value["rrc"] + 0f) / (int)dd.Value["rrcno"]).ToString();
-                var flowup = (int)dd.Value["flowupno"] == 0 ? "" : ((float)dd.Value["flowup"] / (int)dd.Value["flowupno"]).ToString();
-                var flowdown = (int)dd.Value["flowdownno"] == 0 ? "" : ((float)dd.Value["flowdown"] / (int)dd.Value["flowdownno"]).ToString();
-                var ucount = (int)dd.Value["ucount"] == 0 ? "" : (((int)dd.Value["ucount"] + 0f) / (int)dd.Value["ucount"]).ToString();
-                
-                string line = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21}",
-                    dd.Value["province"], dd.Value["provinceno"], dd.Value["city"], dd.Value["cityno"], dd.Value["bid"], dd.Value["cid"], dd.Value["cname"], dd.Value["fugai"], dd.Value["pinduan"], dd.Value["chang"], dd.Value["lon"], dd.Value["lat"]
-                    ,prbup , prbdown, rrc, flowup, flowdown, ucount
-                    , dd.Value["days"], dd.Value["prbdownno"], "", ""
-                    );
-                if (cm) {
-                    var cmcx = "其他";
-                    var cmlx = "非超忙";
+            if (ct.ttype == 12)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("省份,省份编码,地市,地市编码,基站ID,小区ID,小区名称,小区覆盖类别,频段标识,厂家,经度,纬度,PRB上行利用率（%）,PRB下行利用率（%）,RRC连接用户数（个）,小区流量（GB)-上行,小区流量（GB)-下行,计费用户数,可查询天数,有数据天数,是否在超忙原始清单,是否在新扩容小区" + (cm ? ",超忙/闲小区,超忙类别" : "") + "\r\n");
+                foreach (var dd in dic)
+                {
+                    var prbup = (int)dd.Value["prbupno"] == 0 ? "" : ((float)dd.Value["prbup"] / (int)dd.Value["prbupno"]).ToString();
+                    var prbdown = (int)dd.Value["prbdownno"] == 0 ? "" : ((float)dd.Value["prbdown"] / (int)dd.Value["prbdownno"]).ToString();
+                    var rrc = (int)dd.Value["rrcno"] == 0 ? "" : (((int)dd.Value["rrc"] + 0f) / (int)dd.Value["rrcno"]).ToString();
+                    var flowup = (int)dd.Value["flowupno"] == 0 ? "" : ((float)dd.Value["flowup"] / (int)dd.Value["flowupno"]).ToString();
+                    var flowdown = (int)dd.Value["flowdownno"] == 0 ? "" : ((float)dd.Value["flowdown"] / (int)dd.Value["flowdownno"]).ToString();
+                    var ucount = (int)dd.Value["ucount"] == 0 ? "" : (((int)dd.Value["ucount"] + 0f) / (int)dd.Value["ucount"]).ToString();
 
-                    var cmcxlist = new List<string>();
-                    var cmlxlist = new List<string>();
+                    string line = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21}",
+                        dd.Value["province"], dd.Value["provinceno"], dd.Value["city"], dd.Value["cityno"], dd.Value["bid"], dd.Value["cid"], dd.Value["cname"], dd.Value["fugai"], dd.Value["pinduan"], dd.Value["chang"], dd.Value["lon"], dd.Value["lat"]
+                        , prbup, prbdown, rrc, flowup, flowdown, ucount
+                        , dd.Value["days"], dd.Value["prbdownno"], dic[dd.Key]["existsb"], dic[dd.Key]["existsbex"]
+                        );
+                    if (cm)
+                    {
+                        var cmcx = "其他";
+                        var cmlx = "非超忙";
 
-                    var sbusydays = (int)dd.Value["sbusydays"];
-                    var overflowdays = (int)dd.Value["overflowdays"];
-                    var overuserdays = (int)dd.Value["overuserdays"];
+                        var cmcxlist = new List<string>();
+                        var cmlxlist = new List<string>();
 
-                    var cx = O2.O2D(flowdown) < (double)menxian[4]["flowdown"] ? true : false;
+                        var sbusydays = (int)dd.Value["sbusydays"];
+                        var overflowdays = (int)dd.Value["overflowdays"];
+                        var overuserdays = (int)dd.Value["overuserdays"];
 
-                    if (sbusydays >= cmts) {
-                        cmcxlist.Add("超忙");
-                        if (overflowdays > 0) {
-                            cmlxlist.Add("大流量");
+                        var cx = O2.O2D(flowdown) < (double)menxian[4]["flowdown"] ? true : false;
+
+                        if (sbusydays >= cmts)
+                        {
+                            cmcxlist.Add("超忙");
+                            if (overflowdays > 0)
+                            {
+                                cmlxlist.Add("大流量");
+                            }
+                            if (overuserdays > 0)
+                            {
+                                cmlxlist.Add("多用户");
+                            }
+                            if (cmlxlist.Count > 0)
+                            {
+                                cmlx = string.Join("|", cmlxlist);
+                            }
                         }
-                        if (overuserdays > 0) {
-                            cmlxlist.Add("多用户");
+                        if (cx)
+                        {
+                            cmcxlist.Add("超闲");
                         }
-                        if (cmlxlist.Count > 0) {
-                            cmlx = string.Join("|",cmlxlist);
+                        if (cmcxlist.Count > 0)
+                        {
+                            cmcx = string.Join("|", cmcxlist);
                         }
-                    }
-                    if (cx) {
-                        cmcxlist.Add("超闲");
-                    }
-                    if (cmcxlist.Count > 0) {
-                        cmcx = string.Join("|",cmcxlist);
-                    }
 
 
-                    line += ","+cmcx+","+cmlx;
+                        line += "," + cmcx + "," + cmlx;
+                    }
+                    line += "\r\n";
+                    sb.Append(line);
                 }
-                line += "\r\n";
-                sb.Append(line);
+                File.WriteAllText(csvfilename, sb.ToString(), Encoding.GetEncoding("gbk"));
+                File.Copy(filenametmp, xmlfilename, true);
             }
-            File.WriteAllText(csvfilename,sb.ToString(),Encoding.GetEncoding("gbk"));
-            File.Copy(filenametmp,xmlfilename,true);
+            else if (ct.ttype == 15) {
+                float idlemx = (float)O2.O2D(DB.QueryOne("select flowdown from ckrmen where id=5")["flowdown"]);
+                filepath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/sbusyexcomp");
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
+                }
+                xmlfilename = Path.Combine(filepath, ct.tfilename + ".xml");
+                csvfilename = Path.Combine(filepath, ct.tfilename + ".csv");
+
+                var sql = "select b.period b_period,'河北' b_province,'813' b_provinceno,b.city b_city,b.cityno b_cityno,b.enodebid b_enodebid,b.cellid b_cellid,b.cellname b_cellname,b.chang b_chang,b.pinduan b_pinduan,b.flowdown b_flowdown,b.rrc b_rrc,b.ucount b_ucount,b.prbdown b_prbdown,b.richurate b_richurate,b.richorder b_richorder,b.reportgroup b_reportgroup,b.cellsetting b_cellsetting,b.advise b_advise,b.advisepinduan b_advisepinduan,b.buildmode b_buildmode,a.* from csuperbusyex a left join csuperbusy b on a.yenodebid=b.enodebid and a.ycellid=b.cellid where 1=1 {0}";
+                var where = "";
+                
+                sql = string.Format(sql, where);
+                var dt = DB.Query(sql);
+                dt.Columns.RemoveAt(21);
+                dt.Columns.RemoveAt(21);
+                StringBuilder sb = new StringBuilder();
+                var cols = new List<string>();
+                foreach (DataColumn dc in dt.Columns) {
+                    cols.Add(dc.ColumnName);
+                }
+                sb.Append(string.Join(",",cols)+"\r\n");
+
+                foreach (DataRow dr in dt.Rows) {
+                    cols.Clear();
+                    foreach (var val in dr.ItemArray) {
+                        if (val.GetType() == typeof(DateTime)) {
+                            cols.Add(((DateTime)val).ToString("yyyy/M/d"));
+                        }
+                        else if (val.GetType() == typeof(bool))
+                        {
+                            break;
+                        }
+                        else {
+                            cols.Add(val.ToString());
+                        }
+                    }
+                    #region 后续处理
+                    var yeci = (int)dr["b_enodebid"] * 256 + (int)dr["b_cellid"];
+                    var eci = (int)dr["enodebid"] * 256 + (int)dr["cellid"];
+                    string yexist = "否";
+                    float? yprbup = null;
+                    float? yprbdown = null;
+                    int? yrrc = null;
+                    float? yflowup = null;
+                    float? yflowdown = null;
+                    int? yucount = null;
+
+                    string exist = "否";
+                    float? prbup = null;
+                    float? prbdown = null;
+                    int? rrc = null;
+                    float? flowup = null;
+                    float? flowdown = null;
+                    int? ucount = null;
+
+                    if (dic.ContainsKey(yeci))
+                    {
+                        yexist = "是";
+                        yprbup = O2F(dic[yeci]["prbup"]);
+                        yprbdown = O2F(dic[yeci]["prbdown"]);
+                        yrrc = O2I(dic[yeci]["rrc"]);
+                        yflowup = O2F(dic[yeci]["flowup"]);
+                        yflowdown = O2F(dic[yeci]["flowdown"]);
+                        yucount = O2I(dic[yeci]["ucount"]);
+                    }
+                    if (dic.ContainsKey(eci))
+                    {
+                        exist = "是";
+                        prbup = O2F(dic[eci]["prbup"]);
+                        prbdown = O2F(dic[eci]["prbdown"]);
+                        rrc = O2I(dic[eci]["rrc"]);
+                        flowup = O2F(dic[eci]["flowup"]);
+                        flowdown = O2F(dic[eci]["flowdown"]);
+                        ucount = O2I(dic[eci]["ucount"]);
+                    }
+                    var idle = "";
+                    
+                    if (flowdown.HasValue)
+                    {
+                        if (flowdown.Value < idlemx)
+                        {
+                            idle = "是";
+                        }
+                        else
+                        {
+                            idle = "否";
+                        }
+                    }
+                    var flowbi = "";
+                    if (yflowdown.HasValue && flowdown.HasValue && yflowdown.Value + flowdown.Value != 0)
+                    {
+                        flowbi = (flowdown.Value / (yflowdown.Value + flowdown.Value)).ToString();
+                    }
+                    var loadreasonable = "";
+                    if (flowbi != "")
+                    {
+                        if (O2F(flowbi).Value >= 0.3)
+                        {
+                            loadreasonable = "是";
+                        }
+                        else
+                        {
+                            loadreasonable = "否";
+                        }
+                    }
+                    var reasonable = "";
+                    if (yexist == "是" && exist == "是" && idle == "否" && loadreasonable == "是")
+                    {
+                        reasonable = "是";
+                    }
+                    else
+                    {
+                        reasonable = "否";
+                    }
+                    cols.Add(yexist);
+                    cols.Add(yprbup + "");
+                    cols.Add(yprbdown + "");
+                    cols.Add(yrrc + "");
+                    cols.Add(yflowup + "");
+                    cols.Add(yflowdown + "");
+                    cols.Add(yucount + "");
+
+                    cols.Add(exist);
+                    cols.Add(prbup + "");
+                    cols.Add(prbdown + "");
+                    cols.Add(rrc + "");
+                    cols.Add(flowup + "");
+                    cols.Add(flowdown + "");
+                    cols.Add(ucount + "");
+
+                    cols.Add(idle);
+                    cols.Add(flowbi);
+                    cols.Add(loadreasonable);
+                    cols.Add(reasonable);
+
+                    sb.Append(string.Join(",", cols) + "\r\n");
+                    #endregion
+                }
+
+                File.WriteAllText(csvfilename, sb.ToString(), Encoding.GetEncoding("gbk"));
+                File.Copy(filenametmp, xmlfilename, true);
+            }
             File.Delete(filenametmp);
             #endregion
 

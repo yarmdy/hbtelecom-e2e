@@ -613,9 +613,9 @@ namespace CTCCGoods.Controllers
             return Json(new { ok = true, msg = "已删除" }, JsonRequestBehavior.AllowGet);
         }
 
-        public static string ExportConvert(string content,  cuser user, int index)
+        public static string ExportConvert(string content,  cuser user, int index,int usercolno=0)
         {
-            var list = SelectUserData(content, index, user);
+            var list = SelectUserData(content, index, user,null,usercolno);
             StringBuilder sb = new StringBuilder();
             sb.Append(list[0]+"\r\n");
             for (int i = 1; i < list.Count; i++)
@@ -724,6 +724,7 @@ namespace CTCCGoods.Controllers
             var err = "";
             //清空数据库
             DB db = new DB();
+            return Json(new { ok = false, msg = "功能已停用" }, JsonRequestBehavior.AllowGet);
             try
             {
                 db.Execobj("truncate table ctasks");

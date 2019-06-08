@@ -66,7 +66,7 @@
             $("#btn_export").on("click", function () {
                 var val = "@(ViewBag.thisfile.Replace("\\","\\\\"))";
                 if (val) {
-                    $("#btn_export").attr("href", "/rru/export?index=0&file=" + val);
+                    $("#btn_export").attr("href", "/netcap/export?index=2&file=" + val);
                 }
             })
             $("#btnsearch").on("click",function(){

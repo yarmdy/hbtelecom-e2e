@@ -15,19 +15,21 @@ namespace CTCCGoods.Controllers
     {
         //
         // GET: /Netcap/
-
+        [Breadcrumb(Auth = "0")]
         public ActionResult Index()
         {
             return View();
         }
+        [Breadcrumb(Auth = "0")]
         public ActionResult Krmen() {
             return View();
         }
+        [Breadcrumb(Auth = "0")]
         public ActionResult Fkrm() {
             var js=DB.QueryAsDics("select * from ckrmen order by id");
             return Json(new { total = js==null?0:js.Length, data = js }, JsonRequestBehavior.AllowGet);
         }
-
+        [Breadcrumb(Auth = "0")]
         public ActionResult Ukrm(int id,string field,string v) {
             field = field.Replace("'","").Replace("--","");
             var res = DB.Exec("update ckrmen set "+field+"='"+v+"' where id="+id);
@@ -36,6 +38,7 @@ namespace CTCCGoods.Controllers
             }
             return Json(new { ok = false, msg = "修改失败" });
         }
+        [Breadcrumb(Auth = "1")]
         public ActionResult Table1() {
             DirectoryInfo dir = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/table1"));
             cuser user = (cuser)Session["loginuser"];
@@ -59,6 +62,7 @@ namespace CTCCGoods.Controllers
             ViewBag.user = user;
             return View();
         }
+        [Breadcrumb(Auth = "0")]
         public ActionResult Dtable1(string name)
         {
             var nspath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"netcapfiles\table1");
@@ -66,6 +70,7 @@ namespace CTCCGoods.Controllers
             System.IO.File.Delete(Path.Combine(nspath, name));
             return Json(new { ok = true, msg = "已删除" }, JsonRequestBehavior.AllowGet);
         }
+        [Breadcrumb(Auth = "0")]
         public ActionResult Table1import(string[] flimport, string txttime)
         {
             if (Request.Files.Count <= 0)
@@ -94,7 +99,7 @@ namespace CTCCGoods.Controllers
             ctasksHandle.addtask(11, filename, targetname, "");
             return Content("<script>alert(\"已上传到服务器，进入后台任务\");location=\"/task\"</script>");
         }
-
+        [Breadcrumb(Auth = "1")]
         public ActionResult Sbusycomp() {
             DirectoryInfo dir = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/table1"));
             cuser user = (cuser)Session["loginuser"];
@@ -154,7 +159,8 @@ namespace CTCCGoods.Controllers
             ViewBag.thisfile = thisfile;
             return View();
         }
-        public ActionResult Csbusy(string[] list,int count,string start,string end,bool cm,int? cmts) {
+        [Breadcrumb(Auth = "0")]
+        public ActionResult Csbusy(string[] list,int count,string start,string end,bool cm,int? cmts,int? ttype) {
 
             if (list == null || list.Length <= 0) {
                 return Json(new { ok = false, msg = "未选择任何日期" }, JsonRequestBehavior.AllowGet);
@@ -192,14 +198,19 @@ namespace CTCCGoods.Controllers
             var dec = new XDeclaration("1.0","gbk","yes");
             xml.Declaration = dec;
             xml.Save(Path.Combine(filepath,filename));
-            ctasksHandle.addtask(12, filename,"sbusycomp","");
+            if (!ttype.HasValue)
+            {
+                ttype = 12;
+            }
+            ctasksHandle.addtask(ttype.Value, filename, "sbusycomp", "");
 
             return Json(new { ok=true,msg="已加入任务列表，请在后台任务查看任务状态"},JsonRequestBehavior.AllowGet);
         }
-
+        [Breadcrumb(Auth = "1")]
         public ActionResult Superbusylist() {
             return View();
         }
+        [Breadcrumb(Auth = "0")]
         public ActionResult Table2import(string[] flimport, string txttime)
         {
             if (Request.Files.Count <= 0)
@@ -228,6 +239,7 @@ namespace CTCCGoods.Controllers
             ctasksHandle.addtask(13, filename, targetname, "");
             return Content("<script>alert(\"已上传到服务器，进入后台任务\");location=\"/task\"</script>");
         }
+        [Breadcrumb(Auth = "1")]
         public ActionResult Ft2(int offset,int limit) {
             cuser user = (cuser)Session["loginuser"];
 
@@ -255,6 +267,7 @@ namespace CTCCGoods.Controllers
             }
             return Json(new { rows = rows, total = total }, JsonRequestBehavior.AllowGet);
         }
+        [Breadcrumb(Auth = "1")]
         public ActionResult Exportt2()
         {
             cuser user = (cuser)Session["loginuser"];
@@ -277,10 +290,70 @@ namespace CTCCGoods.Controllers
 
             return File(Encoding.GetEncoding("gbk").GetBytes(sb.ToString()), "application/octet-stream","超忙原始清单.csv");
         }
+        [Breadcrumb(Auth = "1")]
         public ActionResult Superbusyex() {
+            DirectoryInfo dir = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/table1"));
+            cuser user = (cuser)Session["loginuser"];
 
+            var thisfile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\sbusyexcomp\\sbusycomp.csv");
+            var thisxml = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\sbusyexcomp\\sbusycomp.xml");
+
+            ViewBag.start = "";
+            ViewBag.end = "";
+            ViewBag.cm = false;
+            ViewBag.cmts = 4;
+
+            var selectedlist = new Dictionary<string, object>();
+
+            if (System.IO.File.Exists(thisxml))
+            {
+                var xml = XDocument.Load(thisxml);
+                var starts = xml.Descendants("start").FirstOrDefault();
+                var ends = xml.Descendants("end").FirstOrDefault();
+                var cms = xml.Descendants("cm").FirstOrDefault();
+                var cmtss = xml.Descendants("cmts").FirstOrDefault();
+
+                ViewBag.start = starts != null ? starts.Value : "";
+                ViewBag.end = ends != null ? ends.Value : "";
+                ViewBag.cm = O2.O2B(cms);
+                ViewBag.cmts = O2.O2I(cmtss);
+
+                selectedlist = xml.Descendants("item").ToDictionary(a => a.Value, a => (object)null);
+            }
+
+            List<Dictionary<string, string>> list = new List<Dictionary<string, string>>();
+            if (dir.Exists)
+            {
+                FileInfo[] files = dir.GetFiles();
+                //Array.Sort(files, (f1, f2) => f1.CreationTime.CompareTo(f2.CreationTime));
+                Array.Sort(files, (f1, f2) =>
+                {
+                    var res = 0;
+                    res = f1.Name.Substring(0, 6).CompareTo(f2.Name.Substring(0, 6));
+                    if (res == 0)
+                    {
+                        res = f2.Name.Substring(6, 2).CompareTo(f1.Name.Substring(6, 2));
+                    }
+                    return res;
+                });
+                Array.Reverse(files);
+                foreach (FileInfo fi in files)
+                {
+                    var a = new Dictionary<string, string>();
+                    if (user.utype != 0 && fi.Name.Contains("[hidden]")) continue;
+                    a.Add("code", fi.FullName);
+                    a.Add("text", fi.Name);
+                    var selected = selectedlist.ContainsKey(fi.Name) ? "1" : "0";
+                    a.Add("sel", selected);
+                    list.Add(a);
+                }
+            }
+            ViewBag.history = list;
+            ViewBag.user = user;
+            ViewBag.thisfile = thisfile;
             return View();
         }
+        [Breadcrumb(Auth = "0")]
         public ActionResult Table3import(string[] flimport, string txttime)
         {
             if (Request.Files.Count <= 0)
@@ -309,7 +382,8 @@ namespace CTCCGoods.Controllers
             ctasksHandle.addtask(14, filename, targetname, "");
             return Content("<script>alert(\"已上传到服务器，进入后台任务\");location=\"/task\"</script>");
         }
-        public ActionResult Ft3(int offset, int limit)
+        [Breadcrumb(Auth = "1")]
+        public ActionResult Ft3(int offset, int limit,string city,string chang,string n,string b,string r)
         {
             cuser user = (cuser)Session["loginuser"];
 
@@ -318,6 +392,25 @@ namespace CTCCGoods.Controllers
             if (user.utype != 0)
             {
                 where = " and b.city='" + user.wname + "'";
+            }
+            if (!string.IsNullOrEmpty(city)) {
+                where += " and b.city='"+city+"'";
+            }
+            if (!string.IsNullOrEmpty(chang))
+            {
+                where += " and b.chang='" + chang + "'";
+            }
+            if (!string.IsNullOrEmpty(n))
+            {
+                where += " and a.cellname like '%" + n + "%'";
+            }
+            if (!string.IsNullOrEmpty(b))
+            {
+                where += " and a.enodebid='" + b + "'";
+            }
+            if (!string.IsNullOrEmpty(r))
+            {
+                where += " and a.cellid='" + r + "'";
             }
             sql = string.Format(sql, where);
             var dt = DB.Query(sql);
@@ -349,6 +442,7 @@ namespace CTCCGoods.Controllers
             }
             return Json(new { rows = rows, total = total }, JsonRequestBehavior.AllowGet);
         }
+        [Breadcrumb(Auth = "1")]
         public ActionResult Exportt3()
         {
             cuser user = (cuser)Session["loginuser"];
@@ -385,6 +479,62 @@ namespace CTCCGoods.Controllers
             }
 
             return File(Encoding.GetEncoding("gbk").GetBytes(sb.ToString()), "application/octet-stream", "超忙对应扩容清单.csv");
+        }
+        [Breadcrumb(Auth = "0")]
+        public ActionResult Completerate() {
+            return View();
+        }
+        [Breadcrumb(Auth = "0")]
+        public ActionResult Fcompleterate(int? limit,int? offset) {
+            var crpath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\completerate");
+            var crname = Path.Combine(crpath, "completerate.xml");
+            XDocument crxml = null;
+            if (System.IO.File.Exists(crname))
+            {
+                crxml = XDocument.Load(crname);
+            }
+            else
+            {
+                crxml = XDocument.Parse("<root></root>");
+                crxml.Declaration = new XDeclaration("1.0", "gbk", "yes");
+            }
+            var xmlfilelist = crxml.Descendants("file").Select(a => new Dictionary<string, string> { { "name", a.Attribute("name").Value.Substring(0,8) }, { "value", a.Attribute("value").Value }, { "zcount", a.Attribute("zcount").Value }, { "ccount", a.Attribute("ccount").Value } }).ToArray();
+            return Json(new {total=xmlfilelist.Length ,data=xmlfilelist},JsonRequestBehavior.AllowGet);
+        }
+        [Breadcrumb(Auth = "1")]
+        public ActionResult Extj() {
+            return View();
+        }
+        [Breadcrumb(Auth = "1")]
+        public ActionResult Fextj(int? export) {
+            var sql = @"select city,cityno,iif(zcount=0,null,(excount+0.0)/zcount*100) exrate,iif(excount=0,null,ylostcount/excount*100) ylostrate,iif(excount=0,null,lostcount/excount*100) lostrate,iif(excount=0,null,idlecount/excount*100) idlerate,iif(excount=0,null,loadreasonablecount/excount*100) loadreasonablerate,iif(excount=0,null,reasonablecount/excount*100) reasonablerate from(
+select b.city,b.cityno,count(0) zcount,sum(iif(a.yenodebid is not null,1,0)) excount,sum(iif(a.yenodebid is not null and a.yexist=0,1.0,0.0)) ylostcount,sum(iif(a.yenodebid is not null and a.exist=0,1.0,0.0)) lostcount,sum(iif(a.yenodebid is not null and a.idle=1,1.0,0.0)) idlecount,sum(iif(a.yenodebid is not null and a.loadreasonable=1,1.0,0.0)) loadreasonablecount,sum(iif(a.yenodebid is not null and a.reasonable=1,1.0,0.0)) reasonablecount from csuperbusyex a right join csuperbusy b on a.yenodebid=b.enodebid and a.ycellid=b.cellid group by b.city,b.cityno
+union all
+select '全省'city,'813'cityno,count(0) zcount,sum(iif(a.yenodebid is not null,1,0)) excount,sum(iif(a.yenodebid is not null and a.yexist=0,1.0,0.0)) ylostcount,sum(iif(a.yenodebid is not null and a.exist=0,1.0,0.0)) lostcount,sum(iif(a.yenodebid is not null and a.idle=1,1.0,0.0)) idlecount,sum(iif(a.yenodebid is not null and a.loadreasonable=1,1.0,0.0)) loadreasonablecount,sum(iif(a.yenodebid is not null and a.reasonable=1,1.0,0.0)) reasonablecount from csuperbusyex a right join csuperbusy b on a.yenodebid=b.enodebid and a.ycellid=b.cellid 
+)a
+where 1=1 {0}
+order by iif(cityno='813','814',cityno)";
+
+            var where = "";
+            var user = (cuser)Session["loginuser"];
+            if (user.utype != 0) {
+                where = " and city='"+user.wname+"'";
+            }
+            sql=string.Format(sql,where);
+            var data = DB.QueryAsDics(sql);
+            if (export.HasValue && export.Value == 1) {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("地市,地市编码,扩容完成率,原小区丢失率,新小区丢失率,新小区超闲率,新扩容小区流量满足率,整体满足率\r\n");
+                foreach (var dd in data) {
+                    var line = new List<string>();
+                    foreach (var dc in dd) {
+                        line.Add(dc.Value+"");
+                    }
+                    sb.Append(string.Join(",",line)+"\r\n");
+                }
+                return File(Encoding.GetEncoding("gbk").GetBytes(sb.ToString()), "application/octet-stream","sbusytj.csv");
+            }
+            return Json(new { total=data.Length,data=data},JsonRequestBehavior.AllowGet);
         }
         #region 通用
         public ActionResult File(string b, string r, string n, string city, string chang, string pinduan, string leixing, string xz, string fh)
@@ -438,7 +588,7 @@ namespace CTCCGoods.Controllers
                 return File(file, "application/octet-stream", file.Split('\\')[file.Split('\\').Length - 1]);
             }
             string content = System.IO.File.ReadAllText(file, Encoding.Default);
-            string r = RruController.ExportConvert(content, user, index);
+            string r = RruController.ExportConvert(content, user, index,2);
             return File(Encoding.Default.GetBytes(r), "application/octet-stream", file.Split('\\')[file.Split('\\').Length - 1]);
         }
         #endregion

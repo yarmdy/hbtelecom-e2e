@@ -115,6 +115,12 @@ namespace CTCCGoods
                 case "warning":
                     act = "任务警告处理";
                     break;
+                case "completerate":
+                    act = "数据完整率";
+                    break;
+                case "extj":
+                    act = "扩容统计";
+                    break;
                 default:
                     act = null;
                     break;
