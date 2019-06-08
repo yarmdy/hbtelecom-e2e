@@ -14,7 +14,7 @@ namespace CTCCGoods.Controllers
         [Breadcrumb(Auth = "1")]
         public ActionResult Index()
         {
-            return Redirect("/rru/report");
+            return View();
         }
         [Breadcrumb(Auth = "1")]
         public ActionResult Report()
