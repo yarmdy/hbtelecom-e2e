@@ -482,10 +482,58 @@ namespace CTCCGoods.Controllers
         }
         [Breadcrumb(Auth = "0")]
         public ActionResult Completerate() {
+            DirectoryInfo dir = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/table1"));
+            cuser user = (cuser)Session["loginuser"];
+
+            ViewBag.start = "";
+            ViewBag.end = "";
+
+            var selectedlist = new Dictionary<string, object>();
+
+
+            List<Dictionary<string, string>> list = new List<Dictionary<string, string>>();
+
+            if (dir.Exists)
+            {
+                FileInfo[] files = dir.GetFiles();
+                var lastfile=files.OrderByDescending(a => a.Name).FirstOrDefault();
+                if (lastfile != null) {
+                    selectedlist = files.Where(a => a.Name.Substring(0, 6) == lastfile.Name.Substring(0, 6)).ToDictionary(a=>a.Name,b=>(object)null);
+                    ViewBag.start = selectedlist.OrderBy(a=>a.Key).FirstOrDefault().Key;
+                    ViewBag.end = selectedlist.OrderByDescending(a => a.Key).FirstOrDefault().Key;
+                }
+                //Array.Sort(files, (f1, f2) => f1.CreationTime.CompareTo(f2.CreationTime));
+                Array.Sort(files, (f1, f2) =>
+                {
+                    var res = 0;
+                    res = f1.Name.Substring(0, 6).CompareTo(f2.Name.Substring(0, 6));
+                    if (res == 0)
+                    {
+                        res = f2.Name.Substring(6, 2).CompareTo(f1.Name.Substring(6, 2));
+                    }
+                    return res;
+                });
+                Array.Reverse(files);
+                foreach (FileInfo fi in files)
+                {
+                    var a = new Dictionary<string, string>();
+                    if (user.utype != 0 && fi.Name.Contains("[hidden]")) continue;
+                    a.Add("code", fi.FullName);
+                    a.Add("text", fi.Name);
+                    var selected = selectedlist.ContainsKey(fi.Name) ? "1" : "0";
+                    a.Add("sel", selected);
+                    list.Add(a);
+                }
+            }
+            ViewBag.history = list;
+            ViewBag.user = user;
             return View();
         }
         [Breadcrumb(Auth = "0")]
-        public ActionResult Fcompleterate(int? limit,int? offset) {
+        public ActionResult Fcompleterate(int? limit,int? offset,string[] list,string chang) {
+            if (list == null) {
+                list = new string[0];
+            }
             var crpath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\completerate");
             var crname = Path.Combine(crpath, "completerate.xml");
             XDocument crxml = null;
@@ -498,19 +546,41 @@ namespace CTCCGoods.Controllers
                 crxml = XDocument.Parse("<root></root>");
                 crxml.Declaration = new XDeclaration("1.0", "gbk", "yes");
             }
-            var xmlfilelist = crxml.Descendants("file").Select(a => new Dictionary<string, string> { { "name", a.Attribute("name").Value.Substring(0,8) }, { "value", a.Attribute("value").Value }, { "zcount", a.Attribute("zcount").Value }, { "ccount", a.Attribute("ccount").Value } }).ToArray();
+            Dictionary<string,string>[] xmlfilelist = new Dictionary<string,string>[0];;
+            if (string.IsNullOrEmpty(chang))
+            {
+                xmlfilelist = crxml.Descendants("file").Where(a => list.Contains(a.Attribute("name").Value)).Select(a => new Dictionary<string, string> { { "name", a.Attribute("name").Value.Substring(0, 8) }, { "value", Math.Round((decimal)O2.O2D(a.Attribute("value").Value), 1, MidpointRounding.AwayFromZero).ToString() }, { "zcount", a.Attribute("zcount").Value }, { "ccount", a.Attribute("ccount").Value } }).ToArray();
+            }
+            else {
+                xmlfilelist = crxml.Descendants("file").Where(a => list.Contains(a.Attribute("name").Value)).Select(a => {
+                    var tmpchang = a.Descendants("item").Where(b => b.Attribute("name").Value == chang).FirstOrDefault();
+                    var tmp = new Dictionary<string, string> { { "name", a.Attribute("name").Value.Substring(0, 8) }, { "value", tmpchang == null || tmpchang.Attribute("value").Value ==""? "" : Math.Round((decimal)O2.O2D(tmpchang.Attribute("value").Value), 1, MidpointRounding.AwayFromZero).ToString() }, { "zcount", tmpchang == null ? "0" : tmpchang.Attribute("zcount").Value }, { "ccount", tmpchang == null ? "0" : tmpchang.Attribute("ccount").Value } };
+                    return tmp;
+                }).ToArray();
+            }
             return Json(new {total=xmlfilelist.Length ,data=xmlfilelist},JsonRequestBehavior.AllowGet);
+        }
+        [Breadcrumb(Auth = "0")]
+        public ActionResult Rcompleterate() {
+            ctasksHandle.addtask(16,"","","");
+            return Json(new{ok=true,msg="已加入后台任务，任务完成后重新回到此页面查看结果" }, JsonRequestBehavior.AllowGet);
         }
         [Breadcrumb(Auth = "1")]
         public ActionResult Extj() {
+            var zhangqidt = DB.Query("select distinct period from csuperbusy order by period desc");
+            var zhangqi=new string[0];
+            if (zhangqidt != null) {
+                zhangqi = zhangqidt.AsEnumerable().Select(a => a["period"].ToString()).ToArray();
+            }
+            ViewBag.zhangqi = zhangqi;
             return View();
         }
         [Breadcrumb(Auth = "1")]
-        public ActionResult Fextj(int? export) {
+        public ActionResult Fextj(int? export,string zq) {
             var sql = @"select city,cityno,iif(zcount=0,null,(excount+0.0)/zcount*100) exrate,iif(excount=0,null,ylostcount/excount*100) ylostrate,iif(excount=0,null,lostcount/excount*100) lostrate,iif(excount=0,null,idlecount/excount*100) idlerate,iif(excount=0,null,loadreasonablecount/excount*100) loadreasonablerate,iif(excount=0,null,reasonablecount/excount*100) reasonablerate from(
-select b.city,b.cityno,count(0) zcount,sum(iif(a.yenodebid is not null,1,0)) excount,sum(iif(a.yenodebid is not null and a.yexist=0,1.0,0.0)) ylostcount,sum(iif(a.yenodebid is not null and a.exist=0,1.0,0.0)) lostcount,sum(iif(a.yenodebid is not null and a.idle=1,1.0,0.0)) idlecount,sum(iif(a.yenodebid is not null and a.loadreasonable=1,1.0,0.0)) loadreasonablecount,sum(iif(a.yenodebid is not null and a.reasonable=1,1.0,0.0)) reasonablecount from csuperbusyex a right join csuperbusy b on a.yenodebid=b.enodebid and a.ycellid=b.cellid group by b.city,b.cityno
+select b.city,b.cityno,count(0) zcount,sum(iif(a.yenodebid is not null,1,0)) excount,sum(iif(a.yenodebid is not null and a.yexist=0,1.0,0.0)) ylostcount,sum(iif(a.yenodebid is not null and a.exist=0,1.0,0.0)) lostcount,sum(iif(a.yenodebid is not null and a.idle=1,1.0,0.0)) idlecount,sum(iif(a.yenodebid is not null and a.loadreasonable=1,1.0,0.0)) loadreasonablecount,sum(iif(a.yenodebid is not null and a.reasonable=1,1.0,0.0)) reasonablecount from csuperbusyex a right join csuperbusy b on a.yenodebid=b.enodebid and a.ycellid=b.cellid where 1=1 {1} group by b.city,b.cityno
 union all
-select '全省'city,'813'cityno,count(0) zcount,sum(iif(a.yenodebid is not null,1,0)) excount,sum(iif(a.yenodebid is not null and a.yexist=0,1.0,0.0)) ylostcount,sum(iif(a.yenodebid is not null and a.exist=0,1.0,0.0)) lostcount,sum(iif(a.yenodebid is not null and a.idle=1,1.0,0.0)) idlecount,sum(iif(a.yenodebid is not null and a.loadreasonable=1,1.0,0.0)) loadreasonablecount,sum(iif(a.yenodebid is not null and a.reasonable=1,1.0,0.0)) reasonablecount from csuperbusyex a right join csuperbusy b on a.yenodebid=b.enodebid and a.ycellid=b.cellid 
+select '全省'city,'813'cityno,count(0) zcount,sum(iif(a.yenodebid is not null,1,0)) excount,sum(iif(a.yenodebid is not null and a.yexist=0,1.0,0.0)) ylostcount,sum(iif(a.yenodebid is not null and a.exist=0,1.0,0.0)) lostcount,sum(iif(a.yenodebid is not null and a.idle=1,1.0,0.0)) idlecount,sum(iif(a.yenodebid is not null and a.loadreasonable=1,1.0,0.0)) loadreasonablecount,sum(iif(a.yenodebid is not null and a.reasonable=1,1.0,0.0)) reasonablecount from csuperbusyex a right join csuperbusy b on a.yenodebid=b.enodebid and a.ycellid=b.cellid where 1=1 {1} 
 )a
 where 1=1 {0}
 order by iif(cityno='813','814',cityno)";
@@ -520,7 +590,12 @@ order by iif(cityno='813','814',cityno)";
             if (user.utype != 0) {
                 where = " and city='"+user.wname+"'";
             }
-            sql=string.Format(sql,where);
+            var where2 = "";
+            if (!string.IsNullOrEmpty(zq)) {
+                where2 = " and b.period='"+zq+"'";
+            }
+
+            sql=string.Format(sql,where,where2);
             var data = DB.QueryAsDics(sql);
             if (export.HasValue && export.Value == 1) {
                 StringBuilder sb = new StringBuilder();

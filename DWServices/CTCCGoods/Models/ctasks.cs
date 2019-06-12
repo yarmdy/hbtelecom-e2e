@@ -245,6 +245,9 @@ namespace CTCCGoods.Controllers
                     case 15:
                         res = sbusycomp(ct, out msg);
                         break;
+                    case 16:
+                        res = completeratecomp(ct, out msg);
+                        break;
                     default:
                         res = -1;
                         msg = "任务类型不匹配";
@@ -1751,6 +1754,17 @@ namespace CTCCGoods.Controllers
             var hasprbdown = dic.Where(a => a.Value["prbdown"]+""!="").Count();
             var hasprbdownlv = (float)hasprbdown / dic.Count*100;
             var crpath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\completerate");
+
+            var hwhas = dic.Where(a => a.Value["prbdown"] + "" != "" && a.Value["chang"].ToString()=="华为").Count();
+            var hwzong = dic.Where(a => a.Value["chang"].ToString() == "华为").Count();
+            var hwlv = hwzong==0?100: (float)hwhas / hwzong * 100;
+            var zxhas = dic.Where(a => a.Value["prbdown"] + "" != "" && a.Value["chang"].ToString() == "中兴").Count();
+            var zxzong = dic.Where(a => a.Value["chang"].ToString() == "中兴").Count();
+            var zxlv = zxzong==0?100: (float)zxhas / zxzong * 100;
+            var nkhas = dic.Where(a => a.Value["prbdown"] + "" != "" && a.Value["chang"].ToString() == "诺基亚").Count();
+            var nkzong = dic.Where(a => a.Value["chang"].ToString() == "诺基亚").Count();
+            var nklv = nkzong==0?100: (float)nkhas / nkzong * 100;
+
             if (!Directory.Exists(crpath)) {
                 Directory.CreateDirectory(crpath);
             }
@@ -1769,8 +1783,44 @@ namespace CTCCGoods.Controllers
                 xmlfiles = new XElement("files");
                 crxml.Root.Add(xmlfiles);
             }
-            var xmlfilelist = crxml.Descendants("file").ToDictionary(a => a.Attribute("name").Value, a => new Dictionary<string, string> { { "value", a.Attribute("value").Value }, { "zcount", a.Attribute("zcount").Value }, { "ccount", a.Attribute("ccount").Value } });
-            xmlfilelist[ct.tfilename] = new Dictionary<string, string> { { "value", hasprbdownlv.ToString() }, { "zcount", dic.Count.ToString() }, { "ccount", hasprbdown.ToString() } };
+            var xmlfilelist = crxml.Descendants("file").ToDictionary(a => a.Attribute("name").Value, a => {
+                var dditem= new Dictionary<string, string> { { "value", a.Attribute("value").Value }, { "zcount", a.Attribute("zcount").Value }, { "ccount", a.Attribute("ccount").Value } };
+                var hwe = a.Descendants("item").Where(b => b.Attribute("name").Value == "华为").FirstOrDefault();
+                var zxe = a.Descendants("item").Where(b => b.Attribute("name").Value == "中兴").FirstOrDefault();
+                var nke = a.Descendants("item").Where(b => b.Attribute("name").Value == "诺基亚").FirstOrDefault();
+                dditem["hwz"] = "0";
+                dditem["hwc"] = "0";
+                dditem["hwl"] = "1";
+                dditem["zxz"] = "0";
+                dditem["zxc"] = "0";
+                dditem["zxl"] = "1";
+                dditem["nkz"] = "0";
+                dditem["nkc"] = "0";
+                dditem["nkl"] = "1";
+                if (hwe != null) {
+                    dditem["hwz"] = hwe.Attribute("zcount").Value;
+                    dditem["hwc"] = hwe.Attribute("ccount").Value;
+                    dditem["hwl"] = hwe.Attribute("value").Value;
+                }
+                if (zxe != null)
+                {
+                    dditem["zxz"] = zxe.Attribute("zcount").Value;
+                    dditem["zxc"] = zxe.Attribute("ccount").Value;
+                    dditem["zxl"] = zxe.Attribute("value").Value;
+                }
+                if (nke != null)
+                {
+                    dditem["nkz"] = nke.Attribute("zcount").Value;
+                    dditem["nkc"] = nke.Attribute("ccount").Value;
+                    dditem["nkl"] = nke.Attribute("value").Value;
+                }
+                return dditem;
+            });
+            xmlfilelist[ct.tfilename] = new Dictionary<string, string> { { "value", hasprbdownlv.ToString() }, { "zcount", dic.Count.ToString() }, { "ccount", hasprbdown.ToString() } 
+            ,{"hwz",hwzong+""},{"hwc",hwhas+""},{"hwl",hwlv+""}
+            ,{"zxz",zxzong+""},{"zxc",zxhas+""},{"zxl",zxlv+""}
+            ,{"nkz",nkzong+""},{"nkc",nkhas+""},{"nkl",nklv+""}
+            };
             xmlfilelist = xmlfilelist.OrderBy(a => a.Key).ToDictionary(a=>a.Key,a=>a.Value);
             xmlfiles.RemoveAll();
             foreach (var item in xmlfilelist) {
@@ -1779,6 +1829,28 @@ namespace CTCCGoods.Controllers
                 xmlfile.SetAttributeValue("value", item.Value["value"]);
                 xmlfile.SetAttributeValue("zcount", item.Value["zcount"]);
                 xmlfile.SetAttributeValue("ccount", item.Value["ccount"]);
+                var xmlitemhw = new XElement("item");
+                xmlitemhw.SetAttributeValue("name", "华为");
+                xmlitemhw.SetAttributeValue("value", item.Value["hwz"]=="0"?"":item.Value["hwl"]);
+                xmlitemhw.SetAttributeValue("zcount", item.Value["hwz"]);
+                xmlitemhw.SetAttributeValue("ccount", item.Value["hwc"]);
+
+                var xmlitemzx = new XElement("item");
+                xmlitemzx.SetAttributeValue("name", "中兴");
+                xmlitemzx.SetAttributeValue("value", item.Value["zxz"] == "0" ? "" : item.Value["zxl"]);
+                xmlitemzx.SetAttributeValue("zcount", item.Value["zxz"]);
+                xmlitemzx.SetAttributeValue("ccount", item.Value["zxc"]);
+
+                var xmlitemnk = new XElement("item");
+                xmlitemnk.SetAttributeValue("name", "诺基亚");
+                xmlitemnk.SetAttributeValue("value", item.Value["nkz"] == "0" ? "" : item.Value["nkl"]);
+                xmlitemnk.SetAttributeValue("zcount", item.Value["nkz"]);
+                xmlitemnk.SetAttributeValue("ccount", item.Value["nkc"]);
+
+                xmlfile.Add(xmlitemhw);
+                xmlfile.Add(xmlitemzx);
+                xmlfile.Add(xmlitemnk);
+
                 xmlfiles.Add(xmlfile);
             }
             crxml.Save(crname);
@@ -3189,6 +3261,92 @@ namespace CTCCGoods.Controllers
             {
                 wmsg = sbw.ToString();
             }
+        }
+        private static int completeratecomp(ctasks ct, out string msg)
+        {
+            msg = "";
+            var res = 1;
+
+            #region 重新计算代码
+            var table1path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles/table1");
+            var files = Directory.GetFiles(table1path);
+            if (files == null || files.Length <= 0) {
+                msg = "原始数据不存在无需计算，原始数据导入后会自动计算";
+                return -1;
+            }
+            var completeratepath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\completerate");
+            if (!Directory.Exists(completeratepath)) {
+                Directory.CreateDirectory(completeratepath);
+            }
+            files = files.OrderBy(a => a).ToArray();
+            var completeratefile = Path.Combine(completeratepath, "completerate.xml");
+            Dictionary<int, Dictionary<string, object>> dic = new Dictionary<int, Dictionary<string, object>>();
+            Dictionary<string, Dictionary<string, string>> xmlfilelist = new Dictionary<string, Dictionary<string, string>>();
+            foreach (var file in files) {
+                string tmsg;
+                dic.Clear();
+                readtable1csv(file,dic,out tmsg);
+                var hasprbdown = dic.Where(a => a.Value["prbdown"] + "" != "").Count();
+                var hasprbdownlv = (float)hasprbdown / dic.Count * 100;
+                var crpath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "netcapfiles\\completerate");
+
+                var hwhas = dic.Where(a => a.Value["prbdown"] + "" != "" && a.Value["chang"].ToString() == "华为").Count();
+                var hwzong = dic.Where(a => a.Value["chang"].ToString() == "华为").Count();
+                var hwlv = hwzong == 0 ? 100 : (float)hwhas / hwzong * 100;
+                var zxhas = dic.Where(a => a.Value["prbdown"] + "" != "" && a.Value["chang"].ToString() == "中兴").Count();
+                var zxzong = dic.Where(a => a.Value["chang"].ToString() == "中兴").Count();
+                var zxlv = zxzong == 0 ? 100 : (float)zxhas / zxzong * 100;
+                var nkhas = dic.Where(a => a.Value["prbdown"] + "" != "" && a.Value["chang"].ToString() == "诺基亚").Count();
+                var nkzong = dic.Where(a => a.Value["chang"].ToString() == "诺基亚").Count();
+                var nklv = nkzong == 0 ? 100 : (float)nkhas / nkzong * 100;
+
+                
+                xmlfilelist[file.Substring(file.LastIndexOf("\\")+1)] = new Dictionary<string, string> { { "value", hasprbdownlv.ToString() }, { "zcount", dic.Count.ToString() }, { "ccount", hasprbdown.ToString() } 
+                ,{"hwz",hwzong+""},{"hwc",hwhas+""},{"hwl",hwlv+""}
+                ,{"zxz",zxzong+""},{"zxc",zxhas+""},{"zxl",zxlv+""}
+                ,{"nkz",nkzong+""},{"nkc",nkhas+""},{"nkl",nklv+""}
+                };
+            }
+            var crxml = XDocument.Parse("<root></root>");
+            crxml.Declaration = new XDeclaration("1.0","gbk","yes");
+            var xmlfiles = new XElement("files");
+            crxml.Root.Add(xmlfiles);
+            foreach (var item in xmlfilelist)
+            {
+                var xmlfile = new XElement("file");
+                xmlfile.SetAttributeValue("name", item.Key);
+                xmlfile.SetAttributeValue("value", item.Value["value"]);
+                xmlfile.SetAttributeValue("zcount", item.Value["zcount"]);
+                xmlfile.SetAttributeValue("ccount", item.Value["ccount"]);
+                var xmlitemhw = new XElement("item");
+                xmlitemhw.SetAttributeValue("name", "华为");
+                xmlitemhw.SetAttributeValue("value", item.Value["hwz"] == "0" ? "" : item.Value["hwl"]);
+                xmlitemhw.SetAttributeValue("zcount", item.Value["hwz"]);
+                xmlitemhw.SetAttributeValue("ccount", item.Value["hwc"]);
+
+                var xmlitemzx = new XElement("item");
+                xmlitemzx.SetAttributeValue("name", "中兴");
+                xmlitemzx.SetAttributeValue("value", item.Value["zxz"] == "0" ? "" : item.Value["zxl"]);
+                xmlitemzx.SetAttributeValue("zcount", item.Value["zxz"]);
+                xmlitemzx.SetAttributeValue("ccount", item.Value["zxc"]);
+
+                var xmlitemnk = new XElement("item");
+                xmlitemnk.SetAttributeValue("name", "诺基亚");
+                xmlitemnk.SetAttributeValue("value", item.Value["nkz"] == "0" ? "" : item.Value["nkl"]);
+                xmlitemnk.SetAttributeValue("zcount", item.Value["nkz"]);
+                xmlitemnk.SetAttributeValue("ccount", item.Value["nkc"]);
+
+                xmlfile.Add(xmlitemhw);
+                xmlfile.Add(xmlitemzx);
+                xmlfile.Add(xmlitemnk);
+
+                xmlfiles.Add(xmlfile);
+            }
+            crxml.Save(completeratefile);
+
+            #endregion
+
+            return res;
         }
     }
 }

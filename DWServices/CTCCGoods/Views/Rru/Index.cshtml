@@ -63,11 +63,11 @@
                 }
             },
             visualMap: {
-                min: 0.0,
+                min: 80.0,
                 max: 100.0,
                 calculable: true,
                 inRange: {
-                    color: ['#d94e5d', '#eac736', '#50a3ba']
+                    color: ['#d94e5d', '#eac736', '#00FF00']
                 },
                 textStyle: {
                     color: '#000'
@@ -92,7 +92,7 @@
             $.each(data.rows, function () {
                 var thiscity = {};
                 thiscity.name = this.city=="雄安"?"雄安新区": this.city+"市";
-                thiscity.value = (parseFloat(this.rrumd) + parseFloat(this.rrugd) + parseFloat(this.prrud)) / (parseFloat(this.rrum4) + parseFloat(this.rrug4) + parseFloat(this.prru4))*100;
+                thiscity.value = (parseFloat(this.rrum4) + parseFloat(this.rrug4) + parseFloat(this.prru4)) / (parseFloat(this.rrumd) + parseFloat(this.rrugd) + parseFloat(this.prrud)) * 100;
                 series.data.push(thiscity);
             });
             hebeiMap.setOption({ series: series });
@@ -123,7 +123,7 @@
 
             $("#smd").html((parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud)));
             $("#sm4").html((parseFloat($this.rrum4) + parseFloat($this.rrug4) + parseFloat($this.prru4)));
-            $("#smrate").html(Math.round((parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud)) / (parseFloat($this.rrum4) + parseFloat($this.rrug4) + parseFloat($this.prru4)) * 10000)/100+"%");
+            $("#smrate").html(Math.round((parseFloat($this.rrum4) + parseFloat($this.rrug4) + parseFloat($this.prru4)) / (parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud)) * 10000) / 100 + "%");
             $("#smwin").removeClass("hidden");
         });
         hebeiMap.on("mouseout", function (param) {
@@ -140,6 +140,6 @@
         <div class="col-md-8"><strong>地市：</strong></div><div class="col-md-4" id="smcity"></div>
         <div class="col-md-8"><strong>历史到货数(含减免)：</strong></div><div class="col-md-4" id="smd"></div>
         <div class="col-md-8"><strong>累计RRU序列号出现数：</strong></div><div class="col-md-4" id="sm4"></div>
-        <div class="col-md-8"><strong>到货率：</strong></div><div class="col-md-4" id="smrate"></div>
+        <div class="col-md-8"><strong>RRU序列号累计出现率：</strong></div><div class="col-md-4" id="smrate"></div>
     </div>
 </div>
