@@ -1879,7 +1879,11 @@ namespace CTCCGoods.Controllers
             System.Text.StringBuilder sbr = new System.Text.StringBuilder();
             System.IO.FileStream fsm = new System.IO.FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             System.IO.StreamReader sr = new System.IO.StreamReader(fsm, System.Text.Encoding.GetEncoding("gbk"));
-            sr.ReadLine();
+            var title=sr.ReadLine();
+            var skipcol = 0;
+            if (title.StartsWith("日期")) {
+                skipcol = 1;
+            }
 
             while (!sr.EndOfStream)
             {
@@ -1887,7 +1891,7 @@ namespace CTCCGoods.Controllers
                 var line = sr.ReadLine();
                 Regex reg = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                 var cols = reg.Split(line);
-                if (cols.Length < 18)
+                if (cols.Length < 18+skipcol)
                 {
                     sbr.Append("第" + rowno + "行，列数不足" + "\r\n");
                     continue;
@@ -1899,14 +1903,17 @@ namespace CTCCGoods.Controllers
                 dicin["province"] = "河北";
                 dicin["provinceno"] = "813";
 
-                var city = cols[2].Trim();
+                var city = cols[2 + skipcol].Trim();
+                if (city == "雄安新区") {
+                    city = "雄安";
+                }
                 dicin["city"] = city;
                 if (!constcitys.Contains(city))
                 {
                     errline.Add("地市不正确");
                 }
 
-                var cityno = cols[3].Trim();
+                var cityno = cols[3 + skipcol].Trim();
                 dicin["cityno"] = cityno;
                 if (!constcitynos.Contains(cityno))
                 {
@@ -1918,7 +1925,7 @@ namespace CTCCGoods.Controllers
                 }
 
 
-                var bids = cols[4].Trim();
+                var bids = cols[4 + skipcol].Trim();
                 int bid;
                 if (bids == "")
                 {
@@ -1934,7 +1941,7 @@ namespace CTCCGoods.Controllers
                     dicin["bid"] = bid;
                 }
 
-                var cids = cols[5].Trim();
+                var cids = cols[5 + skipcol].Trim();
                 int cid;
                 if (cids == "")
                 {
@@ -1957,35 +1964,35 @@ namespace CTCCGoods.Controllers
                     chong = true;
                 }
 
-                var cname = cols[6].Trim();
+                var cname = cols[6 + skipcol].Trim();
                 dicin["cname"] = cname;
                 if (string.IsNullOrEmpty(cname))
                 {
                     errline.Add("小区名称不能为空");
                 }
 
-                var fugai = cols[7].Trim().ToUpper();
+                var fugai = cols[7 + skipcol].Trim().ToUpper();
                 dicin["fugai"] = fugai;
                 if (!constcfugai.Contains(fugai))
                 {
                     errline.Add("小区覆盖类型不正确");
                 }
 
-                var pinduan = cols[8].Trim().ToUpper();
+                var pinduan = cols[8 + skipcol].Trim().ToUpper();
                 dicin["pinduan"] = pinduan;
                 if (!constpinduannc.Contains(pinduan))
                 {
                     errline.Add("频段不正确");
                 }
 
-                var chang = cols[9].Trim();
+                var chang = cols[9 + skipcol].Trim();
                 dicin["chang"] = chang;
                 if (!constchangs.Contains(chang))
                 {
                     errline.Add("厂家不正确");
                 }
 
-                var lons = cols[10].Trim();
+                var lons = cols[10 + skipcol].Trim();
                 float lon;
                 dicin["lon"] = "";
                 if (lons.Length > 0)
@@ -1996,7 +2003,7 @@ namespace CTCCGoods.Controllers
                     dicin["lon"] = lon;
                 }
 
-                var lats = cols[11].Trim();
+                var lats = cols[11 + skipcol].Trim();
                 float lat;
                 dicin["lat"] = "";
                 if (lats.Length > 0)
@@ -2008,7 +2015,7 @@ namespace CTCCGoods.Controllers
                     dicin["lat"] = lat;
                 }
 
-                var prbups = cols[12].Trim();
+                var prbups = cols[12 + skipcol].Trim();
                 float prbup;
                 dicin["prbup"] = "";
                 if (prbups.Length > 0)
@@ -2020,7 +2027,7 @@ namespace CTCCGoods.Controllers
                     dicin["prbup"] = prbup;
                 }
 
-                var prbdowns = cols[13].Trim();
+                var prbdowns = cols[13 + skipcol].Trim();
                 float prbdown;
                 dicin["prbdown"] = "";
                 if (prbdowns.Length > 0)
@@ -2032,7 +2039,7 @@ namespace CTCCGoods.Controllers
                     dicin["prbdown"] = prbdown;
                 }
 
-                var rrcs = cols[14].Trim();
+                var rrcs = cols[14 + skipcol].Trim();
                 int rrc;
                 dicin["rrc"] = "";
                 if (rrcs.Length > 0)
@@ -2044,7 +2051,7 @@ namespace CTCCGoods.Controllers
                     dicin["rrc"] = rrc;
                 }
 
-                var flowups = cols[15].Trim();
+                var flowups = cols[15 + skipcol].Trim();
                 float flowup;
                 dicin["flowup"] = "";
                 if (flowups.Length > 0)
@@ -2056,7 +2063,7 @@ namespace CTCCGoods.Controllers
                     dicin["flowup"] = flowup;
                 }
 
-                var flowdowns = cols[16].Trim();
+                var flowdowns = cols[16 + skipcol].Trim();
                 float flowdown;
                 dicin["flowdown"] = "";
                 if (flowdowns.Length > 0)
@@ -2068,7 +2075,7 @@ namespace CTCCGoods.Controllers
                     dicin["flowdown"] = flowdown;
                 }
 
-                var ucounts = cols[17].Trim();
+                var ucounts = cols[17 + skipcol].Trim();
                 int ucount;
                 dicin["ucount"] = "";
                 if (ucounts.Length > 0)
