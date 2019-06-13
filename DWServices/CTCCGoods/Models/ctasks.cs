@@ -401,6 +401,7 @@ namespace CTCCGoods.Controllers
                 }
                 var errline = new List<string>();
                 var chong = false;
+                var fugai = false;
                 var dicin = new Dictionary<string, object>();
 
                 var city = cols[0].Trim();
@@ -437,8 +438,8 @@ namespace CTCCGoods.Controllers
                     chong = true;
                 }
                 if (dbdic.ContainsKey(rruno)) {
-                    errline.Add("rru序列号旧表已存在");
-                    chong = true;
+                    //errline.Add("rru序列号旧表已存在");
+                    fugai = true;
                 }
                 var sendtime = cols[5].Trim();
                 DateTime stime;
@@ -473,7 +474,11 @@ namespace CTCCGoods.Controllers
                     sb.Append("第"+rowno+"行："+string.Join("、",errline)+"\r\n");
                 }
                 if (chong) continue;
-                dic[rruno] = dicin;
+                if (fugai) {
+                    dbdic[rruno] = dicin;
+                } else {
+                    dic[rruno] = dicin;
+                }
             }
             sr.Close();
             fs.Close();
@@ -512,6 +517,7 @@ namespace CTCCGoods.Controllers
                     var cols = sheet1.GetRow(rowno - 1);
                     var errline = new List<string>();
                     var chong = false;
+                    var fugai = false;
                     var dicin = new Dictionary<string, object>();
                     var city = getcellval(cols, 0).Trim();
                     dicin["city"] = city;
@@ -551,8 +557,8 @@ namespace CTCCGoods.Controllers
                     }
                     if (dbdic.ContainsKey(rruno))
                     {
-                        errline.Add("rru序列号旧表已存在");
-                        chong = true;
+                        //errline.Add("rru序列号旧表已存在");
+                        fugai = true;
                     }
                     var sendtime = getcellval(cols, 5).Trim();
                     DateTime stime;
@@ -590,7 +596,12 @@ namespace CTCCGoods.Controllers
                         sb.Append("第" + rowno + "行：" + string.Join("、", errline) + "\r\n");
                     }
                     if (chong) continue;
-                    dic[rruno] = dicin;
+                    if (fugai) {
+                        dbdic[rruno] = dicin;
+                    } else {
+                        dic[rruno] = dicin;
+                    }
+                    
                 }
                 catch {
                     sb.Append("第" + rowno + "行，数据异常读取失败" + "\r\n");
