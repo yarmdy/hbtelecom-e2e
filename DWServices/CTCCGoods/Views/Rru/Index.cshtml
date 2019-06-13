@@ -92,7 +92,7 @@
             $.each(data.rows, function () {
                 var thiscity = {};
                 thiscity.name = this.city=="雄安"?"雄安新区": this.city+"市";
-                thiscity.value = (parseFloat(this.rrum4) + parseFloat(this.rrug4) + parseFloat(this.prru4)) / (parseFloat(this.rrumd) + parseFloat(this.rrugd) + parseFloat(this.prrud)) * 100;
+                thiscity.value = (parseFloat(this.rrum4) + parseFloat(this.rrug4) + parseFloat(this.prru4)/8) / (parseFloat(this.rrumd) + parseFloat(this.rrugd) + parseFloat(this.prrud)/8) * 100;
                 series.data.push(thiscity);
             });
             hebeiMap.setOption({ series: series });
@@ -123,7 +123,7 @@
 
             $("#smd").html((parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud)));
             $("#sm4").html((parseFloat($this.rrum4) + parseFloat($this.rrug4) + parseFloat($this.prru4)));
-            $("#smrate").html(Math.round((parseFloat($this.rrum4) + parseFloat($this.rrug4) + parseFloat($this.prru4)) / (parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud)) * 10000) / 100 + "%");
+            $("#smrate").html(Math.round((parseFloat($this.rrum4) + parseFloat($this.rrug4) + parseFloat($this.prru4)/8) / (parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud)/8) * 10000) / 100 + "%");
             $("#smwin").removeClass("hidden");
         });
         hebeiMap.on("mouseout", function (param) {
