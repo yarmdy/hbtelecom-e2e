@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="themes/default/style.css">
     <style>
         #goodrate {
-            width:130px;
+            width:160px;
             height:50px;
             position:relative;
         }
@@ -40,7 +40,7 @@
             .navbar-nav li ul:hover li {
             display:block
             }
-    .navbar-nav {
+        .navbar-nav {
         margin-left: -100px;
     }
     </style>
@@ -154,7 +154,11 @@
                         <li id="Li1"><a href="datalog.html?r=0"
 					    target="mainframe">入库完整性</a></li>
                         <li><a href="paidan.html?r=0" target="mainframe">派单解决状态</a></li>
-<li><a href="http://136.158.194.126:8081/map/evt" target="_blank">事件察看</a></li>
+<li><a href="http://27.184.196.35:3397/map/evt" target="_blank">事件察看</a></li>
+
+<li><a href="volte-monitoring.html"  target="mainframe">Volte感知监控</a></li>
+<li><a href="volte-single-search.html"  target="mainframe">Volte单用户查询</a></li>
+<li><a href="volte-terminal-search.html"  target="mainframe">Volte终端查询</a></li>
                     </ul>
                     
                 </li>
@@ -163,6 +167,10 @@
                         <li class="tot"><a>大屏展示</a></li>
                         <li><a href="#" onclick="gotomap(this)" target="_blank">移动网络性能监控</a></li>
                         <li><a href="#" onclick="gotomap2(this)" target="_blank">三网覆盖对比</a></li>
+<li><a href="http://27.184.196.35:3397/goodrate/goodrate" target="_blank">三网感知对比</a></li>
+<li><a href="http://27.184.196.35:3397/goodrate/g3h" target="_blank">三网室内感知对比</a></li>
+						<li><a href="http://27.184.196.35:3397/alarm"  target="_blank">小区信息呈现</a></li>
+
                     </ul>
                     
                 </li>
