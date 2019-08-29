@@ -883,23 +883,27 @@
 
       </mapping>
       <custom>
-        <webtar><![CDATA[http://m.weibo.cn|http://xw.qq.com|http://m.jd.com|http://m.360.com|http://3g.163.com/touch|http://189.cn|http://sina.cn|http://m.sohu.com|http://m.taobao.com|http://www.apple.com/cn|http://i.ifeng.com]]></webtar>
-        <videotar><![CDATA[http://m.tv.sohu.com|http://www.youku.com|http://m.v.qq.com|http://m.iqiyi.com|http://m.tv189.com|http://www.le.com]]></videotar>
+        <desc></desc>
+        <webtar><![CDATA[m.weibo.cn|xw.qq.com|m.jd.com|m.360.com|3g.163.com/touch|189.cn|sina.cn|m.sohu.com|m.taobao.com|www.apple.com/cn|i.ifeng.com|www.epicc.com.cn/m|www.mojing.cn|m.kugou.com|m.iqiyi.com|hlddz.qq.com/m|wap.eastmoney.com/iphone/default.shtml|m.58.com|m.tool.chinaz.com|www.youku.com|www.xunlei.com|www.ijinshan.com|www.360doc.cn|www.oppo.cn|www.imicang.com|api.ixiaoyuanzhi.com|adgomob.com|igexin.com/wap/index.html|m.pingan.com|m.ce.cn|www.umeng.com|m.pptv.com|m.kuwo.cn|m.le.com|a.vmall.com|music.163.com/m|tianqi.moji.com|www.yidianzixun.com|wap.yy.com|m.ximalaya.com|www.xianshuabao.com|m.sm.cn|m.ctrip.com|m.pinduoduo.com|m.365yg.com|xiangqi.qq.com/m|h.xiami.com|www.xiaohongshu.com|a.9game.cn|speedm.qq.com/m|m.weather.com.cn|www.samsung.com/cn|m.qingting.fm|www.happyelements.com|m.kuaikanmanhua.com|m.zhuishushenqi.com|touch.qunar.com|h5.mizhe.com|www.tianya.cn/m|m.shihuo.cn|activity.renren.com|m.pcauto.com.cn|www.chelun.com|m.39.net|cn.bing.com/ditu|m.gameabc.com/mobile|cn.bing.com|ditu.amap.com|weread.qq.com|www.iqiyi.com|www.jd.com|www.kpd00.com|yiyilicai.cn|www.taobao.com|cbox.cntv.cn|www.eastmoney.com]]></webtar>
+        <webtartop><![CDATA[m.weibo.cn|xw.qq.com|m.jd.com|m.360.com|3g.163.com/touch|189.cn|sina.cn|m.sohu.com|m.taobao.com|www.apple.com/cn|i.ifeng.com]]></webtartop>
+        <webtarbak><![CDATA[m.weibo.cn|xw.qq.com|m.jd.com|m.360.com|3g.163.com/touch|189.cn|sina.cn|m.sohu.com|m.taobao.com|m.baidu.com|www.apple.com/cn|i.ifeng.com|www.epicc.com.cn/m|www.mojing.cn|m.kugou.com|m.iqiyi.com|hlddz.qq.com/m|wap.eastmoney.com/iphone/default.shtml|m.58.com|m.tool.chinaz.com|www.youku.com|www.xunlei.com|www.ijinshan.com|www.360doc.cn|www.oppo.cn|www.imicang.com|api.ixiaoyuanzhi.com|adgomob.com|igexin.com/wap/index.html|m.pingan.com|m.ce.cn|www.umeng.com|m.pptv.com|m.kuwo.cn|m.le.com|a.vmall.com|music.163.com/m|tianqi.moji.com|www.yidianzixun.com|wap.yy.com|m.ximalaya.com|www.xianshuabao.com|m.sm.cn|m.ctrip.com|m.pinduoduo.com|m.365yg.com|xiangqi.qq.com/m|h.xiami.com|www.xiaohongshu.com|a.9game.cn|speedm.qq.com/m|waimai.baidu.com|m.weather.com.cn|www.samsung.com/cn|m.qingting.fm|www.happyelements.com|m.kuaikanmanhua.com|m.zhuishushenqi.com|touch.qunar.com|h5.mizhe.com|www.tianya.cn/m|m.shihuo.cn|activity.renren.com|m.pcauto.com.cn|www.chelun.com|m.39.net|cn.bing.com/ditu|m.gameabc.com/mobile|cn.bing.com|www.baidu.com|ditu.amap.com|weread.qq.com|www.iqiyi.com|www.jd.com|www.kpd00.com|yiyilicai.cn|www.taobao.com|cbox.cntv.cn|www.eastmoney.com]]></webtarbak>
+        <videotar><![CDATA[搜狐视频|优酷视频|腾讯视频|爱奇艺|天翼视讯|西瓜影视|网易视频|新浪视频|土豆视频|PPTV|芒果TV|哔哩哔哩]]></videotar>
         <imtar><![CDATA[微信|QQ|易信]]></imtar>
-        <gametar><![CDATA[王者荣耀|阴阳师|爱游戏]]></gametar>
+        <gametar><![CDATA[王者荣耀|阴阳师|爱游戏|绝地求生：刺激战场]]></gametar>
         <nettype><![CDATA[1X|EVDO|WLAN]]></nettype>
-        <webopen><![CDATA[>1500|>1800]]></webopen>
+        <webopen><![CDATA[>2000|>2300]]></webopen>
         <firstdelay><![CDATA[>5000]]></firstdelay>
-        <videodown><![CDATA[<1500|<1000]]></videodown>
+        <videodown><![CDATA[<2000|<1500]]></videodown>
         <videorate><![CDATA[>0.5]]></videorate>
-        <gamedelay><![CDATA[>300]]></gamedelay>
+        <gamedelay><![CDATA[>200]]></gamedelay>
 
         <webcount>9</webcount>
         <videocount>4</videocount>
         <imcount>4</imcount>
         <gamecount>4</gamecount>
-        <downloadurl>http://132.33.18.55:9703/07E99589C36C3836/</downloadurl>
+        <downloadurl>http://132.33.18.127:9703/07E99589C36C3836/</downloadurl>
         <exportpath><![CDATA[E:\WebSite\DWebsite\perdata\]]></exportpath>
+        <wugaopath><![CDATA[I:\wugao\wugao.txt]]></wugaopath>
       </custom>
     </analyzer>
 

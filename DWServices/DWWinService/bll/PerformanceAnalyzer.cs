@@ -287,13 +287,22 @@ namespace DWWinService
             #endregion
             #region 读取配置
             var webtar = cfg.custom["webtar"].Split(new char[] { '|' }).ToList();
+
+            var webtartop = cfg.custom["webtartop"].Split(new char[] { '|' }).ToList();
+
             var videotar = cfg.custom["videotar"].Split(new char[] { '|' }).ToList();
             var imtar = cfg.custom["imtar"].Split(new char[] { '|' }).ToList();
             var gametar = cfg.custom["gametar"].Split(new char[] { '|' }).ToList();
             var nettype = cfg.custom["nettype"].Split(new char[] { '|' }).ToList();
             var webopen = O2.O2I(cfg.custom["webopen"].Split(new char[] { '|' }).ToList()[0].Replace(">", ""));
+
+            var webopenhttps = O2.O2I(cfg.custom["webopen"].Split(new char[] { '|' }).ToList()[1].Replace(">", ""));
+
             var firstdelay = O2.O2I(cfg.custom["firstdelay"].Replace(">", ""));
             var videodown = O2.O2I(cfg.custom["videodown"].Split(new char[] { '|' }).ToList()[0].Replace("<", ""));
+
+            var videodown800m = O2.O2I(cfg.custom["videodown"].Split(new char[] { '|' }).ToList()[1].Replace("<", ""));
+
             var videorate = O2.O2D(cfg.custom["videorate"].Replace(">", ""));
             var gamedelay = O2.O2I(cfg.custom["gamedelay"].Replace(">", ""));
             var webcount = O2.O2I(cfg.custom["webcount"]);
@@ -400,11 +409,17 @@ namespace DWWinService
                             cels[TestResult_TCLASS].Trim() != "1" ||
                             cels[TestResult_Success].Trim() != "1" ||
                             dics.ContainsKey(cels[PhoneInfo_MEID] + "_" + cels[TestResult_PageSurfTime])
+
+                            //剔除
+                            || cels[TestResult_FirstScreenDelay].Trim() == "" || O2.O2I(cels[TestResult_FirstScreenDelay])<0
                             )
                         {
                             continue;
                         }
                         var dic = new Dictionary<string, object>();
+                        if (O2.O2I(cels[TestResult_FirstScreenDelay]) > 30000) {
+                            cels[TestResult_FirstScreenDelay] = "30000";
+                        }
                         dic["PhoneInfo_MEID"] = cels[PhoneInfo_MEID];
                         dic["PositionInfo_City"] = cels[PositionInfo_City];
                         dic["NetInfo_NetType"] = cels[NetInfo_NetType];
@@ -429,7 +444,15 @@ namespace DWWinService
                         dic["TestResult_FirstScreenDelay"] = cels[TestResult_FirstScreenDelay];
 
                         dic["ISZHICHA1"] = (O2.O2I(cels[TestResult_PageOpenDelay]) > webopen) ? "1" : "0";
-                        dic["ISZHICHA2"] = (O2.O2I(cels[TestResult_FirstScreenDelay]) > firstdelay) ? "1" : "0";
+                        if (cels[TestResult_PageURL].IndexOf("baidu") >= 0 || cels[TestResult_PageURL].IndexOf("taobao") >= 0)
+                        {
+                            dic["ISZHICHA1"] = (O2.O2I(cels[TestResult_PageOpenDelay]) > webopenhttps) ? "1" : "0";
+                        }
+                        
+                        dic["ISZHICHA2"] = "0";
+                        if (webtartop.IndexOf(cels[TestResult_PageURL]) >= 0) {
+                            dic["ISZHICHA2"] = (O2.O2I(cels[TestResult_FirstScreenDelay]) > firstdelay) ? "1" : "0";
+                        }
 
                         var lteci = O2.O2I(dic["NetInfo_LteCi"]);
                         dic["wugao"] = wugao.ContainsKey(lteci) ? 1 : 0;
@@ -530,6 +553,11 @@ namespace DWWinService
                             O2.O2D(cels[TestResult_VideoAvgSpeed]) <= 0 ||
                             O2.O2D(cels[TestResult_VideoPeakSpeed]) <= 0 ||
                             dics.ContainsKey(cels[PhoneInfo_MEID] + "_" + cels[TestResult_VideoTestTime])
+
+                            //剔除
+                            || O2.O2D(cels[TestResult_VideoPeakSpeed]) <= 0 || O2.O2D(cels[TestResult_VideoAvgSpeed]) <= 0
+                            || O2.O2D(cels[TestResult_VideoPeakSpeed]) > 307200 || O2.O2D(cels[TestResult_VideoAvgSpeed]) > 307200
+                            || cels[TestResult_CacheRate].Trim()=="" || O2.O2D(cels[TestResult_VideoTotleTraffic])<500
                             )
                         {
                             continue;
@@ -552,6 +580,14 @@ namespace DWWinService
                         dic["TestResult_CacheRate"] = cels[TestResult_CacheRate];
 
                         dic["ISZHICHA1"] = (O2.O2D(cels[TestResult_VideoAvgSpeed]) < videodown) ? "1" : "0";
+                        var cell1 = O2.O2I(cels[NetInfo_LteCi]) % 256 / 16;
+
+                        if (cell1 == 1 || cell1 == 9) {
+                            dic["ISZHICHA1"] = (O2.O2D(cels[TestResult_VideoAvgSpeed]) < videodown800m) ? "1" : "0";
+                        }
+
+                        
+
                         dic["ISZHICHA2"] = (O2.O2D(cels[TestResult_CacheRate]) > videorate) ? "1" : "0";
 
                         var lteci = O2.O2I(dic["NetInfo_LteCi"]);
@@ -647,6 +683,9 @@ namespace DWWinService
 
                             cels[TestResult_TCLASS].Trim() != "1" ||
                             dics.ContainsKey(cels[PhoneInfo_MEID] + "_" + cels[TestResult_ImTestTime])
+
+                            //剔除
+                            || cels[TestResult_ImSendRate].Trim() == "" || O2.O2D(cels[TestResult_ImSendRate]) < 0 || O2.O2D(cels[TestResult_ImSendRate])>100
                             )
                         {
                             continue;
@@ -760,6 +799,9 @@ namespace DWWinService
 
                             cels[TestResult_TCLASS].Trim() != "1" ||
                             dics.ContainsKey(cels[PhoneInfo_MEID] + "_" + cels[TestResult_gameTestTime])
+
+                            //剔除
+                            || cels[TestResult_AckDelay].Trim() == "" || O2.O2D(cels[TestResult_AckDelay]) < 0
                             )
                         {
                             continue;
@@ -1881,7 +1923,7 @@ namespace DWWinService
                             }
                             dt.Columns.Add(cel.Key, tp);
                         }
-                        dr[cel.Key] = cel.Value == "" ? DBNull.Value : cel.Value;
+                        dr[cel.Key] = cel.Value.ToString() == "" ? DBNull.Value : cel.Value;
                     }
                     dt.Rows.Add(dr);
                 }
