@@ -954,7 +954,7 @@ namespace CTCCGoods.Controllers
         }
 
         [Breadcrumb(Auth = "0")]
-        public ActionResult Nsendimport(string[] flimport,string txttime) {
+        public ActionResult Nsendimport(string[] flimport,string txttime,bool? hdfg) {
             if (Request.Files.Count <= 0) {
                 return Content("<script>alert(\"没有检测到上传文件，上传失败\");location=\"/rru\"</script>");
             }
@@ -974,7 +974,7 @@ namespace CTCCGoods.Controllers
             if (!string.IsNullOrEmpty(txttime) && DateTime.TryParse(txttime, out tartime)) {
                 targetname = tartime.ToString("yyyyMMdd") +now.ToString("_HHmmss") + ".csv";
             }
-            ctasksHandle.addtask(1,filename,targetname,"");
+            ctasksHandle.addtask(1,filename,targetname,!hdfg.HasValue||!hdfg.Value?"0":"1");
             return Content("<script>alert(\"已上传到服务器，进入后台任务\");location=\"/task\"</script>");
         }
         [Breadcrumb(Auth = "1")]

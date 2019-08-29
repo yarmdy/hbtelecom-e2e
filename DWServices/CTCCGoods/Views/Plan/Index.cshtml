@@ -58,6 +58,38 @@
 
 
         var originData = null;
+        //function format(data) {
+        //    if (!data) {
+        //        return null
+        //    }
+        //    var result = []
+        //    var old = []
+        //    var planclasses = []
+        //    for (var i = 0; i < data.length; i++) {
+        //        if (old.indexOf(data[i].planclass) != -1) {
+        //            continue
+        //        }
+        //        old.push(data[i].planclass)
+        //        planclasses.push(data[i].planclass)
+        //    }
+        //    for (var i = 0; i < planclasses.length;i++) {
+        //        var p = planclasses[i];
+        //        var donenum = 0;
+        //        var doingnum = 0;
+        //        for (var j = 0; j < data.length; j++) {
+        //            if (data[j].planclass != p) {
+        //                continue
+        //            }
+        //            if (data[j].status == 0) {
+        //                doingnum++
+        //            } else {
+        //                donenum++
+        //            }
+        //        }
+        //        result.push({ planclass: p, plansnum: (donenum+doingnum), plandone:donenum, plandoing: doingnum })
+        //    }
+        //    return result
+        //}
         function format(data) {
             if (!data) {
                 return null
@@ -66,18 +98,20 @@
             var old = []
             var planclasses = []
             for (var i = 0; i < data.length; i++) {
-                if (old.indexOf(data[i].planclass) != -1) {
+                var pcl=data[i].planclass.substr(0,data[i].planclass.indexOf("/")<0?data[i].planclass.length:data[i].planclass.indexOf("/"));
+                if (old.indexOf(pcl) != -1) {
                     continue
                 }
-                old.push(data[i].planclass)
-                planclasses.push(data[i].planclass)
+                old.push(pcl)
+                planclasses.push(pcl)
             }
             for (var i = 0; i < planclasses.length;i++) {
                 var p = planclasses[i];
                 var donenum = 0;
                 var doingnum = 0;
                 for (var j = 0; j < data.length; j++) {
-                    if (data[j].planclass != p) {
+                    var pcl=data[j].planclass.substr(0,data[j].planclass.indexOf("/")<0?data[j].planclass.length:data[j].planclass.indexOf("/"));
+                    if (pcl != p) {
                         continue
                     }
                     if (data[j].status == 0) {

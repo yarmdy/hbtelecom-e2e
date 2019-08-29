@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data;
 
 namespace CTCCGoods.Controllers
 {
@@ -17,12 +18,33 @@ namespace CTCCGoods.Controllers
         [Breadcrumb(Auth = "1")]
         public ActionResult Index()
         {
+            //var et = DB.QueryAsDics("select id, name from e_templet");
+            //if (et == null)
+            //{
+            //    et = new Dictionary<string, object>[0];
+            //}
+            //ViewBag.et = et;
+            return Redirect("/plan/list");
+
+            //var et = DB.QueryAsDics("select id, name from e_templet");
+            //if (et == null)
+            //{
+            //    et = new Dictionary<string, object>[0];
+            //}
+            //ViewBag.et = et;
+            //return View();
+        }
+        [Breadcrumb(Auth = "1")]
+        public ActionResult List(string id)
+        {
+            var path = Uri.UnescapeDataString(id+"");
             var et = DB.QueryAsDics("select id, name from e_templet");
             if (et == null)
             {
                 et = new Dictionary<string, object>[0];
             }
             ViewBag.et = et;
+            ViewBag.path = id+"";
             return View();
         }
         [Breadcrumb(Auth = "0")]
@@ -46,16 +68,47 @@ namespace CTCCGoods.Controllers
                 et = new Dictionary<string, object>[0];
             }
             var planclass = DB.QueryAsDics("select distinct planclass from e_plan");
+            //planclass = planclass.Select(a=>new Dictionary<string,object>{{"planclass" ,a["planclass"].ToString().Substring(0,a["planclass"].ToString().LastIndexOf("/"))}}).ToArray();
             ViewBag.et = et;
             ViewBag.pc = planclass;
             return View();
         }
+        //[Breadcrumb(Auth = "1")]
+        //public ActionResult Fp()
+        //{
+        //    //var js = DB.QueryAsDics("select a.id,a.name,a.des,a.etid,b.name etname,a.plannum,a.uploadnum,a.status,a.createtime,a.plantime,a.completetime,a.createuid,c.name createuname from e_plan a left join e_templet b on a.etid=b.id left join cuser c on a.createuid=c.id");
+        //    var js = DB.QueryAsDics("SELECT a.id, a.name, a.des,a.planclass, a.etid, b.name etname, a.plannum, a.uploadnum, a.status, CONVERT ( VARCHAR (100), a.createtime, 20 ) createtime, CONVERT (VARCHAR(100), a.plantime, 23) plantime, CONVERT (VARCHAR(100), a.completetime, 23) completetime, a.createuid, c.name createuname, b.filename FROM e_plan a LEFT JOIN e_templet b ON a.etid = b.id LEFT JOIN cuser c ON a.createuid = c.id ORDER BY a.createtime desc");
+        //    return Json(new { total = js==null?0:js.Length, data = js }, JsonRequestBehavior.AllowGet);
+        //}
         [Breadcrumb(Auth = "1")]
-        public ActionResult Fp()
+        public ActionResult Fp(string id)
         {
+            var path = Uri.UnescapeDataString(id + "");
             //var js = DB.QueryAsDics("select a.id,a.name,a.des,a.etid,b.name etname,a.plannum,a.uploadnum,a.status,a.createtime,a.plantime,a.completetime,a.createuid,c.name createuname from e_plan a left join e_templet b on a.etid=b.id left join cuser c on a.createuid=c.id");
             var js = DB.QueryAsDics("SELECT a.id, a.name, a.des,a.planclass, a.etid, b.name etname, a.plannum, a.uploadnum, a.status, CONVERT ( VARCHAR (100), a.createtime, 20 ) createtime, CONVERT (VARCHAR(100), a.plantime, 23) plantime, CONVERT (VARCHAR(100), a.completetime, 23) completetime, a.createuid, c.name createuname, b.filename FROM e_plan a LEFT JOIN e_templet b ON a.etid = b.id LEFT JOIN cuser c ON a.createuid = c.id ORDER BY a.createtime desc");
-            return Json(new { total = js==null?0:js.Length, data = js }, JsonRequestBehavior.AllowGet);
+            List<Dictionary<string, object>> dirs = null;
+            if (string.IsNullOrEmpty(id)) {
+                dirs = js.Where(a => !string.IsNullOrEmpty(a["planclass"] + "")).Select(a => a["planclass"].ToString().Substring(0, a["planclass"].ToString().IndexOf("/") < 0 ? a["planclass"].ToString().Length : a["planclass"].ToString().IndexOf("/"))).Distinct().Select(a => new Dictionary<string, object> {{"classname",a},{"classpath",Uri.EscapeDataString(a)} }).OrderBy(a=>a["classname"]+"").ToList();
+                dirs.AddRange((js.Where(a => string.IsNullOrEmpty(a["planclass"] + "")).ToList()));
+                
+            }else{
+                dirs = js.Where(a => (a["planclass"] + "").IndexOf(path + "/") == 0).Select(a => {
+                    var tmpname = a["planclass"].ToString().Substring(path.Length + 1);
+
+                    return tmpname.Substring(0, tmpname.IndexOf("/") < 0 ? tmpname.Length : tmpname.IndexOf("/"));
+                }).Distinct().Select(a => new Dictionary<string, object> { { "classname", a }, { "classpath", Uri.EscapeDataString(path + "/" + a) } }).OrderBy(a => a["classname"] + "").ToList();
+                dirs.AddRange((js.Where(a => (a["planclass"] + "")==path).ToList()));
+                
+            }
+            foreach (var dic in dirs) {
+                if (dic.ContainsKey("name")) continue;
+                var classpath = Uri.UnescapeDataString(dic["classpath"] + "");
+                dic["num"] = js.Count(a => (a["planclass"] + "") == classpath + "" || (a["planclass"] + "").IndexOf(classpath + "/") == 0);
+                dic["close"] = js.Count(a => ((a["planclass"] + "") == classpath + "" || (a["planclass"] + "").IndexOf(classpath + "/") == 0)&&(int)a["status"]!=0);
+                dic["open"] = js.Count(a => ((a["planclass"] + "") == classpath + "" || (a["planclass"] + "").IndexOf(classpath + "/") == 0) && (int)a["status"] == 0);
+            }
+            js = dirs.ToArray();
+            return Json(new { total = js == null ? 0 : js.Length, data = js }, JsonRequestBehavior.AllowGet);
         }
         [Breadcrumb(Auth = "0")]
         public ActionResult QueryEnums(int limit, int offset)
@@ -244,7 +297,8 @@ namespace CTCCGoods.Controllers
                 //    result.Add("etid", -1);
                 //    return Json(new { ok = true, data = result, msg = "" }, JsonRequestBehavior.AllowGet);
                 //}
-                int whid = O2.O2I(DB.QueryOne("select cw.id from cwarehouse cw join cuser cu on cw.name = cu.name where cu.id = " + user.id)["id"]);
+                //int whid = O2.O2I(DB.QueryOne("select cw.id from cwarehouse cw join cuser cu on cw.name = cu.name where cu.id = " + user.id)["id"]);
+                int whid = user.wid.Value;
                 string sql = "SELECT epu.*,CONVERT ( VARCHAR (100), epu.uploadtime, 20 ) uptime, cw.name FROM e_plan_upload epu JOIN cwarehouse cw ON epu.whid = cw.id WHERE epid = " + id + " and cw.id = " + whid;
                 var detail = DB.QueryAsDics(sql);
                 var name = DB.QueryOne("select et.name from e_templet et join e_plan ep on ep.etid = et.id where ep.id = " + id);
@@ -838,10 +892,25 @@ namespace CTCCGoods.Controllers
             if (row == null) {
                 return Json(new { ok = false, msg = "未找到任何数据" });
             }
+            #region 模板扩展
+            var errlist = new List<string>();
+            var dic_etctype = new Dictionary<string, int>();
+            foreach (var et in Enum.GetValues(typeof(e_etctype)))
+            {
+                dic_etctype[O2.GED(et)] = (int)et;
+            }
+            var dic_eenums = new Dictionary<string, int>();
+            var db_eenums = DB.Query("select id,name from e_enum");
+            if (db_eenums != null) {
+                dic_eenums = db_eenums.AsEnumerable().ToDictionary(a=>a["name"]+"",a=>(int)a["id"]);
+            }
+            #endregion
+            
             try
             {
                 bool hasClass = sheet.LastRowNum > 0;
                 bool hasComment = sheet.LastRowNum > 1;
+                bool hasOther = sheet.LastRowNum > 2;
                 int rows = 0;
                 int cols = 0;
                 List<string> classNames = new List<string>();
@@ -856,7 +925,7 @@ namespace CTCCGoods.Controllers
                             NPOI.ExcelExtension.IsMergeCell(cell, out rows, out cols);
                             for (int j = 0; j < cols; j++)
                             {
-                                classNames.Add(cell.ToString());
+                                classNames.Add(cell+"");
                             }
                         }
                     }
@@ -868,16 +937,61 @@ namespace CTCCGoods.Controllers
                     if (cell != null)
                     {
                         Dictionary<string, object> temp = new Dictionary<string, object>();
-                        temp.Add("data", cell.ToString());
+                        temp.Add("data", cell+"");
                         temp.Add("class", hasClass ? classNames[i] : "");
-                        temp.Add("comments", hasComment ? sheet.GetRow(2).GetCell(i) == null ? "" : sheet.GetRow(2).GetCell(i).ToString() : "");
+                        temp.Add("comments", hasComment ? sheet.GetRow(2).GetCell(i) == null ? "" : sheet.GetRow(2).GetCell(i)+"" : "");
+
+                        #region 其他列解析
+                        if (hasOther) {
+                            var col_ecttype = sheet.GetRow(3).GetCell(i)+"";
+                            temp.Add("etctype", !dic_etctype.ContainsKey(col_ecttype) ? 0 : dic_etctype[col_ecttype]);
+
+                            var col_notnull = sheet.GetRow(5).GetCell(i)+"";
+                            temp.Add("notnull", col_notnull=="必填"?true:false);
+
+                            var col_expr = sheet.GetRow(6).GetCell(i)+"";
+                            temp.Add("expr", col_expr==""?"":col_expr[0]=='='?col_expr:"="+col_expr);
+
+                            var col_ecc = sheet.GetRow(7).GetCell(i) + "";
+                            temp.Add("ecc", col_ecc);
+
+
+                            var col_eeid = -1;
+                            var col_eedesc = sheet.GetRow(4).GetCell(i) + "";
+                            var col_eearry = col_eedesc.Split(new char[]{'|'});
+                            if (col_eedesc == "")
+                            {
+                                col_eeid = -1;
+                            }
+                            else {
+                                if (dic_eenums.ContainsKey(col_eearry[0]))
+                                {
+                                    col_eeid = dic_eenums[col_eearry[0]];
+                                }
+                                else {
+                                    if (col_eearry.Length < 2)
+                                    {
+                                        errlist.Add("枚举“" + col_eearry[0] + "”不存在且模板没有定义");
+                                    }
+                                    else {
+                                        col_eeid = -2;
+                                    }
+                                }
+                            }
+                            temp.Add("eeid", col_eeid);
+                            temp.Add("eedesc", col_eedesc);
+                        }
+                        #endregion
+
                         result.Add(temp);
                     }
                 }
-
+                if (errlist.Count > 0) {
+                    return Json(new { ok = false, msg = "上传的文件结构未能识别，（" + string.Join(",", errlist) + "）" });
+                }
                 return Json(new { ok = true, data = result, msg = "" });
             } catch (Exception e) {
-                return Json(new { ok = false, msg = "上传的文件结构未能识别" });
+                return Json(new { ok = false, msg = "上传的文件结构未能识别，（"+string.Join(",",errlist)+"）" });
             }
         }
 
@@ -979,7 +1093,7 @@ namespace CTCCGoods.Controllers
             if(user.utype.Value == 0)
             {
                 int whid = O2.O2I(Request.Form["whid"]);
-                var a = DB.QueryOne("select cu.id from cuser cu left join cwarehouse cw on cu.name = cw.name where cw.id ="+whid);
+                var a = DB.QueryOne("select cu.id from cuser cu  where utype=1 and cu.wid =" + whid);
                 cityid = O2.O2I(a["id"]);
             }
             var files = Request.Files;

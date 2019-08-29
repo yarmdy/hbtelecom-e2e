@@ -43,6 +43,7 @@ namespace CTCCGoods.Controllers
         public bool? notnull { get; set; }
         public string expr { get; set; }
         public string ecc { get; set; }
+        public string eedesc { get; set; }
     }
     public class etempletfactory {
         private e_templet _templet;
@@ -78,6 +79,18 @@ namespace CTCCGoods.Controllers
                 var etid = db.Insertobj(sqlinserttemp);
                 foreach (var col in temp.cols)
                 {
+                    if (col.Value.eeid == -2)
+                    {
+                        var eedesc = col.Value.eedesc + "";
+                        var eearry = eedesc.Split(new char[] { '|' });
+                        if (eearry.Length > 1)
+                        {
+                            col.Value.eeid = db.Insertobj(string.Format("insert into e_enum values('{0}','{1}','导入的')", eearry[0], eearry[1]));
+                        }
+                        else {
+                            col.Value.eeid = -1;
+                        }
+                    }
                     var colsql = string.Format("insert into e_templet_col (etid,ordernum,name,classname,etctype,eeid,notnull,expr,ecc,comments) values({0},{1},'{2}','{3}',{4},{5},{6},'{7}','{8}', '{9}')",
                         etid, col.Value.ordernum,col.Value.name,col.Value.classname,(int?)col.Value.etctype,col.Value.eeid,col.Value.notnull.HasValue&&col.Value.notnull.Value?1:0,col.Value.expr,col.Value.ecc, col.Value.comments);
                     db.Execobj(colsql);
@@ -155,8 +168,21 @@ namespace CTCCGoods.Controllers
                 db.Execobj("delete e_templet_col where etid=" + _templet.id);
                 foreach (var col in _templet.cols)
                 {
+                    if (col.Value.eeid == -2)
+                    {
+                        var eedesc = col.Value.eedesc + "";
+                        var eearry = eedesc.Split(new char[] { '|' });
+                        if (eearry.Length > 1)
+                        {
+                            col.Value.eeid = db.Insertobj(string.Format("insert into e_enum values('{0}','{1}','导入的')", eearry[0], eearry[1]));
+                        }
+                        else
+                        {
+                            col.Value.eeid = -1;
+                        }
+                    }
                     var colsql = string.Format("insert into e_templet_col (etid,ordernum,name,classname,etctype,eeid,notnull,expr,ecc,comments) values({0},{1},'{2}','{3}',{4},{5},{6},'{7}','{8}','{9}')",
-                        _templet.id, col.Value.ordernum, col.Value.name, col.Value.classname,(int?)col.Value.etctype, col.Value.eeid, col.Value.notnull.HasValue && col.Value.notnull.Value ? 1 : 0, col.Value.expr, col.Value.ecc, col.Value.comments);
+                            _templet.id, col.Value.ordernum, col.Value.name, col.Value.classname, (int?)col.Value.etctype, col.Value.eeid, col.Value.notnull.HasValue && col.Value.notnull.Value ? 1 : 0, col.Value.expr, col.Value.ecc, col.Value.comments);
                     db.Execobj(colsql);
                 }
 

@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace CTCCGoods
 {
@@ -233,7 +234,63 @@ where o.status >= 0 and o.status < 6 and (o.top1 = 1 or o.verifyno = 5) {0}";
         {
             //httpContext.Session["loginuser"] = new Controllers.cuser { id=1};
             if (NoCheck) return true;
-            var user=(Controllers.cuser)httpContext.Session["loginuser"];
+            Controllers.cuser user = null;
+            var usetoken = Controllers.O2.O2B(System.Configuration.ConfigurationManager.AppSettings["usetoken"]);
+            var token = httpContext.Request["tk"];
+            if (usetoken && !string.IsNullOrWhiteSpace(token))
+            {
+                try {
+                    var deskey = "e10adc3949ba59abbe56e057f20f883e";
+
+                    var tokenb = System.Convert.FromBase64String(token);
+                    var token64 = System.Text.Encoding.GetEncoding("utf-8").GetString(tokenb);
+                    tokenb = System.Convert.FromBase64String(token64);
+                    System.Security.Cryptography.DESCryptoServiceProvider des = new System.Security.Cryptography.DESCryptoServiceProvider();
+                    var stream = new System.IO.MemoryStream();
+                    des.Mode = System.Security.Cryptography.CipherMode.ECB;
+                    des.Key = System.Text.Encoding.GetEncoding("utf-8").GetBytes(deskey.Substring(0,8));
+                    des.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
+                    stream = new System.IO.MemoryStream();
+                    var cstream=new System.Security.Cryptography.CryptoStream(stream,des.CreateDecryptor(),System.Security.Cryptography.CryptoStreamMode.Write);
+                    cstream.Write(tokenb, 0, tokenb.Length);
+                    cstream.FlushFinalBlock();
+                    token = System.Text.Encoding.GetEncoding("utf-8").GetString(stream.ToArray());
+
+                    var tks = token.Split(new char[] { '-' });
+                    if (tks.Length != 5) return false;
+                    if (tks[4].Length != 14) return false;
+
+                    System.DateTime indt = System.DateTime.ParseExact(tks[4], "yyyyMMddHHmmss", System.Globalization.CultureInfo.InvariantCulture);
+                    var seconds=(System.DateTime.Now - indt).TotalSeconds;
+                    if (seconds > 30 || seconds<-30) return false;
+                    string sql;
+                    if (tks[2] == "0")
+                    {
+                        sql = "select * from cuser where utype=0";
+                    }
+                    else {
+                        sql = "select * from cuser where utype=1 and wid="+tks[3];
+                    }
+                    var userdic = Controllers.DB.QueryAsDics(sql);
+                    if (userdic == null) return false;
+
+                    user = new Controllers.cuser();
+                    user.id = int.Parse(userdic[0]["id"].ToString());
+                    user.name = userdic[0]["name"].ToString();
+                    user.status = int.Parse(userdic[0]["status"].ToString());
+                    user.pwd = userdic[0]["pwd"].ToString();
+                    user.utype = int.Parse(userdic[0]["utype"].ToString());
+                    user.code = userdic[0]["code"].ToString();
+
+                    httpContext.Session["loginuser"] = user;
+                }
+                catch {
+                    return false;
+                }
+            }
+            else {
+                user = (Controllers.cuser)httpContext.Session["loginuser"];
+            }
             if (user == null) return false;
             if (!user.id.HasValue) return false;
             var userd = Controllers.DB.QueryOne("select u.*,w.name wname from cuser u left join cwarehouse w on u.wid=w.id where u.id=" + user.id);
@@ -263,7 +320,12 @@ where o.status >= 0 and o.status < 6 and (o.top1 = 1 or o.verifyno = 5) {0}";
         {
             if (!filterContext.HttpContext.Request.IsAjaxRequest()) {
                 //filterContext.HttpContext.Response.Redirect("/login", true);
-                filterContext.Result = new RedirectResult("/login");
+                var usetoken = Controllers.O2.O2B(System.Configuration.ConfigurationManager.AppSettings["usetoken"]);
+                if (usetoken) {
+                    filterContext.Result = new ContentResult() { Content="参数无效"};
+                } else {
+                    filterContext.Result = new RedirectResult("/login");
+                }
             } else {
                 //filterContext.HttpContext.Response.ContentType = "application/json";
                 //filterContext.HttpContext.Response.Write("{ok:false,msg:'您没有登录'}");

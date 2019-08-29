@@ -66,6 +66,7 @@
         ];
         var enums=[
             {value:-1,text:"-",fenlei:"全部"},
+            {value:-2,text:"导入的",fenlei:"导入的"},
             @foreach (var e in enums)
             {
             @:{value:"@(e["id"])",text:"@(e["name"])",fenlei:"@(e["eclass"])"},
@@ -312,6 +313,10 @@
                             //pk:2,
                             source: enums
                         }
+                    },{
+                        field: 'eedesc',
+                        title: '导入的枚举',
+                        visible: false,
                     }, {
                         field: 'notnull',
                         title: '必填',
@@ -333,7 +338,8 @@
                         editable: {
 
                         }
-                    },{
+                    },
+                    {
                         field: 'ordernum2',
                         title: '操作',
                         formatter:actionbtn,
@@ -428,7 +434,7 @@
                             $('#table1').bootstrapTable('insertRow', {
                                 index: count, row: {
                                     ordernum: count + 1, name: data[i].data,
-                                    classname: data[i].class, comments: data[i].comments, etctype: 0, eeid: -1, notnull: false, expr: "", ecc: "",
+                                    classname: data[i].class, comments: data[i].comments, etctype: data[i].etctype, eeid: data[i].eeid, notnull: data[i].notnull, expr: data[i].expr, ecc: data[i].ecc,eedesc:data[i].eedesc
                                 }
                             });
                         }

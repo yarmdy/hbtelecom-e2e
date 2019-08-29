@@ -94,11 +94,14 @@
                 thiscity.name = this.city=="雄安"?"雄安新区": this.city+"市";
                 thiscity.value = (parseFloat(this.rrum4) + parseFloat(this.rrug4) + parseFloat(this.prru4)/8) / (parseFloat(this.rrumd) + parseFloat(this.rrugd) + parseFloat(this.prrud)/8) * 100;
                 series.data.push(thiscity);
+
+                $("#tbbody").append("<tr><td>" + this.city + "</td><td>" + (parseFloat(this.rrumd) + parseFloat(this.rrugd) + parseFloat(this.prrud)) + "</td><td>" + (parseFloat(this.rrum4) + parseFloat(this.rrug4) + parseFloat(this.prru4)) + "</td><td>" + Math.round(thiscity.value * 100) / 100 + "%</td><td>" + (parseFloat(this.rrum) + parseFloat(this.rrug) + parseFloat(this.prru)) + "</td><td>" + (Math.round((parseFloat(this.rrum) + parseFloat(this.rrug) + parseFloat(this.prru) / 8) / (parseFloat(this.rrumd) + parseFloat(this.rrugd) + parseFloat(this.prrud) / 8) * 10000) / 100) + "%</td></tr>");
             });
             hebeiMap.setOption({ series: series });
         });
-        $("#smwin").css({ top: $("#map").offset().top, left: $("#map").offset().left+20 });
-        //$("#smwin").removeClass("hidden");
+        $("#smwin").css({ top: $("#map").offset().top, left: $("#map").offset().left + 20 });
+        $("#ltwin").css({ top: $("#map").offset().top, left: $("#map").offset().left + $("#map").outerWidth() - 200 }).removeClass("hidden");
+        $("#lgwin").css({ right: $("body").outerWidth() - $("#map").offset().left - $("#map").outerWidth() }).removeClass("hidden");
         hebeiMap.on("mouseover", function (param) {
             event.stopPropagation();
             var mapName = param.name;
@@ -123,7 +126,9 @@
 
             $("#smd").html((parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud)));
             $("#sm4").html((parseFloat($this.rrum4) + parseFloat($this.rrug4) + parseFloat($this.prru4)));
-            $("#smrate").html(Math.round((parseFloat($this.rrum4) + parseFloat($this.rrug4) + parseFloat($this.prru4)/8) / (parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud)/8) * 10000) / 100 + "%");
+            $("#smrate").html(Math.round((parseFloat($this.rrum4) + parseFloat($this.rrug4) + parseFloat($this.prru4) / 8) / (parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud) / 8) * 10000) / 100 + "%");
+            $("#sm666").html((parseFloat($this.rrum) + parseFloat($this.rrug) + parseFloat($this.prru)));
+            $("#sm666rate").html(Math.round((parseFloat($this.rrum) + parseFloat($this.rrug) + parseFloat($this.prru) / 8) / (parseFloat($this.rrumd) + parseFloat($this.rrugd) + parseFloat($this.prrud) / 8) * 10000) / 100 + "%");
             $("#smwin").removeClass("hidden");
         });
         hebeiMap.on("mouseout", function (param) {
@@ -131,15 +136,90 @@
             $("#smwin").addClass("hidden");
             
         });
+        $("#lgwin").on("mouseover", function () {
+            $(this).css({height:500});
+        });
+        $("#lgwin").on("mouseout", function () {
+            $(this).css({ height: 50 });
+        });
+        $("#tab1,#tab2").on("click", function () {
+            var $this = $(this);
+            if ($this.hasClass("active")) return;
+
+            $("#tab1,#tab2").removeClass("active");
+            $("#tab1,#tab2").find("span").removeClass("glyphicon-check").addClass("glyphicon-unchecked");
+            $this.addClass("active");
+            $this.find("span").removeClass("glyphicon-unchecked").addClass("glyphicon-check");
+
+
+            var thisid = $this.prop("id");
+            
+            var series = {};
+            series.data = [];
+            $.each(mapdata.rows, function () {
+                var thiscity = {};
+                thiscity.name = this.city == "雄安" ? "雄安新区" : this.city + "市";
+                if (thisid == "tab1") {
+                    thiscity.value = (parseFloat(this.rrum4) + parseFloat(this.rrug4) + parseFloat(this.prru4) / 8) / (parseFloat(this.rrumd) + parseFloat(this.rrugd) + parseFloat(this.prrud) / 8) * 100;
+                } else if (thisid == "tab2") {
+                    thiscity.value = (parseFloat(this.rrum) + parseFloat(this.rrug) + parseFloat(this.prru) / 8) / (parseFloat(this.rrumd) + parseFloat(this.rrugd) + parseFloat(this.prrud) / 8) * 100;
+                }
+                
+                series.data.push(thiscity);
+            });
+            console.log(series);
+            hebeiMap.setOption({ series: series });
+            
+        });
     });
 </script>
 }
-<div class="container" id="cont">
+<div class="container" id="cont" >
     <div id="map" style="height:100%"></div>
-    <div id="smwin" style="position:absolute;width:400px;height:130px;left:0;top:0;padding:30px;border-radius:5px;box-shadow:0 0 5px 0 rgba(0,0,0,.5) " class="hidden row">
+    <div id="smwin" style="position:absolute;width:400px;height:160px;left:0;top:0;padding:30px;border-radius:5px;box-shadow:0 0 5px 0 rgba(0,0,0,.5); " class="hidden row">
         <div class="col-md-8"><strong>地市：</strong></div><div class="col-md-4" id="smcity"></div>
         <div class="col-md-8"><strong>历史到货数(含减免)：</strong></div><div class="col-md-4" id="smd"></div>
         <div class="col-md-8"><strong>累计RRU序列号出现数：</strong></div><div class="col-md-4" id="sm4"></div>
         <div class="col-md-8"><strong>RRU序列号累计出现率：</strong></div><div class="col-md-4" id="smrate"></div>
+
+        <div class="col-md-8"><strong>网管有序列号数(最新)：</strong></div><div class="col-md-4" id="sm666"></div>
+        <div class="col-md-8"><strong>网管有序列号率：</strong></div><div class="col-md-4" id="sm666rate"></div>
+    </div>
+    <div id="ltwin" style="position:absolute;width:199px;height:34px;left:0;top:0;padding:0px;border-radius:5px;box-shadow:0 0 5px 0 rgba(0,0,0,.5); " class="hidden">
+        <div class="form-inline">
+            <div class="btn-group">
+                <button type="button" class="btn btn-info active" id="tab1"><span class="glyphicon glyphicon-check"></span> 累计视图</button>
+                <button type="button" class="btn btn-success" id="tab2"><span class="glyphicon glyphicon-unchecked"></span> 最新视图</button>
+            </div>
+        </div>
+    </div>
+    <div id="lgwin" style="position:absolute;width:900px;height:50px;right:0;bottom:0px;padding:5px;border-radius:5px;box-shadow:0 0 5px 0 rgba(0,0,0,.5);background-color:white;overflow:hidden " class="hidden">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        地市
+                    </th>
+                    <th>
+                        历史到货数(含减免)
+                    </th>
+                    <th>
+                        累计RRU序列号出现数
+                    </th>
+                    <th>
+                        RRU序列号累计出现率
+                    </th>
+                    <th>
+                        网管有序列号数(最新)
+                    </th>
+                    <th>
+                        最新有序列号率
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tbbody">
+
+            </tbody>
+        </table>
     </div>
 </div>

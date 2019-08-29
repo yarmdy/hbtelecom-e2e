@@ -278,6 +278,7 @@ namespace CTCCGoods.Controllers
         public static string[] constadvises = { "扩容","不扩容"};
         public static string[] constbuildmodes = { "本小区扩容", "周边站扩容" };
         public static string[] constcelltypes = { "室分", "宏站" };
+        public static string[] constg45 = { "4G", "5G" };
         /// <summary>
         /// 发货表导入
         /// </summary>
@@ -315,17 +316,28 @@ namespace CTCCGoods.Controllers
             Dictionary<string,Dictionary<string, object>> newdic = new Dictionary<string, Dictionary<string,object>>();
             Dictionary<string, object> lastwdic = new Dictionary<string, object>();
 
+            #region 新存在过算法
+            var lastwtjpath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "rrufiles\\wangtj");
+            var lastwtjfiles = System.IO.Directory.GetFiles(lastwtjpath, "*.csv");
+            var lastwtjfilename = lastwtjfiles == null || lastwtjfiles.Length <= 0 ? null : lastwtjfiles.OrderByDescending(a => a).FirstOrDefault();
+            Dictionary<string, object> lastwtjdic = new Dictionary<string, object>();
+            if (lastwtjfilename != null)
+            {
+                readwangcsv(lastwtjfilename, lastwtjdic);
+            }
+            #endregion
+
             if (lastwfilename != null) {
                 readwangcsv(lastwfilename, lastwdic);
             }
             if (lastfilename != null) {
                 string tmsg;
-                readnsendcsv(lastfilename,lastwdic,null,lastdic,out tmsg);
+                readnsendcsv(lastfilename,lastwdic,lastwtjdic,null,lastdic,out tmsg);
             }
             if (exname == "xlsx") {
-                readnsendexcel(newfilename, lastwdic, lastdic, newdic, out msg);
+                readnsendexcel(newfilename, lastwdic,lastwtjdic, lastdic, newdic, out msg);
             } else if (exname == "csv") {
-                readnsendcsv(newfilename, lastwdic, lastdic, newdic, out msg);
+                readnsendcsv(newfilename, lastwdic,lastwtjdic, lastdic, newdic, out msg);
             
             } else {
                 msg = "不支持的文件扩展名";
@@ -338,13 +350,18 @@ namespace CTCCGoods.Controllers
             }
             else {
                 StringBuilder sb = new StringBuilder();
-                sb.Append("地市,厂家,RRU型号,RRU类型,RRU序列号,发货时间,借货期次,备注,是否八期,是否在网管,是否存在过网管,是否新发货" + "\r\n");
-                foreach (var kv in lastdic) {
-                    var cols = new List<string>();
-                    foreach (var k in kv.Value) {
-                        cols.Add(k.Value.GetType()==typeof(DateTime)?((DateTime)k.Value).ToString("yyyy/M/d"):k.Value.ToString());
+                sb.Append("地市,厂家,4G/5G,是否45G双模,RRU型号,RRU类型,RRU序列号,发货时间,借货期次,备注,是否八期,是否在网管,是否存在过网管,是否新发货" + "\r\n");
+                if (ct.rul != "1")
+                {
+                    foreach (var kv in lastdic)
+                    {
+                        var cols = new List<string>();
+                        foreach (var k in kv.Value)
+                        {
+                            cols.Add(k.Value.GetType() == typeof(DateTime) ? ((DateTime)k.Value).ToString("yyyy/M/d") : k.Value.ToString());
+                        }
+                        sb.Append(string.Join(",", cols) + "\r\n");
                     }
-                    sb.Append(string.Join(",",cols)+"\r\n");
                 }
                 foreach (var kv in newdic)
                 {
@@ -373,7 +390,7 @@ namespace CTCCGoods.Controllers
         /// <param name="dbdic">对比发货表字典，只读取服务器数据的话留空null</param>
         /// <param name="dic">用于装发货表数据的字典</param>
         /// <param name="msg">返回消息，可以忽略</param>
-        private static void readnsendcsv(string filename, Dictionary<string, object> lastwdic, Dictionary<string, Dictionary<string, object>> dbdic, Dictionary<string, Dictionary<string, object>> dic, out string msg)
+        private static void readnsendcsv(string filename, Dictionary<string, object> lastwdic, Dictionary<string, object> lastwtjdic, Dictionary<string, Dictionary<string, object>> dbdic, Dictionary<string, Dictionary<string, object>> dic, out string msg)
         {
             msg = "";
             var nodb = false;
@@ -385,7 +402,12 @@ namespace CTCCGoods.Controllers
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             System.IO.FileStream fs = new System.IO.FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             System.IO.StreamReader sr = new System.IO.StreamReader(fs, System.Text.Encoding.GetEncoding("gbk"));
-            sr.ReadLine();
+            var tt=sr.ReadLine();
+            var coloffset = 2;
+            var ttn = tt.Split(new char[]{','});
+            if (ttn.Length < 13) {
+                coloffset = 0;
+            }
             
             while (!sr.EndOfStream)
             {
@@ -395,7 +417,7 @@ namespace CTCCGoods.Controllers
                 
                 //var cols = line.Split(new char[] { ',' }, StringSplitOptions.None);
                 var cols = reg.Split(line);
-                if (cols.Length < 11) {
+                if (cols.Length < 12+coloffset) {
                     sb.Append("第"+rowno+"行，列数不足"+"\r\n");
                     continue;
                 }
@@ -415,18 +437,34 @@ namespace CTCCGoods.Controllers
                 if (!constchangs.Contains(chang)) {
                     errline.Add("厂家不正确");
                 }
-                var xinghao = cols[2].Trim();
+
+                var g45 = "";
+                var g45s = "";
+                if (coloffset == 2) {
+                    g45 = cols[2].Trim().ToUpper();
+                    g45s = cols[3].Trim();
+                }
+                if (!constg45.Contains(g45)) {
+                    errline.Add("4G/5G不正确");
+                }
+                if (string.IsNullOrEmpty(g45s)) {
+                    errline.Add("是否45G双模不能为空");
+                }
+                dicin["g45"] = g45;
+                dicin["g45s"] = g45s;
+
+                var xinghao = cols[2 + coloffset].Trim();
                 dicin["xinghao"] = xinghao;
                 if (string.IsNullOrEmpty(xinghao))
                 {
                     errline.Add("RRU型号不能为空");
                 }
-                var leixing = cols[3].Trim().ToUpper();
+                var leixing = cols[3 + coloffset].Trim().ToUpper();
                 dicin["leixing"] = leixing;
                 if (!constleixing.Contains(leixing)) {
                     errline.Add("RRU类型不正确");
                 }
-                var rruno = cols[4].ToUpper().Trim();
+                var rruno = cols[4 + coloffset].ToUpper().Trim();
                 dicin["rruno"] = rruno;
                 if (string.IsNullOrEmpty(rruno)) {
                     errline.Add("rru序列号不能为空");
@@ -441,7 +479,7 @@ namespace CTCCGoods.Controllers
                     //errline.Add("rru序列号旧表已存在");
                     fugai = true;
                 }
-                var sendtime = cols[5].Trim();
+                var sendtime = cols[5 + coloffset].Trim();
                 DateTime stime;
                 if (string.IsNullOrEmpty(sendtime)|| !DateTime.TryParse(sendtime, out stime))
                 {
@@ -450,15 +488,20 @@ namespace CTCCGoods.Controllers
                 else {
                     dicin["sendtime"] = stime;
                 }
-                var qici = cols[6].Trim();
+                var qici = cols[6 + coloffset].Trim();
                 dicin["qici"] = qici;
-                var bz = cols[7].Trim();
+                var bz = cols[7 + coloffset].Trim();
                 dicin["bz"] = bz;
-                var baqi = cols[8].Trim();
+                var baqi = cols[8 + coloffset].Trim();
                 dicin["baqi"] = baqi;
 
                 var sfzwg = "";
-                var sfczg = nodb ? cols[10].Trim() : "";
+                //var sfczg = nodb ? cols[10 + coloffset].Trim() : "";
+                var sfczg = "";
+                if (lastwtjdic.ContainsKey(rruno))
+                {
+                    sfczg = "1";
+                }
                 if (lastwdic.ContainsKey(rruno)) {
                     sfzwg = "1";
                     sfczg = "1";
@@ -466,7 +509,7 @@ namespace CTCCGoods.Controllers
                 dicin["sfzwg"] = sfzwg;
                 dicin["sfczg"] = sfczg;
 
-                var xfh = cols[11].Trim();
+                var xfh = cols[11 + coloffset].Trim();
                 dicin["xfh"] = xfh;
 
                 if (errline.Count > 0) {
@@ -475,10 +518,9 @@ namespace CTCCGoods.Controllers
                 }
                 if (chong) continue;
                 if (fugai) {
-                    dbdic[rruno] = dicin;
-                } else {
-                    dic[rruno] = dicin;
+                    dbdic.Remove(rruno);
                 }
+                dic[rruno] = dicin;
             }
             sr.Close();
             fs.Close();
@@ -498,7 +540,7 @@ namespace CTCCGoods.Controllers
         /// <param name="dbdic">对比发货表字典，只读取服务器数据的话留空null</param>
         /// <param name="dic">用于装发货表数据的字典</param>
         /// <param name="msg">返回消息，可以忽略</param>
-        private static void readnsendexcel(string filename,Dictionary<string, object> lastwdic, Dictionary<string, Dictionary<string, object>> dbdic, Dictionary<string, Dictionary<string, object>> dic, out string msg)
+        private static void readnsendexcel(string filename, Dictionary<string, object> lastwdic, Dictionary<string, object> lastwtjdic, Dictionary<string, Dictionary<string, object>> dbdic, Dictionary<string, Dictionary<string, object>> dic, out string msg)
         {
             msg = "";
             var nodb = false;
@@ -512,6 +554,13 @@ namespace CTCCGoods.Controllers
             System.IO.FileStream fs = new System.IO.FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             var workbook = new XSSFWorkbook(fs);
             var sheet1 = workbook.GetSheetAt(0);
+            var tt = sheet1.GetRow(rowno - 1);
+            var coloffset = 2;
+            var ttn = tt.LastCellNum+1;
+            if (ttn < 13)
+            {
+                coloffset = 0;
+            }
             while(rowno++<sheet1.LastRowNum+1){
                 try {
                     var cols = sheet1.GetRow(rowno - 1);
@@ -531,19 +580,38 @@ namespace CTCCGoods.Controllers
                     {
                         errline.Add("厂家不正确");
                     }
-                    var xinghao = getcellval(cols, 2).Trim();
+
+                    var g45 = "";
+                    var g45s = "";
+                    if (coloffset == 2)
+                    {
+                        g45 = getcellval(cols, 2).Trim().ToUpper();
+                        g45s = getcellval(cols, 3).Trim();
+                    }
+                    if (!constg45.Contains(g45))
+                    {
+                        errline.Add("4G/5G不正确");
+                    }
+                    if (string.IsNullOrEmpty(g45s))
+                    {
+                        errline.Add("是否45G双模不能为空");
+                    }
+                    dicin["g45"] = g45;
+                    dicin["g45s"] = g45s;
+
+                    var xinghao = getcellval(cols, 2+coloffset).Trim();
                     dicin["xinghao"] = xinghao;
                     if (string.IsNullOrEmpty(xinghao))
                     {
                         errline.Add("RRU型号不能为空");
                     }
-                    var leixing = getcellval(cols, 3).Trim().ToUpper();
+                    var leixing = getcellval(cols, 3 + coloffset).Trim().ToUpper();
                     dicin["leixing"] = leixing;
                     if (!constleixing.Contains(leixing))
                     {
                         errline.Add("RRU类型不正确");
                     }
-                    var rruno = getcellval(cols, 4).ToUpper().Trim();
+                    var rruno = getcellval(cols, 4 + coloffset).ToUpper().Trim();
                     dicin["rruno"] = rruno;
                     if (string.IsNullOrEmpty(rruno))
                     {
@@ -560,7 +628,7 @@ namespace CTCCGoods.Controllers
                         //errline.Add("rru序列号旧表已存在");
                         fugai = true;
                     }
-                    var sendtime = getcellval(cols, 5).Trim();
+                    var sendtime = getcellval(cols, 5 + coloffset).Trim();
                     DateTime stime;
                     if (string.IsNullOrEmpty(sendtime)|| !DateTime.TryParse(sendtime, out stime))
                     {
@@ -570,15 +638,20 @@ namespace CTCCGoods.Controllers
                     {
                         dicin["sendtime"] = stime;
                     }
-                    var qici = getcellval(cols, 6).Trim();
+                    var qici = getcellval(cols, 6 + coloffset).Trim();
                     dicin["qici"] = qici;
-                    var bz = getcellval(cols, 7).Trim();
+                    var bz = getcellval(cols, 7 + coloffset).Trim();
                     dicin["bz"] = bz;
-                    var baqi = getcellval(cols, 8).Trim();
+                    var baqi = getcellval(cols, 8 + coloffset).Trim();
                     dicin["baqi"] = baqi;
 
                     var sfzwg = "";
-                    var sfczg = nodb ? getcellval(cols, 9).Trim() : "";
+                    //var sfczg = nodb ? getcellval(cols, 10 + coloffset).Trim() : "";
+                    var sfczg = "";
+                    if (lastwtjdic.ContainsKey(rruno))
+                    {
+                        sfczg = "1";
+                    }
                     if (lastwdic.ContainsKey(rruno))
                     {
                         sfzwg = "1";
@@ -587,7 +660,7 @@ namespace CTCCGoods.Controllers
                     dicin["sfzwg"] = sfzwg;
                     dicin["sfczg"] = sfczg;
 
-                    var xfh = getcellval(cols, 11).Trim();
+                    var xfh = getcellval(cols, 11 + coloffset).Trim();
                     dicin["xfh"] = xfh;
 
                     if (errline.Count > 0)
@@ -597,11 +670,9 @@ namespace CTCCGoods.Controllers
                     }
                     if (chong) continue;
                     if (fugai) {
-                        dbdic[rruno] = dicin;
-                    } else {
-                        dic[rruno] = dicin;
+                        dbdic.Remove(rruno);
                     }
-                    
+                    dic[rruno] = dicin;
                 }
                 catch {
                     sb.Append("第" + rowno + "行，数据异常读取失败" + "\r\n");
@@ -736,7 +807,8 @@ namespace CTCCGoods.Controllers
                 }
 
                 string tmsg;
-                readnsendcsv(lastnsfilename, lastwdic, null, lastnsdic, out tmsg);
+                var lastwtjdic = new Dictionary<string, object>();
+                readnsendcsv(lastnsfilename, lastwdic,lastwtjdic, null, lastnsdic, out tmsg);
             }
 
             Dictionary<string, object> newwdic = new Dictionary<string, object>();
@@ -885,7 +957,8 @@ namespace CTCCGoods.Controllers
             if (lastnsfilename != null)
             {
                 string tmsg;
-                readnsendcsv(lastnsfilename, newwdic, null, lastnsdic, out tmsg);
+                var newwtjdic = lasttjdic.ToDictionary(a=>a.Key,a=>(object)null);
+                readnsendcsv(lastnsfilename, newwdic,newwtjdic, null, lastnsdic, out tmsg);
             }
 
             StringBuilder sbres = new StringBuilder();
@@ -923,7 +996,7 @@ namespace CTCCGoods.Controllers
             File.WriteAllText(Path.Combine(lasttjpath, ct.tfilename), sbres.ToString(), Encoding.GetEncoding("gbk"));
 
             sbres.Clear();
-            sbres.Append("地市,厂家,RRU型号,RRU类型,RRU序列号,发货时间,借货期次,备注,是否八期,是否在网管,是否存在过网管,是否新发货\r\n");
+            sbres.Append("地市,厂家,4G/5G,是否45G双模,RRU型号,RRU类型,RRU序列号,发货时间,借货期次,备注,是否八期,是否在网管,是否存在过网管,是否新发货\r\n");
             foreach (var kv in lastnsdic)
             {
                 var cols = new List<string>();
@@ -1606,7 +1679,8 @@ namespace CTCCGoods.Controllers
             var nsfilename = Path.Combine(nsfilepath, ct.filename);
 
             readwangcsv(tfilename,tmpdic);
-            readnsendcsv(nsfilename,tmpdic,null,tmpnsdic,out tmsg);
+            var tmpdictj = new Dictionary<string, object>();
+            readnsendcsv(nsfilename, tmpdic, tmpdictj, null, tmpnsdic, out tmsg);
 
             readwangcsv(filename, tmpdic, tmpnsdic,tmpnewdic,filedic,out tmsg);
             readwangcsv(tfilename, tmpdic, tmpnsdic, tmpnewdic, tfiledic, out tmsg);
